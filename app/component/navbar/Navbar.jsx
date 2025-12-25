@@ -33,8 +33,8 @@ const Header = () => {
   return (
     <header className="">
       {/* Top Black Bar */}
-      <div className="bg-secondary">
-        <div className=" text-white py-2 px-8.75 flex justify-between items-center text-sm max-w-7xl mx-auto">
+      <div className="bg-secondary max-w-8xl mx-auto">
+        <div className=" text-white py-2 px-8.75 flex justify-between items-center text-sm ">
           <div className="flex items-center gap-2">
             <FaPhoneAlt className="text-xs" />
             <span>+13072696920</span>
@@ -49,8 +49,8 @@ const Header = () => {
       </div>
 
       {/* Main Navigation */}
-      <div className="bg-white shadow-xs">
-        <nav className="py-4 px-2.5 md:px-8.75 flex justify-between items-center  sticky max-w-7xl mx-auto">
+      <div className="bg-primary shadow-xs">
+        <nav className="py-4 px-2.5 md:px-8.75 flex justify-between items-center  sticky max-w-8xl mx-auto">
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-2">
