@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Active link check korar jonno
+import { usePathname } from "next/navigation"; 
 import {
   FaFacebookF,
   FaInstagram,
