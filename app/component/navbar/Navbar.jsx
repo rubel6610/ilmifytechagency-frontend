@@ -13,6 +13,7 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import Image from "next/image";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
@@ -50,11 +51,11 @@ const Header = () => {
 
       {/* Main Navigation */}
       <div className="bg-white shadow-xs">
-        <nav className="py-4 px-[10px] md:px-[35px] flex justify-between items-center relative sticky sm:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1140px] 2xl:w-[1320px] mx-auto">
+        <nav className="py-4 px-2.5 md:px-8.75 flex justify-between items-center  sticky sm:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1140px] 2xl:w-[1320px] mx-auto">
         {/* Logo */}
         <Link href="/">
           <div className="flex items-center gap-2">
-            <img className="" src="/Logo-1-1.png" alt="website log" />
+            <Image height={150} width={150} className="" src="/Logo-1-1.png" alt="website log" />
           </div>
         </Link>
 
@@ -79,7 +80,7 @@ const Header = () => {
         {/* Right Side: Button & Search */}
         <div className="flex items-center gap-6">
           <Link href="/contact" className="hidden md:block">
-            <button className="bg-gradient-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition">
+            <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition">
               Login
             </button>
           </Link>
@@ -109,7 +110,7 @@ const Header = () => {
               </Link>
             ))}
             <Link href="/contact" onClick={() => setNav(false)}>
-              <button className="bg-gradient-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full text-sm">
+              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full text-sm">
                 GET IN TOUCH
               </button>
             </Link>
