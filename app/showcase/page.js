@@ -2,7 +2,7 @@ import React from "react";
 
 const Showcase = () => {
   return (
-    <div className="grid grid-cols-2  mx-auto place-items-center sm:max-w-sm md:max-w-md xl:max-w-390">
+    <div className="grid grid-cols-1 md:grid-cols-2 py-50 max-w-7xl mx-auto ">
       <div>
         <h1 className="font-semibold text-5xl ">Our recent <span className="text-primary">web designs</span> & <br/> some examples of <br/> past <span className="text-primary">projects</span> </h1>
       </div> 
