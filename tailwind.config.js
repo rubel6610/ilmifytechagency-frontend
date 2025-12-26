@@ -10,7 +10,9 @@ module.exports = {
       colors: {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
-        border: 'var(--color-border)', // Use your custom border color
+        border: 'var(--color-border)', 
+        background: 'var(--color-background)',
+        foreground: 'var(--color-foreground)',
       },
     },
   },
