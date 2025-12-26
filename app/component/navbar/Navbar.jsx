@@ -34,7 +34,7 @@ const Header = () => {
     <header className="w-full">
       {/* Top Black Bar */}
       {!nav && (
-        <div className="bg-secondary max-w-8xl mx-auto">
+        <div className="bg-secondary max-w-8xl  mx-auto">
           <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
@@ -51,7 +51,7 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <div className="bg-[#FFFFFF] shadow-xs max-w-8xl mx-auto">
+      <div className="bg-[#FFFFFF] shadow-xs max-w-10/12 mx-auto">
         <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
