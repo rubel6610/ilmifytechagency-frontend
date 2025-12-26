@@ -63,7 +63,7 @@ const cardsData = [
 const Cards = () => {
   return (
     <div className="">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-7 md:gap-3 ">
         {cardsData.map((card) => (
           <motion.div
           whileHover={{
@@ -96,7 +96,7 @@ const Cards = () => {
                   "linear-gradient(to bottom, rgba(13, 218, 160, 0.7) , rgba(140, 224, 100, 0.7))",
               }}
             >
-              <div className="p-6 z-10 text-white translate-y-6 group-hover:translate-y-0 transition-all duration-500 space-y-2">
+              <div className="p-6 z-10 text-white translate-y-6 group-hover:translate-y-0 transition-all duration-1500 space-y-2">
                 <h3 className="text-2xl  font-semibold">{card.title}</h3>
                 <h4 className="text-2xl font-semibold mt-1">{card.author}</h4>
                 <span className="text-sm opacity-80">{card.type}</span>

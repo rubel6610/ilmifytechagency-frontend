@@ -7,7 +7,7 @@ import CallToActionCard from "./component/CallToActionCard";
 const Showcase = () => {
   return (
     <div className="max-w-400 mx-auto ">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-44 md:pb-34 md:pt-70  ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-44 md:pb-34 md:pt-70 px-4 pb-4 ">
         <div className="flex flex-col gap-10">
           <h1 className="font-semibold text-3xl mb-10 md:mb-0 md:text-5xl tracking-wide leading-10 md:leading-14 ">Our recent <span className="text-primary">web designs</span> & <br /> some examples of <br /> past <span className="text-primary">projects</span> </h1>
          <CustomBorder></CustomBorder>
@@ -21,7 +21,11 @@ const Showcase = () => {
       </div>
 
       {/* card */}
-      <Cards />
+      <div className="p-4">
+         <Cards />
+      </div>
+     
+      {/* action card */}
       <div className="mt-66 mb-25">
           <CallToActionCard/>
       </div>

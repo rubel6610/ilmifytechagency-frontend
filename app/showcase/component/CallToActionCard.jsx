@@ -1,7 +1,18 @@
+"use client";
+
+import Link from "next/link";
+import { motion } from "motion/react";
+
+const MotionLink = motion(Link);
+
 const CallToActionCard = () => {
   return (
     <div className="w-full px-4">
-      <div
+      {/* Card Animation */}
+      <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        whileInView={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="
           max-w-365
           mx-auto
@@ -16,22 +27,26 @@ const CallToActionCard = () => {
           items-center
           text-center
           text-white
-          shadow-xl shadow-green-300/30 
+       
         "
+        style={{
+          boxShadow: "10px 20px 20px rgba(13, 218, 160, 0.25) ",
+        }}
       >
-        {/* Small Heading */}
         <p className="text-sm md:text-base opacity-90 mb-3">
           What Are You Waiting for?
         </p>
 
-        {/* Main Heading */}
         <h2 className="text-3xl md:text-5xl font-semibold mb-10">
           Let&apos;s Talk About Work
         </h2>
 
-        {/* Button */}
-        <button
+        {/* Animated Link Button */}
+        <MotionLink
+          href="/contact"
           className="
+            relative
+            overflow-hidden
             bg-black
             text-white
             px-8
@@ -39,15 +54,35 @@ const CallToActionCard = () => {
             rounded-full
             text-sm
             tracking-wide
-            hover:scale-105
-            transition-transform
-            duration-300
             shadow-xl
+            inline-block
           "
+          initial="rest"
+          whileHover="hover"
+          animate="rest"
         >
-          START NOW
-        </button>
-      </div>
+          {/* Hover Gradient */}
+          <motion.span
+            variants={{
+              rest: { scale: 0 },
+              hover: { scale: 1 },
+            }}
+            transition={{ duration: 0.17, ease: "easeOut" }}
+            className="
+              absolute
+              inset-0
+              bg-linear-to-r
+              from-[#0ddaa0]
+              to-[#8ce064]
+              rounded-full
+              z-0
+            "
+            style={{ originX: 0.5, originY: 0.5 }}
+          />
+
+          <span className="relative z-10">START NOW</span>
+        </MotionLink>
+      </motion.div>
     </div>
   );
 };
