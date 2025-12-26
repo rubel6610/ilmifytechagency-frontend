@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Active link check korar jonno
+import { usePathname } from "next/navigation";
 import {
   FaFacebookF,
   FaInstagram,
@@ -17,11 +17,10 @@ import Image from "next/image";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
-  const pathname = usePathname(); // Bortoman URL path nibe
+  const pathname = usePathname();
 
   const toggleNav = () => setNav(!nav);
 
-  // Menu Items Array (Zate code repeat na hoy)
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -32,91 +31,86 @@ const Header = () => {
   ];
 
   return (
-    <header className="">
+    <header className="w-full">
       {/* Top Black Bar */}
       <div className="bg-[#222]">
-        <div className=" text-white py-2 px-[35px] flex justify-between items-center text-sm sm:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1140px] 2xl:w-[1320px] mx-auto">
-        <div className="flex items-center gap-2">
-          <FaPhoneAlt className="text-xs" />
-          <span>+13072696920</span>
+        <div className="text-white py-2 px-4 flex justify-between items-center text-sm max-w-7xl mx-auto">
+          <div className="flex items-center gap-2">
+            <FaPhoneAlt className="text-xs" />
+            <span>+13072696920</span>
+          </div>
+          <div className="flex gap-4">
+            <FaFacebookF className="cursor-pointer hover:text-green-400 transition" />
+            <FaInstagram className="cursor-pointer hover:text-green-400 transition" />
+            <FaLinkedinIn className="cursor-pointer hover:text-green-400 transition" />
+            <FaTwitter className="cursor-pointer hover:text-green-400 transition" />
+          </div>
         </div>
-        <div className="flex gap-4">
-          <FaFacebookF className="cursor-pointer hover:text-green-400 transition" />
-          <FaInstagram className="cursor-pointer hover:text-green-400 transition" />
-          <FaLinkedinIn className="cursor-pointer hover:text-green-400 transition" />
-          <FaTwitter className="cursor-pointer hover:text-green-400 transition" />
-        </div>
-      </div>
       </div>
 
       {/* Main Navigation */}
-      <div className="bg-white shadow-xs">
-        <nav className="py-4 px-2.5 md:px-8.75 flex justify-between items-center  sticky sm:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1140px] 2xl:w-[1320px] mx-auto">
-        {/* Logo */}
-        <Link href="/">
-          <div className="flex items-center gap-2">
-            <Image height={150} width={150} className="" src="/Logo-1-1.png" alt="website log" />
+      <div className="bg-white shadow-sm">
+        <nav className="py-6 px-4 flex flex-col xl:flex-row justify-between items-center max-w-7xl mx-auto relative">
+          {/* Logo & Mobile Menu Button Section */}
+          <div className="flex justify-between items-center w-full xl:w-auto">
+            <Link href="/" className="md:mx-auto xl:mx-0">
+              <Image height={50} width={150} src="/Logo-1-1.png" alt="website logo" priority />
+            </Link>
+
+           
+            <div className="md:hidden text-2xl cursor-pointer text-black" onClick={toggleNav}>
+              {nav ? <FaTimes /> : <FaBars />}
+            </div>
           </div>
-        </Link>
 
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex gap-8 font-medium">
-          {menuItems.map((item) => (
-            <li key={item.path}>
-              <Link
-                href={item.path}
-                className={`uppercase text-sm transition duration-300 ${
-                  pathname === item.path
-                    ? "text-green-500 font-bold"
-                    : "text-gray-700 hover:text-green-500"
-                }`}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Right Side: Button & Search */}
-        <div className="flex items-center gap-6">
-          <Link href="/contact" className="hidden md:block">
-            <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition">
-              Login
-            </button>
-          </Link>
-          <FaSearch className="text-teal-500 cursor-pointer text-xl hidden md:block" />
-
-          <div
-            className="md:hidden text-2xl cursor-pointer text-black"
-            onClick={toggleNav}
-          >
-            {nav ? <FaTimes /> : <FaBars />}
+          {/* Menu for Tablet and Desktop */}
+          <div className="mt-6 xl:mt-0">
+            <ul className="hidden md:flex gap-8 font-medium">
+              {menuItems.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`uppercase text-[13px] tracking-wide transition duration-300 ${
+                      pathname === item.path
+                        ? "text-green-500 font-bold"
+                        : "text-gray-700 hover:text-green-500"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
 
-        {/* Mobile Menu Dropdown */}
-        {nav && (
-          <div className="absolute top-full left-0 w-full bg-white z-50 flex flex-col items-center py-6 gap-4 shadow-xl md:hidden">
-            {menuItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                onClick={() => setNav(false)} // Click korle menu bondho hoye jabe
-                className={`uppercase text-sm font-bold transition ${
-                  pathname === item.path ? "text-green-500" : "text-gray-800"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Link href="/contact" onClick={() => setNav(false)}>
-              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full text-sm">
-                GET IN TOUCH
+          {/* Right Side: Login & Search (Only XL) */}
+          <div className="hidden xl:flex items-center gap-6">
+            <Link href="/contact">
+              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-md hover:opacity-90 transition">
+                Login
               </button>
             </Link>
+            <FaSearch className="text-teal-500 cursor-pointer text-xl" />
           </div>
-        )}
-      </nav>
+
+          {/* Mobile Menu Dropdown */}
+          {nav && (
+            <div className="absolute top-full left-0 w-full bg-white z-50 flex flex-col items-center py-6 gap-4 shadow-xl md:hidden">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  onClick={() => setNav(false)}
+                  className={`uppercase text-sm font-bold transition ${
+                    pathname === item.path ? "text-green-500" : "text-gray-800"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </nav>
       </div>
     </header>
   );
