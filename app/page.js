@@ -1,9 +1,12 @@
 import React from "react";
+import ContactCards from "./component/ContactCards";
+import ServicesSection from "./component/ServicesSection";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="">
+      <ServicesSection/>
+      <ContactCards/>
     </div>
   );
 };
