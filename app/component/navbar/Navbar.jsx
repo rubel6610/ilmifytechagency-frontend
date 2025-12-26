@@ -34,8 +34,8 @@ const Header = () => {
     <header className="w-full">
       {/* Top Black Bar */}
       {!nav && (
-        <div className="bg-secondary max-w-8xl  mx-auto">
-          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm">
+        <div className="bg-secondary">
+          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
@@ -51,8 +51,8 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <div className="bg-[#FFFFFF] shadow-xs max-w-10/12 mx-auto">
-        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative">
+      <div className="bg-[#FFFFFF] shadow-xs">
+        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
             {!nav && (
@@ -105,7 +105,7 @@ const Header = () => {
                 Login
               </button>
             </Link>
-            <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]"/>
+            <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]" />
           </div>
 
           {/* Mobile Menu Dropdown */}

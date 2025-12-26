@@ -8,7 +8,7 @@ import {
   FaInstagram,
   FaYoutube,
 } from "react-icons/fa";
-import {  MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail } from "react-icons/md";
 import CustomBorder from "../customBorder/CustomBorder";
 import Image from "next/image";
 import { PiDeviceMobileLight } from "react-icons/pi";
@@ -16,10 +16,10 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FFFFFF] pt-20 xl:pt-25 font-sans text-gray-600 max-w-8xl mx-auto">
+    <footer className="bg-[#FFFFFF] pt-20 xl:pt-25 font-sans text-gray-600">
       {/* Top Section */}
-      <div className="container mx-auto px-5 md:px-10 pb-20 xl:pb-33.75">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
+      <div className="max-w-400 mx-auto px-5 md:px-10 pb-20 xl:pb-33.75">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">
           {/* 1. Logo & About */}
           <div className="space-y-5">
             <div className="flex items-center">
@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
 
           {/* 2. Quick Links */}
-          <div>
+          <div className="w-full">
             <h3 className="text-[23px] font-bold text-gray-600 uppercase tracking-wider">
               Quick Links
             </h3>
@@ -66,23 +66,23 @@ const Footer = () => {
           </div>
 
           {/* 3. Contact Info */}
-          <div>
+          <div className="w-full">
             <h3 className="text-[23px] font-bold text-gray-600 uppercase tracking-wider">
               Contact
             </h3>
             <CustomBorder />
             <ul className="space-y-4 text-[15px]">
               <li className="flex items-center gap-3">
-                <MdOutlineMail className="text-[#8FE481] text-xl" />
+                <MdOutlineMail className="text-[#8FE481] text-xl shrink-0" />
                 <a
                   href="mailto:info@ilmifytech.com"
-                  className="hover:text-[#00D9A5]"
+                  className="hover:text-[#00D9A5] break-all"
                 >
                   info@ilmifytech.com
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <PiDeviceMobileLight className="text-[#8FE481] text-xl" />
+                <PiDeviceMobileLight className="text-[#8FE481] text-xl shrink-0" />
                 <span>+13072696920</span>
               </li>
               <li className="flex items-start gap-3">
@@ -117,7 +117,7 @@ const Footer = () => {
           </div>
 
           {/* 4. Policy */}
-          <div>
+          <div className="w-full">
             <h3 className="text-[23px] font-bold text-gray-600 uppercase tracking-wider">
               Policy
             </h3>
@@ -144,8 +144,8 @@ const Footer = () => {
       </div>
 
       {/* Bottom Black Bar */}
-      <div className="bg-linear-to-r from-[#5a5757] to-[#111111] py-8.75 pt-8.5 pb-9.5 px-8.75">
-        <div className="max-w-8xl mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6">
+      <div className="bg-linear-to-r from-[#5a5757] to-[#111111]">
+        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-8.75">
           {/* Left Side: Copyright Text */}
           <p className="text-gray-400 text-[16px] tracking-wide order-1">
             © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
