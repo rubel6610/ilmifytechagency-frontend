@@ -9,11 +9,11 @@ import {
   FaLinkedinIn,
   FaTwitter,
   FaPhoneAlt,
-  FaSearch,
   FaBars,
   FaTimes,
 } from "react-icons/fa";
 import Image from "next/image";
+import { IoSearchSharp } from "react-icons/io5";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
@@ -33,34 +33,49 @@ const Header = () => {
   return (
     <header className="w-full">
       {/* Top Black Bar */}
-      <div className="bg-secondary max-w-8xl mx-auto">
-        <div className=" text-white py-2 px-8.75 flex justify-between items-center text-sm ">
-          <div className="flex items-center gap-2">
-            <FaPhoneAlt className="text-xs" />
-            <span>+13072696920</span>
-          </div>
-          <div className="flex gap-4">
-            <FaFacebookF className="cursor-pointer hover:text-green-400 transition" />
-            <FaInstagram className="cursor-pointer hover:text-green-400 transition" />
-            <FaLinkedinIn className="cursor-pointer hover:text-green-400 transition" />
-            <FaTwitter className="cursor-pointer hover:text-green-400 transition" />
+      {!nav && (
+        <div className="bg-secondary max-w-8xl mx-auto">
+          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm">
+            <div className="flex items-center gap-2">
+              <FaPhoneAlt className="text-xs" />
+              <span>+13072696920</span>
+            </div>
+            <div className="flex gap-4">
+              <FaFacebookF className="cursor-pointer hover:text-green-400 transition" />
+              <FaInstagram className="cursor-pointer hover:text-green-400 transition" />
+              <FaLinkedinIn className="cursor-pointer hover:text-green-400 transition" />
+              <FaTwitter className="cursor-pointer hover:text-green-400 transition" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Navigation */}
-      <div className="bg-white shadow-sm">
-        <nav className="py-6 px-4 flex flex-col xl:flex-row justify-between items-center max-w-7xl mx-auto relative">
+      <div className="bg-[#FFFFFF] shadow-xs max-w-8xl mx-auto">
+        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
-            <Link href="/" className="md:mx-auto xl:mx-0">
-              <Image height={50} width={150} src="/Logo-1-1.png" alt="website logo" priority />
-            </Link>
-
-           
-            <div className="md:hidden text-2xl cursor-pointer text-black" onClick={toggleNav}>
-              {nav ? <FaTimes /> : <FaBars />}
-            </div>
+            {!nav && (
+              <Link href="/" className="md:mx-auto xl:mx-0">
+                <Image
+                  className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
+                  height={50}
+                  width={150}
+                  src="/Logo-1-1.png"
+                  alt="website logo"
+                  priority
+                />
+              </Link>
+            )}
+            {/* Hamburger icon */}
+            {!nav && (
+              <div
+                className="md:hidden text-xl cursor-pointer text-gray-400"
+                onClick={toggleNav}
+              >
+                <FaBars />
+              </div>
+            )}
           </div>
 
           {/* Menu for Tablet and Desktop */}
@@ -70,10 +85,10 @@ const Header = () => {
                 <li key={item.path}>
                   <Link
                     href={item.path}
-                    className={`uppercase text-[13px] tracking-wide transition duration-300 ${
+                    className={`uppercase text-[14px] tracking-wide transition duration-300 ${
                       pathname === item.path
-                        ? "text-green-500 font-bold"
-                        : "text-gray-700 hover:text-green-500"
+                        ? "text-gray-600 font-bold"
+                        : "text-gray-500"
                     }`}
                   >
                     {item.name}
@@ -86,11 +101,11 @@ const Header = () => {
           {/* Right Side: Login & Search (Only XL) */}
           <div className="hidden xl:flex items-center gap-6">
             <Link href="/contact">
-              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-md hover:opacity-90 transition">
+              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
                 Login
               </button>
             </Link>
-            <FaSearch className="text-teal-500 cursor-pointer text-xl" />
+            <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]"/>
           </div>
 
           {/* Mobile Menu Dropdown */}
@@ -101,7 +116,7 @@ const Header = () => {
                   key={item.path}
                   href={item.path}
                   onClick={() => setNav(false)}
-                  className={`uppercase text-sm font-bold transition ${
+                  className={`uppercase text-[30px] font-semibold transition ${
                     pathname === item.path ? "text-green-500" : "text-gray-800"
                   }`}
                 >
@@ -112,6 +127,16 @@ const Header = () => {
           )}
         </nav>
       </div>
+
+      {/* Center Cancel Button Overlay */}
+      {nav && (
+        <div
+          onClick={toggleNav}
+          className="fixed top-6 left-1/2 -translate-x-1/2 z-50 md:hidden"
+        >
+          <FaTimes className="text-[40px] p-1.5 text-gray-700 cursor-pointer" />
+        </div>
+      )}
     </header>
   );
 };
