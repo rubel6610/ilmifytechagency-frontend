@@ -1,56 +1,47 @@
-/* Tailwind CSS imports */
 @import "tailwindcss";
 
-/* Define a set of reusable CSS variables for the 4 colors */
 :root {
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.129 0.042 264.695);
+
   --color-primary: #0ddaa0;
   --color-secondary: #8ce064;
-  --color-border: #dcdcdc; /* Custom border color */
+  --color-border: #dcdcdc;
+
   --font-quicksand: "Quicksand", sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 }
 
-/* Apply default light mode colors */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-background: var(--color-background);
-    --color-foreground: var(--color-foreground);
-  }
-}
-
-/* Use the colors directly for Tailwind and custom styles */
 @layer base {
   body {
     font-family: var(--font-quicksand);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
-  /* Font styles for different use cases */
   .font-ubuntu {
     font-family: var(--font-ubuntu);
   }
+}
 
+/* 🔹 Tailwind-friendly utility classes */
+@layer utilities {
   .bg-primary {
-    background-color: #ffffff;
-  }
-  .bg-secondary {
-    background-color: #000000;
-  }
-  .text-primary {
-    color: #0ddaa0;
-  }
-  .text-secondary {
-    color: #8ce064;
-  }
-  .primary {
-    color: #0ddaa0;
-  }
-  .secondary {
-    color: #8ce064;
+    background-color: var(--color-background);
   }
 
-  /* Custom borders using the defined color */
+  .bg-secondary {
+    background-color: var(--color-foreground);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+
   .border-primary {
     border: 1px solid var(--color-primary);
   }
@@ -62,4 +53,9 @@
   .border-default {
     border: 1px solid var(--color-border);
   }
+}
+
+/* Logo */
+.logo {
+  filter: brightness(0%) contrast(167%) saturate(0%);
 }

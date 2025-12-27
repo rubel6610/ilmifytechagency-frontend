@@ -1,5 +1,7 @@
 import { Quicksand, Ubuntu } from "next/font/google";
 import "./globals.css";
+import Navbar from "./component/navbar/Navbar";
+import Footer from "./component/footer/Footer";
 
 // Correct font imports from next/font/google
 const quicksand = Quicksand({
@@ -23,7 +25,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${quicksand.variable} ${ubuntu.variable} antialiased`}>
+        <Navbar/>
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -1,18 +1,12 @@
-import React from 'react';
+import React from "react";
+import ContactCards from "./component/ContactCards";
+import ServicesSection from "./component/ServicesSection";
 
 const Home = () => {
   return (
-    <div>
-      <a href='/about' className='text-primary text-2xl'>
-        about
-      </a>
-
-      <p className='text-secondary'>jfldkas</p>
-
-      {/* Example for borders */}
-      <div className="border-primary p-4">
-        This div has a primary border color.
-      </div>
+    <div className="">
+      <ServicesSection/>
+      <ContactCards/>
     </div>
   );
 };
