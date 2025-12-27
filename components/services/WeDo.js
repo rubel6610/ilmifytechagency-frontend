@@ -7,37 +7,37 @@ const services = [
   {
     title: "CMS Services",
     description:
-      "At iLMiFY, we offer CMS services that help businesses easily manage and update their website content. Whether it's a custom CMS or platforms like WordPress and Shopify, we provide user-friendly solutions.",
+      "At iLMiFY, we offer CMS services that help businesses easily manage and update their website content. Whether it's a custom CMS or platforms like WordPress and Shopify, we provide user-friendly solutions, seamless integrations, and scalability to support your business growth.",
     button: "Read More",
   },
   {
     title: "Custom Development",
     description:
-      "At iLMiFY, we specialize in building custom websites using HTML, CSS, PHP, JavaScript, and React with scalable back-end systems.",
+      "At iLMiFY, we offer CMS services that help businesses easily manage and update their website content. Whether it's a custom CMS or platforms like WordPress and Shopify, we provide user-friendly solutions, seamless integrations, and scalability to support your business growth.",
     button: "Read More",
   },
   {
     title: "Digital Marketing",
     description:
-      "We enhance your online presence using SEO, PPC, social media, and content marketing strategies.",
+      "At iLMiFY, we provide digital marketing services that enhance your online presence and drive growth. Our team uses strategies like SEO, PPC, social media, and content marketing to reach your target audience. We create customized campaigns to boost brand visibility and engagement. ",
     button: "Read More",
   },
   {
     title: "Graphic Design",
     description:
-      "Professional graphic design services including logos, branding, and marketing materials.",
+      "At iLMiFY, we offer professional graphic design services to enhance your brand's visual identity. Our team creates impactful logos, branding, and marketing materials that resonate with your target audience. We align designs with your business goals, bringing your vision to life with creativity and precision.",
     button: "Read More",
   },
   {
     title: "Mobile App Development",
     description:
-      "High-performance mobile apps for iOS and Android with seamless user experience.",
+      "At iLMiFY, we specialize in creating innovative and user-friendly mobile apps for both iOS and Android. Our team combines cutting-edge technology with seamless design to deliver high-performance, scalable apps that provide an exceptional user experience. Whether you need a business app, e-commerce platform.",
     button: "Read More",
   },
   {
     title: "AI Development",
     description:
-      "Custom AI solutions using machine learning, NLP, and automation.",
+      "At iLMiFY, we deliver advanced AI solutions that drive business efficiency and innovation. Our expertise in machine learning, NLP, and computer vision enables us to create custom AI systems that automate processes and enhance decision-making.We empower your business with data-driven solutions for real results.",
     button: "Read More",
   },
 
@@ -78,14 +78,14 @@ export default function WeDo() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="rounded-xl border-none bg-white shadow-xl transition hover:shadow-md"
+              className="rounded-xl border-none bg-white shadow-2xl transition hover:shadow-md"
             >
               <CardContent className="flex h-full flex-col items-center p-6 text-center">
                 
                 {/* IMAGE CARD */}
                 {service.isImageCard ? (
                   <>
-                    <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl">
+                    <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl px-8">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -105,7 +105,7 @@ export default function WeDo() {
                       {service.title}
                     </h3>
 
-                    <p className="mb-6 text-sm text-muted-foreground">
+                    <p className="pt-8 pb-12  text-sm text-muted-foreground text-justify leading-relaxed">
                       {service.description}
                     </p>
 
