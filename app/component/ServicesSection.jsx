@@ -8,30 +8,30 @@ const ServicesSection = () => {
       id: 1,
       title: 'CMS Services',
       description: 'Flexible, secure, and scalable content management for your business...',
-      icon: '/icons/cms.png',
+      icon: '/cms.png',
     },
     {
       id: 2,
       title: 'Digital Marketing',
       description: 'Reach the right audience with targeted SEO, ads and build on database campaigns...',
-      icon: '/icons/marketing.png',
+      icon: '/marketing-strategy.png',
     },
     {
       id: 3,
       title: 'Custom Development',
       description: 'Custom web and app solutions built for performance and growth...',
-      icon: '/icons/dev.png',
+      icon: '/monitor.png',
     },
     {
       id: 4,
       title: 'Graphics Design',
       description: 'Far far away, behind the word mountains, far from the countries Vokalia Separated...',
-      icon: '/icons/design.png',
+      icon: '/pen-tool.png',
     },
   ];
 
   return (
-    <section className="py-20 bg-[#FFFFFF] relative overflow-hidden w-full border-2 ">
+    <section className="py-20 bg-[#FFFFFF] relative overflow-hidden w-full">
 
         {/* Vertical Text Side Decoration */}
           <div className="hidden xl:block absolute -right-26 top-1/2 -translate-y-1/2 -rotate-90 origin-center">

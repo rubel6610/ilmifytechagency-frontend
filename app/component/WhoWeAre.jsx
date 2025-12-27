@@ -62,7 +62,7 @@ const WhoWeAre = () => {
 
         <div className="w-full xl:w-[40%] xl:pl-16 flex flex-col items-start">
           <div className="mb-8">
-            <h2 className="text-5xl md:text-7xl font-bold text-[#222] leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#222] leading-tight">
               Who <span className="text-[#00c389]">We Are</span>
             </h2>
             
