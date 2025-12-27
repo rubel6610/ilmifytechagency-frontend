@@ -78,14 +78,14 @@ export default function WeDo() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="rounded-xl border-none bg-white shadow-2xl transition hover:shadow-md"
+              className="rounded-xl border-none bg-white shadow-2xl transition hover:shadow-md hover:bg-linear-to-b from-[#86e062] to-[#00c389] hover:text-white"
             >
               <CardContent className="flex h-full flex-col items-center p-6 text-center">
                 
                 {/* IMAGE CARD */}
                 {service.isImageCard ? (
                   <>
-                    <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl px-8">
+                    <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl px-8 ">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -94,18 +94,18 @@ export default function WeDo() {
                       />
                     </div>
 
-                    <h3 className="text-2xl font-semibold">
+                    <h3 className="text-2xl font-semibold pt-12">
                       {service.title}
                     </h3>
                   </>
                 ) : (
                   <>
                     {/* NORMAL CARD */}
-                    <h3 className="mb-3 text-3xl font-medium">
+                    <h3 className="mb-3 text-3xl font-medium ">
                       {service.title}
                     </h3>
 
-                    <p className="pt-8 pb-12  text-sm text-muted-foreground text-justify leading-relaxed">
+                    <p className="pt-8 pb-12  text-sm text-muted-foreground text-justify leading-relaxed ">
                       {service.description}
                     </p>
 
