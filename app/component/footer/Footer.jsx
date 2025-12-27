@@ -28,7 +28,7 @@ const Footer = () => {
                   className="logo w-45.25 h-auto md:w-42.75 lg:w-57.75 xl:w-37 2xl:w-47"
                   height={50}
                   width={150}
-                  src="/Logo-1-1.png"
+                  src="/logo.png"
                   alt="website logo"
                   priority
                 />
