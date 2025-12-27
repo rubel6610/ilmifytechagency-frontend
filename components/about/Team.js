@@ -1,88 +1,41 @@
-// // components/OurTeam.js
-// import Image from "next/image";
-
-// const teamMembers = [
-//   { name: "Member 1", role: "Developer", image: "/team2.png" },
-//   { name: "Member 2", role: "Designer", image: "/team3.png" },
-//   { name: "Member 3", role: "Manager", image: "/team4.png" },
-//   { name: "Member 4", role: "HR", image: "/team5.png" },
-//   { name: "Member 5", role: "Support", image: "/team6.png" },
-//   { name: "Member 6", role: "CEO", image: "/team7.png" },
-// ];
-
-// export default function Team() {
-//   return (
-//     <section className="my-12 py-16 bg-white text-center">
-//       <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
-//         Get to know
-//       </h2>
-//       <p className="text-2xl md:text-4xl font-semibold text-green-500  mt-2">
-//         our team
-//       </p>
-//       <div className="flex justify-center space-x-2 py-10">
-//         <div className="border-3 rounded-2xl border-green-500 w-3"></div>
-//         <div className="border-3 rounded-2xl border-green-500 w-10"></div>
-//       </div>
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-//         {teamMembers.map((member, index) => (
-//           <div
-//             key={index}
-//             className="rounded-lg overflow-hidden shadow hover:shadow-lg transition"
-//           >
-//             <Image
-//               src={member.image}
-//               alt={member.name}
-//               width={400}
-//               height={400}
-//               className="w-full h-80 object-cover"
-//             />
-//           </div>
-//         ))}
-//       </div>
-//     </section>
-//   );
-// }
-
-// components/OurTeam.js
 import Image from "next/image";
 
 const teamMembers = [
   {
-    name: "Member 1",
-    role: "Developer",
+    name: "Tufael Ahmed Zuarder",
+    role: "Operation Manager",
     image: "/team2.png",
-    description: "Expert in frontend and backend development.",
+    description: "Tufael Ahmed Zuarder is an experienced Operation Manager with a proven track record of optimizing operational processes and driving efficiency within organizations.",
   },
   {
-    name: "Member 2",
+    name: "DEXTER MATTHEW",
     role: "Designer",
     image: "/team3.png",
-    description: "Creative UI/UX designer with modern ideas.",
+    description: "Far far away, behind the word mountains, far from the countries Vokalia and Conson, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics",
   },
   {
-    name: "Member 3",
-    role: "Manager",
+    name: "RANDY SMITH",
+    role: "Project Manager",
     image: "/team4.png",
-    description: "Ensures smooth project execution and delivery.",
+    description: "Far far away, behind the word mountains, far from the countries Vokalia and Conson, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics.",
   },
   {
-    name: "Member 4",
-    role: "HR",
+    name: "ANGELO GARNER",
+    role: "Co-founder",
     image: "/team5.png",
-    description: "Manages talent and company culture.",
+    description: "Far far away, behind the word mountains, far from the countries Vokalia and Conson, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics.",
   },
   {
-    name: "Member 5",
-    role: "Support",
+    name: "JIMMIE BENEDICT",
+    role: "Frontend Developer",
     image: "/team6.png",
-    description: "Always ready to help our customers.",
+    description: "Far far away, behind the word mountains, far from the countries Vokalia and Conson, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics.",
   },
   {
-    name: "Member 6",
-    role: "CEO",
+    name: "JANET GARNER",
+    role: "Founder",
     image: "/team7.png",
-    description: "Visionary leader driving company growth.",
+    description: "Far far away, behind the word mountains, far from the countries Vokalia and Conson, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics.",
   },
 ];
 

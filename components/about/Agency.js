@@ -1,16 +1,44 @@
-import React from "react";
+"use client";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { Typewriter } from "react-simple-typewriter";
 
 export default function Agency() {
   return (
-    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-[#F9F9F9]">
+    <div className="container mx-auto my-28  px-4 md:px-12 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-[#F9F9F9]">
       {/* Left Content */}
       <div>
         <h1 className="text-3xl md:text-5xl font-semibold leading-tight">
-          We are a creative <br />
-          web <span className="text-green-500">design agency</span>
+          <span className="text-gray-800">
+            <Typewriter
+              words={["We are a creative"]}
+              loop={1}
+              cursor={false}
+              typeSpeed={80}
+            />
+          </span>
+          <br />
+          <span className="text-gray-800 pr-2">
+            <Typewriter
+              words={["web"]}
+              loop={1}
+              cursor={false}
+              typeSpeed={100}
+              delaySpeed={2200}
+            />
+          </span>
+
+          <span className="text-green-500">
+            <Typewriter
+              words={["design agency"]}
+              loop={1}
+              cursor={false}
+              typeSpeed={80}
+              delaySpeed={100}
+            />
+          </span>
         </h1>
+
         <div className="flex space-x-2 py-10">
           <div className="border-3 rounded-2xl border-green-500 w-3"></div>
           <div className="border-3 rounded-2xl border-green-500 w-10"></div>
@@ -31,13 +59,13 @@ export default function Agency() {
           your business success.
         </p>
 
-        <Button className="mt-8 bg-green-500 hover:bg-green-600 text-white rounded-full px-8 py-6">
+        <Button className="mt-8 bg-green-500 hover:bg-[#1B1B1B] text-white rounded-full px-8 py-6 ">
           GET IN TOUCH
         </Button>
       </div>
 
       {/* Right Image */}
-      <div className="relative w-full h-[300px] md:h-[400px]">
+      <div className="relative w-full h-[300px] md:h-[500px] rounded-lg overflow-hidden">
         <Image
           src="/team1.jpg" // replace with your image path
           alt="Team discussion"
