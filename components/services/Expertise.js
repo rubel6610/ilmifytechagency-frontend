@@ -30,7 +30,7 @@ const steps = [
 export default function Expertise() {
   return (
     <section
-      className="relative w-full bg-fixed bg-center bg-cover text-white py-20"
+      className="relative bg-fixed bg-center bg-cover text-white px-8 py-20"
       style={{
         backgroundImage: "url('/teammate.jpg')",
       }}
@@ -38,7 +38,7 @@ export default function Expertise() {
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/70" />
 
-      <div className="relative container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-24">
         {/* Left Content */}
         <div>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">
@@ -60,7 +60,7 @@ export default function Expertise() {
         </div>
 
         {/* Right Card */}
-        <Card className="rounded-2xl shadow-xl">
+        <Card className="bg-[#FFFFFF] rounded-2xl shadow-xl">
           <CardContent className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step) => (
               <div key={step.number}>
