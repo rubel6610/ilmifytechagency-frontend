@@ -28,6 +28,7 @@ const Header = () => {
     { name: "Showcase", path: "/showcase" },
     { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
+    { name: "Careers", path: "/careers" },
   ];
 
   return (
@@ -52,7 +53,7 @@ const Header = () => {
 
       {/* Main Navigation */}
       <div className="bg-[#FFFFFF] shadow-xs">
-        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
+        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 m flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
             {!nav && (
