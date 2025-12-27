@@ -61,7 +61,7 @@ const Header = () => {
                   className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
                   height={50}
                   width={150}
-                  src="/Logo-1-1.png"
+                  src="/logo.png"
                   alt="website logo"
                   priority
                 />
