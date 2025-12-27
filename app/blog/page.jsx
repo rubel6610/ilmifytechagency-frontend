@@ -58,7 +58,7 @@ const Blog = () => {
   return (
     <div>
       {/* HEADER */}
-      <h1 className="text-center bg-[#F9F9F9] text-[43px] text-[#00D9A6] py-12">
+      <h1 className="text-center font-bold bg-[#F9F9F9] text-[43px] text-[#00D9A6] py-12">
         Blog
       </h1>
 
