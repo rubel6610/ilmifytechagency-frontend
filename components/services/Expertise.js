@@ -29,7 +29,12 @@ const steps = [
 
 export default function Expertise() {
   return (
-    <section className="relative w-full bg-black text-white py-20">
+    <section
+      className="relative w-full bg-fixed bg-center bg-cover text-white py-20"
+      style={{
+        backgroundImage: "url('/teammate.jpg')",
+      }}
+    >
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/70" />
 

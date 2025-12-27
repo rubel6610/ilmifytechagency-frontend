@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function WeAre() {
   return (
-    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-[#F9F9F9]">
+    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       {/* Left Content */}
       <div>
         <h1 className="text-3xl md:text-5xl font-semibold leading-tight">
@@ -12,6 +12,11 @@ export default function WeAre() {
           <br />
           What <span className="text-green-500">We Do</span>
         </h1>
+
+        <div className="flex space-x-2 py-10">
+          <div className="border-3 rounded-2xl border-green-500 w-3"></div>
+          <div className="border-3 rounded-2xl border-green-500 w-10"></div>
+        </div>
 
         <p className="mt-6 text-gray-600 text-sm leading-relaxed">
           At iLMiFY, we are a passionate team of designers, developers, and
@@ -35,7 +40,7 @@ export default function WeAre() {
       </div>
 
       {/* Right Image */}
-      <div className="relative w-full h-[300px] md:h-[360px]">
+      <div className="relative w-full h-[300px] md:h-[500px]">
         <Image
           src="/outside.jpg" // replace with your image path
           alt="Team discussion"

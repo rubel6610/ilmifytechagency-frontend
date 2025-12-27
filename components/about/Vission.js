@@ -63,7 +63,7 @@ export default function Vission() {
           </div>
         </div>
       </div>
-    </section>
+    </section> 
   );
 }
 
