@@ -31,7 +31,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden w-full border-2 ">
+    <section className="py-20 bg-[#FFFFFF] relative overflow-hidden w-full border-2 ">
 
         {/* Vertical Text Side Decoration */}
           <div className="hidden xl:block absolute -right-26 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
