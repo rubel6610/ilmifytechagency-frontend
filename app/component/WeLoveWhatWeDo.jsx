@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import CustomBorder from "./customBorder/CustomBorder";
 
 function Counter({ end, duration = 1500, suffix = "" }) {
   const [count, setCount] = useState(0);
@@ -88,12 +89,12 @@ export default function WeLoveWhatWeDo() {
 
           {/* RIGHT CARD */}
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 h-full relative z-20 w-full lg:w-[50%] lg:ml-[-10%] mt-[-50px] lg:mt-0 top-[70px]">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            <h2 className="text-4xl md:text-5xl mb-4 font-bold text-gray-900">
               We <span className="text-green-500">Love</span> What <br />
               We Do
             </h2>
 
-            <div className="w-14 h-1 bg-green-500 mt-4 rounded-full"></div>
+            <CustomBorder/>
 
             <p className="text-gray-600 mt-6 leading-relaxed">
               At LIMIFY, passion drives everything we do. We're not just
