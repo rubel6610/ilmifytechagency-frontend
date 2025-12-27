@@ -3,8 +3,8 @@ import CustomBorder from './customBorder/CustomBorder';
 
 const Support = () => {
   return (
-    <section className="py-16 px-6 md:px-12 lg:px-24 bg-white">
-      <div className="max-w-400 mx-auto flex flex-col-reverse xl:flex-row items-center gap-12">
+    <section className="py-10 md:py-20 xl:py-30 2xl:py-40 bg-white">
+      <div className="max-w-400 mx-auto flex flex-col-reverse xl:flex-row items-center gap-12 px-5 md:px-8.75">
         
         {/* Left Side: Content */}
         <div className="w-full xl:w-1/2 order-2 xl:order-1">
@@ -33,7 +33,7 @@ const Support = () => {
 
         {/* Right Side: Image */}
         <div className="w-full xl:w-1/2 order-1 xl:order-2 flex justify-center">
-          <div className="relative w-full h-[300px] md:h-[450px]">
+          <div className="relative w-full h-75 md:h-112.5">
             {/* Replace 'support-team.png' with your actual image path */}
             <Image
               src="/WeLove.jpg" 

@@ -36,8 +36,8 @@ function Counter({ end, duration = 1500, suffix = "" }) {
 
 export default function WeLoveWhatWeDo() {
   return (
-    <section className="w-full bg-white py-40">
-      <div className="max-w-400 mx-auto px-4">
+    <section className="w-full bg-white py-10 md:py-20 xl:py-30 2xl:py-40">
+      <div className="max-w-400 mx-auto px-5 md:px-8.75">
         <div className="flex flex-col lg:flex-row relative gap-10 items-stretch">
 
           {/* LEFT CARD */}
@@ -45,7 +45,7 @@ export default function WeLoveWhatWeDo() {
             
             {/* Background Image */}
             <Image
-              src="/WeLove.jpg" // 🔁 replace later
+              src="/WeLove.jpg"
               alt="Team"
               fill
               priority

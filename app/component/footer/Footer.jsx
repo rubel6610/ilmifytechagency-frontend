@@ -16,9 +16,9 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FFFFFF] pt-20 xl:pt-25 font-sans text-gray-600">
+    <footer className="bg-[#FFFFFF] pt-20 font-sans text-gray-600">
       {/* Top Section */}
-      <div className="max-w-400 mx-auto px-5 md:px-10 pb-20 xl:pb-33.75">
+      <div className="max-w-400 mx-auto px-2.5 md:px-8.75 pb-20 xl:pb-33.75">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">
           {/* 1. Logo & About */}
           <div className="space-y-5">
@@ -145,7 +145,7 @@ const Footer = () => {
 
       {/* Bottom Black Bar */}
       <div className="bg-linear-to-r from-[#5a5757] to-[#111111]">
-        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-8.75">
+        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-4 md:px-8.75">
           {/* Left Side: Copyright Text */}
           <p className="text-gray-400 text-[16px] tracking-wide order-1">
             © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
