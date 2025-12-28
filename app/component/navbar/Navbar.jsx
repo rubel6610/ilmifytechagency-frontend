@@ -28,6 +28,7 @@ const Header = () => {
     { name: "Showcase", path: "/showcase" },
     { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
+    { name: "Careers", path: "/careers" },
   ];
 
   return (
@@ -35,7 +36,7 @@ const Header = () => {
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-secondary">
-          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto"> 
+          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
@@ -52,7 +53,7 @@ const Header = () => {
 
       {/* Main Navigation */}
       <div className="bg-[#FFFFFF] shadow-xs">
-        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 xl:px-8.75 flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
+        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 m flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
             {!nav && (
@@ -61,7 +62,7 @@ const Header = () => {
                   className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
                   height={50}
                   width={150}
-                  src="/Logo-1-1.png"
+                  src="/logo.png"
                   alt="website logo"
                   priority
                 />

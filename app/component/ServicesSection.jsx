@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import CustomBorder from './customBorder/CustomBorder';
 
 const ServicesSection = () => {
   const services = [
@@ -7,30 +8,30 @@ const ServicesSection = () => {
       id: 1,
       title: 'CMS Services',
       description: 'Flexible, secure, and scalable content management for your business...',
-      icon: '/icons/cms.png',
+      icon: '/cms.png',
     },
     {
       id: 2,
       title: 'Digital Marketing',
       description: 'Reach the right audience with targeted SEO, ads and build on database campaigns...',
-      icon: '/icons/marketing.png',
+      icon: '/marketing-strategy.png',
     },
     {
       id: 3,
       title: 'Custom Development',
       description: 'Custom web and app solutions built for performance and growth...',
-      icon: '/icons/dev.png',
+      icon: '/monitor.png',
     },
     {
       id: 4,
       title: 'Graphics Design',
       description: 'Far far away, behind the word mountains, far from the countries Vokalia Separated...',
-      icon: '/icons/design.png',
+      icon: '/pen-tool.png',
     },
   ];
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden w-full border-2">
+    <section className="py-20 bg-[#FFFFFF] relative overflow-hidden w-full">
 
         {/* Vertical Text Side Decoration */}
           <div className="hidden xl:block absolute -right-26 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
@@ -39,7 +40,7 @@ const ServicesSection = () => {
             </p>
           </div>
 
-      <div className="max-w-400 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-400 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-8.75">
         
         {/* Left Side Content */}
         <div className="lg:col-span-5 space-y-6">
@@ -57,11 +58,7 @@ const ServicesSection = () => {
             to bring your vision to life efficiently, beautifully, and with purpose.
           </p>
 
-          {/* Progress Bar Style Line */}
-          <div className="flex gap-1">
-            <div className="h-1.5 w-4 bg-[#8FE481] rounded-full"></div>
-            <div className="h-1.5 w-12 bg-[#00D9A5] rounded-full"></div>
-          </div>
+          <CustomBorder/>
 
           <button className="mt-4 px-8 py-3 bg-linear-to-r from-[#8FE481] to-[#00D9A5] text-white font-bold rounded-full shadow-[0_10px_20px_rgba(0,217,165,0.3)] hover:scale-105 transition-transform text-xs uppercase tracking-widest">
             View All
@@ -76,7 +73,11 @@ const ServicesSection = () => {
           {services.map((service) => (
             <div 
               key={service.id} 
-              className="bg-white p-10 rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-gray-50 flex flex-col items-start space-y-5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-shadow duration-300"
+              className="bg-white p-10 rounded-xl text-gray-800 border border-gray-50 flex flex-col items-start space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-300 ease-out
+         hover:shadow-[0_0_40px_rgba(0,255,160,0.6)]
+         hover:bg-linear-to-r
+         hover:from-[#00E5A8]
+         hover:to-[#6CFF9E] hover:text-white"
             >
               {/* Icon placeholder - Replace with actual Image or SVG */}
               <div className="w-12 h-12 flex items-center justify-center">
@@ -84,8 +85,8 @@ const ServicesSection = () => {
               </div>
               
               <div className="space-y-3">
-                <h3 className="text-xl font-bold text-[#1A1A1A]">{service.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <h3 className="text-xl  font-bold">{service.title}</h3>
+                <p className=" text-sm leading-relaxed">
                   {service.description}
                 </p>
               </div>

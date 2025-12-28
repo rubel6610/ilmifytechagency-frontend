@@ -2,8 +2,8 @@ import React from "react";
 
 const ContactCards = () => {
   return (
-    <div className="">
-      <div className="grid grid-cols-1 xl:grid-cols-2 px-3.75 md:px-13.75 xl:px-0 xl:gap-6 items-stretch">
+    <div className=" mt-20">
+      <div className="grid grid-cols-1 xl:grid-cols-2 px-3.75 md:px-13.75 xl:px-8.75 xl:gap-6 items-stretch max-w-400 mx-auto">
         {/* Left Card - Dark */}
         <div className="bg-linear-to-r from-[#5a5757] to-[#111111] text-white rounded-xl px-3.75 pt-18 pb-13 flex flex-col items-center text-center justify-center shadow-2xl xl:h-87.25">
           <p className="text-white/50 text-[17px] font-medium mb-1.25">
