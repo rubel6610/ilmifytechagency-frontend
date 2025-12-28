@@ -19,7 +19,7 @@ const NotFound = () => {
         </p>
 
         <div className="flex justify-center">
-          <Button address="/" label="Go Home" />
+          <Button address="/" label="Go Home"  />
         </div>
       </div>
     </div>

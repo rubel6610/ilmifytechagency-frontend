@@ -1,13 +1,13 @@
+"use client";
 import React from 'react';
-import { projectsData } from '../components/Cards';
+import { useParams } from 'next/navigation';
 
-const CardDetails = ({params}) => {
-      const project = projectsData.find((item) => item.id === params.id);
-    
-
+const CardDetails = () => {
+      const params = useParams();
+      const {id}=params;
     return (
         <div>
-            
+            <h1 className="text-3xl font-bold mb-4">Project Details for ID: {id}</h1>
         </div>
     );
 };

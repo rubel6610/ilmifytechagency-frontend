@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { TbLocationFilled } from "react-icons/tb";
 import { motion } from "framer-motion";
@@ -39,7 +38,7 @@ const JobCard = ({ job }) => {
         </h3>
 
         <p className="text-sm text-gray-600 font-medium">
-          {job.company}
+          {job.companyName}
         </p>
 
         <motion.p
@@ -48,7 +47,7 @@ const JobCard = ({ job }) => {
           className="text-sm text-gray-500 flex items-center gap-1"
         >
           <TbLocationFilled className="text-primary" />
-          {job.location}
+          {job.summary.location}
         </motion.p>
       </div>
 
@@ -58,14 +57,14 @@ const JobCard = ({ job }) => {
           whileHover={{ scale: 1.08 }}
           className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
         >
-          {job.type}
+          {job.compensationAndBenefits.employmentStatus}
         </motion.span>
 
         <motion.span
           whileHover={{ scale: 1.08 }}
           className="text-sm px-3 py-1 rounded-full bg-green-50 text-green-600"
         >
-          {job.salary}
+          {job.summary.salary}
         </motion.span>
       </div>
 
@@ -77,7 +76,7 @@ const JobCard = ({ job }) => {
 
         <motion.div whileHover={{ x: 6 }}>
           <Link
-            href={`/jobs/${job.id}`}
+            href={`careers/${job.id}`}
             className="text-sm font-medium text-primary"
           >
             View Details →

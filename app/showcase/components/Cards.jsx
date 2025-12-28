@@ -67,7 +67,7 @@ const Cards = () => {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-7 md:gap-3">
         {projectsData.map((project) => (
-          <Link key={project.id} href={`/projects/${project.id}`}>
+          <Link key={project.id} href={`showcase/${project.id}`}>
             <motion.div
               whileHover={{
                 scale: 1.1,
