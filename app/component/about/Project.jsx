@@ -22,7 +22,7 @@ export default function Project() {
         variants={slideInVariants}
       >
         <p className="text-gray-200 text-center">Are You Ready?</p>
-        <h1 className="text-white text-center text-2xl md:text-4xl font-semibold">
+        <h1 className="text-white text-center text-2xl md:text-4xl font-semibold px-4">
           Start a New Project
         </h1>
       </motion.div>

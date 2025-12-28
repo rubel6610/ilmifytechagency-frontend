@@ -31,7 +31,7 @@
 
 "use client"; // required for Framer Motion
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/component/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 const MotionLink = motion(Link);
@@ -59,7 +59,7 @@ export default function Question() {
         
 
           <motion.h2
-            className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white text-center"
+            className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white text-center px-4"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.6 }} // animate once when 60% visible

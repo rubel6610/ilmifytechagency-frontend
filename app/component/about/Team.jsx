@@ -62,12 +62,6 @@ export default function Team() {
   };
   return (
     <section className="max-w-400 mx-auto my-12 py-24 bg-white text-center">
-      {/* <h2 className="text-2xl md:text-5xl font-semibold text-gray-800">
-        Get to know
-      </h2>
-      <p className="text-2xl md:text-5xl font-semibold text-green-500 mt-2">
-        our team
-      </p> */}
 
       <motion.h2
         className="text-2xl md:text-4xl lg:text-5xl font-semibold text-center"
@@ -98,7 +92,7 @@ export default function Team() {
               alt={member.name}
               width={400}
               height={500}
-              className="w-full h-96 object-cover"
+              className="w-full h-72 lg:h-96 object-cover px-4"
             />
 
             {/* Hover Card Overlay */}

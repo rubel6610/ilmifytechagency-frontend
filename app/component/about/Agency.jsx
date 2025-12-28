@@ -19,10 +19,10 @@ export default function Agency() {
   };
   return (
     <div className="bg-[#F9F9F9]">
-      <div className="max-w-400 mx-auto my-28 px-4 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+      <div className="max-w-400 mx-auto my-28 px-4 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
         {/* Left Content */}
-        <div className="text-center">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight">
+        <div className="order-2 md:order-1">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight ">
             {/* Line 1 */}
             <motion.span
               className="block text-gray-800 overflow-hidden whitespace-nowrap"
@@ -52,23 +52,37 @@ export default function Agency() {
             <div className="border-3 rounded-2xl border-green-500 w-10"></div>
           </div>
 
-          <p className="text-gray-600 leading-relaxed">
-            At iLMiFY, we transform ideas into powerful digital solutions. Our
-            team of creative designers, skilled developers, and strategic
-            marketers works together to deliver modern websites, mobile apps,
-            branding, and digital marketing services that help businesses grow
-            and stand out.
-          </p>
+          <div className="text-justify">
+            <motion.p
+              className="text-gray-600 md:leading-relaxed items-start"
+              initial={{ y: 60, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true }}
+            >
+              At iLMiFY, we transform ideas into powerful digital solutions. Our
+              team of creative designers, skilled developers, and strategic
+              marketers works together to deliver modern websites, mobile apps,
+              branding, and digital marketing services that help businesses grow
+              and stand out.
+            </motion.p>
+            
+            <br />
+            <motion.p
+              className="text-gray-600 md:leading-relaxed"
+              initial={{ y: 60, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true }}
+            >
+              We believe in innovation, transparency, and results. Every project
+              is a partnership, where we focus on understanding your goals and
+              turning them into impactful digital experiences. With iLMiFY by
+              your side, you don’t just get a service. You gain a trusted
+              technology partner for your business success.
+            </motion.p>
+          </div>
 
-          <p className="mt-6 text-gray-600 leading-relaxed">
-            We believe in innovation, transparency, and results. Every project
-            is a partnership, where we focus on understanding your goals and
-            turning them into impactful digital experiences. With iLMiFY by your
-            side, you don’t just get a service. You gain a trusted technology
-            partner for your business success.
-          </p>
-
-        
           <MotionLink
             href="/contact"
             className="
@@ -117,7 +131,7 @@ export default function Agency() {
 
         {/* Right Image (Animated Reveal) */}
         <motion.div
-          className="relative w-full h-[300px] md:h-[500px] rounded-lg overflow-hidden"
+          className="relative w-full h-[220px] md:h-[500px] rounded-lg overflow-hidden order-1 md:order-2 px-4"
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{
