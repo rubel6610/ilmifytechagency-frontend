@@ -78,49 +78,75 @@
 //   );
 // }
 
-
 "use client";
 
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 
 export default function Agency() {
+  const typingVariant = {
+    hidden: { width: 0 },
+    visible: (duration) => ({
+      width: "100%",
+      transition: {
+        duration,
+        ease: "linear",
+      },
+    }),
+  };
   return (
     <div className="container mx-auto my-28 px-4 md:px-12 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-[#F9F9F9]">
-      
       {/* Left Content */}
       <div>
         <h1 className="text-3xl md:text-5xl font-semibold leading-tight">
-          <span className="text-gray-800">
-            <Typewriter
-              words={["We are a creative"]}
-              loop={1}
-              cursor={false}
-              typeSpeed={80}
-            />
-          </span>
-          <br />
-          <span className="text-gray-800 pr-2">
-            <Typewriter
-              words={["web"]}
-              loop={1}
-              cursor={false}
-              typeSpeed={100}
-              delaySpeed={2200}
-            />
-          </span>
+          {/* Line 1 */}
+          <motion.span
+            className="block text-gray-800 overflow-hidden whitespace-nowrap"
+            variants={typingVariant}
+            initial="hidden"
+            animate="visible"
+            custom={1.6}
+          >
+            We are a creative
+          </motion.span>
 
-          <span className="text-green-500">
-            <Typewriter
-              words={["design agency"]}
-              loop={1}
-              cursor={false}
-              typeSpeed={80}
-              delaySpeed={100}
-            />
-          </span>
+          {/* Line 2
+          <div className="flex">
+            <motion.span
+              className="text-gray-800 overflow-hidden whitespace-nowrap pr-2"
+              variants={typingVariant}
+              initial="hidden"
+              animate="visible"
+              custom={0.6}
+              transition={{ delay: 1.8 }}
+            >
+              web
+            </motion.span>
+
+            <motion.span
+              className="text-green-500 overflow-hidden whitespace-nowrap"
+              variants={typingVariant}
+              initial="hidden"
+              animate="visible"
+              custom={1.4}
+              transition={{ delay: 2.4 }}
+            >
+              design agency
+            </motion.span>
+          </div> */}
+
+          {/* Line 2 */}
+          <motion.span
+            className="block overflow-hidden whitespace-nowrap"
+            variants={typingVariant}
+            initial="hidden"
+            animate="visible"
+            custom={2}
+          >
+            <span className="text-gray-800">web </span>
+            <span className="text-green-500">design agency</span>
+          </motion.span>
         </h1>
 
         <div className="flex space-x-2 py-10">
@@ -129,15 +155,15 @@ export default function Agency() {
         </div>
 
         <p className="text-gray-600 leading-relaxed">
-          At iLMiFY, we transform ideas into powerful digital solutions. Our team
-          of creative designers, skilled developers, and strategic marketers
-          works together to deliver modern websites, mobile apps, branding, and
-          digital marketing services that help businesses grow.
+          At iLMiFY, we transform ideas into powerful digital solutions. Our
+          team of creative designers, skilled developers, and strategic
+          marketers works together to deliver modern websites, mobile apps,
+          branding, and digital marketing services that help businesses grow.
         </p>
 
         <p className="mt-6 text-gray-600 leading-relaxed">
-          We believe in innovation, transparency, and results. Every project is a
-          partnership focused on long-term success.
+          We believe in innovation, transparency, and results. Every project is
+          a partnership focused on long-term success.
         </p>
 
         <Button className="mt-8 bg-green-500 hover:bg-[#1B1B1B] text-white rounded-full px-8 py-6">
