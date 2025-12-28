@@ -9,10 +9,12 @@ const Contact = () => {
   return (
     <div className="overflow-visible">
       {/* HEADER */}
-      <h1 className="text-[43px] text-primary py-12 text-center bg-[#F9F9F9] font-bold">
+      <h1 className=" text-[55px] text-primary py-48 md:py-16 text-center bg-[#F9F9F9] font-bold">
         Contact Page
       </h1>
-        <MapClient />
+       <div className="">
+         <MapClient />
+       </div>
   
       <div className="h-10" />
         <ContactCard />

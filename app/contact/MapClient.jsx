@@ -10,7 +10,7 @@ const MapWithTooltip = dynamic(
 
 export default function MapClient() {
   return (
-    <div className="h-[75vh] w-full z-1">
+    <div className="h-[75vh] w-full  ">
       <MapWithTooltip />
     </div>
   );

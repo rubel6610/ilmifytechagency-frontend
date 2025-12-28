@@ -19,7 +19,7 @@ const MapWithTooltip = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[70vh]">
+    <div className="relative  w-full h-[70vh]">
       {/* Overlay message */}
       {showHint && (
         <div className="absolute inset-0  flex items-center justify-center bg-black/40 text-white text-sm pointer-events-none text-center px-4">
