@@ -35,7 +35,7 @@ const Header = () => {
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-secondary">
-          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
+          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto"> 
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
