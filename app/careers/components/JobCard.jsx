@@ -36,7 +36,7 @@ const JobCard = ({ job }) => {
         <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
           {job.title}
         </h3>
-
+      
         <p className="text-sm text-gray-600 font-medium">
           {job.companyName}
         </p>

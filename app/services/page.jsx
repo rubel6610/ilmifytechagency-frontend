@@ -1,7 +1,8 @@
-import Expertise from "@/components/services/Expertise";
-import WeAre from "@/components/services/WeAre";
-import WeDo from "@/components/services/WeDo";
+
 import React from "react";
+import Expertise from "../component/services/Expertise";
+import WeAre from "../component/services/WeAre";
+import WeDo from "../component/services/WeDo";
 
 const Services = () => {
   return (
