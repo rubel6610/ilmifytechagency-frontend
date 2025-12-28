@@ -1,7 +1,7 @@
 import React from "react";
-import Cards from "./component/Cards";
+import Cards from "./components/Cards";
 import CustomBorder from "../component/customBorder/CustomBorder";
-import CallToActionCard from "./component/CallToActionCard";
+import CallToActionCard from "./components/CallToActionCard";
 
 const Showcase = () => {
   return (

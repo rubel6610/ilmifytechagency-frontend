@@ -18,6 +18,7 @@ const Careers = () => {
           placeholder="Search Vacancies"
         />
       </div>
+      
     </div>
   );
 };
