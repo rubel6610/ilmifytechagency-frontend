@@ -77,18 +77,7 @@ const Cards = () => {
                         />
 
                         {/* Hover Overlay */}
-                        <div
-                            className="
-                absolute inset-0
-                opacity-0 group-hover:opacity-60
-                transition-all duration-1000
-                flex items-end
-              "
-                            style={{
-                                background: "linear-gradient(to bottom, var(--color-primary), var(--color-secondary))",
-                            }}
-                        >
-                            <div className="p-6 text-white translate-y-6 group-hover:translate-y-0 transition-all duration-500">
+                        <div className=" absolute inset-0 opacity-0 group-hover:opacity-60 transition-all duration-1000 flex items-end" style={{ background: "linear-gradient(to bottom, var(--color-primary), var(--color-secondary))", }}> <div className="p-6 text-white translate-y-6 group-hover:translate-y-0 transition-all duration-500">
                                 <h3 className="text-2xl font-semibold">{card.title}</h3>
                                 <p className="text-lg mt-1">{card.author}</p>
                                 <span className="text-sm opacity-80">{card.type}</span>
