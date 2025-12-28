@@ -7,7 +7,7 @@ import Link from "next/link";
 const MotionLink = motion(Link);
 
 export default function Agency() {
-  const typingVariant = {
+  const typingVariant = { 
     hidden: { width: 0 },
     visible: (duration) => ({
       width: "100%",
@@ -19,10 +19,10 @@ export default function Agency() {
   };
   return (
     <div className="bg-[#F9F9F9]">
-      <div className="max-w-400 mx-auto my-28 px-4 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
+      <div className="max-w-400 mx-auto my-28 px-8 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
         {/* Left Content */}
         <div className="order-2 md:order-1">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight ">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left mb-6">
             {/* Line 1 */}
             <motion.span
               className="block text-gray-800 overflow-hidden whitespace-nowrap"

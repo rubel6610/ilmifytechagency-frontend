@@ -55,6 +55,31 @@ const services = [
   },
 ];
 
+/* ------------------ Animation Variants ------------------ */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    x: 60,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function WeDo() {
   return (
     <section className="w-full py-20">
@@ -62,7 +87,7 @@ export default function WeDo() {
         {/* Heading */}
         <div className="mb-14 text-center">
           <motion.h2
-            className="text-center text-2xl md:text-4xl lg:text-5xl font-semibold"
+            className="text-center text-3xl md:text-5xl  font-semibold"
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -73,18 +98,24 @@ export default function WeDo() {
             you <span className="text-[#00D9A6]">need</span>
           </motion.h2>
 
-          <div className="flex space-x-2 py-10 justify-center">
+          <motion.div className="flex space-x-2 py-10 justify-center">
             <div className="border-3 rounded-2xl border-[#00C950] w-3"></div>
             <div className="border-3 rounded-2xl border-[#00C950] w-10"></div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {services.map((service, index) => (
-            <Card
-              key={index}
-              className="
+            <motion.div key={index} variants={cardVariants}>
+              <Card
+                className="
     relative
     rounded-xl
     border-none
@@ -102,50 +133,50 @@ export default function WeDo() {
     to-[#00c389]
     hover:text-white
   "
-            >
-              <CardContent className="flex h-full flex-col items-center p-6 text-center">
-                {/* IMAGE CARD */}
-                {service.isImageCard ? (
-                  <>
-                    <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl px-8">
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
+              >
+                <CardContent className="flex h-full flex-col items-center p-6 text-center">
+                  {/* IMAGE CARD */}
+                  {service.isImageCard ? (
+                    <div className="w-full h-84">
+                      <div className="relative mb-6 h-40 w-full overflow-hidden rounded-xl px-8">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+
+                      <h3 className="pt-12 text-2xl font-semibold">
+                        {service.title}
+                      </h3>
                     </div>
+                  ) : (
+                    <div className="w-full h-84 ">
+                      {/* NORMAL CARD */}
+                      <h3 className="mb-3 text-3xl font-medium">
+                        {service.title}
+                      </h3>
 
-                    <h3 className="pt-12 text-2xl font-semibold">
-                      {service.title}
-                    </h3>
-                  </>
-                ) : (
-                  <>
-                    {/* NORMAL CARD */}
-                    <h3 className="mb-3 text-3xl font-medium">
-                      {service.title}
-                    </h3>
+                      <p className="pb-12 pt-8 text-sm leading-relaxed text-justify text-muted-foreground">
+                        {service.description}
+                      </p>
 
-                    <p className="pb-12 pt-8 text-sm leading-relaxed text-justify text-muted-foreground">
-                      {service.description}
-                    </p>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-auto rounded-full px-6"
-                    >
-                      {service.button}
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mb-2 rounded-full px-6"
+                      >
+                        {service.button}
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
-
