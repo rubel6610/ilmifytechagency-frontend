@@ -380,7 +380,7 @@ export const jobs = [
     skillsAndExpertise: ["Figma", "Adobe XD", "User Research"],
     compensationAndBenefits: {
       workplace: "Remote",
-      employmentStatus: "Full Time",
+      employmentStatus: "Part Time",
       gender: "Any",
       jobLocation: "Remote",
     },

@@ -47,10 +47,10 @@ export default function Expertise() {
             their best
           </h2>
 
-             <div className="flex space-x-2 py-10">
-          <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
-          <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
-        </div>
+          <div className="flex space-x-2 py-10">
+            <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
+            <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
+          </div>
 
           <p className="mt-6 max-w-md text-white/70 leading-relaxed">
             Our team of experts puts in their best effort to deliver exceptional
@@ -60,29 +60,30 @@ export default function Expertise() {
         </div>
 
         {/* Right Card */}
-        <Card className="bg-[#FFFFFF] rounded-2xl shadow-xl">
-          <CardContent className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((step) => (
-              <div key={step.number}>
-                <div className="flex items-center gap-3 mb-4">
-                     <span className="h-[2px] w-4 bg-emerald-400 mt-5"/>
-                  <span className="text-3xl font-medium text-gray-600">
-                    {step.number}
-                  </span>
-               
+        <div>
+          <Card className="bg-[#FFFFFF] rounded-2xl shadow-xl">
+            <CardContent className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {steps.map((step) => (
+                <div key={step.number}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="h-[2px] w-4 bg-emerald-400 mt-5" />
+                    <span className="text-3xl font-medium text-gray-600">
+                      {step.number}
+                    </span>
+                  </div>
+
+                  <h4 className="text-emerald-500 text-xl font-medium mb-3">
+                    {step.title}
+                  </h4>
+
+                  <p className="text-gray-400 leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-
-                <h4 className="text-emerald-500 text-xl font-medium mb-3">
-                  {step.title}
-                </h4>
-
-                <p className="text-gray-400 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );

@@ -14,13 +14,11 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import { IoSearchSharp } from "react-icons/io5";
-
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
 
   const toggleNav = () => setNav(!nav);
-
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -101,11 +99,20 @@ const Header = () => {
 
           {/* Right Side: Login & Search (Only XL) */}
           <div className="hidden xl:flex items-center gap-6">
-            <Link href="/contact">
-              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
-                Login
-              </button>
-            </Link>
+         
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                Admin Dashboard
+              </Link>
+ 
+              <Link href="/login">
+                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
+                  Login
+                </button>
+              </Link>
+       
             <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]" />
           </div>
 

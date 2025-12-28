@@ -617,7 +617,7 @@ const Careers = () => {
       job.companyInfo.address.toLowerCase().includes(search.toLowerCase()) ||
       job.companyName.toLowerCase().includes(search.toLowerCase());
 
-    const matchFilter = filter === "All" || job.type === filter;
+    const matchFilter = filter === "All" || job.compensationAndBenefits.employmentStatus === filter;
 
     return matchSearch && matchFilter;
   });
@@ -663,7 +663,6 @@ const Careers = () => {
         >
           <option value="All">All Jobs</option>
           <option value="Full Time">Full Time</option>
-          <option value="Remote">Remote</option>
           <option value="Part Time">Part Time</option>
         </select>
       </div>
