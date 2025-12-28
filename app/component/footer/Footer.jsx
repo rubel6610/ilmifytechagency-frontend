@@ -16,7 +16,7 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FFFFFF] pt-20 font-sans text-gray-600">
+    <footer className="bg-[#FFFFFF] font-sans text-gray-600">
       {/* Top Section */}
       <div className="max-w-400 mx-auto px-2.5 md:px-8.75 pb-20 xl:pb-33.75">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">
@@ -145,13 +145,12 @@ const Footer = () => {
 
       {/* Bottom Black Bar */}
       <div className="bg-linear-to-r from-[#5a5757] to-[#111111]">
-        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-4 md:px-8.75">
+        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-5 md:px-8.75">
           {/* Left Side: Copyright Text */}
           <p className="text-gray-400 text-[16px] tracking-wide order-1">
             © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
           </p>
 
-          {/* Right Side: Social Icons & Scroll Button */}
           <div className="flex flex-col md:flex-row items-start md:items-center gap-5 order-2">
             {/* Social Icons Container */}
             <div className="flex gap-6 text-gray-400">
@@ -161,7 +160,6 @@ const Footer = () => {
               <FaTwitter className="cursor-pointer hover:text-white transition-colors text-[16px]" />
             </div>
 
-            {/* Scroll Top Button (Optional: Mobile-e hide rakhte chaile 'hidden md:flex' dite paren) */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-[#00D9A5] hover:text-white transition-all group self-end md:self-auto"

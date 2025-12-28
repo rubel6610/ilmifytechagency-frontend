@@ -25,6 +25,24 @@ const WhoWeAre = () => {
   const backImageY = useTransform(smoothProgress, [0, 1], [0, 60]);
   const backImageX = useTransform(smoothProgress, [0, 1], [0, 40]);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  };
+
+  const fadeInUpVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
   return (
     <div className="bg-[#F9F9F9] py-10 md:py-20 xl:py-30 2xl:py-40">
       <div
@@ -60,24 +78,30 @@ const WhoWeAre = () => {
           </motion.div>
         </div>
 
-        <div className="w-full xl:w-[40%] xl:pl-16 flex flex-col items-start">
+        <motion.div 
+        initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+        className="w-full xl:w-[40%] xl:pl-16 flex flex-col items-start">
           <div className="mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#222] leading-tight">
+            <motion.h2 variants={fadeInUpVariants} className="text-4xl md:text-5xl font-bold text-[#222] leading-tight">
               Who <span className="text-[#00c389]">We Are</span>
-            </h2>
+            </motion.h2>
             
             <CustomBorder/>
 
           <div className="space-y-6 text-gray-600 text-base md:text-lg leading-relaxed text-justify">
-            <p>
+            <motion.p variants={fadeInUpVariants}>
               At <span className="font-semibold text-black italic">iLMiFY</span>, we transform ideas into powerful digital solutions. Our team of creative designers, skilled developers, and strategic marketers works together to deliver modern websites, mobile apps, branding, and digital marketing services that help businesses grow and stand out.
-            </p>
-            <p>
-              We believe in innovation, transparency, and results. Every project is a partnership, where we focus on understanding your goals and turning them into impactful digital experiences. With iLMiFY by your side, you don't just get a service. You gain a trusted technology partner for your business success.
-            </p>
+            </motion.p>
+            <motion.p variants={fadeInUpVariants}>
+              We believe in innovation, transparency, and results. Every project is a partnership, where we focus on understanding your goals and turning them into impactful digital experiences. With iLMiFY by your side, you don&rsquo;t just get a service. You gain a trusted technology partner for your business success.
+            </motion.p>
           </div>
 
           <motion.button
+          variants={fadeInUpVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="mt-10 px-12 py-4 bg-linear-to-r from-[#98e670] to-[#00d696] text-white font-bold rounded-full shadow-[0_10px_30px_rgba(0,195,137,0.4)] uppercase tracking-wider text-sm transition-all duration-500 ease-in-out hover:bg-[#181818] hover:bg-none"
@@ -85,7 +109,7 @@ const WhoWeAre = () => {
             Read More
           </motion.button>
         </div>
-      </div>
+      </motion.div>
     </div>
     </div>
   );
