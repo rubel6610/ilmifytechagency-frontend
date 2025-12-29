@@ -1,14 +1,14 @@
 import React from "react";
-import Cards from "./component/Cards";
+import Cards from "./components/Cards";
 import CustomBorder from "../component/customBorder/CustomBorder";
-import CallToActionCard from "./component/CallToActionCard";
+import CallToActionCard from "./components/CallToActionCard";
 
 const Showcase = () => {
   return (
     <div className="max-w-400 mx-auto ">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-44 md:pb-34 md:pt-70 px-4 pb-4 ">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-25 md:pb-34 lg:pt-70 px-4 pb-4 ">
         <div className="flex flex-col gap-10">
-          <h1 className="font-semibold text-3xl mb-10 md:mb-0 md:text-5xl tracking-wide leading-10 md:leading-14 ">
+          <h1 className="font-semibold text-3xl lg:mb-10 md:mb-0 md:text-5xl  tracking-wide leading-10 md:leading-14 ">
             Our recent <span className="text-primary">web designs</span> &{" "}
             <br /> some examples of <br /> past{" "}
             <span className="text-primary">projects</span>{" "}
