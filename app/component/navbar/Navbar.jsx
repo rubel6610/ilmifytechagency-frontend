@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import { IoSearchSharp } from "react-icons/io5";
 
-export const role = "admin"; // this is a demo role , replace with actual role 
+import { role } from "../../dashboard/layout";
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
