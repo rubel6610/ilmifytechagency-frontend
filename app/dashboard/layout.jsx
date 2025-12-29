@@ -1,5 +1,6 @@
 "use client";
 import Sidebar from "./components/SideBar";
+
 export default function DashboardLayout({ children }) {
     return (
         <div className="flex min-h-screen bg-slate-100">
