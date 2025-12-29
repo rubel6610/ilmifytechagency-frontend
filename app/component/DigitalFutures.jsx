@@ -17,7 +17,7 @@ const DigitalFutures = () => {
   };
   return (
     <section 
-      className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center bg-fixed bg-cover bg-center bg-no-repeat overflow-hidden "
+      className="relative w-full max-h-150 flex items-center justify-center bg-fixed bg-cover bg-center bg-no-repeat overflow-hidden "
       style={{
         backgroundImage: `url('https://i.ibb.co.com/JwcDnrt1/46830.jpg')`,
       }}

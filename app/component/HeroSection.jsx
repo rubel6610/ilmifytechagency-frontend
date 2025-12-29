@@ -83,7 +83,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative w-full min-h-[85vh] bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden">
+    <section className="relative w-full max-h-225 bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden">
       <Swiper
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         modules={[Navigation, Autoplay]}
@@ -101,7 +101,7 @@ export default function HeroSection() {
               initial="hidden"
               animate="visible"
               variants={containerVariants}
-              className="max-w-400 mx-auto px-5 md:px-8.75 grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-20 items-center min-h-150 xl:min-h-[85vh] relative"
+              className="max-w-400 mx-auto px-5 md:px-8.75 grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-20 items-center max-h-225 relative"
             >
               {/* LEFT CONTENT */}
               <div className="order-2 xl:order-1 text-left relative z-10">
@@ -122,7 +122,7 @@ export default function HeroSection() {
                   {slide.description}
                 </motion.p>
 
-                <motion.button variants={fadeInUpVariants} className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-emerald-500 transition-all text-[11px] tracking-[0.1em] shadow-lg">
+                <motion.button variants={fadeInUpVariants} className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-[0.1em] shadow-lg">
                   {slide.btnText}
                 </motion.button>
 

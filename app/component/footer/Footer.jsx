@@ -16,14 +16,14 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FFFFFF] font-sans text-gray-600">
+    <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6">
       {/* Top Section */}
-      <div className="max-w-400 mx-auto px-2.5 md:px-8.75 pb-20 xl:pb-33.75">
+      <div className="max-w-400 mx-auto px-5 md:px-8.75 pb-20 xl:pb-33.75">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">
           {/* 1. Logo & About */}
           <div className="space-y-5">
             <div className="flex items-center">
-              <Link href="/" className="md:mx-auto xl:mx-0">
+              <Link href="/" className=" xl:mx-0">
                 <Image
                   className="logo w-45.25 h-auto md:w-42.75 lg:w-57.75 xl:w-37 2xl:w-47"
                   height={50}

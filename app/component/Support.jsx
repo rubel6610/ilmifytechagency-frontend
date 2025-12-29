@@ -18,7 +18,7 @@ const Support = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
   return (
-    <section className="py-10 md:py-20 xl:py-30 bg-white">
+    <section className="py-10 md:py-20 xl:py-30 bg-[#FCFCFC]">
       <div className="max-w-400 mx-auto flex flex-col-reverse xl:flex-row items-center gap-12 px-5 md:px-8.75">
         
         {/* Left Side: Content */}

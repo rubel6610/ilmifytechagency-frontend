@@ -27,19 +27,18 @@ const LogoSlider = () => {
             transition={{
               duration: 50, 
               ease: "linear",
-              repeat: Infinity, // আজীবন চলতে থাকবে
+              repeat: Infinity, 
             }}
             style={{ 
                display: 'flex',
-               width: 'fit-content' // কন্টেন্ট অনুযায়ী উইডথ নিবে
+               width: 'fit-content'
             }}
           >
             {duplicatedLogos.map((logo, idx) => (
               <div 
                 key={idx} 
-                // রেসপনসিভ উইডথ: XL এ ৭টি, LG তে ৫টি ইত্যাদি
                 className="shrink-0 flex items-center justify-center px-4 
-                           w-[150px] sm:w-[200px] md:w-[250px] lg:w-[180px] xl:w-[200px]"
+                           w-37.5 sm:w-50 md:w-62.5 lg:w-45 xl:w-50"
               >
                 <div className="relative w-full h-16 md:h-20">
                   <Image
@@ -54,9 +53,9 @@ const LogoSlider = () => {
             ))}
           </motion.div>
           
-          {/* দুই পাশে শ্যাডো মাস্ক যাতে লোগোগুলো হঠাৎ করে উধাও না হয় (Optional) */}
-          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
-          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
+          
+          <div className="absolute inset-y-0 left-0 w-20 bg-linear-to-r from-white to-transparent z-10"></div>
+          <div className="absolute inset-y-0 right-0 w-20 bg-linear-to-l from-white to-transparent z-10"></div>
           
         </div>
       </div>

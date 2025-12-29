@@ -3,7 +3,9 @@ import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
 import Cards from "../showcase/component/Cards";
 import { motion } from "motion/react";
+import Link from "next/link";
 
+const MotionLink = motion(Link);
 const ShowcaseSection = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -22,7 +24,7 @@ const ShowcaseSection = () => {
     },
   };
   return (
-    <div className="max-w-400 mx-auto py-10 md:py-20 xl:py-30">
+    <div className="max-w-400 mx-auto py-10 md:py-20 xl:pt-30 xl:pb-20 bg-[#FFFFFF]">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -66,13 +68,52 @@ const ShowcaseSection = () => {
         <Cards />
       </div>
 
-      <div className="flex justify-center mt-10">
-        <motion.button
-        variants={fadeInRight}
-        className="mt-4 px-8 py-3 bg-linear-to-r from-[#8FE481] to-[#00D9A5] text-white font-bold rounded-full shadow-[0_10px_20px_rgba(0,217,165,0.3)] transition-transform text-xs uppercase tracking-widest duration-500 ease-in-out hover:bg-[#181818] hover:bg-none"
-      >
-        View All
-      </motion.button>
+      {/* romantic button */}
+      <div className="flex justify-center">
+        <MotionLink
+          href="/showcase"
+          className=" font-bold
+                   relative
+                   overflow-hidden
+                 bg-linear-to-r
+                     from-[#0ddaa0]
+                     to-[#8ce064]
+                     text-white
+                     mt-12
+                   px-8
+                   py-4
+                   rounded-full
+                   text-sm
+                   tracking-wide
+                   shadow-xl
+                   inline-block
+                 "
+          initial="rest"
+          whileHover="hover"
+          animate="rest"
+        >
+          {/* Hover Gradient */}
+          <motion.span
+            variants={{
+              rest: { scale: 0 },
+              hover: { scale: 1 },
+            }}
+            transition={{ duration: 0.17, ease: "easeOut" }}
+            className="
+                     absolute
+                     inset-0
+                    bg-linear-to-r
+                     from-[#3D3D3D]
+                     to-[#151515]
+                   text-white
+                     rounded-full
+                     z-0
+                   "
+            style={{ originX: 0.5, originY: 0.5 }}
+          />
+
+          <span className="relative z-10">READ MORE</span>
+        </MotionLink>
       </div>
     </div>
   );

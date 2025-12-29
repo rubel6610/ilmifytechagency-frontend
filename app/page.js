@@ -8,6 +8,7 @@ import DigitalFutures from "./component/DigitalFutures";
 import LogoSlider from "./component/LogoSlider";
 import ShowcaseSection from "./component/ShowcaseSection";
 import HeroSection from "./component/HeroSection";
+import BlogPostSection from "./component/BlogPostSection";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <WeLoveWhatWeDo/>
       <Support/>
       <DigitalFutures/>
+      <BlogPostSection/>
       <ContactCards/>
       <LogoSlider/>
     </div>
