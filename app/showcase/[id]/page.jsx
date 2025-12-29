@@ -1,10 +1,21 @@
 "use client";
 
+
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { projectsData } from "../components/projectData";
+import { FaGooglePlusG, FaPinterestP, FaRegHeart, FaStumbleupon, FaWhatsapp } from "react-icons/fa";
+import { MdOutlineMarkEmailRead, MdShare } from "react-icons/md";
+import { useState } from "react";
+import { TiSocialFacebook, TiSocialTwitter } from "react-icons/ti";
+import { FiPocket } from "react-icons/fi";
+import { RiTelegram2Line } from "react-icons/ri";
+import { IoLogoLinkedin } from "react-icons/io5";
+
+
 
 const CardDetails = () => {
+  const [social, setSocial]= useState(false)
   const { id } = useParams();
 
   const project = projectsData.find(
@@ -19,15 +30,36 @@ const CardDetails = () => {
     );
   }
 
+  const socialLinks = <>
+  <div className="absolute right-0 top-17.5
+    flex items-center gap-4
+    bg-black text-white
+    px-6 py-3
+    rounded-full
+    shadow-lg
+    transition-all duration-300">
+    <TiSocialFacebook />
+    <TiSocialTwitter />
+    <FaGooglePlusG />
+    <FaPinterestP />
+    <IoLogoLinkedin />
+    <FaStumbleupon />
+    <FaWhatsapp />
+    <FiPocket />
+    <MdOutlineMarkEmailRead />
+    <RiTelegram2Line />
+  </div>
+  </>
+
   return (
-    <div className="mx-auto flex justify-center px-6 py-20">
-     <div className="w-[65%]">
+    <div className="mx-auto flex justify-center px-6 py-20 lg:max-w-400">
+     <div className="w-197.5 mx-20 ">
       
         <Image
           src={project.image}
           alt={project.title}
           height={400}
-          width={800}
+          width={790}
           className=""
         />
          <div className="mt-20 max-w-5xl">
@@ -102,11 +134,47 @@ I integrated multiple secure payment gateways to facilitate smooth transactions.
       </div>
 
       </div>
-      <div className="w-[35%]">
-          <h1>{project.title} </h1>
-          <p>I had the opportunity to design and develop a custom Shopify website for Charme, an e-commerce store focused on delivering high-quality products </p>
-        </div>
-       <h1> Launch Project </h1>
+      {/* right sectiuon */}
+{/* right section */}
+<div className="w-84.75 sticky top-24 self-start">
+  <div className="relative">
+
+    {/* SOCIAL BAR */}
+    {social && socialLinks}
+
+    <h1 className="text-[54px] font-semibold my-4">
+      {project.title}
+    </h1>
+
+    <p className="py-6 text-gray-600">
+      I had the opportunity to design and develop a custom Shopify website for Charme,
+      an e-commerce store focused on delivering high-quality products
+    </p>
+
+    <h1 className="font-ubuntu uppercase my-3 tracking-widest">
+      Launch Project
+    </h1>
+
+    <span className="flex text-4xl gap-7 my-8 items-center">
+      <FaRegHeart className="text-primary cursor-pointer" />
+
+      <button
+        onClick={() => setSocial(!social)}
+        className="cursor-pointer"
+      >
+        <MdShare />
+      </button>
+    </span>
+
+    <p className="font-bold">Client</p>
+    <p className="mb-4">{project.author}</p>
+
+    <p className="font-bold">Release Date</p>
+    <p>{project.date}</p>
+  </div>
+</div>
+
+       
     </div>
   );
 };

@@ -5,6 +5,7 @@ export const projectsData = [
     title: "Insurance website for",
     author: "yas_som",
     type: "CMS",
+    date: "10 december 2024",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const projectsData = [
     title: "AkiMed™ Science Website",
     author: "Harry Blaq",
     type: "CMS",
+    date: "18 november 2024",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const projectsData = [
     title: "Hopes Promise Respite",
     author: "LLC Hopejekakye",
     type: "CMS",
+    date: "02 october 2024",
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const projectsData = [
     title: "Shopify Store Design",
     author: "CHARM",
     type: "CMS",
+    date: "21 september 2024",
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ export const projectsData = [
     title: "Custom Trading Website",
     author: "John",
     type: "Costum",
+    date: "05 august 2024",
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ export const projectsData = [
     title: "Custom E-Commerce",
     author: "Website Daneal",
     type: "Costum",
+    date: "14 july 2024",
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ export const projectsData = [
     title: "Tour Travel Website",
     author: "Monalisa",
     type: "Costum",
+    date: "30 june 2024",
   },
   {
     id: 8,
@@ -54,5 +61,6 @@ export const projectsData = [
     title: "Mobile App Development",
     author: "Mackkalam",
     type: "App",
+    date: "11 may 2024",
   },
 ];
