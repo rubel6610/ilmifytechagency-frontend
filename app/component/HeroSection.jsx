@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -122,7 +121,7 @@ export default function HeroSection() {
                   {slide.description}
                 </motion.p>
 
-                <motion.button variants={fadeInUpVariants} className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-[0.1em] shadow-lg">
+                <motion.button variants={fadeInUpVariants} className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg">
                   {slide.btnText}
                 </motion.button>
 
