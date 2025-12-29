@@ -51,7 +51,7 @@ export default function WeLoveWhatWeDo() {
 
   const titleWords = "We Love What We Do".split(" ");
   return (
-    <section className="w-full bg-[#F9F9F9] py-10 md:py-20 xl:py-30 2xl:py-40">
+    <section className="w-full bg-[#F9F9F9] py-10 md:py-20 xl:py-30">
       <div className="max-w-400 mx-auto px-5 md:px-8.75">
         <div className="flex flex-col lg:flex-row relative gap-10 items-stretch">
 

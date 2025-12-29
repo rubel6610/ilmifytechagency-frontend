@@ -22,7 +22,7 @@ const ShowcaseSection = () => {
     },
   };
   return (
-    <div className="max-w-400 mx-auto py-10 md:py-20 xl:py-30 2xl:py-40">
+    <div className="max-w-400 mx-auto py-10 md:py-20 xl:py-30">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -33,7 +33,7 @@ const ShowcaseSection = () => {
         <div className="flex flex-col gap-10">
           <motion.h1
             variants={fadeInRight}
-            className="font-semibold text-3xl mb-10 md:mb-0 md:text-5xl tracking-wide leading-10 md:leading-14 "
+            className="font-semibold text-4xl md:text-5xl mb-10 md:mb-0  tracking-wide leading-10 md:leading-14 "
           >
             Our recent <span className="text-primary">web designs</span> &{" "}
             <br /> some examples of <br /> past{" "}

@@ -20,7 +20,7 @@ const fadeInRight = {
   },
 };
   return (
-    <div className="py-10 md:py-20 xl:py-30 2xl:py-40 mt-10 mb-10 md:mb-0 md:mt-0">
+    <div className="py-10 md:py-20 xl:py-30 mt-10 mb-10 md:mb-0 md:mt-0">
       <div className="grid grid-cols-1 xl:grid-cols-2 px-5 md:px-8.75 xl:gap-6 items-stretch max-w-400 mx-auto">
         {/* Left Card - Dark */}
         <motion.div
@@ -56,7 +56,7 @@ const fadeInRight = {
             <div className="mr-2">Lets Talk About</div> <div>Work</div>
           </div>
 
-          <button className="bg-[#222] hover:bg-black text-white text-xs font-bold mt-8 py-4 px-10 rounded-full uppercase tracking-widest transition-all duration-300 shadow-lg active:scale-95">
+          <button className="bg-[#222] hover:bg-[#63DE77] text-white text-xs font-bold mt-8 py-4 px-10 rounded-full uppercase tracking-widest transition-all duration-300 shadow-lg active:scale-95">
             Start Now
           </button>
         </motion.div>

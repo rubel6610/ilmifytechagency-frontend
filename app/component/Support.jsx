@@ -1,7 +1,8 @@
 "use client"
-import Image from 'next/image';
 import CustomBorder from './customBorder/CustomBorder';
 import { motion } from "motion/react";
+import Lottie from 'lottie-react';
+import supportAnimation from '../../public/support.json'
 
 const Support = () => {
   const containerVariants = {
@@ -17,7 +18,7 @@ const Support = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
   return (
-    <section className="py-10 md:py-20 xl:py-30 2xl:py-40 bg-white">
+    <section className="py-10 md:py-20 xl:py-30 bg-white">
       <div className="max-w-400 mx-auto flex flex-col-reverse xl:flex-row items-center gap-12 px-5 md:px-8.75">
         
         {/* Left Side: Content */}
@@ -56,16 +57,14 @@ const Support = () => {
 
         {/* Right Side: Image */}
         <div className="w-full xl:w-1/2 order-1 xl:order-2 flex justify-center">
-          <div className="relative w-full h-75 md:h-112.5">
-            <Image
-              src="/WeLove.jpg" 
-              alt="Support Team Illustration"
-              layout="fill"
-              objectFit="contain"
-              priority
-            />
-          </div>
-        </div>
+      <div className="relative w-full h-75 md:h-112.5">
+        <Lottie 
+          animationData={supportAnimation} 
+          loop={true} 
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+    </div>
 
       </div>
     </section>

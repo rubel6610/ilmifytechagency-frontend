@@ -63,7 +63,7 @@ const ServicesSection = () => {
 };
 
   return (
-    <section className="py-10 md:py-20 xl:py-30 2xl:py-40 bg-[#FFFFFF] relative overflow-hidden w-full">
+    <section className="py-10 md:py-20 xl:py-30 bg-[#FFFFFF] relative overflow-hidden w-full">
       {/* Vertical Text Side Decoration */}
       <div className="hidden xl:block absolute -right-26 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
         <p className="text-[#00D9A5] font-extrabold text-sm whitespace-nowrap">
@@ -81,7 +81,7 @@ const ServicesSection = () => {
         {/* Left Side Content */}
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-2">
-            <motion.h2 variants={fadeInRight} className="text-3xl md:text-[42px] font-bold text-[#1A1A1A] leading-tight">
+            <motion.h2 variants={fadeInRight} className="text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-tight">
               We Are Here To <br />
               Make Your <span className="text-[#00D9A5]">Website</span> <br />
               Look More <span className="text-[#00D9A5]">Elegant</span> And
@@ -125,7 +125,7 @@ const ServicesSection = () => {
               </div>
 
               <div className="relative z-10 space-y-3 group-hover:text-white transition-colors duration-500 flex-grow w-full">
-                <h3 className="text-xl font-bold">{service.title}</h3>
+                <h3 className="text-2xl font-bold">{service.title}</h3>
                 <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100">
                   {service.description}
                 </p>

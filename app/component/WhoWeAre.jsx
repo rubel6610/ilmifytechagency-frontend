@@ -44,7 +44,7 @@ const WhoWeAre = () => {
   };
 
   return (
-    <div className="bg-[#F9F9F9] py-10 md:py-20 xl:py-30 2xl:py-40">
+    <div className="bg-[#F9F9F9] py-10 md:py-20 xl:py-30">
       <div
         ref={containerRef}
         className="relative flex flex-col xl:flex-row items-center justify-between max-w-400 mx-auto gap-12 xl:gap-0 px-5 md:px-8.75"
