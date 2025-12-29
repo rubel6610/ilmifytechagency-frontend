@@ -1,89 +1,182 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { motion } from "motion/react";
 
+/* ---------- Field Component (OUTSIDE render) ---------- */
+import { Field } from "./components/Field";
+
+/* ---------- Main Component ---------- */
 export default function PostJobPage() {
-  const [job, setJob] = useState({
-    title: "",
-    companyName: "",
-    location: "",
-    vacancy: "",
-    age: "",
-    deadline: "",
-    description: "",
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit",
   });
 
-  const handleChange = (e) => {
-    setJob({ ...job, [e.target.name]: e.target.value });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "responsibilities",
+  });
+
+  const onSubmit = (data) => {
+    console.log("JOB DATA 👉", data);
+    alert("Job Posted Successfully (Demo)");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Posted Job:", job);
-    alert("Job posted (demo)");
-  };
+  let i = 0;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-6 text-slate-800">
-        Post a New Job
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      className="max-w-5xl mx-auto p-8 bg-white rounded-xl shadow"
+    >
+      <h2 className="text-2xl font-bold mb-6 text-center text-slate-800">
+        Post New Job
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="title"
-          placeholder="Job Title"
-          className="input"
-          onChange={handleChange}
-        />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
 
-        <input
-          name="companyName"
-          placeholder="Company Name"
-          className="input"
-          onChange={handleChange}
-        />
+        {/* ---------- BASIC INFO ---------- */}
+        <h3 className="font-semibold text-lg text-[#86e062]">
+          Basic Information
+        </h3>
 
-        <input
-          name="location"
-          placeholder="Job Location"
-          className="input"
-          onChange={handleChange}
-        />
-
-        <div className="grid grid-cols-2 gap-4">
+        <Field label="Job Title" index={i++} error={errors.title?.message}>
           <input
-            name="vacancy"
-            placeholder="Vacancy"
             className="input"
-            onChange={handleChange}
+            {...register("title", { required: "Job title is required" })}
           />
+        </Field>
+
+        <Field label="Company Name" index={i++} error={errors.companyName?.message}>
           <input
-            name="age"
-            placeholder="Age Limit"
             className="input"
-            onChange={handleChange}
+            {...register("companyName", { required: "Company name is required" })}
           />
+        </Field>
+
+        <Field label="Company Logo URL" index={i++} error={errors.companyImage?.message}>
+          <input
+            className="input"
+            {...register("companyImage", { required: "Logo URL required" })}
+          />
+        </Field>
+
+        <Field label="Deadline" index={i++} error={errors.deadline?.message}>
+          <input
+            type="date"
+            className="input"
+            {...register("deadline", { required: "Deadline required" })}
+          />
+        </Field>
+
+        {/* ---------- SUMMARY ---------- */}
+        <h3 className="font-semibold text-lg text-[#86e062]">
+          Job Summary
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <Field label="Vacancy" index={i++} error={errors.vacancy?.message}>
+            <input
+              className="input"
+              {...register("vacancy", { required: "Vacancy required" })}
+            />
+          </Field>
+
+          <Field label="Age Limit" index={i++} error={errors.age?.message}>
+            <input
+              className="input"
+              {...register("age", { required: "Age range required" })}
+            />
+          </Field>
+
+          <Field label="Location" index={i++} error={errors.location?.message}>
+            <input
+              className="input"
+              {...register("location", { required: "Location required" })}
+            />
+          </Field>
+
+          <Field label="Salary" index={i++} error={errors.salary?.message}>
+            <input
+              className="input"
+              {...register("salary", { required: "Salary info required" })}
+            />
+          </Field>
+
+          <Field label="Experience" index={i++} error={errors.experience?.message}>
+            <input
+              className="input"
+              {...register("experience", { required: "Experience required" })}
+            />
+          </Field>
         </div>
 
-        <input
-          type="date"
-          name="deadline"
-          className="input"
-          onChange={handleChange}
-        />
+        {/* ---------- REQUIREMENTS ---------- */}
+        <h3 className="font-semibold text-lg text-[#86e062]">
+          Requirements
+        </h3>
 
-        <textarea
-          name="description"
-          placeholder="Job Description"
-          className="input h-28"
-          onChange={handleChange}
-        />
+        <Field label="Education" index={i++} error={errors.education?.message}>
+          <input
+            className="input"
+            {...register("education", { required: "Education required" })}
+          />
+        </Field>
 
-        <button className="bg-sky-400 text-white px-6 py-2 rounded hover:bg-sky-500">
-          Post Job
+        <Field label="Additional Requirements" index={i++}>
+          <textarea
+            className="input h-28"
+            {...register("additional")}
+          />
+        </Field>
+
+        {/* ---------- RESPONSIBILITIES ---------- */}
+        <h3 className="font-semibold text-lg text-[#86e062]">
+          Responsibilities
+        </h3>
+
+        {fields.map((field, idx) => (
+          <div key={field.id} className="flex gap-2">
+            <input
+              className="input flex-1"
+              {...register(`responsibilities.${idx}`, {
+                required: "Responsibility required",
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => remove(idx)}
+              className="text-red-500"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          onClick={() => append("")}
+          className="text-[#00c389] font-medium "
+        >
+          + Add Responsibility
         </button>
+
+        {/* ---------- SUBMIT ---------- */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-[#00c389] text-white px-10 mx-4 py-3 rounded-lg font-semibold"
+        >
+          Post Job
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 }
