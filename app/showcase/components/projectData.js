@@ -1,0 +1,58 @@
+export const projectsData = [
+  {
+    id: 1,
+    image: "/assets/insurance.jpg",
+    title: "Insurance website for",
+    author: "yas_som",
+    type: "CMS",
+  },
+  {
+    id: 2,
+    image: "/assets/science.jpg",
+    title: "AkiMed™ Science Website",
+    author: "Harry Blaq",
+    type: "CMS",
+  },
+  {
+    id: 3,
+    image: "/assets/promise.webp",
+    title: "Hopes Promise Respite",
+    author: "LLC Hopejekakye",
+    type: "CMS",
+  },
+  {
+    id: 4,
+    image: "/assets/shopifystore.jpg",
+    title: "Shopify Store Design",
+    author: "CHARM",
+    type: "CMS",
+  },
+  {
+    id: 5,
+    image: "/assets/custom-trading.jpg",
+    title: "Custom Trading Website",
+    author: "John",
+    type: "Costum",
+  },
+  {
+    id: 6,
+    image: "/assets/custom-ecommerce.jpeg",
+    title: "Custom E-Commerce",
+    author: "Website Daneal",
+    type: "Costum",
+  },
+  {
+    id: 7,
+    image: "/assets/tour-travels.jpg",
+    title: "Tour Travel Website",
+    author: "Monalisa",
+    type: "Costum",
+  },
+  {
+    id: 8,
+    image: "/assets/mobile-app.jpg",
+    title: "Mobile App Development",
+    author: "Mackkalam",
+    type: "App",
+  },
+];
