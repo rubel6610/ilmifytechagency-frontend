@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CustomBorder from "./customBorder/CustomBorder";
+import { motion } from "motion/react";
 
 function Counter({ end, duration = 1500, suffix = "" }) {
   const [count, setCount] = useState(0);
@@ -35,9 +36,23 @@ function Counter({ end, duration = 1500, suffix = "" }) {
 
 
 export default function WeLoveWhatWeDo() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const fadeInUpVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const titleWords = "We Love What We Do".split(" ");
   return (
-    <section className="w-full bg-white py-40">
-      <div className="max-w-400 mx-auto px-4">
+    <section className="w-full bg-[#F9F9F9] py-10 md:py-20 xl:pt-30 xl:pb-50">
+      <div className="max-w-400 mx-auto px-5 md:px-8.75">
         <div className="flex flex-col lg:flex-row relative gap-10 items-stretch">
 
           {/* LEFT CARD */}
@@ -45,7 +60,7 @@ export default function WeLoveWhatWeDo() {
             
             {/* Background Image */}
             <Image
-              src="/WeLove.jpg" // 🔁 replace later
+              src="/WeLove.jpg"
               alt="Team"
               fill
               priority
@@ -71,7 +86,7 @@ export default function WeLoveWhatWeDo() {
                     +<Counter end={3500} />
                   </h3>
                   <p className="text-sm opacity-90 mt-1">
-                    Users' Comments
+                    Users&rsquo; Comments
                   </p>
                 </div>
 
@@ -88,19 +103,29 @@ export default function WeLoveWhatWeDo() {
           </div>
 
           {/* RIGHT CARD */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 h-full relative z-20 w-full lg:w-[50%] lg:ml-[-10%] mt-[-50px] lg:mt-0 top-[70px]">
-            <h2 className="text-4xl md:text-5xl mb-4 font-bold text-gray-900">
+          <motion.div
+          initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+          className="bg-white rounded-2xl shadow-xl p-8 md:p-12 h-full relative z-20 w-full lg:w-[50%] lg:ml-[-10%] mt-12.5 lg:mt-0 top-17.5">
+            <motion.h2 variants={fadeInUpVariants} className="text-4xl md:text-5xl mb-4 font-bold text-gray-900">
+
               We <span className="text-green-500">Love</span> What <br />
+
               We Do
-            </h2>
 
-            <CustomBorder/>
+            </motion.h2>
 
-            <p className="text-gray-600 mt-6 leading-relaxed">
-              At LIMIFY, passion drives everything we do. We're not just
-              about building websites or developing digital solutions—we're
+            <motion.div variants={fadeInUpVariants}>
+               <CustomBorder/>
+            </motion.div>
+
+            <motion.p variants={fadeInUpVariants} className="text-gray-600 mt-6 leading-relaxed">
+              At LIMIFY, passion drives everything we do. We&rsquo;re not just
+              about building websites or developing digital solutions—we&rsquo;re
               about creating meaningful experiences that make a real impact.
-            </p>
+            </motion.p>
 
             <ul className="mt-8 space-y-3">
               {[
@@ -111,16 +136,17 @@ export default function WeLoveWhatWeDo() {
                 "E-Commerce Solutions",
                 "CMS Solutions",
               ].map((item, index) => (
-                <li
+                <motion.li
                   key={index}
+                  variants={fadeInUpVariants}
                   className="flex items-center gap-3 text-gray-700"
                 >
                   <FaCheckCircle className="text-green-500 text-lg" />
                   <span>{item}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
         </div>
       </div>

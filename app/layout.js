@@ -24,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${quicksand.variable} ${ubuntu.variable} antialiased`}>
+      <body className={`${quicksand.variable} ${ubuntu.variable} antialiased`} suppressHydrationWarning>
         <Navbar/>
         {children}
         <Footer />
