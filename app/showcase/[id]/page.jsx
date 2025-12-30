@@ -19,6 +19,7 @@ import { IoLogoLinkedin } from "react-icons/io5";
 import Link from "next/link";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import { BsGrid3X3GapFill } from "react-icons/bs";
+import RelatedProjects from "../components/RelatedProjects";
 
 const CardDetails = () => {
   const [social, setSocial] = useState(false);
@@ -44,7 +45,7 @@ const CardDetails = () => {
 
   const socialLinks = (
     <ul
-      className="absolute top-950 right-50  md:right-100 lg:right-17 lg:top-83
+      className="absolute top-950 right-50 md:top-640  md:right-100 lg:right-17 lg:top-83
       flex flex-col  lg:flex-row items-center gap-4
       bg-black text-white
       px-6 py-3
@@ -259,6 +260,9 @@ const CardDetails = () => {
 
       </div>
     </div>
+    <div className="hidden lg:block">
+      <RelatedProjects></RelatedProjects>
+    </div>
       </div>
 
       {/* RIGHT SECTION */}
@@ -342,6 +346,9 @@ const CardDetails = () => {
         )}
 
       </div>
+    </div>
+    <div className="lg:hidden">
+      <RelatedProjects></RelatedProjects>
     </div>
     </div>
   );
