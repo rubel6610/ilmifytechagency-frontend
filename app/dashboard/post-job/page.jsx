@@ -160,13 +160,13 @@ export default function PostJobPage() {
           </div>
         ))}
 
-        <button
-          type="button"
-          onClick={() => append("")}
-          className="text-[#00c389] font-medium "
+        <motion.button
+          whileHover={{ scale: 1 }}
+          whileTap={{ scale: 0.95 }}
+          className="hover:bg-[#00c389] hover:text-white border px-10 mx-4 py-3 rounded-lg font-semibold"
         >
           + Add Responsibility
-        </button>
+        </motion.button>
 
         {/* ---------- SUBMIT ---------- */}
         <motion.button

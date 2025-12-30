@@ -101,12 +101,19 @@ const Header = () => {
 
           {/* Right Side: Login & Search (Only XL) */}
           <div className="hidden xl:flex items-center gap-6">
-            {role ? ( 
+            {role=== "admin" ? ( 
               <Link
                 href="/dashboard"
                 className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
               >
                 Admin Dashboard
+              </Link>
+            ) :  role=== "user" ? (
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                User Dashboard
               </Link>
             ) : (
               <Link href="/login">

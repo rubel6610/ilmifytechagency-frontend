@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
-
 import { motion } from "motion/react";
 import Link from "next/link";
 import Cards from "../showcase/components/Cards";
