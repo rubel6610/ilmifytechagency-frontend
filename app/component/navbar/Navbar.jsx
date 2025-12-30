@@ -35,7 +35,7 @@ const Header = () => {
     <header className="w-full">
       {/* Top Black Bar */}
       {!nav && (
-        <div className="bg-secondary">
+        <div className="bg-[#3C3C3C]">
           <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
@@ -52,8 +52,8 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <div className="bg-[#FFFFFF] shadow-xs">
-        <nav className="py-2.5 md:pt-6.5 md:pb-3.75 px-2.5 m flex flex-col xl:flex-row justify-between items-center relative max-w-400 mx-auto">
+      <div className="bg-[#FFFFFF] shadow-xs sticky top-0 z-50">
+        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col  xl:flex-row justify-between items-center max-w-400 mx-auto">
           {/* Logo & Mobile Menu Button Section */}
           <div className="flex justify-between items-center w-full xl:w-auto">
             {!nav && (
@@ -102,7 +102,7 @@ const Header = () => {
           {/* Right Side: Login & Search (Only XL) */}
           <div className="hidden xl:flex items-center gap-6">
             <Link href="/contact">
-              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
+              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition duration-500 ease-in-out hover:bg-[#181818] hover:bg-none">
                 Login
               </button>
             </Link>
@@ -117,7 +117,7 @@ const Header = () => {
                   key={item.path}
                   href={item.path}
                   onClick={() => setNav(false)}
-                  className={`uppercase text-[30px] font-semibold transition ${
+                  className={`uppercase text-[20px] font-semibold transition ${
                     pathname === item.path ? "text-green-500" : "text-gray-800"
                   }`}
                 >
