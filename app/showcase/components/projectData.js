@@ -1,7 +1,7 @@
 export const projectsData = [
   {
     id: 1,
-    image: "/assets/insurance.jpg",
+    image: "/assets/insurance_pic.jpg",
     title: "Insurance website for",
     author: "yas_som",
     type: "CMS",
@@ -9,7 +9,7 @@ export const projectsData = [
   },
   {
     id: 2,
-    image: "/assets/science.jpg",
+    image: "/assets/woman_pic.jpg",
     title: "AkiMed™ Science Website",
     author: "Harry Blaq",
     type: "CMS",
@@ -17,7 +17,7 @@ export const projectsData = [
   },
   {
     id: 3,
-    image: "/assets/promise.webp",
+    image: "/assets/store_design.jpg",
     title: "Hopes Promise Respite",
     author: "LLC Hopejekakye",
     type: "CMS",
@@ -25,7 +25,7 @@ export const projectsData = [
   },
   {
     id: 4,
-    image: "/assets/shopifystore.jpg",
+    image: "/assets/customtrading_pic.jpg",
     title: "Shopify Store Design",
     author: "CHARM",
     type: "CMS",
@@ -41,7 +41,7 @@ export const projectsData = [
   },
   {
     id: 6,
-    image: "/assets/custom-ecommerce.jpeg",
+    image: "/assets/shopping_pic.avif",
     title: "Custom E-Commerce",
     author: "Website Daneal",
     type: "Costum",
@@ -49,7 +49,7 @@ export const projectsData = [
   },
   {
     id: 7,
-    image: "/assets/tour-travels.jpg",
+    image: "/assets/tour_travel_pic.jpg",
     title: "Tour Travel Website",
     author: "Monalisa",
     type: "Costum",
@@ -57,7 +57,7 @@ export const projectsData = [
   },
   {
     id: 8,
-    image: "/assets/mobile-app.jpg",
+    image: "/assets/app_development.jpg",
     title: "Mobile App Development",
     author: "Mackkalam",
     type: "App",
