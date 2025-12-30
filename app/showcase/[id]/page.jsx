@@ -16,20 +16,35 @@ import { TiSocialFacebook, TiSocialTwitter } from "react-icons/ti";
 import { FiPocket } from "react-icons/fi";
 import { RiTelegram2Line } from "react-icons/ri";
 import { IoLogoLinkedin } from "react-icons/io5";
+import Link from "next/link";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
+import { BsGrid3X3GapFill } from "react-icons/bs";
 
 const CardDetails = () => {
   const [social, setSocial] = useState(false);
   const { id } = useParams();
 
-  const project = projectsData.find((item) => item.id === Number(id));
+   const currentIndex = projectsData.findIndex(
+    (item) => item.id === Number(id)
+  );
+
+  const project = projectsData[currentIndex];
+
+  const prevProject = projectsData[currentIndex - 1];
+  const nextProject = projectsData[currentIndex + 1];
 
   if (!project) {
-    return <div className="py-20 text-center text-xl">Project not found</div>;
-  }
+    return (
+      <div className="py-20 text-center text-xl">
+        Project not found
+      </div>
+    );
+  }                                        
+
 
   const socialLinks = (
     <ul
-      className="absolute top-950 right-50  md:right-100 lg:right-17 lg:top-87
+      className="absolute top-950 right-50  md:right-100 lg:right-17 lg:top-83
       flex flex-col  lg:flex-row items-center gap-4
       bg-black text-white
       px-6 py-3
@@ -204,6 +219,46 @@ const CardDetails = () => {
             effectively.
           </p>
         </div>
+    <div className="hidden lg:block mt-10 bg-[#F8F8F8]">
+      <div className="max-w-5xl mx-auto px-6 py-10 flex items-center justify-between">
+
+        {/* PREVIOUS */}
+        {prevProject ? (
+          <Link
+            href={`/showcase/${prevProject.id}`}
+            className="group flex items-center gap-3 text-sm font-semibold tracking-wide uppercase"
+          >
+            <HiArrowLeft className="text-xl transition-transform group-hover:-translate-x-1" />
+            <span>Previous Portfolio</span>
+          </Link>
+        ) : (
+          <div />
+        )}
+
+        {/* CENTER GRID */}
+        <Link
+          href="/showcase"
+          className="text-xl hover:scale-110 transition-transform"
+          aria-label="All portfolios"
+        >
+         <BsGrid3X3GapFill />
+        </Link>
+
+        {/* NEXT */}
+        {nextProject ? (
+          <Link
+            href={`/showcase/${nextProject.id}`}
+            className="group flex items-center gap-3 text-sm font-semibold tracking-wide uppercase"
+          >
+            <span>Next Portfolio</span>
+            <HiArrowRight className="text-xl transition-transform group-hover:translate-x-1" />
+          </Link>
+        ) : (
+          <div />
+        )}
+
+      </div>
+    </div>
       </div>
 
       {/* RIGHT SECTION */}
@@ -249,6 +304,45 @@ const CardDetails = () => {
           </div>{" "}
         </div>{" "}
       </div>
+          <div className="block lg:hidden mt-24 bg-[#F8F8F8]">
+      <div className="max-w-5xl mx-auto px-6 py-10 flex items-center justify-between">
+
+        {/* PREVIOUS */}
+        {prevProject ? (
+          <Link
+            href={`/showcase/${prevProject.id}`}
+            className="group flex items-center gap-3 text-sm font-semibold tracking-wide uppercase"
+          >
+            <HiArrowLeft className="text-xl transition-transform group-hover:-translate-x-1" />
+            <span>Previous Portfolio</span>
+          </Link>
+        ) : (
+          <div />
+        )}
+
+        {/* CENTER GRID */}
+        <div
+          className="text-xl hover:scale-110 pr-8 md:pr-0 transition-transform"
+          aria-label="All portfolios"
+        >
+         <BsGrid3X3GapFill className="" />
+        </div>
+
+        {/* NEXT */}
+        {nextProject ? (
+          <Link
+            href={`/showcase/${nextProject.id}`}
+            className="group flex items-center gap-3 text-sm font-semibold tracking-wide uppercase"
+          >
+            <span>Next Portfolio</span>
+            <HiArrowRight className="text-xl transition-transform group-hover:translate-x-1" />
+          </Link>
+        ) : (
+          <div />
+        )}
+
+      </div>
+    </div>
     </div>
   );
 };

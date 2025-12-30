@@ -17,7 +17,7 @@ export const projectsData = [
   },
   {
     id: 3,
-    image: "/assets/store_design.jpg",
+    image: "/assets/helping_hand.webp",
     title: "Hopes Promise Respite",
     author: "LLC Hopejekakye",
     type: "CMS",
@@ -25,7 +25,7 @@ export const projectsData = [
   },
   {
     id: 4,
-    image: "/assets/customtrading_pic.jpg",
+    image: "/assets/store_design.jpg",
     title: "Shopify Store Design",
     author: "CHARM",
     type: "CMS",
@@ -33,7 +33,7 @@ export const projectsData = [
   },
   {
     id: 5,
-    image: "/assets/custom-trading.jpg",
+    image: "/customtrading_pic.jpg",
     title: "Custom Trading Website",
     author: "John",
     type: "Costum",
