@@ -10,7 +10,7 @@ const majorServicesData = [
     title: "WordPress CMS Services",
     description: `At iLMiFY, we provide professional WordPress CMS services to help businesses manage content efficiently. 
     Whether it's building custom themes, optimizing performance, or seamless integration, we ensure your website is scalable, secure, and user-friendly.`,
-    image: "/wordpress-cms.png", // replace with actual image path
+    image: "/assets/mockups.png", // replace with actual image path
     features: [
       "Custom WordPress Website Design",
       "WordPress Theme Customization",
@@ -37,7 +37,7 @@ const majorServicesData = [
     title: "Shopify CMS Services",
     description: `At iLMiFY, we deliver tailored e-commerce solutions using Shopify to help businesses manage online stores efficiently. 
     From store setup to custom app integration, we provide end-to-end Shopify solutions to enhance your digital presence and boost sales.`,
-    image: "/shopify-cms.png", // replace with actual image path
+    image: "/assets/ilmify2.png", // replace with actual image path
     features: [
       "Custom Shopify Store Design",
       "Shopify Theme Customization",
@@ -61,7 +61,7 @@ const majorServicesData = [
 export default function MajorService() {
   return (
     <section className="w-full py-20 bg-white">
-      <div className="container mx-auto px-4 space-y-20">
+      <div className="container mx-auto px-8 space-y-20">
         {majorServicesData.map((service) => (
           <div key={service.id} className="space-y-8">
             {/* Heading */}
@@ -77,8 +77,8 @@ export default function MajorService() {
             </div>
 
             {/* Description & Image */}
-            <div className="flex flex-col md:flex-row items-center md:space-x-10 space-y-6 md:space-y-0">
-              <div className="md:w-1/2 text-gray-700 text-justify">
+            <div className="flex flex-col lg:flex-row items-center md:space-x-10 space-y-6 md:space-y-0">
+              <div className="lg:w-1/2 text-gray-700 text-justify">
                 <p className="mb-4">{service.description}</p>
                 <p className="mb-4 font-semibold text-gray-800">
                   Here's a list of potential {service.platform} website services you can offer:
@@ -100,7 +100,7 @@ export default function MajorService() {
               </div>
 
               {/* Image */}
-              <div className="md:w-1/2 relative h-72 md:h-96 w-full">
+              <div className="lg:w-1/2 relative h-72 md:h-96 w-full">
                 <Image
                   src={service.image}
                   alt={service.title}

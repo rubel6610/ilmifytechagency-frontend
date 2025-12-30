@@ -20,8 +20,8 @@ export default function ServiceExample({ serviceId }) {
 
       {/* Details */}
       <section className="w-full py-20 bg-white">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-10">
-          <div className="md:w-1/2 space-y-6 text-gray-700">
+        <div className="container mx-auto px-8 flex flex-col lg:flex-row items-center gap-10">
+          <div className="lg:w-1/2 space-y-6 text-gray-700">
             <h2 className="text-3xl md:text-4xl font-semibold">
               Empowering Your Business with Seamless Website{" "}
               <span className="text-[#00D9A6]">{service.subtitle}</span>
@@ -36,7 +36,7 @@ export default function ServiceExample({ serviceId }) {
             </p>
           </div>
      
-          <div className="md:w-1/2 w-full">
+          <div className="lg:w-1/2 w-full">
             <video
               src="/assets/videos/demo-video1.mp4" // public/assets/videos/...
               autoPlay
