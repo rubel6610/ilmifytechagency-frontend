@@ -131,7 +131,7 @@ export default function Agency() {
 
         {/* Right Image (Animated Reveal) */}
         <motion.div
-          className="relative w-full h-[220px] md:h-[500px] rounded-lg overflow-hidden order-1 md:order-2 px-4"
+          className="relative w-full h-55 md:h-125 rounded-lg overflow-hidden order-1 md:order-2 px-4"
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{

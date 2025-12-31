@@ -109,9 +109,9 @@ const Register = () => {
 
           {/* Divider */}
           <div className="flex items-center my-6">
-            <div className="flex-grow border-t"></div>
+            <div className="grow border-t"></div>
             <span className="px-3 text-sm text-gray-500">OR</span>
-            <div className="flex-grow border-t"></div>
+            <div className="grow border-t"></div>
           </div>
 
           {/* Social Login */}

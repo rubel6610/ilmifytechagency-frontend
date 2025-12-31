@@ -96,7 +96,7 @@ export default function Team() {
             />
 
             {/* Hover Card Overlay */}
-            <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-12 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-tr from-[#00D9A6]/90 to-[#97DD60] to-99%">
+            <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-12 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-tr from-[#00D9A6]/90 to-[#97DD60] to-99%">
               <h3 className="text-2xl font-medium">{member.name}</h3>
               <p className="font-medium mt-1">{member.role}</p>
               <p className="text-start text-sm mt-3 py-4">
