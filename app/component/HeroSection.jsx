@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -42,7 +41,7 @@ export default function HeroSection() {
       subtitle: "5 YEARS OF EXPERIENCE",
       description:
         "At iLMiFY, we harness innovation to drive growth by integrating cutting-edge technology with actionable strategies. Our scalable solutions ensure your business thrives in an ever-evolving digital landscape.",
-      image: "/blog-2.png",
+      image: "/hero-3.jpg",
       btnText: "Contact Us",
     },
   ];
@@ -136,7 +135,7 @@ export default function HeroSection() {
 
                   <motion.button 
                     variants={fadeInUpVariants} 
-                    className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-[0.1em] shadow-lg"
+                    className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg"
                   >
                     {slide.btnText}
                   </motion.button>
@@ -169,7 +168,7 @@ export default function HeroSection() {
 
                 {/* RIGHT IMAGE - Agertai Rakha Hoyeche */}
                 <div className="relative flex justify-center items-center order-1 xl:order-2 lg:mt-10 xl:mt-0">
-                  <div className="relative w-75 h-75 sm:w-112.5 sm:h-112.5 xl:w-190 xl:h-190">
+                  <div className="relative w-75 h-75 sm:w-112.5 sm:h-112.5 xl:w-150 xl:h-150 2xl:w-180 2xl:h-180">
                     <div className="absolute inset-0 rounded-full border-20 sm:border-35 lg:border-50 border-[#D8D8D8] z-20 pointer-events-none"></div>
 
                     <motion.div
