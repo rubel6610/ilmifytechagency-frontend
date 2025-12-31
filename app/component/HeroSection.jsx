@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 
