@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
 import { motion } from "motion/react";
+import Link from "next/link";
 const ContactCards = () => {
 const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
@@ -56,9 +57,11 @@ const fadeInRight = {
             <div className="mr-2">Lets Talk About</div> <div>Work</div>
           </div>
 
+          <Link href='/contact'>
           <button className="bg-[#222] hover:bg-[#63DE77] text-white text-xs font-bold mt-8 py-4 px-10 rounded-full uppercase tracking-widest transition-all duration-300 shadow-lg active:scale-95">
             Start Now
           </button>
+          </Link>
         </motion.div>
       </div>
     </div>

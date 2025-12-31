@@ -50,11 +50,11 @@ const Footer = () => {
             </h3>
             <CustomBorder />
             <ul className="space-y-3 text-[16px]">
-              {["Home", "About", "Services", "Showcase", "Blog", "Contact"].map(
+              {["Home", "About", "Services", "Showcase", "Blog", "Contact", "Careers"].map(
                 (item) => (
                   <li key={item}>
                     <Link
-                      href={`/${item.toLowerCase()}`}
+                      href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                       className="hover:text-[#00D9A5] transition-colors"
                     >
                       {item}

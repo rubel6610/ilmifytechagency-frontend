@@ -163,7 +163,7 @@ const ServicesSection = () => {
             <motion.div
               variants={fadeInLeft}
               key={service.id}
-              className="group relative flex flex-col items-start min-h-full  p-10 rounded-xl text-gray-800   transition-all duration-500 overflow-hidden"
+              className="group relative flex flex-col items-start min-h-full bg-white p-10 rounded-xl text-gray-800 border border-gray-50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 bg-linear-to-r from-[#00E5A8] to-[#6CFF9E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out z-0"></div>
 
@@ -177,14 +177,13 @@ const ServicesSection = () => {
                 />
               </div>
 
-              <div className="relative z-10 space-y-3 group-hover:text-white bg-transparent  duration-500 grow w-full">
+              <div className="relative z-10 space-y-3 group-hover:text-white bg-transparent transition-colors duration-500 grow w-full">
                 <h3 className="text-2xl font-bold">{service.title}</h3>
                 <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100">
                   {service.description}
                 </p>
               </div>
 
-             
             </motion.div>
           ))}
         </div>
