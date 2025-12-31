@@ -11,10 +11,7 @@ export default function Sidebar({ role = "user" }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const links =
-    role === "admin"
-      ? adminLinks
-      : userLinks;
+  const links = role === "admin" ? adminLinks : userLinks;
 
   return (
     <>

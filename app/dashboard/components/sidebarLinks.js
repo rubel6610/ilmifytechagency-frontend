@@ -3,19 +3,17 @@ import {
   LayoutDashboard,
   Plus,
   Shield,
-  Users,
-
 } from "lucide-react";
 
 export const userLinks = [
   {
     name: "Dashboard",
-    href: "/dashboard/userdashboard",
+    href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
     name: "Applied Jobs",
-    href: "/dashboard/applied-jobs",
+    href: "/dashboard/userdashboard/applied-jobs",
     icon: Plus,
   },
   {
@@ -29,17 +27,13 @@ export const userLinks = [
 export const adminLinks = [
   {
     name: "Admin Dashboard",
-    href: "/dashboard/admindashboard",
+    href: "/dashboard",
     icon: Shield,
   },
   {
-    name: "Post job",
+    name: "Post Job",
     href: "/dashboard/admindashboard/post-job",
     icon: Shield,
   },
-  {
-    name: "Manage Users",
-    href: "/dashboard/admin/users",
-    icon: Users,
-  },
+  
 ];
