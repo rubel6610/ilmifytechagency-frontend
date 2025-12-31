@@ -116,44 +116,44 @@ const Blog = () => {
                   />
                 </div>
 
-                {/* CARD */}
-                <div
-                  className="
-                    absolute left-4 right-4 md:left-8 md:right-8
-                    -bottom-12
-                    bg-white
-                    px-8 py-9 md:px-11 md:py-11.75
-                    rounded-md
-                    shadow-xl
-                    transition-all duration-700 ease-out
-                    
-                    /* Desktop Hover & Mobile Tap Effects */
-                    group-hover:translate-y-6
-                    group-active:translate-y-6
-                    
-                    group-hover:bg-gradient-to-tr
-                    group-active:bg-gradient-to-tr
-                    
-                    group-hover:from-[#0ddaa0]
-                    group-hover:to-[#8ce064]
-                    group-active:from-[#0ddaa0]
-                    group-active:to-[#8ce064]
-                  "
-                >
-                  <div className=" md:flex lg:flex ml-6 ">
-                                      <p className="text-xs  md:text-sm text-gray-500 group-hover:text-white">
-                    {blog.date} ● by 
-                  </p>
-                       <p className="text-xs lg:ml-2 md:text-sm text-gray-500 group-hover:text-white">
-                    {blog.author}
-                  </p>
-                  </div>
+{/* CARD */}
+<div
+  className="
+    absolute left-4 right-4 md:left-8 md:right-8
+    -bottom-12
+    bg-white
+    px-8 py-9 md:px-11 md:py-11.75
+    rounded-md
+    shadow-xl
+    transition-all duration-700 ease-out
+    
+    /* Desktop Hover & Mobile Tap Effects */
+    group-hover:translate-y-6
+    group-active:translate-y-6
+    
+    group-hover:bg-gradient-to-tr
+    group-active:bg-gradient-to-tr
+    
+    group-hover:from-[#0ddaa0]
+    group-hover:to-[#8ce064]
+    group-active:from-[#0ddaa0]
+    group-active:to-[#8ce064]
+  "
+>
+  <div className="md:flex lg:flex ml-6">
+    <p className="text-xs md:text-sm text-gray-500 group-hover:text-white group-active:text-white">
+      {blog.date} ● by 
+    </p>
+    <p className="text-xs lg:ml-2 md:text-sm text-gray-500 group-hover:text-white group-active:text-white">
+      {blog.author}
+    </p>
+  </div>
 
-                  <h2 className="flex items-center gap-3 text-lg md:text-xl font-semibold mt-3 group-hover:text-white">
-                    <span className="w-3 h-3 rounded-full bg-[#00D9A6] group-hover:bg-white" />
-                    {blog.title}
-                  </h2>
-                </div>
+  <h2 className="flex items-center gap-3 text-lg md:text-xl font-semibold mt-3 group-hover:text-white group-active:text-white">
+    <span className="w-3 h-3 rounded-full bg-[#00D9A6] group-hover:bg-white group-active:bg-white" />
+    {blog.title}
+  </h2>
+</div>
               </motion.div>
               </Link>
             ))}
