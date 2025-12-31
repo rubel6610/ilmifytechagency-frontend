@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export default function WeAre() {
   const typingVariant = {
@@ -15,10 +15,10 @@ export default function WeAre() {
     }),
   };
   return (
-    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       {/* Left Content */}
       <div>
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center md:text-left">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left">
           {/* Line 1 */}
           <motion.span
             className="block text-gray-800 overflow-hidden whitespace-nowrap"
@@ -43,7 +43,7 @@ export default function WeAre() {
           </motion.span>
         </h1>
 
-        <div className="flex space-x-2 py-10 items-center justify-center md:justify-start">
+        <div className="flex space-x-2 py-10 items-center justify-center lg:justify-start">
           <div className="border-3 rounded-2xl border-green-500 w-3"></div>
           <div className="border-3 rounded-2xl border-green-500 w-10"></div>
         </div>
@@ -88,7 +88,7 @@ export default function WeAre() {
       {/* Right Image */}
       <div>
         <motion.div
-          className="relative w-full h-[220px] md:h-[500px] rounded-lg overflow-hidden order-1 md:order-2 "
+          className="relative w-full h-55 md:h-125 rounded-lg overflow-hidden order-1 md:order-2 "
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export default function Vission() {
   const cardVariants = {
@@ -28,7 +28,7 @@ export default function Vission() {
       }}
     >
       {/* Gradient Overlay */}
-      <div className="absolute  inset-0  bg-gradient-to-tr from-[#00D9A6]/90 to-[#97DD60] to-99% " />
+      <div className="absolute  inset-0  bg-linear-to-tr from-[#00D9A6]/90 to-[#97DD60] to-99% " />
 
       {/* Content */}
       <div className="relative max-w-400 mx-auto px-4 md:px-12 py-20 md:py-32 text-white">
