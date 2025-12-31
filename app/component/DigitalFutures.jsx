@@ -26,7 +26,7 @@ const DigitalFutures = () => {
       <div className="absolute inset-0 bg-linear-to-r from-[#059669]/80 via-[#10b981]/70 to-[#34d399]/80 z-0"></div>
       
       {/* 2. Scrolling Text Container */}
-      <div className="relative z-10 w-full h-1/3 flex items-center justify-center p-6">
+      <div className="relative z-10 w-full h-1/3 flex items-center justify-center p-6 py-20 xl:py-40">
         <motion.div
         initial="hidden"
             whileInView="visible"
