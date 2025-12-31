@@ -121,13 +121,13 @@ export default function WeLoveWhatWeDo() {
                <CustomBorder/>
             </motion.div>
 
-            <motion.p variants={fadeInUpVariants} className="text-gray-600 mt-6 leading-relaxed">
+            <motion.p variants={fadeInUpVariants} className="text-gray-600 mt-6 leading-relaxed font-ubuntu">
               At LIMIFY, passion drives everything we do. We&rsquo;re not just
               about building websites or developing digital solutions—we&rsquo;re
               about creating meaningful experiences that make a real impact.
             </motion.p>
 
-            <ul className="mt-8 space-y-3">
+            <ul className="mt-8 space-y-3 font-ubuntu">
               {[
                 "Custom Web Design & Development",
                 "UI/UX Design",

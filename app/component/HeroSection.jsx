@@ -128,7 +128,7 @@ export default function HeroSection() {
 
                   <motion.p 
                     variants={fadeInUpVariants} 
-                    className="text-gray-500 text-sm md:text-base max-w-lg leading-relaxed mb-10"
+                    className="text-gray-500 text-sm md:text-base max-w-lg leading-relaxed mb-10 font-ubuntu"
                   >
                     {slide.description}
                   </motion.p>
@@ -143,10 +143,10 @@ export default function HeroSection() {
                   <div className="mt-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     {/* Socials - Agertai Rakha Hoyeche */}
                     <motion.div variants={fadeInRight} className="flex gap-5 text-[12px] font-bold text-gray-600 uppercase tracking-widest">
-                      <a href="#" className="hover:text-emerald-400 transition-colors">Facebook</a>
-                      <a href="#" className="hover:text-emerald-400 transition-colors">Instagram</a>
-                      <a href="#" className="hover:text-emerald-400 transition-colors">Twitter</a>
-                      <a href="#" className="hover:text-emerald-400 transition-colors">YouTube</a>
+                      <a href="https://www.facebook.com/ilmifyTech" className="hover:text-emerald-400 transition-colors">Facebook</a>
+                      <a href="https://www.instagram.com/ilmifytech.agency" className="hover:text-emerald-400 transition-colors">Instagram</a>
+                      <a href="https://twitter.com" className="hover:text-emerald-400 transition-colors">Twitter</a>
+                      <a href="https://www.youtube.com/@ilmifyTechAgency" className="hover:text-emerald-400 transition-colors">YouTube</a>
                     </motion.div>
 
                     <div className="flex gap-4 z-50">
