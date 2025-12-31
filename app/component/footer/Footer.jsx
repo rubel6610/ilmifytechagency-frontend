@@ -34,7 +34,7 @@ const Footer = () => {
                 />
               </Link>
             </div>
-            <p className="leading-relaxed text-[15px]">
+            <p className="leading-relaxed text-[15px] font-ubuntu">
               At iLMIFY, we re passionate about delivering innovative digital
               solutions that drive business growth. We combine cutting-edge
               technology with tailored strategies to create stunning web
@@ -49,19 +49,25 @@ const Footer = () => {
               Quick Links
             </h3>
             <CustomBorder />
-            <ul className="space-y-3 text-[16px]">
-              {["Home", "About", "Services", "Showcase", "Blog", "Contact", "Careers"].map(
-                (item) => (
-                  <li key={item}>
-                    <Link
-                      href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                      className="hover:text-[#00D9A5] transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                )
-              )}
+            <ul className="space-y-3 text-[16px] font-ubuntu">
+              {[
+                "Home",
+                "About",
+                "Services",
+                "Showcase",
+                "Blog",
+                "Contact",
+                "Careers",
+              ].map((item) => (
+                <li key={item}>
+                  <Link
+                    href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                    className="hover:text-[#00D9A5] transition-colors"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -71,7 +77,7 @@ const Footer = () => {
               Contact
             </h3>
             <CustomBorder />
-            <ul className="space-y-4 text-[15px]">
+            <ul className="space-y-4 text-[15px] font-ubuntu">
               <li className="flex items-center gap-3">
                 <MdOutlineMail className="text-[#8FE481] text-xl shrink-0" />
                 <a
@@ -88,27 +94,40 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <IoLocationOutline className="text-[#8FE481] text-2xl shrink-0" />
                 <span className="leading-tight">
-                  30 N GOULD ST STE R, SHERIDAN, WY 82801
+                  117, Road: Ahmed Shorkar Road, Trishal 2220
                 </span>
               </li>
             </ul>
             {/* Social Icons */}
             <div className="flex gap-2.5 mt-6">
               {[
-                FaFacebookF,
-                FaTwitter,
-                FaLinkedinIn,
-                FaInstagram,
-                FaYoutube,
-              ].map((Icon, idx) => (
+                {
+                  Icon: FaFacebookF,
+                  link: "https://www.facebook.com/ilmifyTech",
+                },
+                { Icon: FaTwitter, link: "https://twitter.com" },
+                {
+                  Icon: FaLinkedinIn,
+                  link: "https://bd.linkedin.com/company/ilmifytechagency",
+                },
+                {
+                  Icon: FaInstagram,
+                  link: "https://www.instagram.com/ilmifytech.agency",
+                },
+                {
+                  Icon: FaYoutube,
+                  link: "https://www.youtube.com/@ilmifyTechAgency",
+                },
+              ].map(({ Icon, link }, idx) => (
                 <Link
                   key={idx}
-                  href="#"
+                  href={link}
+                  target="_blank"
                   className="w-6 h-6 rounded-full bg-[#00D9A5] text-white flex items-center justify-center 
-           transition-all duration-300 
-           hover:bg-[#A5E46D]
-           hover:translate-y-2 
-           active:translate-y-0"
+      transition-all duration-300 
+      hover:bg-[#A5E46D]
+      hover:translate-y-2 
+      active:translate-y-0"
                 >
                   <Icon size={12} />
                 </Link>
@@ -118,7 +137,7 @@ const Footer = () => {
 
           {/* 4. Policy */}
           <div className="w-full">
-            <h3 className="text-[23px] font-bold text-gray-600 uppercase tracking-wider">
+            <h3 className="text-[23px] font-bold text-gray-600 uppercase tracking-wider font-ubuntu">
               Policy
             </h3>
             <CustomBorder />
@@ -147,17 +166,23 @@ const Footer = () => {
       <div className="bg-linear-to-r from-[#5a5757] to-[#111111]">
         <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-5 md:px-8.75">
           {/* Left Side: Copyright Text */}
-          <p className="text-gray-400 text-[16px] tracking-wide order-1">
+          <p className="text-gray-400 text-[16px] tracking-wide order-1 font-ubuntu">
             © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
           </p>
 
           <div className="flex flex-col md:flex-row items-start md:items-center gap-5 order-2">
             {/* Social Icons Container */}
             <div className="flex gap-6 text-gray-400">
-              <FaFacebookF className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              <FaInstagram className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              <FaLinkedinIn className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              <FaTwitter className="cursor-pointer hover:text-white transition-colors text-[16px]" />
+              <Link href="https://www.facebook.com/ilmifyTech">
+                <FaFacebookF className="cursor-pointer hover:text-white transition-colors text-[16px]" />
+              </Link>
+              <Link href="https://www.instagram.com/ilmifytech.agency">
+                <FaInstagram className="cursor-pointer hover:text-white transition-colors text-[16px]" />
+              </Link>
+              <Link href="https://bd.linkedin.com/company/ilmifytechagency">
+                <FaLinkedinIn className="cursor-pointer hover:text-white transition-colors text-[16px]" />
+              </Link>
+              <Link href='https://twitter.com'><FaTwitter className="cursor-pointer hover:text-white transition-colors text-[16px]" /></Link>
             </div>
 
             <button

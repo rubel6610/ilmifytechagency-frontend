@@ -36,7 +36,7 @@ const fadeInRight = {
           <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
             <div className="mr-2">Start a New</div> <div>Project</div>
           </div>
-          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5">
+          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5 font-ubuntu">
             We&rsquo;d love to hear from you! Whether you&rsquo;re ready to start a project,
             have questions about our services, or just want to say hello, our
             team at iLMiFY is here to help.

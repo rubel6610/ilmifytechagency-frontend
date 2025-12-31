@@ -40,7 +40,7 @@ const Support = () => {
 
           </div>
 
-          <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+          <div className="space-y-6 text-gray-600 text-lg leading-relaxed font-ubuntu">
             <motion.p variants={fadeInUpVariants}>
               At iLMIFY, we understand that exceptional customer service is crucial to building trust 
               and long-lasting relationships. That’s why we offer Live Chat and 24/7 Support to 

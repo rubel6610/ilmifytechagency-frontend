@@ -96,7 +96,7 @@ const ServicesSection = () => {
 
           <motion.p
             variants={fadeInRight}
-            className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md"
+            className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md font-ubuntu"
           >
             We provide end-to-end digital solutions designed to help your
             business grow smarter. Whether you&rsquo;re launching a new product
@@ -179,7 +179,7 @@ const ServicesSection = () => {
 
               <div className="relative z-10 space-y-3 group-hover:text-white bg-transparent transition-colors duration-500 grow w-full">
                 <h3 className="text-2xl font-bold">{service.title}</h3>
-                <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100">
+                <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100 font-ubuntu">
                   {service.description}
                 </p>
               </div>
