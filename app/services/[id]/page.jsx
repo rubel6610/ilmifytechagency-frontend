@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-
 import servicesData from "@/app/component/services/servicesData";
 import ServiceExample from "@/app/component/services/ServiceExample";
 import MajorService from "@/app/component/services/MajorService";

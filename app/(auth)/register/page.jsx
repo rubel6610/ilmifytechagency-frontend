@@ -5,7 +5,7 @@ import registerAnimation from "../../../public/assets/lotties/register"; // your
 import Image from "next/image";
 import Link from "next/link";
 const MotionLink = motion(Link);
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 const Register = () => {
   return (

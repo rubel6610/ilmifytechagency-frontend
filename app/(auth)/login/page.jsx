@@ -5,7 +5,7 @@ import loginAnimation from "../../../public/assets/lotties/login";
 import Image from "next/image";
 import Link from "next/link";
 const MotionLink = motion(Link);
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export default function Login() {
   return (
