@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
 import { motion } from "motion/react";
+import Link from "next/link";
 const ContactCards = () => {
 const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
@@ -35,7 +36,7 @@ const fadeInRight = {
           <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
             <div className="mr-2">Start a New</div> <div>Project</div>
           </div>
-          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5">
+          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5 font-ubuntu">
             We&rsquo;d love to hear from you! Whether you&rsquo;re ready to start a project,
             have questions about our services, or just want to say hello, our
             team at iLMiFY is here to help.
@@ -56,9 +57,11 @@ const fadeInRight = {
             <div className="mr-2">Lets Talk About</div> <div>Work</div>
           </div>
 
+          <Link href='/contact'>
           <button className="bg-[#222] hover:bg-[#63DE77] text-white text-xs font-bold mt-8 py-4 px-10 rounded-full uppercase tracking-widest transition-all duration-300 shadow-lg active:scale-95">
             Start Now
           </button>
+          </Link>
         </motion.div>
       </div>
     </div>

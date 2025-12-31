@@ -45,7 +45,7 @@ const ShowcaseSection = () => {
             <CustomBorder />
           </motion.div>
         </div>
-        <div className="opacity-80 md:text-lg">
+        <div className="opacity-80 md:text-lg font-ubuntu">
           <motion.p variants={fadeInRight}>
             At iLMiFY, we take pride in delivering modern, responsive, and
             user-friendly web designs that reflect the unique identity of each

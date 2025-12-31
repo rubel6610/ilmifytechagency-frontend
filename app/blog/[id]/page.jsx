@@ -116,7 +116,7 @@ const BlogPage = () => {
                         </button>
 
                         <div className="relative flex items-center">
-                            {social && <SocialLinks />}
+                            {social && SocialLinks()}
                             <button
                                 onClick={() => setSocial(!social)}
                                 className={`cursor-pointer transition-all duration-300 ${social ? 'text-primary scale-110' : 'text-gray-600 hover:text-primary'}`}
