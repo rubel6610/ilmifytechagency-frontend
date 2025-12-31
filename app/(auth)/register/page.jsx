@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 
 const Register = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-4">
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         {/* LEFT: FORM */}
         <div className="p-8 md:p-12">
@@ -102,9 +102,9 @@ const Register = () => {
 
           <p className="text-center text-sm mt-4">
             Already have an account?{" "}
-            <span className="text-blue-600 cursor-pointer font-medium">
+            <Link href="/login" className="text-primary font-medium">
               Login
-            </span>
+            </Link>
           </p>
 
           {/* Divider */}
@@ -138,6 +138,7 @@ const Register = () => {
             animationData={registerAnimation}
             loop={true}
             className="w-96"
+            color="#00D9A6"
           />
         </div>
       </div>

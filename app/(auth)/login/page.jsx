@@ -94,7 +94,9 @@ export default function Login() {
           {/* Register */}
           <p className="text-sm text-center mt-4">
             Don&apos;t have an account?{" "}
-            <span className="text-blue-600 cursor-pointer">Register</span>
+            <Link href="/register" className="text-primary font-medium">
+              Register
+            </Link>
           </p>
 
           {/* Divider */}
