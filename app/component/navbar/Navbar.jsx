@@ -36,7 +36,7 @@ const Header = () => {
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">
-          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
+          <div className="text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
@@ -53,21 +53,22 @@ const Header = () => {
 
       {/* Main Navigation */}
       <div className="bg-[#FFFFFF] shadow-xs sticky top-0 z-50">
-        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col  xl:flex-row justify-between items-center max-w-400 mx-auto">
-          {/* Logo & Mobile Menu Button Section */}
+        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
           <div className="flex justify-between items-center w-full xl:w-auto">
-            {!nav && (
-              <Link href="/" className="md:mx-auto xl:mx-0">
-                <Image
-                  className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
-                  height={50}
-                  width={150}
-                  src="/logo.png"
-                  alt="website logo"
-                  priority
-                />
-              </Link>
-            )}
+            <Link
+              href="/"
+              className={`${nav ? "invisible" : "visible"} md:mx-auto xl:mx-0`}
+            >
+              <Image
+                className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
+                height={50}
+                width={150}
+                src="/logo.png"
+                alt="website logo"
+                priority
+              />
+            </Link>
+
             {/* Hamburger icon */}
             {!nav && (
               <div
@@ -79,7 +80,7 @@ const Header = () => {
             )}
           </div>
 
-          {/* Menu for Tablet and Desktop */}
+          {/* Desktop Menu */}
           <div className="mt-6 xl:mt-0">
             <ul className="hidden md:flex gap-8 font-medium">
               {menuItems.map((item) => (
@@ -99,7 +100,6 @@ const Header = () => {
             </ul>
           </div>
 
-          {/* Right Side: Login & Search (Only XL) */}
           <div className="hidden xl:flex items-center gap-6">
             {role=== "admin" ? ( 
               <Link
@@ -125,15 +125,22 @@ const Header = () => {
             <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]" />
           </div>
 
-          {/* Mobile Menu Dropdown */}
+          {/* Mobile Menu Dropdown & Cancel Button */}
           {nav && (
-            <div className="absolute top-full left-0 w-full bg-white z-50 flex flex-col items-center py-6 gap-4 shadow-xl md:hidden">
+            <div className="fixed top-0 left-0 w-full h-screen bg-white z-60 flex flex-col items-center justify-center gap-4 shadow-xl md:hidden">
+              <div
+                className="absolute top-6 text-3xl text-gray-600 cursor-pointer"
+                onClick={toggleNav}
+              >
+                <FaTimes />
+              </div>
+
               {menuItems.map((item) => (
                 <Link
                   key={item.path}
                   href={item.path}
                   onClick={() => setNav(false)}
-                  className={`uppercase text-[20px] font-semibold transition ${
+                  className={`uppercase text-[22px] font-semibold transition ${
                     pathname === item.path ? "text-green-500" : "text-gray-800"
                   }`}
                 >
@@ -144,16 +151,6 @@ const Header = () => {
           )}
         </nav>
       </div>
-
-      {/* Center Cancel Button Overlay */}
-      {nav && (
-        <div
-          onClick={toggleNav}
-          className="fixed top-6 left-1/2 -translate-x-1/2 z-50 md:hidden"
-        >
-          <FaTimes className="text-[40px] p-1.5 text-gray-700 cursor-pointer" />
-        </div>
-      )}
     </header>
   );
 };

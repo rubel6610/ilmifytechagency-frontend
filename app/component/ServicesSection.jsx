@@ -56,18 +56,18 @@ const ServicesSection = () => {
   };
 
   const fadeInLeft = {
-  hidden: { opacity: 0, x: 20 },
-  visible: { 
-    opacity: 1, 
-    x: 0, 
-    transition: { duration: 0.8, ease: "easeOut" } 
-  },
-};
+    hidden: { opacity: 0, x: 20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
 
   return (
     <section className="py-10 md:py-20 xl:py-30 bg-[#FFFFFF] relative overflow-hidden w-full">
       {/* Vertical Text Side Decoration */}
-      <div className="hidden xl:block absolute -right-1 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
+      <div className="hidden 2xl:block absolute -right-10 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
         <p className="text-[#00D9A5] font-extrabold text-sm whitespace-nowrap">
           5 years of experience helping people for best solutions
         </p>
@@ -83,7 +83,10 @@ const ServicesSection = () => {
         {/* Left Side Content */}
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-2">
-            <motion.h2 variants={fadeInRight} className="text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-tight">
+            <motion.h2
+              variants={fadeInRight}
+              className="text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-tight"
+            >
               We Are Here To <br />
               Make Your <span className="text-[#00D9A5]">Website</span> <br />
               Look More <span className="text-[#00D9A5]">Elegant</span> And
@@ -91,22 +94,25 @@ const ServicesSection = () => {
             </motion.h2>
           </div>
 
-          <motion.p variants={fadeInRight} className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md">
+          <motion.p
+            variants={fadeInRight}
+            className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md"
+          >
             We provide end-to-end digital solutions designed to help your
-            business grow smarter. Whether you&rsquo;re launching a new product or
-            refreshing your brand, our team is here to bring your vision to life
-            efficiently, beautifully, and with purpose.
+            business grow smarter. Whether you&rsquo;re launching a new product
+            or refreshing your brand, our team is here to bring your vision to
+            life efficiently, beautifully, and with purpose.
           </motion.p>
 
           <motion.div variants={fadeInRight}>
-               <CustomBorder/>
-            </motion.div>
+            <CustomBorder />
+          </motion.div>
 
           {/* romantic button */}
-                <div className="">
-                  <MotionLink
-                    href="/services"
-                    className=" font-bold
+          <div className="">
+            <MotionLink
+              href="/services"
+              className=" font-bold
                              relative
                              overflow-hidden
                            bg-linear-to-r
@@ -122,18 +128,18 @@ const ServicesSection = () => {
                              shadow-xl
                              inline-block
                            "
-                    initial="rest"
-                    whileHover="hover"
-                    animate="rest"
-                  >
-                    {/* Hover Gradient */}
-                    <motion.span
-                      variants={{
-                        rest: { scale: 0 },
-                        hover: { scale: 1 },
-                      }}
-                      transition={{ duration: 0.17, ease: "easeOut" }}
-                      className="
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+            >
+              {/* Hover Gradient */}
+              <motion.span
+                variants={{
+                  rest: { scale: 0 },
+                  hover: { scale: 1 },
+                }}
+                transition={{ duration: 0.17, ease: "easeOut" }}
+                className="
                                absolute
                                inset-0
                               bg-linear-to-r
@@ -143,18 +149,19 @@ const ServicesSection = () => {
                                rounded-full
                                z-0
                              "
-                      style={{ originX: 0.5, originY: 0.5 }}
-                    />
-          
-                    <span className="relative z-10">VEIW ALL</span>
-                  </MotionLink>
-                </div>
+                style={{ originX: 0.5, originY: 0.5 }}
+              />
+
+              <span className="relative z-10">VEIW ALL</span>
+            </MotionLink>
+          </div>
         </div>
 
         {/* Right Side Cards Grid */}
         <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8 relative items-stretch">
           {services.map((service) => (
-            <motion.div variants={fadeInLeft}
+            <motion.div
+              variants={fadeInLeft}
               key={service.id}
               className="group relative flex flex-col items-start min-h-full bg-white p-10 rounded-xl text-gray-800 border border-gray-50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
             >
