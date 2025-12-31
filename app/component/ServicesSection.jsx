@@ -96,7 +96,7 @@ const ServicesSection = () => {
 
           <motion.p
             variants={fadeInRight}
-            className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md"
+            className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md font-ubuntu"
           >
             We provide end-to-end digital solutions designed to help your
             business grow smarter. Whether you&rsquo;re launching a new product
@@ -163,7 +163,7 @@ const ServicesSection = () => {
             <motion.div
               variants={fadeInLeft}
               key={service.id}
-              className="group relative flex flex-col items-start min-h-full bg-white p-10 rounded-xl text-gray-800 border border-gray-50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
+              className="group hover:shadow-cyan-100 relative flex flex-col items-start min-h-full bg-white p-10 rounded-xl text-gray-800 border border-gray-50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 bg-linear-to-r from-[#00E5A8] to-[#6CFF9E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out z-0"></div>
 
@@ -177,19 +177,13 @@ const ServicesSection = () => {
                 />
               </div>
 
-              <div className="relative z-10 space-y-3 group-hover:text-white transition-colors duration-500 flex-grow w-full">
+              <div className="relative z-10 space-y-3 group-hover:text-white bg-transparent transition-colors duration-500 grow w-full">
                 <h3 className="text-2xl font-bold">{service.title}</h3>
-                <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100">
+                <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100 font-ubuntu">
                   {service.description}
                 </p>
               </div>
 
-              {/* Shadow Effect */}
-              <style jsx>{`
-                div:hover {
-                  box-shadow: 0 0 40px rgba(0, 255, 160, 0.6) !important;
-                }
-              `}</style>
             </motion.div>
           ))}
         </div>
