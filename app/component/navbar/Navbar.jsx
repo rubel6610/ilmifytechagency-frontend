@@ -111,7 +111,7 @@ const Header = () => {
 
           {/* Mobile Menu Dropdown & Cancel Button */}
           {nav && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-white z-[60] flex flex-col items-center justify-center gap-4 shadow-xl md:hidden">
+            <div className="fixed top-0 left-0 w-full h-screen bg-white z-60 flex flex-col items-center justify-center gap-4 shadow-xl md:hidden">
               <div
                 className="absolute top-6 text-3xl text-gray-600 cursor-pointer"
                 onClick={toggleNav}
