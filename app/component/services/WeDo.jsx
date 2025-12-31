@@ -1,11 +1,11 @@
-
 "use client";
 import Image from "next/image";
 import { Card, CardContent } from "@/app/component/ui/card";
-import { Button } from "@/app/component/ui/button";
 import { motion } from "framer-motion";
 import servicesData from "./servicesData";
 import Link from "next/link";
+import { Button } from "../ui/button";
+
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {
@@ -114,13 +114,6 @@ export default function WeDo() {
                         {service.description}
                       </p>
 
-                      {/* <Button
-                        variant="outline"
-                        size="sm"
-                        className="mb-2 rounded-full px-6"
-                      >
-                        {service.button}
-                      </Button> */}
                       <Link href={`/services/${service.id}`}>
                         <Button
                           variant="outline"

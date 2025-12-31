@@ -1,7 +1,7 @@
 "use client";
 
 import Lottie from "lottie-react";
-import registerAnimation from "../../../public/assets/lotties/register"; // your lottie json
+import registerAnimation from "../../../public/assets/lotties/register";
 import Image from "next/image";
 import Link from "next/link";
 const MotionLink = motion(Link);
