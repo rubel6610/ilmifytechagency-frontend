@@ -590,6 +590,7 @@ export const jobs = [
  
 ];
 
+
 const JobData = () => {
   return (
     <div>
@@ -599,3 +600,4 @@ const JobData = () => {
 };
 
 export default JobData;
+

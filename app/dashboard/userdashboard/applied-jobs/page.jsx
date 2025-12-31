@@ -39,7 +39,7 @@ const AppliedJobs = () => {
         <input
           type="text"
           placeholder="Search by title, company, or location"
-          className="border px-4 py-2 rounded-md"
+          className="rounded-md border border-primary h-10 px-4 w-1/3 focus:outline-none placeholder:text-sm"
           value={searchQuery}
           onChange={handleSearch}
         />

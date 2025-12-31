@@ -3,11 +3,7 @@
 
 
 import Sidebar from "./components/SideBar";
-
-
-
-// DEMO ROLE (replace later with auth logic)
-export const role = "user"; // "user" | "admin"
+import { role } from "./page";
 
 export default function DashboardLayout({children}) {
   return (
