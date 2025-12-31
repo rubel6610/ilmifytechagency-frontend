@@ -77,10 +77,10 @@ const BlogPostSection = () => {
                    "
                 >
                   <div className="ml-2 md:ml-0">
-                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white">
+                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white font-ubuntu">
                       {blog.date} by
                     </p>
-                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white">
+                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white font-ubuntu">
                       {blog.author}
                     </p>
                   </div>
