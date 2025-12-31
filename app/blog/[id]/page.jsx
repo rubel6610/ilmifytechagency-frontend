@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import { blogsData } from '../blogsData';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { FaRegHeart, FaGooglePlusG, FaPinterestP, FaWhatsapp } from 'react-icons/fa';
+import { FaRegHeart, FaGooglePlusG, FaPinterestP, FaWhatsapp, FaInstagram } from 'react-icons/fa';
 import { MdShare } from "react-icons/md";
 import { TiSocialFacebook, TiSocialTwitter } from "react-icons/ti";
 import { RiTelegram2Line } from "react-icons/ri";
 import { IoLogoLinkedin } from "react-icons/io5";
 import CommentForm from '../CommentForm';
+import { GrYoutube } from 'react-icons/gr';
 
 const BlogPage = () => {
     const { id } = useParams();
@@ -25,13 +26,22 @@ const BlogPage = () => {
                        bg-black text-white px-3 py-2 rounded-xl shadow-2xl z-50 
                        w-[200px] sm:w-max sm:max-w-none
                        animate-in fade-in zoom-in duration-300">
-            <li><a href="#" className="hover:text-primary transition-colors"><TiSocialFacebook size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><TiSocialTwitter size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><FaGooglePlusG size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><FaPinterestP size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><IoLogoLinkedin size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><FaWhatsapp size={18} /></a></li>
-            <li><a href="#" className="hover:text-primary transition-colors"><RiTelegram2Line size={18} /></a></li>
+            <li><a href="https://www.facebook.com/ilmifyTech" target="_blank" className="hover:text-primary transition-colors"><TiSocialFacebook  /></a></li>
+            <li>
+        <a href="https://www.instagram.com/ilmifytech.agency" target="_blank">
+          <FaInstagram  />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@ilmifyTechAgency" target="_blank">
+          <GrYoutube />
+        </a>
+      </li>
+      <li>
+        <a href="https://bd.linkedin.com/company/ilmifytechagency" target="_blank">
+          <IoLogoLinkedin />
+        </a>
+      </li>
         </ul>
     );
 
@@ -80,7 +90,7 @@ const BlogPage = () => {
                     </div>
 
                     {/* MAIN BODY TEXT - Fixed overflow */}
-                    <div className='text-left w-full max-w-[1200px] mx-auto text-gray-700 leading-relaxed space-y-6 text-sm sm:text-base md:text-lg overflow-hidden'>
+                    <div className='text-left w-full max-w-[1200px] mx-auto text-gray-700 leading-relaxed space-y-6 text-sm sm:text-base md:text-lg overflow-hidden font-ubuntu font-light'>
                         <p className="whitespace-pre-line break-words overflow-wrap-anywhere">
                             When, while the lovely valley teems with vapor around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary, I throw myself down among the tall grass by the trickling stream; and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath of that universal love which bears and sustains us, as it floats around us in an eternity of bliss; and then, my friend, when darkness overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power, like the form of a beloved mistress, then I often think with longing, Oh, would I could describe these conceptions, could impress upon paper all that is living so full and warm within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite God!
                         </p>
