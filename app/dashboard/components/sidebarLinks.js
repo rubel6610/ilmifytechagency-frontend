@@ -10,7 +10,7 @@ import {
 export const userLinks = [
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/dashboard/userdashboard",
     icon: LayoutDashboard,
   },
   {
@@ -29,7 +29,12 @@ export const userLinks = [
 export const adminLinks = [
   {
     name: "Admin Dashboard",
-    href: "/dashboard/admin",
+    href: "/dashboard/admindashboard",
+    icon: Shield,
+  },
+  {
+    name: "Post job",
+    href: "/dashboard/admindashboard/post-job",
     icon: Shield,
   },
   {

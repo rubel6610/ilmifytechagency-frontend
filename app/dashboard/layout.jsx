@@ -1,13 +1,14 @@
 "use client";
 
-import AdminDashboard from "./components/adminDashboard";
+import AdminDashboard from "./admindashboard/page";
 import Sidebar from "./components/SideBar";
-import UserDashboard from "./components/userDashbaord";
+import UserDashboard from "./userdashboard/page";
+
 
 // DEMO ROLE (replace later with auth logic)
-export const role = "user"; // "user" | "admin"
+export const role = "admin"; // "user" | "admin"
 
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout() {
   return (
     <div className="flex  bg-slate-100">
       {/* Sidebar */}
@@ -17,8 +18,9 @@ export default function DashboardLayout({ children }) {
         {/* Show dashboard based on role */}
         {role === "admin" ? <AdminDashboard /> : <UserDashboard />}
         
-        {/* Nested routes */}
-        {children}
+
+        {/* Nested routes
+        {children} */}
       </div>
     </div>
   );
