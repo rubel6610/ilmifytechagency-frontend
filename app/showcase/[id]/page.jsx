@@ -9,6 +9,8 @@ import {
   FaRegHeart,
   FaStumbleupon,
   FaWhatsapp,
+  FaInstagram,
+  
 } from "react-icons/fa";
 import { MdOutlineMarkEmailRead, MdShare } from "react-icons/md";
 import { useState } from "react";
@@ -18,6 +20,7 @@ import { RiTelegram2Line } from "react-icons/ri";
 import { IoLogoLinkedin } from "react-icons/io5";
 import Link from "next/link";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
+import { GrYoutube } from "react-icons/gr";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import RelatedProjects from "../components/RelatedProjects";
 
@@ -58,27 +61,22 @@ const CardDetails = () => {
       animate-social-float"
     >
       <li>
-        <a href="https://www.facebook.com/" target="_blank">
+        <a href="https://www.facebook.com/ilmifyTech" target="_blank">
           <TiSocialFacebook />
         </a>
       </li>
       <li>
-        <a href="" target="_blank">
-          <TiSocialTwitter />
+        <a href="https://www.instagram.com/ilmifytech.agency" target="_blank">
+          <FaInstagram />
         </a>
       </li>
       <li>
-        <a href="" target="_blank">
-          <FaGooglePlusG />
+        <a href="https://www.youtube.com/@ilmifyTechAgency" target="_blank">
+          <GrYoutube />
         </a>
       </li>
       <li>
-        <a href="" target="_blank">
-          <FaPinterestP />
-        </a>
-      </li>
-      <li>
-        <a href="" target="_blank">
+        <a href="https://bd.linkedin.com/company/ilmifytechagency" target="_blank">
           <IoLogoLinkedin />
         </a>
       </li>

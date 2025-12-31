@@ -10,7 +10,7 @@ const cards = [
   {
     title: "ADDRESS",
     icon: VscLocation,
-    paragraph: "30 N GOULD ST STE R, SHERIDAN, WY 82801",
+    paragraph: "17/1 Ahmed Sarker Road, Trishal, Mymensingh, Bangladesh",
   },
   {
     title: "PHONE & EMAIL",
