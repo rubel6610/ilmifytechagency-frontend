@@ -32,7 +32,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full">
+    <header className="w-full bg-[#FFFFFF] shadow-xs sticky top-0 z-50">
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">
@@ -52,7 +52,7 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <div className="bg-[#FFFFFF] shadow-xs sticky top-0 z-50">
+      <div className="">
         <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
           <div className="flex justify-between items-center w-full xl:w-auto">
             <Link
