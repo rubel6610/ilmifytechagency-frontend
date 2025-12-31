@@ -1,7 +1,11 @@
-"use client" 
+"use client";
 
 import Lottie from "lottie-react";
-import loginAnimation from "../../../public/assets/lotties/login"; 
+import loginAnimation from "../../../public/assets/lotties/login";
+import Image from "next/image";
+import Link from "next/link";
+const MotionLink = motion(Link);
+import { motion } from "framer-motion";
 
 export default function Login() {
   return (
@@ -40,10 +44,52 @@ export default function Login() {
             Forgot password?
           </div>
 
-          {/* Login Button */}
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
-            Login
-          </button>
+          <MotionLink
+            href="/contact"
+            className="
+              w-full
+              text-center
+             relative
+             overflow-hidden
+           bg-linear-to-r
+               from-[#0ddaa0]
+               to-[#8ce064]
+               text-white
+               mt-12
+             px-8
+             py-3
+             rounded-lg
+             text-sm
+             tracking-wide
+             shadow-xl
+             inline-block
+           "
+            initial="rest"
+            whileHover="hover"
+            animate="rest"
+          >
+            {/* Hover Gradient */}
+            <motion.span
+              variants={{
+                rest: { scale: 0 },
+                hover: { scale: 1 },
+              }}
+              transition={{ duration: 0.17, ease: "easeOut" }}
+              className="
+               absolute
+               inset-0
+              bg-linear-to-r
+               from-[#3D3D3D]
+               to-[#151515]
+             text-white
+               rounded-lg
+               z-0
+             "
+              style={{ originX: 0.5, originY: 0.5 }}
+            />
+
+            <span className="relative z-10">Register</span>
+          </MotionLink>
 
           {/* Register */}
           <p className="text-sm text-center mt-4">
@@ -59,19 +105,25 @@ export default function Login() {
           </div>
 
           {/* Social Login */}
-          <button className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-50 transition">
-            <img src="/assets/google.svg" alt="Google" className="w-5 h-5" />
-            Continue with Google
+          <button
+            type="button"
+            aria-label="Continue with Google"
+            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <Image
+              src="/assets/google.png"
+              alt="Google logo"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
+            <span>Continue with Google</span>
           </button>
         </div>
 
         {/* RIGHT: LOTTIE */}
         <div className="hidden md:flex items-center justify-center bg-gray-50">
-          <Lottie
-            animationData={loginAnimation}
-            loop={true}
-            className="w-96"
-          />
+          <Lottie animationData={loginAnimation} loop={true} className="w-96" />
         </div>
       </div>
     </div>

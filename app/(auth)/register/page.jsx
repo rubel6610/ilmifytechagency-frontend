@@ -1,13 +1,16 @@
- "use client"
- 
+"use client";
+
 import Lottie from "lottie-react";
 import registerAnimation from "../../../public/assets/lotties/register"; // your lottie json
+import Image from "next/image";
+import Link from "next/link";
+const MotionLink = motion(Link);
+import { motion } from "framer-motion";
 
 const Register = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-        
         {/* LEFT: FORM */}
         <div className="p-8 md:p-12">
           <h2 className="text-3xl font-semibold mb-6">Register your account</h2>
@@ -49,12 +52,52 @@ const Register = () => {
               />
             </div>
 
-            <button
-              type="button"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition"
+            <MotionLink
+              href="/contact"
+              className="
+              w-full
+              text-center
+             relative
+             overflow-hidden
+           bg-linear-to-r
+               from-[#0ddaa0]
+               to-[#8ce064]
+               text-white
+               mt-12
+             px-8
+             py-3
+             rounded-lg
+             text-sm
+             tracking-wide
+             shadow-xl
+             inline-block
+           "
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
             >
-              Register
-            </button>
+              {/* Hover Gradient */}
+              <motion.span
+                variants={{
+                  rest: { scale: 0 },
+                  hover: { scale: 1 },
+                }}
+                transition={{ duration: 0.17, ease: "easeOut" }}
+                className="
+               absolute
+               inset-0
+              bg-linear-to-r
+               from-[#3D3D3D]
+               to-[#151515]
+             text-white
+               rounded-lg
+               z-0
+             "
+                style={{ originX: 0.5, originY: 0.5 }}
+              />
+
+              <span className="relative z-10">Register</span>
+            </MotionLink>
           </form>
 
           <p className="text-center text-sm mt-4">
@@ -72,16 +115,20 @@ const Register = () => {
           </div>
 
           {/* Social Login */}
+
           <button
             type="button"
-            className="w-full border flex items-center justify-center gap-3 py-2 rounded-md hover:bg-gray-50 transition"
+            aria-label="Continue with Google"
+            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
-              alt="Google"
-              className="w-5 h-5"
+            <Image
+              src="/assets/google.png"
+              alt="Google logo"
+              width={20}
+              height={20}
+              className="object-contain"
             />
-            Continue with Google
+            <span>Continue with Google</span>
           </button>
         </div>
 
