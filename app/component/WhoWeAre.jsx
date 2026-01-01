@@ -99,7 +99,7 @@ const WhoWeAre = () => {
 
             <CustomBorder />
 
-            <div className="space-y-6 text-gray-600 text-base md:text-lg leading-relaxed text-justify">
+            <div className="space-y-6 text-gray-600 text-base md:text-lg leading-relaxed text-justify font-ubuntu">
               <motion.p variants={fadeInUpVariants}>
                 At{" "}
                 <span className="font-semibold text-black italic">iLMiFY</span>,

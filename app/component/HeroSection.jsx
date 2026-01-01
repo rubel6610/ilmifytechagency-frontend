@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
-
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -42,7 +41,7 @@ export default function HeroSection() {
       subtitle: "5 YEARS OF EXPERIENCE",
       description:
         "At iLMiFY, we harness innovation to drive growth by integrating cutting-edge technology with actionable strategies. Our scalable solutions ensure your business thrives in an ever-evolving digital landscape.",
-      image: "/hero.png",
+      image: "/hero-3.jpg",
       btnText: "Contact Us",
     },
   ];
@@ -83,7 +82,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative w-full max-h-225 bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden">
+    <section className="relative w-full min-h-[80vh] bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden">
       <Swiper
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         modules={[Navigation, Autoplay]}
@@ -96,112 +95,110 @@ export default function HeroSection() {
         className="w-full h-full"
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={`${index}-${activeIndex}`}>
-            <motion.div key={activeIndex}
-              initial="hidden"
-              animate="visible"
-              variants={containerVariants}
-              className="max-w-400 mx-auto px-5 md:px-8.75 grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-20 items-center max-h-225 relative"
-            >
-              {/* LEFT CONTENT */}
-              <div className="order-2 xl:order-1 text-left relative z-10">
-                <motion.h3 variants={fadeInLeft} key={`subtitle-${activeIndex}`} className="text-emerald-400 font-bold tracking-[0.2em] text-[14px] uppercase mb-6 block">
-                  {slide.subtitle}
-                </motion.h3>
+          // FIX: key sudhu index hobe
+          <SwiperSlide key={index}>
+            {({ isActive }) => (
+              <motion.div
+                // FIX: Key activeIndex thakle slide change animation hoy na
+                initial="hidden"
+                animate={isActive ? "visible" : "hidden"}
+                variants={containerVariants}
+                className="max-w-400 mx-auto px-5 md:px-8.75 grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-20 items-center min-h-[85vh] relative"
+              >
+                {/* LEFT CONTENT */}
+                <div className="order-2 xl:order-1 text-left relative z-10">
+                  <motion.h3 
+                    variants={fadeInLeft} 
+                    className="text-emerald-400 font-bold tracking-[0.2em] text-[14px] uppercase mb-6 block"
+                  >
+                    {slide.subtitle}
+                  </motion.h3>
 
-                <motion.h1 variants={fadeInUpVariants} className="text-4xl md:text-6xl xl:text-[70px] font-bold text-[#1a1a1a] leading-[1.1] mb-8">
-                  {slide.title}
-                  <br></br>
-                  <span className="text-black">{slide.highlight}</span>
-                  <span className="text-emerald-400 ml-5">
-                    {slide.subHighlight}
-                  </span>
-                </motion.h1>
+                  <motion.h1 
+                    variants={fadeInUpVariants} 
+                    className="text-4xl md:text-6xl xl:text-[70px] font-bold text-[#1a1a1a] leading-[1.1] mb-8"
+                  >
+                    {slide.title}
+                    <br></br>
+                    <span className="text-black">{slide.highlight}</span>
+                    <span className="text-emerald-400 ml-5">
+                      {slide.subHighlight}
+                    </span>
+                  </motion.h1>
 
-                <motion.p variants={fadeInUpVariants} className="text-gray-500 text-sm md:text-base max-w-lg leading-relaxed mb-10">
-                  {slide.description}
-                </motion.p>
+                  <motion.p 
+                    variants={fadeInUpVariants} 
+                    className="text-gray-500 text-sm md:text-base max-w-lg leading-relaxed mb-10 font-ubuntu"
+                  >
+                    {slide.description}
+                  </motion.p>
 
-                <motion.button variants={fadeInUpVariants} className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-[0.1em] shadow-lg">
-                  {slide.btnText}
-                </motion.button>
+                  <motion.button 
+                    variants={fadeInUpVariants} 
+                    className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg"
+                  >
+                    {slide.btnText}
+                  </motion.button>
 
-                <div className="mt-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                  {/* Socials */}
-                  <motion.div variants={fadeInRight} className="flex gap-5 text-[12px] font-bold text-gray-600 uppercase tracking-widest">
-                    <a
-                      href="#"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      Facebook
-                    </a>
-                    <a
-                      href="#"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      Instagram
-                    </a>
-                    <a
-                      href="#"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      Twitter
-                    </a>
-                    <a
-                      href="#"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      YouTube
-                    </a>
-                  </motion.div>
+                  <div className="mt-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    {/* Socials - Agertai Rakha Hoyeche */}
+                    <motion.div variants={fadeInRight} className="flex gap-5 text-[12px] font-bold text-gray-600 uppercase tracking-widest">
+                      <a href="https://www.facebook.com/ilmifyTech" className="hover:text-emerald-400 transition-colors">Facebook</a>
+                      <a href="https://www.instagram.com/ilmifytech.agency" className="hover:text-emerald-400 transition-colors">Instagram</a>
+                      <a href="https://twitter.com" className="hover:text-emerald-400 transition-colors">Twitter</a>
+                      <a href="https://www.youtube.com/@ilmifyTechAgency" className="hover:text-emerald-400 transition-colors">YouTube</a>
+                    </motion.div>
 
-                  <div className="flex gap-4 z-50">
-                    <button
-                      onClick={() => swiperRef.current?.slidePrev()}
-                      className="w-12 h-12 rounded-full bg-[#F3F4F6] flex items-center justify-center hover:bg-emerald-500 text-gray-500 hover:text-white transition-all shadow-sm active:scale-90"
-                    >
-                      <HiArrowSmallLeft size={24} />
-                    </button>
-                    <button
-                      onClick={() => swiperRef.current?.slideNext()}
-                      className="w-12 h-12 rounded-full bg-[#F3F4F6] flex items-center justify-center hover:bg-emerald-500 text-gray-500 hover:text-white transition-all shadow-sm active:scale-90"
-                    >
-                      <HiArrowSmallRight size={24} />
-                    </button>
+                    <div className="flex gap-4 z-50">
+                      <button
+                        onClick={() => swiperRef.current?.slidePrev()}
+                        className="w-12 h-12 rounded-full bg-[#F3F4F6] flex items-center justify-center hover:bg-emerald-500 text-gray-500 hover:text-white transition-all shadow-sm active:scale-90"
+                      >
+                        <HiArrowSmallLeft size={24} />
+                      </button>
+                      <button
+                        onClick={() => swiperRef.current?.slideNext()}
+                        className="w-12 h-12 rounded-full bg-[#F3F4F6] flex items-center justify-center hover:bg-emerald-500 text-gray-500 hover:text-white transition-all shadow-sm active:scale-90"
+                      >
+                        <HiArrowSmallRight size={24} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* RIGHT IMAGE */}
-              <div className="relative flex justify-center items-center order-1 xl:order-2 lg:mt-10 xl:mt-0">
-                <div className="relative w-75 h-75 sm:w-112.5 sm:h-112.5 xl:w-150 xl:h-150">
-                  <div className="absolute inset-0 rounded-full border-20 sm:border-35 lg:border-50 border-[#D8D8D8] z-20 pointer-events-none"></div>
+                {/* RIGHT IMAGE - Agertai Rakha Hoyeche */}
+                <div className="relative flex justify-center items-center order-1 xl:order-2 lg:mt-10 xl:mt-0">
+                  <div className="relative w-75 h-75 sm:w-112.5 sm:h-112.5 xl:w-150 xl:h-150 2xl:w-180 2xl:h-180">
+                    <div className="absolute inset-0 rounded-full border-20 sm:border-35 lg:border-50 border-[#D8D8D8] z-20 pointer-events-none"></div>
 
-                  <motion.div
-                    className="absolute inset-5 sm:inset-8.75 xl:inset-12.5 z-10 overflow-hidden"
-                    initial={{ clipPath: "circle(50% at 50% 50%)" }}
-                    whileInView={{
-                      clipPath:
-                        "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
-                    }}
-                    transition={{ duration: 1.5, ease: "easeInOut" }}
-                  >
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={slide.image}
-                        alt="Hero Image"
-                        fill
-                        className="object-cover scale-110"
-                        priority
-                      />
-                    </div>
-                  </motion.div>
-                  {/* Decorative Background Shapes */}
-                  <div className="absolute -left-10 xl:-left-20 top-1/4 w-32 xl:w-48 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
-                  <div className="absolute -left-5 xl:-left-10 top-[38%] w-24 xl:w-36 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
+                    <motion.div
+                      className="absolute inset-5 sm:inset-8.75 xl:inset-12.5 z-10 overflow-hidden"
+                      initial={{ clipPath: "circle(50% at 50% 50%)" }}
+                      animate={isActive ? {
+                        clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
+                      } : {
+                        clipPath: "circle(50% at 50% 50%)"
+                      }}
+                      transition={{ duration: 1.5, ease: "easeInOut" }}
+                    >
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={slide.image}
+                          alt="Hero Image"
+                          fill
+                          className="object-cover scale-110"
+                          priority
+                        />
+                      </div>
+                    </motion.div>
+                    
+                    {/* Decorative Background Shapes */}
+                    <div className="absolute -left-10 xl:-left-20 top-1/4 w-32 xl:w-48 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
+                    <div className="absolute -left-5 xl:-left-10 top-[38%] w-24 xl:w-36 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>

@@ -66,7 +66,7 @@ export default function Expertise() {
               {steps.map((step) => (
                 <div key={step.number}>
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="h-[2px] w-4 bg-emerald-400 mt-5" />
+                    <span className="h-0.5 w-4 bg-emerald-400 mt-5" />
                     <span className="text-3xl font-medium text-gray-600">
                       {step.number}
                     </span>

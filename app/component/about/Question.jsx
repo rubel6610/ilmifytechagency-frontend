@@ -1,7 +1,6 @@
 "use client"; // required for Framer Motion
 
-import { Button } from "@/app/component/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 const MotionLink = motion(Link);
 
