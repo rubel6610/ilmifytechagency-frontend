@@ -84,10 +84,10 @@ const Careers = () => {
             <button
               key={index}
               onClick={() => setCurrentPage(index + 1)}
-              className={`px-4 py-2 rounded-md border transition ${
+              className={`px-4 py-2 rounded-md  transition ${
                 currentPage === index + 1
-                  ? "bg-white text-primary hover:bg-gray-100"
-                  : "bg-primary text-gray-500 border-gray-600"
+                  ? "bg-emerald-500 text-white"
+                : "bg-gray-200 text-gray-700"
               }`}
             >
               {index + 1}
