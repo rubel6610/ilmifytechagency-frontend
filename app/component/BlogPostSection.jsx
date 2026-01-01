@@ -148,7 +148,7 @@ const BlogPostSection = () => {
                 style={{ originX: 0.5, originY: 0.5 }}
               />
 
-              <span className="relative z-10">VEIW ALL POST</span>
+              <span className="relative z-10">VIEW ALL POST</span>
             </MotionLink>
           </div>
         </div>
