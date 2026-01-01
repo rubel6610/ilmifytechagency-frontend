@@ -16,6 +16,7 @@ export default function MapClient() {
   );
 }
 
+//  Map section
 
 // "use client";
 
