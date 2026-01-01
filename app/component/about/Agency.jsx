@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
+import CustomBorder from "../customBorder/CustomBorder";
 const MotionLink = motion(Link);
 
 export default function Agency() {
@@ -16,6 +17,15 @@ export default function Agency() {
         ease: "linear",
       },
     }),
+  };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
   };
   return (
     <div className="bg-[#F9F9F9]">
@@ -47,10 +57,15 @@ export default function Agency() {
             </motion.span>
           </h1>
 
-          <div className="flex space-x-2 py-10 justify-center">
-            <div className="border-3 rounded-2xl border-green-500 w-3"></div>
-            <div className="border-3 rounded-2xl border-green-500 w-10"></div>
-          </div>
+          <motion.div
+        className="flex justify-center lg:justify-start"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
 
           <div className="text-justify">
             <motion.p

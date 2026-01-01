@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import CustomBorder from "../customBorder/CustomBorder";
 
 export default function WeAre() {
   const typingVariant = {
@@ -14,6 +15,15 @@ export default function WeAre() {
       },
     }),
   };
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
   return (
     <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       {/* Left Content */}
@@ -43,10 +53,15 @@ export default function WeAre() {
           </motion.span>
         </h1>
 
-        <div className="flex space-x-2 py-10 items-center justify-center lg:justify-start">
-          <div className="border-3 rounded-2xl border-green-500 w-3"></div>
-          <div className="border-3 rounded-2xl border-green-500 w-10"></div>
-        </div>
+        <motion.div
+        className="flex justify-center lg:justify-start mt-4"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
 
         <div className="text-justify">
           <motion.p

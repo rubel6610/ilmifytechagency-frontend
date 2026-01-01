@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaPinterestP } from "react-icons/fa";
+import CustomBorder from "../customBorder/CustomBorder";
 
 const teamMembers = [
   {
@@ -60,9 +61,17 @@ export default function Team() {
       transition: { duration: 0.8, ease: "easeOut" }, // smooth animation
     },
   };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
   return (
     <section className="max-w-400 mx-auto px-8 md:px-12 my-12 py-24 bg-white text-center">
-
       <motion.h2
         className="text-2xl md:text-4xl lg:text-5xl font-semibold text-center"
         initial="hidden"
@@ -76,10 +85,15 @@ export default function Team() {
         <span className="text-[#00D9A6]">our team</span>
       </motion.h2>
 
-      <div className="flex space-x-2 py-10 justify-center">
-        <div className="border-3 rounded-2xl border-[#98DD5F] w-3"></div>
-        <div className="border-3 rounded-2xl border-[#98DD5F] w-10"></div>
-      </div>
+      <motion.div
+        className="flex justify-center mt-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto mt-10">
         {teamMembers.map((member, index) => (
           <div
@@ -115,4 +129,3 @@ export default function Team() {
     </section>
   );
 }
-
