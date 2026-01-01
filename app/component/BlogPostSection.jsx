@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
@@ -9,38 +9,42 @@ const MotionLink = motion(Link);
 const BlogPostSection = () => {
   const blogs = [
     {
+      id: 1,
       title: "Marketing Ideas",
       date: "May 24, 2018",
       author: "tufael4736@gmail.com",
-      image:
-        "/blog-1.png",
+      image: "/blog-1.png",
     },
     {
+      id: 2,
       title: "Rest During Working Hours",
       date: "June 10, 2018",
       author: "tufael4736@gmail.com",
       image: "/blog-2.png",
     },
     {
+      id: 3,
       title: "Develop Your Startup Idea",
       date: "July 02, 2018",
       author: "tufael4736@gmail.com",
       image: "/blog-3.png",
-    }
+    },
   ];
 
   return (
     <div>
-
       <div className="bg-background py-16">
         <div className="max-w-400 mx-auto px-5 sm:px-6 lg:px-8">
-            <h1 className="text-center text-4xl md:text-5xl font-bold">Latest News & Our <span className="text-[#00D9A6]">Blog</span></h1>
-            <div className="flex justify-center mt-7">
-                <CustomBorder></CustomBorder>
-            </div>
+          <h1 className="text-center text-4xl md:text-5xl font-bold">
+            Latest News & Our <span className="text-[#00D9A6]">Blog</span>
+          </h1>
+          <div className="flex justify-center mt-7">
+            <CustomBorder></CustomBorder>
+          </div>
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-12  my-6">
             {blogs.map((blog, index) => (
-              <div
+              <Link
+                href={`/blog/${blog.id}`}
                 key={index}
                 className="relative group rounded-2xl overflow-visible my-10"
               >
@@ -96,14 +100,14 @@ const BlogPostSection = () => {
                     {blog.title}
                   </h2>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           {/* romantic button */}
           <div className="flex justify-center">
-           <MotionLink
-            href="/blog"
-            className=" font-bold
+            <MotionLink
+              href="/blog"
+              className=" font-bold
              relative
              overflow-hidden
            bg-linear-to-r
@@ -116,21 +120,22 @@ const BlogPostSection = () => {
              rounded-full
              text-sm
              tracking-wide
-             shadow-xl
+             shadow-[0px_0px_20px_5px_rgba(16,185,129,0.4)]
+                   hover:shadow-[0_0_0_0_rgba(0,0,0,0)]
              inline-block
            "
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-          >
-            {/* Hover Gradient */}
-            <motion.span
-              variants={{
-                rest: { scale: 0 },
-                hover: { scale: 1 },
-              }}
-              transition={{ duration: 0.17, ease: "easeOut" }}
-              className="
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+            >
+              {/* Hover Gradient */}
+              <motion.span
+                variants={{
+                  rest: { scale: 0 },
+                  hover: { scale: 1 },
+                }}
+                transition={{ duration: 0.17, ease: "easeOut" }}
+                className="
                absolute
                inset-0
               bg-linear-to-r
@@ -140,13 +145,12 @@ const BlogPostSection = () => {
                rounded-full
                z-0
              "
-              style={{ originX: 0.5, originY: 0.5 }}
-            />
+                style={{ originX: 0.5, originY: 0.5 }}
+              />
 
-            <span className="relative z-10">VEIW ALL POST</span>
-          </MotionLink>
+              <span className="relative z-10">VEIW ALL POST</span>
+            </MotionLink>
           </div>
-          
         </div>
       </div>
     </div>
