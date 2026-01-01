@@ -53,7 +53,7 @@ const Header = () => {
 
       {/* Main Navigation */}
       <div className="">
-        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
+        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative ">
           <div className="flex justify-between items-center w-full xl:w-auto">
             <Link
               href="/"

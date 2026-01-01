@@ -19,7 +19,7 @@ const BlogPage = () => {
     const [social, setSocial] = useState(false);
 
     if (!blogs) {
-        return <div className="text-center py-20"><BlogNotFound></BlogNotFound> </div>;
+        return <div className="text-center"><BlogNotFound></BlogNotFound> </div>;
     }
 
     const SocialLinks = () => (
