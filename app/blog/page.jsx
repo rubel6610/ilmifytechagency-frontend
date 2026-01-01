@@ -131,8 +131,8 @@ const Blog = () => {
     group-hover:translate-y-6
     group-active:translate-y-6
     
-    group-hover:bg-gradient-to-tr
-    group-active:bg-gradient-to-tr
+    group-hover:bg-linear-to-tr
+    group-active:bg-linear-to-tr
     
     group-hover:from-[#0ddaa0]
     group-hover:to-[#8ce064]

@@ -9,7 +9,7 @@ const Contact = () => {
   return (
     <div className="overflow-visible">
       {/* HEADER */}
-      <h1 className=" text-[55px] text-primary py-48 md:py-16 text-center bg-[#F9F9F9] font-bold">
+      <h1 className=" text-primary py-10 text-[43px]  sm:text-[43px] md:py-16 text-center bg-[#F9F9F9] font-bold">
         Contact Page
       </h1>
        <div className="">
