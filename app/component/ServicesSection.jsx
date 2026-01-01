@@ -125,7 +125,8 @@ const ServicesSection = () => {
                              rounded-full
                              text-sm
                              tracking-wide
-                             shadow-xl
+                             shadow-[0px_0px_20px_5px_rgba(16,185,129,0.4)]
+                   hover:shadow-[0_0_0_0_rgba(0,0,0,0)]
                              inline-block
                            "
               initial="rest"
@@ -183,7 +184,6 @@ const ServicesSection = () => {
                   {service.description}
                 </p>
               </div>
-
             </motion.div>
           ))}
         </div>

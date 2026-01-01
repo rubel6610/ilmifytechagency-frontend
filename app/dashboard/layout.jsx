@@ -7,7 +7,7 @@ import { role } from "./page";
 
 export default function DashboardLayout({children}) {
   return (
-    <div className="flex  bg-slate-100 min-h-screen lg:min-h-[100vh - 100px]:">
+    <div className="flex  bg-slate-100 min-h-screen lg:min-h-[calc(100vh - 100px)]">
       {/* Sidebar */}
       <Sidebar role={role} />
 

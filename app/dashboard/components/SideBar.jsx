@@ -55,7 +55,7 @@ export default function Sidebar({ role = "user" }) {
 
       {/* ---------- Desktop Sidebar ---------- */}
       <aside
-        className="hidden min-h-[calc(100vh-200px)] lg:flex w-64 
+        className="hidden min-h-[calc(100vh-00px)] lg:flex w-64 
           bg-linear-to-b from-[#00c389] to-[#86e062]
           text-white p-5 flex-col z-40"
       >
@@ -70,7 +70,7 @@ function SidebarContent({ links, pathname, close }) {
   return (
     <>
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8 relative">
         <h2 className="text-2xl font-bold">Dashboard</h2>
         {close && (
           <button onClick={close} className="lg:hidden">
@@ -114,7 +114,7 @@ function SidebarContent({ links, pathname, close }) {
       </nav>
 
       {/* Bottom Section */}
-      <div className="border-t border-white/30 pt-4 flex flex-col align-center">
+      <div className="border-t border-white/30 absolute bottom-5 w-50 flex flex-col align-center">
         <Link
           href="/dashboard/profile"
           onClick={close}
