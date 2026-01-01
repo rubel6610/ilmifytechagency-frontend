@@ -1,5 +1,4 @@
-
-"use client";
+"use client"
 import { Card, CardContent } from "@/app/component/ui/card";
 import { motion } from "motion/react";
 
@@ -31,6 +30,14 @@ const steps = [
 ];
 
 export default function Expertise() {
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
   return (
     <section
       className="relative py-20 pr-8 text-white bg-fixed bg-center bg-cover"
@@ -50,10 +57,15 @@ export default function Expertise() {
             their best
           </h2>
 
-          <div className="flex py-10 space-x-2">
-            <div className="w-3 border-gray-300 border-3 rounded-2xl"></div>
-            <div className="w-10 border-gray-300 border-3 rounded-2xl"></div>
-          </div>
+          <motion.div 
+          initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+          className="flex space-x-2 py-10">
+            <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
+            <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
+          </motion.div>
 
           <p className="max-w-md mt-6 leading-relaxed text-white/70">
             Our team of experts puts in their best effort to deliver exceptional

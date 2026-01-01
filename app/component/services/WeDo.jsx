@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import servicesData from "./servicesData";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import CustomBorder from "../customBorder/CustomBorder";
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {
@@ -31,6 +32,15 @@ const cardVariants = {
   },
 };
 
+const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
 export default function WeDo() {
   return (
     <section className="w-full py-20">
@@ -49,10 +59,15 @@ export default function WeDo() {
             you <span className="text-[#00D9A6]">need</span>
           </motion.h2>
 
-          <motion.div className="flex justify-center py-10 space-x-2">
-            <div className="border-3 rounded-2xl border-[#00C950] w-3"></div>
-            <div className="border-3 rounded-2xl border-[#00C950] w-10"></div>
-          </motion.div>
+          <motion.div
+        className="flex justify-center mt-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
         </div>
 
         {/* Cards */}
@@ -110,7 +125,7 @@ export default function WeDo() {
                         {service.title}
                       </h3>
 
-                      <p className="pt-8 pb-12 text-sm leading-relaxed text-justify text-muted-foreground">
+                      <p className="pb-12 pt-8 text-sm leading-relaxed text-justify text-muted-foreground h-50">
                         {service.description}
                       </p>
 

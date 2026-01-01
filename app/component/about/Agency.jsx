@@ -18,6 +18,15 @@ export default function Agency() {
       },
     }),
   };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
   return (
     <div className="bg-[#F9F9F9]">
       <div className="max-w-400 mx-auto my-28 px-8 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
@@ -48,9 +57,15 @@ export default function Agency() {
             </motion.span>
           </h1>
 
-          <div className="flex space-x-2 py-8">
-           <CustomBorder/>
-          </div>
+          <motion.div
+        className="flex justify-center lg:justify-start"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
 
           <div className="text-justify">
             <motion.p
