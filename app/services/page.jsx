@@ -1,11 +1,11 @@
-import Expertise from "@/components/services/Expertise";
-import WeAre from "@/components/services/WeAre";
-import WeDo from "@/components/services/WeDo";
 import React from "react";
+import Expertise from "../component/services/Expertise";
+import WeAre from "../component/services/WeAre";
+import WeDo from "../component/services/WeDo";
 
-const Services = () => {
+export default function Services() {
   return (
-    <div>
+    <div className="mb-30">
       <h1 className="text-3xl md:text-5xl font-semibold text-center bg-[#F9F9F9] py-14 text-[#00D9A6]">
         Services
       </h1>
@@ -14,6 +14,4 @@ const Services = () => {
       <Expertise />
     </div>
   );
-};
-
-export default Services;
+}
