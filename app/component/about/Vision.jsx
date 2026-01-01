@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "motion/react";
 
-export default function Vission() {
+export default function Vision() {
   const cardVariants = {
     hidden: {
       opacity: 0,

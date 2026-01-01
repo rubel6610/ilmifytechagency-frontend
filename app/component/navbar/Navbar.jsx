@@ -13,8 +13,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import Image from "next/image";
-import { IoSearchSharp } from "react-icons/io5";
-import { motion } from "framer-motion"; // Importing motion for animations
+import { motion } from "framer-motion"; 
 
 import { role } from "../../dashboard/page";
 
@@ -22,9 +21,7 @@ const Header = () => {
 
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
-
   const toggleNav = () => setNav(!nav);
-
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },

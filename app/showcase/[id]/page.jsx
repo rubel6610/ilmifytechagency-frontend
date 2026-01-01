@@ -4,8 +4,6 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { projectsData } from "../components/projectData";
 import {
-  FaGooglePlusG,
-  FaPinterestP,
   FaRegHeart,
   FaStumbleupon,
   FaWhatsapp,
@@ -14,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { MdOutlineMarkEmailRead, MdShare } from "react-icons/md";
 import { useState } from "react";
-import { TiSocialFacebook, TiSocialTwitter } from "react-icons/ti";
+import { TiSocialFacebook } from "react-icons/ti";
 import { FiPocket } from "react-icons/fi";
 import { RiTelegram2Line } from "react-icons/ri";
 import { IoLogoLinkedin } from "react-icons/io5";

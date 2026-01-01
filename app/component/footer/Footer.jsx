@@ -30,7 +30,9 @@ const Footer = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  if (pathname.includes("/dashboard")) {
+  if ( pathname.includes("/dashboard") ||
+    pathname.includes("/login") ||
+    pathname.includes("/register")) {
     return null;
   }
 
@@ -113,7 +115,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <IoLocationOutline className="text-[#8FE481] text-2xl shrink-0" />
                 <span className="leading-tight">
-                  117, Road: Ahmed Shorkar Road, Trishal 2220
+                 17/1 Ahmed Sarker Road, Trishal, Mymensingh, Bangladesh
                 </span>
               </li>
             </ul>
