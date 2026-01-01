@@ -54,7 +54,6 @@ export default function WeAre() {
           </motion.span>
         </h1>
 
-<<<<<<< HEAD
         <motion.div
         className="flex justify-center lg:justify-start mt-4"
         initial="hidden"
@@ -64,12 +63,6 @@ export default function WeAre() {
       >
         <CustomBorder />
       </motion.div>
-=======
-        <div className="flex items-center justify-center py-10 space-x-2 lg:justify-start">
-          <div className="w-3 border-green-500 border-3 rounded-2xl"></div>
-          <div className="w-10 border-green-500 border-3 rounded-2xl"></div>
-        </div>
->>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 
         <div className="text-justify">
           <motion.p

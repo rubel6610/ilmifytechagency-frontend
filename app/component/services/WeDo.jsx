@@ -59,7 +59,6 @@ export default function WeDo() {
             you <span className="text-[#00D9A6]">need</span>
           </motion.h2>
 
-<<<<<<< HEAD
           <motion.div
         className="flex justify-center mt-8"
         initial="hidden"
@@ -69,12 +68,6 @@ export default function WeDo() {
       >
         <CustomBorder />
       </motion.div>
-=======
-          <motion.div className="flex justify-center py-10 space-x-2">
-            <div className="border-3 rounded-2xl border-[#00C950] w-3"></div>
-            <div className="border-3 rounded-2xl border-[#00C950] w-10"></div>
-          </motion.div>
->>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
         </div>
 
         {/* Cards */}
@@ -132,11 +125,7 @@ export default function WeDo() {
                         {service.title}
                       </h3>
 
-<<<<<<< HEAD
                       <p className="pb-12 pt-8 text-sm leading-relaxed text-justify text-muted-foreground h-50">
-=======
-                      <p className="pt-8 pb-12 text-sm leading-relaxed text-justify text-muted-foreground">
->>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
                         {service.description}
                       </p>
 

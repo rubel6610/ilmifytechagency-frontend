@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 "use client"
-=======
-
-"use client";
->>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 import { Card, CardContent } from "@/app/component/ui/card";
 import { motion } from "motion/react";
 
@@ -62,7 +57,6 @@ export default function Expertise() {
             their best
           </h2>
 
-<<<<<<< HEAD
           <motion.div 
           initial="hidden"
         whileInView="visible"
@@ -72,12 +66,6 @@ export default function Expertise() {
             <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
             <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
           </motion.div>
-=======
-          <div className="flex py-10 space-x-2">
-            <div className="w-3 border-gray-300 border-3 rounded-2xl"></div>
-            <div className="w-10 border-gray-300 border-3 rounded-2xl"></div>
-          </div>
->>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 
           <p className="max-w-md mt-6 leading-relaxed text-white/70">
             Our team of experts puts in their best effort to deliver exceptional
