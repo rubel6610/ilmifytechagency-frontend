@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Link from "next/link";
 import {
   FaFacebookF,
@@ -13,8 +13,13 @@ import CustomBorder from "../customBorder/CustomBorder";
 import Image from "next/image";
 import { PiDeviceMobileLight } from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+  if (pathname.includes("/dashboard")) {
+    return null; 
+  }
   return (
     <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6">
       {/* Top Section */}

@@ -16,7 +16,7 @@ export default function Sidebar({ role = "user" }) {
   return (
     <>
       {/* ---------- Mobile Top Bar ---------- */}
-      <div className="lg:hidden px-4 py-3 bg-[#00c389] text-white">
+      <div className="lg:hidden px-4 py-3 bg-[#00c389] text-white z-50">
         <button onClick={() => setOpen(true)}>
           <Menu size={26} />
         </button>
@@ -30,8 +30,8 @@ export default function Sidebar({ role = "user" }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black z-40"
+              onClick={() => setOpen(false)} 
+              className="fixed inset-0  bg-black z-40 "
             />
 
             <motion.aside
@@ -39,9 +39,9 @@ export default function Sidebar({ role = "user" }) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 260, damping: 25 }}
-              className="fixed z-50 top-0 left-0 w-64 min-h-screen
-              bg-linear-to-b from-[#00c389] to-[#86e062]
-              text-white p-5 flex flex-col"
+              className="fixed z-50 top-10 md:top-20 left-0 w-64 min-h-[calc(100vh-30px)] md:min-h-[calc(100vh-70px)]
+                bg-linear-to-b from-[#00c389] to-[#86e062]
+                text-white p-5 flex flex-col"
             >
               <SidebarContent
                 links={links}
@@ -55,9 +55,9 @@ export default function Sidebar({ role = "user" }) {
 
       {/* ---------- Desktop Sidebar ---------- */}
       <aside
-        className="hidden min-h-[calc(100vh-100px)] lg:flex w-64 
-        bg-linear-to-b from-[#00c389] to-[#86e062]
-        text-white p-5 flex-col"
+        className="hidden min-h-[calc(100vh-200px)] lg:flex w-64 
+          bg-linear-to-b from-[#00c389] to-[#86e062]
+          text-white p-5 flex-col z-40"
       >
         <SidebarContent links={links} pathname={pathname} />
       </aside>

@@ -36,10 +36,8 @@ const JobCard = ({ job }) => {
         <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
           {job.title}
         </h3>
-      
-        <p className="text-sm text-gray-600 font-medium">
-          {job.companyName}
-        </p>
+
+        <p className="text-sm text-gray-600 font-medium">{job.companyName}</p>
 
         <motion.p
           whileHover={{ x: 4 }}
@@ -59,10 +57,15 @@ const JobCard = ({ job }) => {
         >
           {job.compensationAndBenefits.employmentStatus}
         </motion.span>
-
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-green-50 text-green-600"
+          className={`text-sm px-3 py-1 rounded-full ${job.summary.jobStatus === "active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
+        >
+          {job.summary.jobStatus}
+        </motion.span>
+        <motion.span
+          whileHover={{ scale: 1.08 }}
+          className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
         >
           {job.summary.salary}
         </motion.span>
@@ -70,9 +73,7 @@ const JobCard = ({ job }) => {
 
       {/* Bottom */}
       <div className="mt-5 flex items-center justify-between">
-        <p className="text-xs text-gray-400">
-          Deadline: {job.deadline}
-        </p>
+        <p className="text-xs text-gray-400">Deadline: {job.deadline}</p>
 
         <motion.div whileHover={{ x: 6 }}>
           <Link
