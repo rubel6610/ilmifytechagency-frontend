@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, LogOut } from "lucide-react";
 import { userLinks, adminLinks } from "./sidebarLinks";
+import Image from "next/image";
 
 export default function Sidebar({ role = "user" }) {
   const pathname = usePathname();
@@ -120,7 +121,7 @@ function SidebarContent({ links, pathname, close }) {
           onClick={close}
           className="flex items-center gap-3 mb-3 px-4 py-2 rounded-lg hover:bg-white/20"
         >
-          <div className="w-8 h-8 rounded-full bg-white/30" />
+          <Image src="/hero.png" height={150} width={150} alt="profile" className="w-8 h-8 rounded-full bg-white/30" />
           Profile
         </Link>
 
