@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
+import Link from "next/link";
 
 export default function HeroSection() {
   const swiperRef = useRef(null);
@@ -107,15 +108,15 @@ export default function HeroSection() {
               >
                 {/* LEFT CONTENT */}
                 <div className="order-2 xl:order-1 text-left relative z-10">
-                  <motion.h3 
-                    variants={fadeInLeft} 
+                  <motion.h3
+                    variants={fadeInLeft}
                     className="text-emerald-400 font-bold tracking-[0.2em] text-[14px] uppercase mb-6 block"
                   >
                     {slide.subtitle}
                   </motion.h3>
 
-                  <motion.h1 
-                    variants={fadeInUpVariants} 
+                  <motion.h1
+                    variants={fadeInUpVariants}
                     className="text-4xl md:text-6xl xl:text-[70px] font-bold text-[#1a1a1a] leading-[1.1] mb-8"
                   >
                     {slide.title}
@@ -126,27 +127,53 @@ export default function HeroSection() {
                     </span>
                   </motion.h1>
 
-                  <motion.p 
-                    variants={fadeInUpVariants} 
+                  <motion.p
+                    variants={fadeInUpVariants}
                     className="text-gray-500 text-sm md:text-base max-w-lg leading-relaxed mb-10 font-ubuntu"
                   >
                     {slide.description}
                   </motion.p>
 
-                  <motion.button 
-                    variants={fadeInUpVariants} 
-                    className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg"
-                  >
-                    {slide.btnText}
-                  </motion.button>
+                  <Link href="/services">
+                    {" "}
+                    <motion.button
+                      variants={fadeInUpVariants}
+                      className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full hover:shadow-[0px_0px_20px_10px_rgba(0,217,166,0.3)] font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg"
+                    >
+                      {slide.btnText}
+                    </motion.button>
+                  </Link>
 
                   <div className="mt-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     {/* Socials - Agertai Rakha Hoyeche */}
-                    <motion.div variants={fadeInRight} className="flex gap-5 text-[12px] font-bold text-gray-600 uppercase tracking-widest">
-                      <a href="https://www.facebook.com/ilmifyTech" className="hover:text-emerald-400 transition-colors">Facebook</a>
-                      <a href="https://www.instagram.com/ilmifytech.agency" className="hover:text-emerald-400 transition-colors">Instagram</a>
-                      <a href="https://twitter.com" className="hover:text-emerald-400 transition-colors">Twitter</a>
-                      <a href="https://www.youtube.com/@ilmifyTechAgency" className="hover:text-emerald-400 transition-colors">YouTube</a>
+                    <motion.div
+                      variants={fadeInRight}
+                      className="flex gap-5 text-[12px] font-bold text-gray-600 uppercase tracking-widest"
+                    >
+                      <a
+                        href="https://www.facebook.com/ilmifyTech"
+                        className="hover:text-emerald-400 transition-colors"
+                      >
+                        Facebook
+                      </a>
+                      <a
+                        href="https://www.instagram.com/ilmifytech.agency"
+                        className="hover:text-emerald-400 transition-colors"
+                      >
+                        Instagram
+                      </a>
+                      <a
+                        href="https://twitter.com"
+                        className="hover:text-emerald-400 transition-colors"
+                      >
+                        Twitter
+                      </a>
+                      <a
+                        href="https://www.youtube.com/@ilmifyTechAgency"
+                        className="hover:text-emerald-400 transition-colors"
+                      >
+                        YouTube
+                      </a>
                     </motion.div>
 
                     <div className="flex gap-4 z-50">
@@ -174,11 +201,16 @@ export default function HeroSection() {
                     <motion.div
                       className="absolute inset-5 sm:inset-8.75 xl:inset-12.5 z-10 overflow-hidden"
                       initial={{ clipPath: "circle(50% at 50% 50%)" }}
-                      animate={isActive ? {
-                        clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
-                      } : {
-                        clipPath: "circle(50% at 50% 50%)"
-                      }}
+                      animate={
+                        isActive
+                          ? {
+                              clipPath:
+                                "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+                            }
+                          : {
+                              clipPath: "circle(50% at 50% 50%)",
+                            }
+                      }
                       transition={{ duration: 1.5, ease: "easeInOut" }}
                     >
                       <div className="relative w-full h-full">
@@ -191,7 +223,7 @@ export default function HeroSection() {
                         />
                       </div>
                     </motion.div>
-                    
+
                     {/* Decorative Background Shapes */}
                     <div className="absolute -left-10 xl:-left-20 top-1/4 w-32 xl:w-48 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
                     <div className="absolute -left-5 xl:-left-10 top-[38%] w-24 xl:w-36 h-10 xl:h-14 bg-[#F2F2F2] rounded-full -z-10" />
