@@ -14,7 +14,7 @@ export default function Vision() {
       x: 0,
       transition: {
         duration: 3,
-        delay: index * 0.2, // stagger effect
+        delay: index * 0.2, 
         ease: "easeOut",
       },
     }),
@@ -75,7 +75,7 @@ export default function Vision() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.6 }}
                 variants={cardVariants}
-                className="hover:bg-white/20 rounded-2xl px-6 py-12 transition"
+                className="hover:bg-gray-500/30 rounded-2xl px-6 py-12 transition"
               >
                 <h4 className="text-2xl md:text-3xl text-center font-semibold mb-3">
                   {item.title}

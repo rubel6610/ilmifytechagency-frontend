@@ -19,7 +19,7 @@ const Careers = () => {
       job.companyInfo.address.toLowerCase().includes(search.toLowerCase()) ||
       job.companyName.toLowerCase().includes(search.toLowerCase());
 
-    const matchFilter = filter === "All" || job.compensationAndBenefits.employmentStatus === filter;
+    const matchFilter = filter === "All" || job.compensationAndBenefits.employmentStatus === filter || job.summary.jobStatus.toLowerCase() === filter.toLowerCase();
 
     return matchSearch && matchFilter;
   });
@@ -33,7 +33,7 @@ const Careers = () => {
   );
 
   return (
-    <div className="max-w-400 mx-auto px-6 my-8">
+    <div className="max-w-400 mx-auto px-6 my-10  ">
       {/* 🔹 Top Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center mb-6">
         
@@ -44,7 +44,7 @@ const Careers = () => {
 
         {/* Center */}
         <input
-          className="rounded-md border border-primary h-10 px-4 w-full focus:outline-none placeholder:text-sm"
+          className="rounded-md border border-primary h-10 px-4 w-full  focus:outline-none placeholder:text-sm"
           type="search"
           placeholder="Search Vacancies"
           value={search}
@@ -66,6 +66,7 @@ const Careers = () => {
           <option value="All">All Jobs</option>
           <option value="Full Time">Full Time</option>
           <option value="Part Time">Part Time</option>
+          <option value="Active">Active</option>
         </select>
       </div>
 

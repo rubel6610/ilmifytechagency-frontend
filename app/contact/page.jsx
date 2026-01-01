@@ -7,7 +7,7 @@ import ContactCard from "./ContactCard";
 
 const Contact = () => {
   return (
-    <div className="overflow-visible">
+    <div className="overflow-hidden">
       {/* HEADER */}
       <h1 className=" text-primary py-10 text-[43px]  sm:text-[43px] text-center bg-[#F9F9F9] font-bold">
         Contact Page

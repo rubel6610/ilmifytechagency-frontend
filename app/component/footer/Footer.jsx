@@ -13,10 +13,11 @@ import CustomBorder from "../customBorder/CustomBorder";
 import Image from "next/image";
 import { PiDeviceMobileLight } from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
-
+  const pathname = usePathname();
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -28,6 +29,12 @@ const Footer = () => {
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
+
+  if ( pathname.includes("/dashboard") ||
+    pathname.includes("/login") ||
+    pathname.includes("/register")) {
+    return null;
+  }
 
   return (
     <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6 overflow-x-hidden">
@@ -108,7 +115,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <IoLocationOutline className="text-[#8FE481] text-2xl shrink-0" />
                 <span className="leading-tight">
-                  117, Road: Ahmed Shorkar Road, Trishal 2220
+                 17/1 Ahmed Sarker Road, Trishal, Mymensingh, Bangladesh
                 </span>
               </li>
             </ul>

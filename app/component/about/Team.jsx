@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaPinterestP } from "react-icons/fa";
+import CustomBorder from "../customBorder/CustomBorder";
 
 const teamMembers = [
   {
@@ -77,8 +78,7 @@ export default function Team() {
       </motion.h2>
 
       <div className="flex space-x-2 py-10 justify-center">
-        <div className="border-3 rounded-2xl border-[#98DD5F] w-3"></div>
-        <div className="border-3 rounded-2xl border-[#98DD5F] w-10"></div>
+        <CustomBorder/>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto mt-10">
         {teamMembers.map((member, index) => (

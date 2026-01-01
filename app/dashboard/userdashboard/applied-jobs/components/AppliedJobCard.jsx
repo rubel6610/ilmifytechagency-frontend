@@ -26,7 +26,7 @@ const AppliedJobCard = ({ job }) => {
       </div>
 
       <div className="mt-4 text-right">
-        <Link href={`/applied-job/${job.id}`} passHref>
+        <Link href={`/dashboard/userdashboard/applied-jobs/${job.id}`} >
           <button className="text-sm text-teal-500 hover:underline">
             View Details
           </button>

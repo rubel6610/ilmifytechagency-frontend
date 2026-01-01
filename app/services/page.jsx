@@ -5,7 +5,7 @@ import WeDo from "../component/services/WeDo";
 
 export default function Services() {
   return (
-    <div>
+    <div className="mb-30">
       <h1 className="text-3xl md:text-5xl font-semibold text-center bg-[#F9F9F9] py-14 text-[#00D9A6]">
         Services
       </h1>
