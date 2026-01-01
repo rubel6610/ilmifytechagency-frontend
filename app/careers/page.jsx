@@ -44,7 +44,7 @@ const Careers = () => {
 
         {/* Center */}
         <input
-          className="rounded-md border border-primary h-10 px-4 w-full focus:outline-none placeholder:text-sm"
+          className="rounded-md border border-primary h-10 px-4 w-full  focus:outline-none placeholder:text-sm"
           type="search"
           placeholder="Search Vacancies"
           value={search}
