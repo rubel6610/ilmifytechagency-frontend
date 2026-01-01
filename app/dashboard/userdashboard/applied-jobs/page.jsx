@@ -62,7 +62,7 @@ const AppliedJobs = () => {
             key={index}
             className={`px-4 py-2 rounded-md ${
               currentPage === index + 1
-                ? "bg-teal-500 text-white"
+                ? "bg-emerald-500 text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
             onClick={() => handlePageChange(index + 1)}

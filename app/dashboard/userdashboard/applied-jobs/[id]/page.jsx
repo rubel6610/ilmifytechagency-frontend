@@ -1,91 +1,80 @@
 "use client";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { TbLocationFilled } from "react-icons/tb";
 import { motion } from "motion/react";
 import {appliedJobsData as jobs} from "../components/AppliedJobData";
-const AppliedJobsDetails = () => {
+import { MdLocationOn } from "react-icons/md"; // Location icon
+import { FaCheckCircle } from "react-icons/fa"; // Applied check icon
+import Image from "next/image"; // For the company image
+import { useParams } from "next/navigation";
+
+const AppliedJobs = () => {
   const params = useParams();
-  const job = jobs.find((j) => j.id === params.id);
-
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-  return <div>{params.id}</div>
+  const job  = jobs.find(job=>job.id == params.id); // For demonstration, using the first job
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover={{
-        y: -8,
-        scale: 1.02,
-        boxShadow: "0px 10px 40px rgba(0,0,0,0.12)",
-      }}
-      className="bg-gray-100 border border-gray-200 rounded-xl p-5 transition-all duration-300 flex flex-col justify-between h-full cursor-pointer"
-    >
-      {/* Top */}
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
-          {job.title}
-        </h3>
-
-        <p className="text-sm text-gray-600 font-medium">{job.companyName}</p>
-
-        <motion.p
-          whileHover={{ x: 4 }}
-          transition={{ duration: 0.3 }}
-          className="text-sm text-gray-500 flex items-center gap-1"
-        >
-          <TbLocationFilled className="text-primary" />
-          {job.summary.location}
-        </motion.p>
-      </div>
-
-      {/* Middle */}
-      <div className="flex flex-wrap gap-2 mt-4">
-        <motion.span
-          whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
-        >
-          {job.compensationAndBenefits.employmentStatus}
-        </motion.span>
-
-        <motion.span
-          whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-green-50 text-green-600"
-        >
-          {job.summary.salary}
-        </motion.span>
-      </div>
-
-      {/* Bottom */}
-      <div className="mt-5 flex items-center justify-between">
-        <p className="text-xs text-gray-400">Deadline: {job.deadline}</p>
-
-        <motion.div whileHover={{ x: 6 }}>
-          <Link
-            href={`careers/${job.id}`}
-            className="text-sm font-medium text-primary"
+    <div className="max-w-7xl mx-auto p-6 lg:px-12">
+      {/* Grid Layout for Job Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+       
+          <motion.div
+           
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-lg shadow-lg p-6 flex flex-col"
           >
-            View Details →
-          </Link>
-        </motion.div>
+            {/* Company Image and Info */}
+            <div className="flex items-center mb-4">
+              <Image
+                height={150}
+                width={150}
+                src={job.companyImage}
+                alt={job.companyName}
+                className="w-16 h-16 rounded-full object-cover mr-4"
+              />
+              <div>
+                <h4 className="text-lg font-bold text-gray-800">{job.companyName}</h4>
+                <p className="text-sm text-gray-600">{job.title}</p>
+              </div>
+            </div>
+
+            {/* Job Details */}
+            <div className="flex flex-col space-y-3 mb-4">
+              <div className="flex items-center gap-2">
+                <MdLocationOn className="text-[#0ddaa0]" />
+                <span className="text-sm text-gray-700">{job.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-gray-700">Salary:</span>
+                <span className="text-sm text-gray-600">{job.salary}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-gray-700">Deadline:</span>
+                <span className="text-sm text-gray-600">{job.deadline}</span>
+              </div>
+            </div>
+
+            {/* Status and Apply Button */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center justify-between mt-auto"
+            >
+              {job.status === "Applied" ? (
+                <div className="flex items-center text-[#8ce064] gap-2">
+                  <FaCheckCircle className="text-xl" />
+                  <span className="text-sm">Applied</span>
+                </div>
+              ) : (
+                <button className="bg-[#0ddaa0] text-white px-4 py-2 rounded-lg">
+                  Apply Now
+                </button>
+              )}
+            </motion.div>
+          </motion.div>
+       
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export default AppliedJobsDetails;
+export default AppliedJobs;
