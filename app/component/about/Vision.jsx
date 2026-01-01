@@ -14,7 +14,7 @@ export default function Vision() {
       x: 0,
       transition: {
         duration: 3,
-        delay: index * 0.2, // stagger effect
+        delay: index * 0.2, 
         ease: "easeOut",
       },
     }),

@@ -33,7 +33,7 @@ const Careers = () => {
   );
 
   return (
-    <div className="max-w-400 mx-auto px-6 my-8">
+    <div className="max-w-400 mx-auto px-6 my-10  ">
       {/* 🔹 Top Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center mb-6">
         

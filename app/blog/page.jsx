@@ -83,7 +83,7 @@ const Blog = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className="mb-20"
+      className="mb-30"
     >
       {/* HEADER */}
       <h1 className="text-center font-bold bg-[#F9F9F9] text-[32px] sm:text-[43px] text-[#00D9A6] py-10 ">

@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
+import CustomBorder from "../customBorder/CustomBorder";
 const MotionLink = motion(Link);
 
 export default function Agency() {
@@ -47,9 +48,8 @@ export default function Agency() {
             </motion.span>
           </h1>
 
-          <div className="flex space-x-2 py-10 justify-center">
-            <div className="border-3 rounded-2xl border-green-500 w-3"></div>
-            <div className="border-3 rounded-2xl border-green-500 w-10"></div>
+          <div className="flex space-x-2 py-8">
+           <CustomBorder/>
           </div>
 
           <div className="text-justify">
