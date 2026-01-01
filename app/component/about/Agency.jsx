@@ -57,6 +57,7 @@ export default function Agency() {
             </motion.span>
           </h1>
 
+<<<<<<< HEAD
           <motion.div
         className="flex justify-center lg:justify-start"
         initial="hidden"
@@ -66,6 +67,11 @@ export default function Agency() {
       >
         <CustomBorder />
       </motion.div>
+=======
+          <div className="flex space-x-2 py-8">
+           <CustomBorder/>
+          </div>
+>>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 
           <div className="text-justify">
             <motion.p

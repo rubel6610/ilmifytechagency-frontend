@@ -178,9 +178,9 @@ const ServicesSection = () => {
                 />
               </div>
 
-              <div className="relative z-10 space-y-3 group-hover:text-white bg-transparent transition-colors duration-500 grow w-full">
+              <div className="relative z-10 space-y-3 group-hover:text-black bg-transparent transition-colors duration-500 grow w-full">
                 <h3 className="text-2xl font-bold">{service.title}</h3>
-                <p className="text-sm leading-relaxed opacity-80 group-hover:opacity-100 font-ubuntu">
+                <p className="text-md leading-relaxed opacity-80 group-hover:opacity-100 font-ubuntu">
                   {service.description}
                 </p>
               </div>

@@ -85,6 +85,7 @@ export default function Team() {
         <span className="text-[#00D9A6]">our team</span>
       </motion.h2>
 
+<<<<<<< HEAD
       <motion.div
         className="flex justify-center mt-8"
         initial="hidden"
@@ -94,6 +95,11 @@ export default function Team() {
       >
         <CustomBorder />
       </motion.div>
+=======
+      <div className="flex space-x-2 py-10 justify-center">
+        <CustomBorder/>
+      </div>
+>>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto mt-10">
         {teamMembers.map((member, index) => (
           <div

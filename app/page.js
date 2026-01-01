@@ -6,17 +6,17 @@ import WeLoveWhatWeDo from "./component/WeLoveWhatWeDo";
 import Support from "./component/Support";
 import DigitalFutures from "./component/DigitalFutures";
 import LogoSlider from "./component/LogoSlider";
-import ShowcaseSection from "./component/ShowcaseSection";
 import HeroSection from "./component/HeroSection";
 import BlogPostSection from "./component/BlogPostSection";
+import Showcase from "./showcase/page";
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="overflow-x-hidden">
       <HeroSection/>
       <ServicesSection/>
       <WhoWeAre/>
-      <ShowcaseSection/>
+      <Showcase/>
       <WeLoveWhatWeDo/>
       <Support/>
       <DigitalFutures/>

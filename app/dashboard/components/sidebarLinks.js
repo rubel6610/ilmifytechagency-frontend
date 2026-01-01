@@ -2,8 +2,7 @@ import {
   Briefcase,
   LayoutDashboard,
   Plus,
-  Shield,
-  Users,
+  Dock,
 
 } from "lucide-react";
 
@@ -15,8 +14,8 @@ export const userLinks = [
   },
   {
     name: "Applied Jobs",
-    href: "/dashboard/applied-jobs",
-    icon: Plus,
+    href: "/dashboard/userdashboard/applied-jobs",
+    icon:  Dock,
   },
   {
     name: "All Jobs",
@@ -29,12 +28,13 @@ export const userLinks = [
 export const adminLinks = [
   {
     name: "Admin Dashboard",
-    href: "/dashboard/admin",
-    icon: Shield,
+    href: "/dashboard",
+    icon: LayoutDashboard,
   },
   {
-    name: "Manage Users",
-    href: "/dashboard/admin/users",
-    icon: Users,
+    name: "Post Job",
+    href: "/dashboard/admindashboard/post-job",
+    icon: Plus,
   },
+  
 ];

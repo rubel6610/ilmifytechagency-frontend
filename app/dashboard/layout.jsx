@@ -1,22 +1,17 @@
 "use client";
 
-// import AdminDashboard from "./components/adminDashboard";
+
+
 import Sidebar from "./components/SideBar";
-// import UserDashboard from "./components/userDashbaord";
+import { role } from "./page";
 
-// DEMO ROLE (replace later with auth logic)
-export const role = "user"; // "user" | "admin"
-
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout({children}) {
   return (
-    <div className="flex  bg-slate-100">
+    <div className="flex  bg-slate-100 min-h-screen lg:min-h-[calc(100vh - 100px)]">
       {/* Sidebar */}
       <Sidebar role={role} />
 
-      <div className="flex-1 ml-16 p-6"> {/* ml-16 is for small screens, md:ml-64 for larger */}
-        {/* Show dashboard based on role */}
-        {/* {role === "admin" ? <AdminDashboard /> : <UserDashboard />} */}
-        
+      <div className="flex-1  p-6"> 
         {/* Nested routes */}
         {children}
       </div>

@@ -8,7 +8,7 @@ import { appliedJobsData } from "./components/AppliedJobData";
 const AppliedJobs = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8; // Items per page
+  const itemsPerPage = 8; 
 
   // Filter jobs based on search query
   const filteredJobs = appliedJobsData.filter(
@@ -39,7 +39,7 @@ const AppliedJobs = () => {
         <input
           type="text"
           placeholder="Search by title, company, or location"
-          className="border px-4 py-2 rounded-md"
+          className="rounded-md border border-primary h-10 px-4 w-1/3 focus:outline-none placeholder:text-sm"
           value={searchQuery}
           onChange={handleSearch}
         />
@@ -49,7 +49,7 @@ const AppliedJobs = () => {
       </div>
 
       {/* Applied Jobs Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {currentJobs.map((job) => (
           <AppliedJobCard key={job.id} job={job} />
         ))}

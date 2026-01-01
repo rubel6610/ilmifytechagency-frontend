@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, useFieldArray } from "react-hook-form";
-import { motion } from "motion/react";
+import { motion } from "framer-motion"; // Corrected motion import for framer-motion
 
 /* ---------- Field Component (OUTSIDE render) ---------- */
 import { Field } from "./components/Field";
@@ -161,8 +161,10 @@ export default function PostJobPage() {
         ))}
 
         <motion.button
+          type="button"
           whileHover={{ scale: 1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => append("")}
           className="hover:bg-[#00c389] hover:text-white border px-10 mx-4 py-3 rounded-lg font-semibold"
         >
           + Add Responsibility

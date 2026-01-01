@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 "use client"
+=======
+
+"use client";
+>>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 import { Card, CardContent } from "@/app/component/ui/card";
 import { motion } from "motion/react";
 
@@ -40,7 +45,7 @@ export default function Expertise() {
   };
   return (
     <section
-      className="relative bg-fixed bg-center bg-cover text-white px-16 py-20"
+      className="relative py-20 pr-8 text-white bg-fixed bg-center bg-cover"
       style={{
         backgroundImage: "url('/teammate.jpg')",
       }}
@@ -48,15 +53,16 @@ export default function Expertise() {
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/70" />
 
-      <div className="relative mx-auto grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12 items-center py-24">
+      <div className="relative max-w-400 mx-auto grid grid-cols-1 lg:grid-cols-[30%_70%] gap-12 items-center px-16 py-24">
         {/* Left Content */}
         <div>
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+          <h2 className="text-3xl font-bold leading-tight md:text-4xl">
             Our team of <br />
             experts do <br />
             their best
           </h2>
 
+<<<<<<< HEAD
           <motion.div 
           initial="hidden"
         whileInView="visible"
@@ -66,8 +72,14 @@ export default function Expertise() {
             <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
             <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
           </motion.div>
+=======
+          <div className="flex py-10 space-x-2">
+            <div className="w-3 border-gray-300 border-3 rounded-2xl"></div>
+            <div className="w-10 border-gray-300 border-3 rounded-2xl"></div>
+          </div>
+>>>>>>> 33ec3a0573cdc17a4e2b8ff8af186cfb6e572012
 
-          <p className="mt-6 max-w-md text-white/70 leading-relaxed">
+          <p className="max-w-md mt-6 leading-relaxed text-white/70">
             Our team of experts puts in their best effort to deliver exceptional
             solutions that meet your business goals with precision and
             innovation.
@@ -75,9 +87,17 @@ export default function Expertise() {
         </div>
 
         {/* Right Card */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: 60 }} // start from right
+          whileInView={{ opacity: 1, x: 0 }} // move to original position
+          transition={{
+            duration: 1,
+            ease: "easeOut",
+          }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <Card className="bg-[#FFFFFF] rounded-2xl shadow-xl">
-            <CardContent className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <CardContent className="grid grid-cols-1 gap-4 px-6 py-4 sm:grid-cols-2 lg:grid-cols-4">
               {steps.map((step) => (
                 <div key={step.number}>
                   <div className="flex items-center gap-3 mb-4">
@@ -87,18 +107,18 @@ export default function Expertise() {
                     </span>
                   </div>
 
-                  <h4 className="text-emerald-500 text-xl font-medium mb-3">
+                  <h4 className="mb-3 text-xl font-medium text-emerald-500">
                     {step.title}
                   </h4>
 
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="leading-relaxed text-gray-400">
                     {step.description}
                   </p>
                 </div>
               ))}
             </CardContent>
           </Card>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

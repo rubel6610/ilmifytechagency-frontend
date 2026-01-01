@@ -1,24 +1,29 @@
 "use client";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { TbLocationFilled } from "react-icons/tb";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import {appliedJobsData as jobs} from "../components/AppliedJobData";
+const AppliedJobsDetails = () => {
+  const params = useParams();
+  const job = jobs.find((j) => j.id === params.id);
 
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
     },
-  },
-};
-
-const JobCard = ({ job }) => {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+  return <div>{params.id}</div>
   return (
     <motion.div
       variants={cardVariants}
@@ -57,15 +62,10 @@ const JobCard = ({ job }) => {
         >
           {job.compensationAndBenefits.employmentStatus}
         </motion.span>
+
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className={`text-sm px-3 py-1 rounded-full ${job.summary.jobStatus === "active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
-        >
-          {job.summary.jobStatus}
-        </motion.span>
-        <motion.span
-          whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
+          className="text-sm px-3 py-1 rounded-full bg-green-50 text-green-600"
         >
           {job.summary.salary}
         </motion.span>
@@ -88,4 +88,4 @@ const JobCard = ({ job }) => {
   );
 };
 
-export default JobCard;
+export default AppliedJobsDetails;

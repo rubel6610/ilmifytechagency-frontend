@@ -1,20 +1,11 @@
-export default function DashboardPage() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white p-6 rounded shadow">
-        <h4 className="text-slate-600">Total Jobs</h4>
-        <p className="text-3xl font-bold text-sky-400">12</p>
-      </div>
+import React from "react";
 
-      <div className="bg-white p-6 rounded shadow">
-        <h4 className="text-slate-600">Active Jobs</h4>
-        <p className="text-3xl font-bold text-green-500">8</p>
-      </div>
+// import { role } from "./layout";
+import AdminDashboard from "./admindashboard/AdminDashboard";
+import UserDashboard from "./userdashboard/UserDashboard";
+export const role = "user"; // "user" | "admin"
+const page = () => {
+ return role === "admin" ? <AdminDashboard /> : <UserDashboard />;
+};
 
-      <div className="bg-white p-6 rounded shadow">
-        <h4 className="text-slate-600">Applications</h4>
-        <p className="text-3xl font-bold text-orange-400">54</p>
-      </div>
-    </div>
-  );
-}
+export default page;

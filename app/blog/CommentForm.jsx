@@ -129,7 +129,7 @@ export default function CommentForm() {
 <div className="flex justify-center lg:justify-end">
   <button
     type="submit"
-    className="px-8 py-3 text-white font-medium rounded-4xl bg-linear-to-r from-[#94e160] to-[#12DA9D] hover:opacity-90 transition"
+    className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-8 py-3 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
   >
     SUBMIT
   </button>

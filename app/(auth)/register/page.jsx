@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 
 const Register = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 ">
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         {/* LEFT: FORM */}
         <div className="p-8 md:p-12">
@@ -21,7 +21,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="Name"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-none focus:ring-emerald-500"
               />
             </div>
 
@@ -30,7 +30,7 @@ const Register = () => {
               <input
                 type="email"
                 placeholder="Email"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-none focus:ring-emerald-500"
               />
             </div>
 
@@ -39,7 +39,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="Photo URL"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-none focus:ring-emerald-500"
               />
             </div>
 
@@ -48,7 +48,7 @@ const Register = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-none focus:ring-emerald-500"
               />
             </div>
 
@@ -119,7 +119,7 @@ const Register = () => {
           <button
             type="button"
             aria-label="Continue with Google"
-            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition  cursor-pointer hover:shadow-sm "
           >
             <Image
               src="/assets/google.png"
