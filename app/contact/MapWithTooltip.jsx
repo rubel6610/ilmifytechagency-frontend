@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/lib/leafletIcon";
@@ -9,20 +9,19 @@ import CtrlScrollZoom from "./CtrlScrollZoom";
 const MapWithTooltip = () => {
   const position = [24.583045, 90.390682];
   const [showHint, setShowHint] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
 
-  // Detect touch device
-  useEffect(() => {
-    setIsTouch(
-      "ontouchstart" in window || navigator.maxTouchPoints > 0
-    );
-  }, []);
+  const [isTouch] = useState(() => {
+    if (typeof window !== "undefined") {
+      return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    }
+    return false;
+  });
 
   return (
-    <div className="relative  w-full h-[70vh]">
+    <div className="relative w-full h-[70vh]">
       {/* Overlay message */}
       {showHint && (
-        <div className="absolute inset-0  flex items-center justify-center bg-black/40 text-white text-sm pointer-events-none text-center px-4">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-sm pointer-events-none text-center px-4 z-500">
           {isTouch ? (
             <>Use <b>two fingers</b> to zoom in</>
           ) : (
@@ -54,4 +53,3 @@ const MapWithTooltip = () => {
 };
 
 export default MapWithTooltip;
-
