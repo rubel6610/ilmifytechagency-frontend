@@ -11,6 +11,9 @@
   --font-quicksand: "Quicksand", sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 
 @layer base {

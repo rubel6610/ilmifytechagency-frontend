@@ -5,6 +5,7 @@ import AdminDashboard from "./admindashboard/AdminDashboard";
 import UserDashboard from "./userdashboard/UserDashboard";
 export const role = "user"; // "user" | "admin"
 const page = () => {
+    
  return role === "admin" ? <AdminDashboard /> : <UserDashboard />;
 };
 
