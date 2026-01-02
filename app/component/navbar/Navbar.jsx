@@ -32,7 +32,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full bg-[#FFFFFF] shadow-xs sticky top-0 z-1200">
+    <header className="w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200">
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">

@@ -11,9 +11,28 @@
   --font-quicksand: "Quicksand", sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 }
-html {
-  scroll-behavior: smooth;
+/* Remove native vertical scrollbar on html and body */
+html, body {
+  overflow-y: hidden; /* Hide browser native vertical scrollbar */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+/* Lenis wrapper fills full viewport and enables scrolling */
+#lenis-wrapper {
+  overflow-y: auto; /* Enable scroll only here */
+  height: 100vh;
+  width: 100%;
+  overscroll-behavior: none;
+}
+
+/* Prevent horizontal scroll */
+body, #lenis-wrapper {
+  overflow-x: hidden;
+}
+
 
 
 @layer base {

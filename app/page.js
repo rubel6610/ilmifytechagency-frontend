@@ -1,30 +1,58 @@
-import React from "react";
-import ContactCards from "./component/ContactCards";
+"use client";
+import HeroSection from "./component/HeroSection";
 import ServicesSection from "./component/ServicesSection";
 import WhoWeAre from "./component/WhoWeAre";
+import Showcase from "./showcase/page";
 import WeLoveWhatWeDo from "./component/WeLoveWhatWeDo";
 import Support from "./component/Support";
 import DigitalFutures from "./component/DigitalFutures";
-import LogoSlider from "./component/LogoSlider";
-import HeroSection from "./component/HeroSection";
 import BlogPostSection from "./component/BlogPostSection";
-import Showcase from "./showcase/page";
+import ContactCards from "./component/ContactCards";
+import LogoSlider from "./component/LogoSlider";
+import Section from "./component/Section";
 
-const Home = () => {
+export default function Home() {
   return (
-    <div className="overflow-x-hidden">
-      <HeroSection/>
-      <ServicesSection/>
-      <WhoWeAre/>
-      <Showcase/>
-      <WeLoveWhatWeDo/>
-      <Support/>
-      <DigitalFutures/>
-      <BlogPostSection/>
-      <ContactCards/>
-      <LogoSlider/>
-    </div>
-  );
-};
+    <main className="overflow-hidden mt-30">
+      <Section>
+        <HeroSection />
+      </Section>
 
-export default Home;
+      <Section>
+        <ServicesSection />
+      </Section>
+
+      <Section>
+        <WhoWeAre />
+      </Section>
+
+      <Section>
+        <Showcase />
+      </Section>
+
+      <Section>
+        <WeLoveWhatWeDo />
+      </Section>
+
+      <Section>
+        <Support />
+      </Section>
+
+      <Section>
+        <DigitalFutures />
+      </Section>
+
+      <Section>
+        <BlogPostSection />
+      </Section>
+
+      <Section>
+        <ContactCards />
+      </Section>
+
+      <Section>
+        <LogoSlider />
+      </Section>
+    </main>
+  );
+}
