@@ -66,6 +66,10 @@ html {
 .logo {
   filter: brightness(0%) contrast(167%) saturate(0%);
 }
+
+.logo-2 {
+  filter: grayscale(100%) brightness(40%) contrast(100%);
+}
 .input {
   @apply w-full border border-slate-300 px-4 py-2 rounded-md
   focus:outline-none focus:ring-2 focus:ring-[#00c389];
