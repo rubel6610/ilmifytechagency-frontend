@@ -16,6 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { role } from "../../dashboard/page";
 
+const MotionLink = motion(Link);
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
@@ -35,19 +36,21 @@ const Header = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 },
+      transition: { 
+        staggerChildren: 0.1, 
+        delayChildren: 0.2
+      },
     },
   };
 
   const fadeInRight = {
-    hidden: { opacity: 0, x: 20 },
+    hidden: { opacity: 0, x: 50 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.4, ease: "easeOut" },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
-
   return (
     <header className="w-full bg-[#FFFFFF] shadow-xs sticky top-0 z-1200">
       {/* Top Black Bar */}
@@ -69,7 +72,7 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <nav className="md:py-2.5 pt-5 pb-0 md:pt-6 md:pb-5 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
+      <nav className="md:py-2.5 pt-5 pb-5 md:pt-6 md:pb-5 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
         <div className="flex justify-between items-center w-full xl:w-auto">
           <Link
             href="/"
@@ -95,7 +98,7 @@ const Header = () => {
                 <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">Login</button>
               </Link>
             )}
-            <div className="text-xl cursor-pointer text-gray-400" onClick={toggleNav}>
+            <div className="text-xl block md:hidden cursor-pointer text-gray-400" onClick={toggleNav}>
               <FaBars />
             </div>
           </div>
@@ -114,7 +117,34 @@ const Header = () => {
             </li>
           ))}
         </ul>
+
+        {/* Right Side (Only XL) */}
+          <div className="hidden xl:flex items-center gap-6">
+            {role=== "admin" ? ( 
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                Admin Dashboard
+              </Link>
+            ) :  role=== "user" ? (
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                User Dashboard
+              </Link>
+            ) : (
+              <Link href="/login">
+                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
+                  Login
+                </button>
+              </Link>
+            )}
+          </div>
       </nav>
+
+      
 
       {/* Mobile Menu & Backdrop Overlay */}
       <AnimatePresence>
@@ -130,7 +160,7 @@ const Header = () => {
 
             {/* Side Menu */}
             <motion.div
-              className="fixed p-6 top-0 right-0 w-2/3 h-screen bg-white z-1300 flex flex-col items-start justify-start gap-10 shadow-2xl md:hidden"
+              className="fixed p-6 top-0 right-0 w-2/3 h-screen bg-white z-1300 flex flex-col items-start justify-start gap-7 shadow-2xl md:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -145,22 +175,26 @@ const Header = () => {
                     rotate: { repeat: Infinity, duration: 8, ease: "linear" },
                     scale: { repeat: Infinity, duration: 2, ease: "easeInOut" },
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer p-2 bg-gray-100 hover:bg-red-50 text-gray-500 hover:text-red-500 rounded-full transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200"
                 >
                   <FaTimes className="text-gray-500 text-2xl" />
                 </motion.div>
 
-                <div className="flex items-center gap-5 w-full">
-                  <Link href="/" onClick={() => setNav(false)}>
+                <motion.div 
+                 initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+                className="flex items-center gap-10 w-full ">
+                  <MotionLink variants={fadeInRight} href="/" onClick={() => setNav(false)}>
                     <Image className="logo-2 w-20 h-auto" height={50} width={150} src="/logo.png" alt="logo" priority />
-                  </Link>
-                  <div className="flex gap-3 text-gray-500">
+                  </MotionLink>
+                  <motion.div variants={fadeInRight} className="flex gap-3 text-gray-500">
                     <Link href="https://www.facebook.com/ilmifyTech"><FaFacebookF /></Link>
                     <Link href="https://www.instagram.com/ilmifytech.agency"><FaInstagram /></Link>
                     <Link href="https://bd.linkedin.com/company/ilmifytechagency"><FaLinkedinIn /></Link>
                     <Link href="https://linkedin.com"><FaTwitter /></Link>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
               {/* Nav Links */}
@@ -168,7 +202,7 @@ const Header = () => {
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
-                className="flex flex-col gap-5 w-full border-t pt-5 border-gray-100"
+                className="flex flex-col gap-3 w-full border-t pt-5 border-gray-100"
               >
                 {menuItems.map((item) => (
                   <motion.div key={item.path} variants={fadeInRight}>
