@@ -6,7 +6,7 @@ import { role } from "./page";
 export default function DashboardLayout({children}) {
   return (
     <PageWrapper>
-      <div className="flex  bg-slate-100 min-h-screen lg:min-h-[calc(100vh - 100px)] mt-25 md:mt-37 lg:mt-25">
+      <div className="flex  bg-slate-100 min-h-screen ">
       {/* Sidebar */}
       <Sidebar role={role} />
 

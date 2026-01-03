@@ -4,6 +4,7 @@ import Navbar from "./component/navbar/Navbar";
 import Footer from "./component/footer/Footer";
 import SmoothScroll from "./component/SmoothScroll";
 
+
 const quicksand = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
@@ -24,14 +25,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="your-font-classes">
-        <Navbar /> {/* fixed navbar outside scroll */}
+      <body className={`${quicksand.variable} ${ubuntu.variable} font-sans bg-white text-gray-900`}>
+
+          <Navbar /> {/* fixed navbar outside scroll */}
         <SmoothScroll>
           <main id="page-content" >
             {children}
             <Footer />
           </main>
         </SmoothScroll>
+           
       </body>
     </html>
   );

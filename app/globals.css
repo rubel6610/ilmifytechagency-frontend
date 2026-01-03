@@ -18,6 +18,8 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-secondary);
 }
 
 /* Lenis wrapper fills full viewport and enables scrolling */
@@ -98,3 +100,33 @@ body, #lenis-wrapper {
   @apply text-lg font-semibold mb-3 text-slate-700;
 }
 
+
+.leaflet-routing-container,
+.leaflet-routing-alt,
+.leaflet-control-container .leaflet-routing-container,.leaflet-container {
+  z-index: -1 !important;
+ 
+}
+/* For Webkit browsers (Chrome, Safari, etc.) */
+body {
+  overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 12px; /* Adjust width of the scrollbar */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent; /* Makes the track (the area the thumb moves along) invisible */
+}
+
+/* For Firefox */
+body {
+  scrollbar-width: thin; 
+  scrollbar-color: var(--color-primary) var(--color-background); 
+}

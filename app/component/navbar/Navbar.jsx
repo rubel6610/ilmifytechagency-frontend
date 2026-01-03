@@ -12,7 +12,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 import { role } from "../../dashboard/page";
 
@@ -51,12 +51,15 @@ const Header = () => {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
+  if(pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    return null; 
+  }
   return (
     <header className="w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200">
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">
-          <div className="text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
+          <div className="text-white py-2 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
@@ -72,7 +75,7 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <nav className="md:py-2.5 pt-5 pb-5 md:pt-6 md:pb-5 px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
+      <nav className="md:py-2.5 lg:py-6 pt-5 pb-5 md:pt-6  px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
         <div className="flex justify-between items-center w-full xl:w-auto">
           <Link
             href="/"
