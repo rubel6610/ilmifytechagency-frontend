@@ -57,7 +57,7 @@ const JobDetails = () => {
   return (
  
       <motion.div
-      className="mx-auto p-4 sm:p-6 md:p-8  max-w-400  rounded-2xl md:my-10"
+      className="mx-auto p-4 sm:p-6 md:p-8  max-w-400  rounded-2xl my-27 md:my-40"
       style={{ backgroundColor: "#f4f9f9" }}
       initial="hidden"
       animate="visible"

@@ -5,7 +5,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import PageWrapper from "../component/PageWrapper";
-
+import { blogs } from "./blogsData";
 /* Fade up animation */
 const fadeUp = {
   hidden: { opacity: 0, y: 60 },
@@ -17,67 +17,7 @@ const fadeUp = {
 };
 
 const Blog = () => {
-  const blogs = [
-    {
-      id: 1,
-      title: "Marketing Ideas",
-      date: "May 24, 2018",
-      author: "tufael4736@gmail.com",
-      image:
-        "/serious-businesswoman-with-documents-talking-on-P9Q6LX6-768x576.png",
-    },
-    {
-      id: 2,
-      title: "Rest During Working Hours",
-      date: "June 10, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/Businessman-at-the-desk-in-his-office-resting-768x576.png",
-    },
-    {
-      id: 3,
-      title: "Develop Your Startup Idea",
-      date: "July 02, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/simple-home-office-with-tree-PBXRXYB-large-768x576.png",
-    },
-    {
-      id: 4,
-      title: "Travel and Work During Spring",
-      date: "August 15, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/rainbow-mountain-PUWHUHP-768x576.png",
-    },
-    {
-      id: 5,
-      title: "Plan Your Business",
-      date: "September 01, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/business-PG3SVDZ-768x576.png",
-    },
-    {
-      id: 6,
-      title: "Diversity in the Workplace",
-      date: "October 20, 2018",
-      author: "tufael4736@gmail.com",
-      image:
-        "/diversity-young-teens-people-friends-concept-PTZ4RGN-768x576.png",
-    },
-    {
-      id: 7,
-      title: "Women in Business",
-      date: "November 11, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/person-with-long-curly-hair-PZ99QM2@2x-768x576.png",
-    },
-    {
-      id: 8,
-      title: "Hardest Things in Programming",
-      date: "December 05, 2018",
-      author: "tufael4736@gmail.com",
-      image:
-        "/woman-freelancer-female-hands-with-pen-writing-on-P369BAX1-768x576.png",
-    },
-  ];
+ 
 
   return (
     <PageWrapper>

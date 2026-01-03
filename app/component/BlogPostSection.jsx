@@ -4,32 +4,10 @@ import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
 import Link from "next/link";
 import { motion } from "motion/react";
-
+import { blogs as blogsData } from "../blog/blogsData";
 const MotionLink = motion(Link);
 const BlogPostSection = () => {
-  const blogs = [
-    {
-      id: 1,
-      title: "Marketing Ideas",
-      date: "May 24, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/blog-1.png",
-    },
-    {
-      id: 2,
-      title: "Rest During Working Hours",
-      date: "June 10, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/blog-2.png",
-    },
-    {
-      id: 3,
-      title: "Develop Your Startup Idea",
-      date: "July 02, 2018",
-      author: "tufael4736@gmail.com",
-      image: "/blog-3.png",
-    },
-  ];
+const blogs = blogsData.slice(0, 3); // Get the first 3 blog posts
 
   return (
     <div>
@@ -55,7 +33,7 @@ const BlogPostSection = () => {
                     alt="Business woman"
                     width={675}
                     height={506}
-                    className="rounded-md shadow-2xl  w-78.5 h-62.75 md:w-136.5 md:h-101.75 lg:w-full lg:h-auto
+                    className="rounded-md shadow-2xl  w-full mx-auto h-62.75 md:w-136.5 md:h-101.75 lg:w-full lg:h-auto
        transition-transform duration-700
        ease-[cubic-bezier(0.16,1,0.3,1)]
        scale-100
