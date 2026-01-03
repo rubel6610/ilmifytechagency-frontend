@@ -1,7 +1,4 @@
 "use client";
-
-
-
 import Sidebar from "./components/SideBar";
 import { role } from "./page";
 
