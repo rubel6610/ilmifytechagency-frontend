@@ -59,9 +59,13 @@ const JobCard = ({ job }) => {
         </motion.span>
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className={`text-sm px-3 py-1 border rounded-full ${job.summary.jobStatus === "active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
+          className={`text-sm px-3 py-1 border rounded-full ${
+            job.summary.jobStatus === "active"
+              ? "bg-green-50 text-green-600"
+              : "bg-red-50 text-red-600"
+          }`}
         >
-          {job.summary.jobStatus}
+          {job.summary.jobStatus.charAt(0).toUpperCase() + job.summary.jobStatus.slice(1)}
         </motion.span>
         <motion.span
           whileHover={{ scale: 1.08 }}
