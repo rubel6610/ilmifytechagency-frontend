@@ -53,19 +53,19 @@ const JobCard = ({ job }) => {
       <div className="flex flex-wrap gap-2 mt-4">
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
+          className="text-sm px-3 py-1 border rounded-full bg-blue-50 text-blue-600"
         >
           {job.compensationAndBenefits.employmentStatus}
         </motion.span>
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className={`text-sm px-3 py-1 rounded-full ${job.summary.jobStatus === "active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
+          className={`text-sm px-3 py-1 border rounded-full ${job.summary.jobStatus === "active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
         >
           {job.summary.jobStatus}
         </motion.span>
         <motion.span
           whileHover={{ scale: 1.08 }}
-          className="text-sm px-3 py-1 rounded-full bg-blue-50 text-blue-600"
+          className="text-sm px-3 py-1 border rounded-full bg-blue-50 text-blue-600"
         >
           {job.summary.salary}
         </motion.span>
