@@ -14,7 +14,7 @@ import ShowcaseSection from "./component/ShowcaseSection";
 
 export default function Home() {
   return (
-    <main className="overflow-hidden mt-25 md:mt-28">
+    <main className="overflow-hidden mt-25 md:mt-30 lg:mt-32">
       <Section>
         <HeroSection />
       </Section>
