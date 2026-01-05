@@ -48,14 +48,9 @@ const BlogPage = () => {
 
     return (
         <>
-            {/* Global overflow fix - add this to prevent any horizontal scroll */}
-            <style jsx global>{`
-                html, body {
-                    overflow-x: hidden;
-                }
-            `}</style>
+          
             
-            <div className='my-10 md:my-20 bg-background mx-auto w-full max-w-360 px-4 sm:px-6 lg:px-8 overflow-hidden'>
+            <div className='my-10 md:my-20 bg-background mx-auto w-full max-w-360 px-4 sm:px-6 lg:px-8 overflow-hidden mt-30 md:mt-40'>
                 
                 {/* HERO IMAGE */}
                 <div className="relative w-full overflow-hidden rounded-xl">

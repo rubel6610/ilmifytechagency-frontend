@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, Home, ArrowLeftToLine } from "lucide-react";
 import { userLinks, adminLinks } from "./sidebarLinks";
 import Image from "next/image";
 
@@ -40,7 +40,7 @@ export default function Sidebar({ role = "user" }) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 260, damping: 25 }}
-              className="fixed z-50 top-10 md:top-20 left-0 w-64 min-h-[calc(100vh-30px)] md:min-h-[calc(100vh-70px)]
+              className="fixed z-50  left-0 w-64 min-h-[calc(100vh-30px)] md:min-h-[calc(100vh-70px)]
                 bg-linear-to-b from-[#00c389] to-[#86e062]
                 text-white p-5 flex flex-col"
             >
@@ -56,7 +56,7 @@ export default function Sidebar({ role = "user" }) {
 
       {/* ---------- Desktop Sidebar ---------- */}
       <aside
-        className="hidden min-h-[calc(100vh-00px)] lg:flex w-64 
+        className="hidden  lg:flex w-64 
           bg-linear-to-b from-[#00c389] to-[#86e062]
           text-white p-5 flex-col z-40"
       >
@@ -98,7 +98,7 @@ function SidebarContent({ links, pathname, close }) {
                 onClick={close}
                 className={`
                   flex items-center gap-3 px-4 py-3 rounded-lg
-                  transition-all duration-300
+                  transition-all duration-300 text-[16px]
                   ${
                     active
                       ? "bg-white text-[#00c389] shadow-lg font-semibold"
@@ -123,6 +123,14 @@ function SidebarContent({ links, pathname, close }) {
         >
           <Image src="/hero.png" height={150} width={150} alt="profile" className="w-8 h-8 rounded-full bg-white/30" />
           Profile
+        </Link>
+        <Link
+          href="/"
+          onClick={close}
+          className="flex items-center gap-3 mb-3 px-4 py-2 rounded-lg hover:bg-white/20"
+        >
+         <ArrowLeftToLine />
+          Go to Website
         </Link>
 
         <button

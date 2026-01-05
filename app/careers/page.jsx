@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import JobCard from "./components/JobCard";
 import { jobs } from "./components/JobData";
+import PageWrapper from "../component/PageWrapper";
 
 
 const ITEMS_PER_PAGE = 12;
@@ -33,7 +34,8 @@ const Careers = () => {
   );
 
   return (
-    <div className="max-w-400 mx-auto px-6 my-10  ">
+    <PageWrapper>
+ <div className="max-w-400 mx-auto px-6  my-40">
       {/* 🔹 Top Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center mb-6">
         
@@ -96,6 +98,9 @@ const Careers = () => {
         </div>
       )}
     </div>
+
+    </PageWrapper>
+   
   );
 };
 
