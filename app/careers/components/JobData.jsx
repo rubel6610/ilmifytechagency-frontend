@@ -10,7 +10,7 @@ export const jobs = [
       vacancy: "02",
       age: "23 to 40 years",
       location: "Dhaka (Banani)",
-      salary: "Negotiable",
+      salary: "70000-90000",
       experience: "2 to 5 years",
       published: "27 Dec 2025",
       jobStatus: "active",
@@ -43,7 +43,7 @@ export const jobs = [
       "Industry Knowledge",
     ],
     compensationAndBenefits: {
-      workplace: "Work at office",
+      workplace: "Remote",
       employmentStatus: "Full Time",
       gender: "Only Male",
       jobLocation: "Dhaka (Banani)",

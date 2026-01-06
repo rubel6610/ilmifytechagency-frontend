@@ -16,7 +16,7 @@ import {
   Building
 } from "lucide-react";
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 10;
 
 const Careers = () => {
   const [search, setSearch] = useState("");
@@ -405,7 +405,7 @@ const Careers = () => {
                   No jobs found
                 </h3>
                 <p className="text-gray-600 max-w-md mx-auto mb-8">
-                  We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.
+                  We couldnot find any jobs matching your criteria. Try adjusting your filters or search terms.
                 </p>
                 <button
                   onClick={() => {
