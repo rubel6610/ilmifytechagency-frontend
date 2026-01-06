@@ -1,7 +1,7 @@
 import React from "react";
-import Expertise from "../component/services/Expertise";
-import WeAre from "../component/services/WeAre";
-import WeDo from "../component/services/WeDo";
+import Expertise from "./components/Expertise";
+import WeAre from "./components/WeAre";
+import WeDo from "./components/WeDo";
 import PageWrapper from "../component/PageWrapper";
 
 export default function Services() {

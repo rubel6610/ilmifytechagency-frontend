@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardContent } from "@/app/component/ui/card";
+import { Card, CardContent } from "@/app/about/components/ui/card";
 import { motion } from "motion/react";
 
 const steps = [
