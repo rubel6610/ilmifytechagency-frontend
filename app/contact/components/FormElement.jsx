@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import CustomBorder from "../component/customBorder/CustomBorder";
+import CustomBorder from "@/app/component/customBorder/CustomBorder";
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
