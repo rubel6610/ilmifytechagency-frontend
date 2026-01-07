@@ -3,15 +3,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   MapPin,
-  Briefcase,
   Clock,
   Calendar,
   DollarSign,
   Users,
   Building,
-  CheckCircle,
-  ExternalLink,
-  Heart,
   TrendingUp,
 } from "lucide-react";
 import Image from "next/image";
@@ -31,20 +27,8 @@ const cardVariants = {
   },
 };
 
-const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
-  // Get job type color
-  const getJobTypeColor = (type) => {
-    switch (type) {
-      case "Full Time":
-        return "bg-green-100 text-green-800";
-      case "Part Time":
-        return "bg-blue-100 text-blue-800";
-      case "Remote":
-        return "bg-purple-100 text-purple-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
+const JobCard = ({ job }) => {
+ 
 
   // Get job status color
   const getJobStatusColor = (status) => {
@@ -63,7 +47,7 @@ const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
   // Format salary display
   const formatSalary = (salary) => {
     if (typeof salary === "string" && salary.includes("-")) {
-      const [min, max] = salary.split("-").map((s) => s.trim());
+      const [min, max] = job.summary.salary.split("-").map((s) => s.trim());
       const minNum = parseInt(min);
       const maxNum = parseInt(max);
       if (!isNaN(minNum) && !isNaN(maxNum)) {
@@ -80,8 +64,8 @@ const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
 
   // Calculate average salary for sorting
   const getAverageSalary = (salary) => {
-    if (typeof salary === "string" && salary.includes("-")) {
-      const [min, max] = salary.split("-").map((s) => parseInt(s.trim()));
+    if (typeof salary === "string" && job.summary.salary.includes("-")) {
+      const [min, max] = job.summary.salary.split("-").map((s) => parseInt(s.trim()));
       if (!isNaN(min) && !isNaN(max)) {
         return Math.floor((min + max) / 2);
       }
@@ -97,7 +81,7 @@ const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
       animate="visible"
       className="group"
     >
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1  flex flex-col">
         {/* Card Header */}
         <div className="p-5 md:p-6 flex-1">
           <div className="flex justify-between items-start mb-4">
@@ -131,30 +115,14 @@ const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
                 </p>
               </div>
             </div>
-            <motion.button
-              onClick={() => onToggleFavorite?.(job.id)}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <Heart
-                size={20}
-                className={`${
-                  isFavorite
-                    ? "fill-red-500 text-red-500"
-                    : "text-gray-400 group-hover:text-red-400"
-                } transition-colors`}
-              />
-            </motion.button>
+            
           </div>
 
           {/* Job Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(
-                job.compensationAndBenefits.employmentStatus
-              )}`}
+              className={`px-3 py-1 rounded-full text-xs font-medium bg-emerald-300`}
             >
               {job.compensationAndBenefits.employmentStatus}
             </motion.span>
@@ -269,15 +237,7 @@ const JobCard = ({ job, onToggleFavorite, isFavorite }) => {
                   View Details
                 </Link>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }}>
-                <Link
-                  href={`/careers/${job.id}/apply`}
-                  className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium text-sm transition-colors inline-flex items-center"
-                >
-                  Apply Now
-                  <ExternalLink size={14} className="ml-1" />
-                </Link>
-              </motion.div>
+            
             </div>
           </div>
         </div>

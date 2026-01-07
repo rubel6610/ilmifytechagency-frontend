@@ -93,7 +93,7 @@ export const jobs = [
     ],
     compensationAndBenefits: {
       workplace: "Hybrid",
-      employmentStatus: "Full Time",
+      employmentStatus: "Part Time",
       gender: "Any",
       jobLocation: "Dhaka (Gulshan)",
     },
@@ -583,7 +583,7 @@ export const jobs = [
       vacancy: "01",
       age: "23 to 35 years",
       location: "Dhaka (Uttara)",
-      salary: "Negotiable",
+      salary: "50000-55000",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
       jobStatus: "closed",
