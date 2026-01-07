@@ -19,7 +19,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: hidden; /* Hide native scroll, use #lenis-wrapper */
+ 
   font-family: var(--font-quicksand);
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -28,8 +28,8 @@ html, body {
 }
 
 #lenis-wrapper {
-  height: 100vh;
-  overflow-y: auto; /* Enable scrolling here */
+  /* height: 100vh; */
+  overflow-y: auto; 
   overscroll-behavior: none;
 
   /* WebKit scrollbar */
