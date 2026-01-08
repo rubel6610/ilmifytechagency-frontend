@@ -11,6 +11,7 @@ import ContactCards from "./component/ContactCards";
 import LogoSlider from "./component/LogoSlider";
 import Section from "./component/Section";
 import ShowcaseSection from "./component/ShowcaseSection";
+import OverviewSection from "./component/OverviewSection";
 
 export default function Home() {
   return (
@@ -37,6 +38,10 @@ export default function Home() {
 
       <Section>
         <Support />
+      </Section>
+
+      <Section>
+        <OverviewSection/>
       </Section>
 
       <Section>
