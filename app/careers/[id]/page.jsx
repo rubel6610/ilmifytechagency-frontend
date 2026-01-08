@@ -18,7 +18,7 @@ const JobDetails = () => {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-        className="flex flex-col items-center justify-center p-8 rounded-xl bg-linear-to-r from-red-100 to-red-200 shadow-lg text-center space-y-4"
+        className="flex flex-col items-center justify-center mx-4 my-40 p-8 rounded-xl bg-linear-to-r from-red-100 to-red-200 shadow-lg text-center space-y-4"
       >
         <motion.div
           animate={{ rotate: [0, 10, -10, 10, -10, 0] }}
@@ -105,13 +105,7 @@ const JobDetails = () => {
           <span className="font-bold">Application Deadline:</span>{" "}
           {job.deadline}
         </motion.p>
-        <motion.button
-          whileHover={{ scale: 1.05, backgroundColor: "#8ce064" }}
-          onClick={() => setOpenForm(true)}
-          className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-colors"
-        >
-          Apply Now
-        </motion.button>
+      
       </motion.div>
       {openForm && (
         <ApplyJobForm job={job} onClose={() => setOpenForm(false)} />
@@ -267,6 +261,14 @@ const JobDetails = () => {
           </p>
         </motion.div>
       </motion.div>
+        <motion.button
+          whileHover={{ scale: 1.05, backgroundColor: "#8ce064" }}
+          onClick={() => setOpenForm(true)}
+          className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-colors"
+          
+        >
+          Apply Now
+        </motion.button>
     </motion.div>
   );
 };
