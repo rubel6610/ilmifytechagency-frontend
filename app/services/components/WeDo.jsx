@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { Card, CardContent } from "@/app/component/ui/card";
+import { Card, CardContent } from "@/app/about/components/ui/card";
 import { motion } from "framer-motion";
 import servicesData from "./servicesData";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import CustomBorder from "../customBorder/CustomBorder";
+import { Button } from "../../about/components/ui/button";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {
@@ -33,13 +33,13 @@ const cardVariants = {
 };
 
 const fadeInRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
+  hidden: { opacity: 0, x: 50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
 
 export default function WeDo() {
   return (
@@ -60,14 +60,14 @@ export default function WeDo() {
           </motion.h2>
 
           <motion.div
-        className="flex justify-center mt-8"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-      >
-        <CustomBorder />
-      </motion.div>
+            className="flex justify-center mt-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={fadeInRight}
+          >
+            <CustomBorder />
+          </motion.div>
         </div>
 
         {/* Cards */}

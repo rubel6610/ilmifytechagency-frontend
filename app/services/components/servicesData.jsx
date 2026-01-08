@@ -66,29 +66,6 @@ const servicesData = [
     description3:
       "iLMiFY’s AI development ensures scalable and secure implementations tailored to business needs, empowering companies to leverage data-driven insights for real results.",
   },
-  // IMAGE CARDS
-  {
-    id: "7",
-    title: "Launching Shortly",
-    subtitle: "Exciting services coming soon this month",
-    isImageCard: true,
-    image: "/january.png",
-    description2:
-      "Stay tuned for our upcoming offerings designed to enhance your business capabilities. We are preparing innovative solutions to meet modern market demands.",
-    description3:
-      "These new services will provide advanced tools and features to help businesses grow efficiently and stay ahead in the competitive landscape.",
-  },
-  {
-    id: "8",
-    title: "Coming Soon 2026",
-    subtitle: "New features arriving next year",
-    isImageCard: true,
-    image: "/sixteen.png",
-    description2:
-      "We are developing new solutions to launch in 2026, aimed at addressing emerging business needs and technological trends. These will expand your digital capabilities.",
-    description3:
-      "Our upcoming services will offer advanced integrations and user-friendly features, ensuring that businesses can leverage the latest innovations for growth and efficiency.",
-  },
 ];
 
 export default servicesData;

@@ -18,6 +18,18 @@ export default function SmoothScroll({ children }) {
       content: document.getElementById("lenis-content"),
     });
 
+    // Add event listener to prevent Lenis from interfering with dropdowns
+    const handleWheel = (e) => {
+      // If the event target is inside a dropdown, stop propagation
+      const isDropdown = e.target.closest('[data-no-lenis]');
+      if (isDropdown) {
+        e.stopPropagation();
+        return;
+      }
+    };
+
+    document.addEventListener('wheel', handleWheel, { passive: false });
+
     const raf = (time) => {
       lenisRef.current.raf(time);
       requestAnimationFrame(raf);
@@ -25,7 +37,10 @@ export default function SmoothScroll({ children }) {
 
     requestAnimationFrame(raf);
 
-    return () => lenisRef.current.destroy();
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+      lenisRef.current?.destroy();
+    };
   }, []);
 
   // Scroll to top on route change
@@ -34,7 +49,7 @@ export default function SmoothScroll({ children }) {
   }, [pathname]);
 
   return (
-    <div id="lenis-wrapper" style={{ height: "100vh", overflow: "auto" }}>
+    <div id="lenis-wrapper">
       <div id="lenis-content">
         {children}
       </div>

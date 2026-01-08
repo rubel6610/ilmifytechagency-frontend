@@ -4,7 +4,8 @@ import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { blogs as blogsData } from "../blog/blogsData";
+import { blogsData } from "../blog/components/blogsData";
+import TypingText from "./TypingText";
 const MotionLink = motion(Link);
 const BlogPostSection = () => {
 const blogs = blogsData.slice(0, 3); // Get the first 3 blog posts

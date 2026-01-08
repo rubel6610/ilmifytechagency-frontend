@@ -1,9 +1,17 @@
 "use client";
+<<<<<<< HEAD:app/component/about/Agency.jsx
 
 import Image from "next/image";
 import { motion } from "motion/react";
 import CustomBorder from "../customBorder/CustomBorder";
 import Button from "../button/Button";
+=======
+import Image from "next/image";
+import { motion } from "motion/react";
+import Link from "next/link";
+import CustomBorder from "../../component/customBorder/CustomBorder";
+const MotionLink = motion(Link);
+>>>>>>> 6ee6f87c86c0215459ff40669ab150291a3b820e:app/about/components/Agency.jsx
 
 export default function Agency() {
   const typingVariant = {

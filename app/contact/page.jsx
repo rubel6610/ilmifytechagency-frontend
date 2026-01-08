@@ -1,9 +1,8 @@
 import React from "react";
-import MapClient from "./MapClient";
-
-import FormElement from "./FormElement";
-import ContactCard from "./ContactCard";
 import PageWrapper from "../component/PageWrapper";
+import MapClient from "./components/MapClient";
+import ContactCard from "./components/ContactCard";
+import FormElement from "./components/FormElement";
 
 const Contact = () => {
   return (

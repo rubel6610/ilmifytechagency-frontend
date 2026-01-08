@@ -1,8 +1,5 @@
 "use client";
-
 import { useState } from "react";
-import CustomBorder from "../component/customBorder/CustomBorder";
-
 export default function CommentForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -10,15 +7,12 @@ export default function CommentForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-
     // simulate API request
     await new Promise((r) => setTimeout(r, 1500));
-
     setLoading(false);
     setSuccess(true);
     e.target.reset();
   }
-
   return (
     <div className="bg-white rounded-xl p-8  max-w-300 mx-auto  gap-10">
       <div className="w-full py-10  items-center">
