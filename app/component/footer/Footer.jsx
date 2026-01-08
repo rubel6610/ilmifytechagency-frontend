@@ -210,28 +210,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      {/* --- SCROLL TO TOP BUTTON (Fixed Position) --- */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-8 right-5 md:right-8 z-50 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-[#00D9A5] hover:text-white transition-all duration-300 group active:scale-90 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
-        }`}
-      >
-        <svg
-          className="w-5 h-5 text-black group-hover:text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 10l7-7m0 0l7 7m-7-7v18"
-          />
-        </svg>
-      </button>
     </footer>
   );
 };

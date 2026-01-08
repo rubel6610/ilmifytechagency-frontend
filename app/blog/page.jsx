@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import PageWrapper from "../component/PageWrapper";
 import { blogs } from "./components/blogsData";
 import { blogsData } from "./components/blogsData";
 /* Fade up animation */
@@ -19,7 +18,7 @@ const fadeUp = {
 
 const Blog = () => {
   return (
-    <PageWrapper>
+
       <motion.section
         initial="hidden"
         whileInView="visible"
@@ -106,7 +105,7 @@ const Blog = () => {
           </div>
         </div>
       </motion.section>
-    </PageWrapper>
+
   );
 };
 

@@ -18,42 +18,46 @@ html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
- 
+  padding: 0; 
   font-family: var(--font-quicksand);
   background-color: var(--color-background);
   color: var(--color-foreground);
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) transparent;
 }
-
-#lenis-wrapper {
-  /* height: 100vh; */
-  overflow-y: auto; 
-  overscroll-behavior: none;
-
-  /* WebKit scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) transparent;
+html.lenis {
+  height: auto;
 }
 
-#lenis-wrapper::-webkit-scrollbar {
-  width: 12px;
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
 }
 
-#lenis-wrapper::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 6px;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
-#lenis-wrapper::-webkit-scrollbar-track {
-  background: transparent;
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+  html {
+  scroll-behavior: auto !important;
 }
 
-/* Prevent horizontal scroll */
-body, #lenis-wrapper {
-  overflow-x: hidden;
+html.lenis {
+  height: auto;
 }
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+/* Mobile dropdown fix */
+@media (max-width: 768px) {
+  .lenis.lenis-smooth {
+    overflow: auto !important;
+  }
+}
+
 
 /* 🔹 Fonts */
 .font-ubuntu {
@@ -98,23 +102,4 @@ body, #lenis-wrapper {
 .leaflet-control-container .leaflet-routing-container,
 .leaflet-container {
   z-index: 0 !important; /* Ensure interactive maps stay clickable */
-}
-
-/* 🔹 For Webkit (Chrome, Safari) */
-body::-webkit-scrollbar {
-  width: 12px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-}
-
-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* 🔹 Firefox fallback */
-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-background);
 }

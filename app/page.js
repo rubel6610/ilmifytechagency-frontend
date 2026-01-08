@@ -9,51 +9,31 @@ import DigitalFutures from "./component/DigitalFutures";
 import BlogPostSection from "./component/BlogPostSection";
 import ContactCards from "./component/ContactCards";
 import LogoSlider from "./component/LogoSlider";
-import Section from "./component/Section";
 import ShowcaseSection from "./component/ShowcaseSection";
 
 export default function Home() {
   return (
     <main className="overflow-hidden mt-25 md:mt-30 lg:mt-32">
-      <Section>
-        <HeroSection />
-      </Section>
-
-      <Section>
-        <ServicesSection />
-      </Section>
-
-      <Section>
-        <WhoWeAre />
-      </Section>
-
-      <Section>
-        <ShowcaseSection />
-      </Section>
-
-      <Section>
-        <WeLoveWhatWeDo />
-      </Section>
-
-      <Section>
-        <Support />
-      </Section>
-
-      <Section>
-        <DigitalFutures />
-      </Section>
-
-      <Section>
-        <BlogPostSection />
-      </Section>
-
-      <Section>
-        <ContactCards />
-      </Section>
-
-      <Section>
-        <LogoSlider />
-      </Section>
+      {/* hero section */}
+      <HeroSection />
+      {/* Service section */}
+      <ServicesSection />
+      {/* who we are */}
+      <WhoWeAre />
+      {/* Showcase section */}
+      <ShowcaseSection />
+      {/* we love what we do */}
+      <WeLoveWhatWeDo />
+      {/* Support */}
+      <Support />
+      {/* Digital Futures */}
+      <DigitalFutures />
+      {/* BlogPostSection */}
+      <BlogPostSection />
+      {/* Contact Cards */}
+      <ContactCards />
+      {/* Logo Slider */}
+      <LogoSlider />
     </main>
   );
 }
