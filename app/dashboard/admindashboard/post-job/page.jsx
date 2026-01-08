@@ -289,19 +289,7 @@ export default function PostJobPage() {
               />
             </Field>
 
-            <Field
-              label="Company Name"
-              index={i++}
-              error={errors.companyName?.message}
-            >
-              <input
-                className="input"
-                placeholder="e.g., Tech Corp Inc."
-                {...register("companyName", {
-                  required: "Company name is required",
-                })}
-              />
-            </Field>
+            
 
             {/* IMAGE UPLOAD - FIXED VERSION */}
             <div className="space-y-2">

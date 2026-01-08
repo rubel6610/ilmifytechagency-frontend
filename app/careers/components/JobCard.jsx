@@ -28,8 +28,6 @@ const cardVariants = {
 };
 
 const JobCard = ({ job }) => {
- 
-
   // Get job status color
   const getJobStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -65,7 +63,9 @@ const JobCard = ({ job }) => {
   // Calculate average salary for sorting
   const getAverageSalary = (salary) => {
     if (typeof salary === "string" && job.summary.salary.includes("-")) {
-      const [min, max] = job.summary.salary.split("-").map((s) => parseInt(s.trim()));
+      const [min, max] = job.summary.salary
+        .split("-")
+        .map((s) => parseInt(s.trim()));
       if (!isNaN(min) && !isNaN(max)) {
         return Math.floor((min + max) / 2);
       }
@@ -115,7 +115,6 @@ const JobCard = ({ job }) => {
                 </p>
               </div>
             </div>
-            
           </div>
 
           {/* Job Tags */}
@@ -164,7 +163,9 @@ const JobCard = ({ job }) => {
               className="flex items-center text-gray-600"
               whileHover={{ x: 4 }}
             >
-              <DollarSign size={16} className="mr-2 text-gray-400 shrink-0" />
+              <span className="mr-2 text-gray-400 shrink-0 text-sm">
+                &#x09F3;
+              </span>
               <span className="text-sm font-medium text-gray-800">
                 {formatSalary(job.summary.salary)}
               </span>
@@ -237,7 +238,6 @@ const JobCard = ({ job }) => {
                   View Details
                 </Link>
               </motion.div>
-            
             </div>
           </div>
         </div>
