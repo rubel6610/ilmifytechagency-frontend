@@ -2,8 +2,7 @@ import { Quicksand, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "./component/navbar/Navbar";
 import Footer from "./component/footer/Footer";
-import SmoothScroll from "./component/SmoothScroll";
-
+import LenisProvider from "./component/LenisProvider";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -25,16 +24,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${quicksand.variable} ${ubuntu.variable} font-sans bg-white text-gray-900`}>
-
-          <Navbar /> {/* fixed navbar outside scroll */}
-        <SmoothScroll>
-          <main id="page-content" >
+      <body
+        className={`${quicksand.variable} ${ubuntu.variable} font-sans bg-white text-gray-900`}
+      >
+        <LenisProvider>
+          <Navbar />
+          <main>
             {children}
             <Footer />
           </main>
-        </SmoothScroll>
-           
+        </LenisProvider>
       </body>
     </html>
   );

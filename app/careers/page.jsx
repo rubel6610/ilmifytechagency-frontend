@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import JobCard from "./components/JobCard";
 import { jobs } from "./components/JobData";
-import PageWrapper from "../component/PageWrapper";
 import CountUp from "react-countup";
 import JobFilters from "./components/JobFilters";
 import {
@@ -34,7 +33,6 @@ const Careers = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        // Check if we're on mobile/tablet
         if (window.innerWidth < 1024) {
           setSidebarOpen(false);
         }
@@ -127,7 +125,7 @@ const Careers = () => {
   // Handle page change
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // Scroll to top of job listings smoothly
+    // Scroll to top of job listings
     setTimeout(() => {
       const jobListings = document.querySelector('.job-listings-container');
       if (jobListings) {
@@ -169,7 +167,7 @@ const Careers = () => {
   };
 
   return (
-    <PageWrapper>
+    <>
       {/* Mobile Filter Button */}
       <button
         onClick={() => setSidebarOpen(true)}
@@ -180,7 +178,11 @@ const Careers = () => {
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
-        <div className="lg:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setSidebarOpen(false)} />
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40" 
+          onClick={() => setSidebarOpen(false)}
+          data-lenis-prevent
+        />
       )}
 
       {/* HERO */}
@@ -319,7 +321,7 @@ const Careers = () => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8 md:mt-12 flex justify-center items-center space-x-1 md:space-x-2" data-no-lenis="true">
+            <div className="mt-8 md:mt-12 flex justify-center items-center space-x-1 md:space-x-2" data-lenis-prevent>
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -367,7 +369,7 @@ const Careers = () => {
           )}
         </div>
       </div>
-    </PageWrapper>
+    </>
   );
 };
 
