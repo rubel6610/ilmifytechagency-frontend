@@ -1,14 +1,12 @@
 "use client";
 
-import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
-import Link from "next/link";
 import CustomBorder from "../customBorder/CustomBorder";
-const MotionLink = motion(Link);
+import Button from "../button/Button";
 
 export default function Agency() {
-  const typingVariant = { 
+  const typingVariant = {
     hidden: { width: 0 },
     visible: (duration) => ({
       width: "100%",
@@ -58,14 +56,14 @@ export default function Agency() {
           </h1>
 
           <motion.div
-        className="flex justify-center lg:justify-start"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-      >
-        <CustomBorder />
-      </motion.div>
+            className="flex justify-center lg:justify-start"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={fadeInRight}
+          >
+            <CustomBorder />
+          </motion.div>
 
           <div className="text-justify">
             <motion.p
@@ -81,7 +79,7 @@ export default function Agency() {
               branding, and digital marketing services that help businesses grow
               and stand out.
             </motion.p>
-            
+
             <br />
             <motion.p
               className="text-gray-600 md:leading-relaxed"
@@ -97,51 +95,9 @@ export default function Agency() {
               technology partner for your business success.
             </motion.p>
           </div>
-
-          <MotionLink
-            href="/contact"
-            className="
-             relative
-             overflow-hidden
-           bg-linear-to-r
-               from-[#0ddaa0]
-               to-[#8ce064]
-               text-white
-               mt-12
-             px-8
-             py-4
-             rounded-full
-             text-sm
-             tracking-wide
-             shadow-xl
-             inline-block
-           "
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-          >
-            {/* Hover Gradient */}
-            <motion.span
-              variants={{
-                rest: { scale: 0 },
-                hover: { scale: 1 },
-              }}
-              transition={{ duration: 0.17, ease: "easeOut" }}
-              className="
-               absolute
-               inset-0
-              bg-linear-to-r
-               from-[#3D3D3D]
-               to-[#151515]
-             text-white
-               rounded-full
-               z-0
-             "
-              style={{ originX: 0.5, originY: 0.5 }}
-            />
-
-            <span className="relative z-10">GET IN TOUCH</span>
-          </MotionLink>
+          <div className="mt-10">
+            <Button address="/contact" label="GET IN TOUCH" />
+          </div>
         </div>
 
         {/* Right Image (Animated Reveal) */}

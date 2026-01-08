@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "motion/react";
+import Button from "../button/Button";
 
 export default function Project() {
   // Variants for left-to-right animation
@@ -22,9 +23,12 @@ export default function Project() {
         variants={slideInVariants}
       >
         <p className="text-gray-200 text-center">Are You Ready?</p>
-        <h1 className="text-white text-center text-2xl md:text-4xl font-semibold px-4">
+        <h1 className="text-white text-center text-2xl md:text-4xl font-semibold px-4 mt-2">
           Start a New Project
         </h1>
+     <div className="flex justify-center mt-6">
+         <Button address="/contact" label="Get Started" />
+     </div>
       </motion.div>
     </div>
   );
