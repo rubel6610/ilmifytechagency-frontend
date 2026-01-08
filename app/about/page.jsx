@@ -1,8 +1,8 @@
-import Agency from "../component/about/Agency";
-import Project from "../component/about/Project";
-import Question from "../component/about/Question";
-import Team from "../component/about/Team";
-import Vision from "../component/about/Vision";
+import Agency from "./components/Agency";
+import Project from "./components/Project";
+import Question from "./components/Question";
+import Team from "./components/Team";
+import Vision from "./components/Vision";
 
 export default function AboutPage() {
   return (

@@ -37,7 +37,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6 overflow-x-hidden">
+    <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6 overflow-x-hidden -z-4">
       {/* Top Section */}
       <div className="max-w-400 mx-auto px-5 md:px-8.75 pb-20 xl:pb-33.75">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">

@@ -4,6 +4,7 @@ import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
 import { motion } from "motion/react";
 import Link from "next/link";
+import TypingText from "./TypingText";
 
 const MotionLink = motion(Link);
 const ServicesSection = () => {
@@ -88,8 +89,8 @@ const ServicesSection = () => {
               className="text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-tight"
             >
               We Are Here To <br />
-              Make Your <span className="text-[#00D9A5]">Website</span> <br />
-              Look More <span className="text-[#00D9A5]">Elegant</span> And
+              Make Your <span className="text-[#00D9A5]"><TypingText text="Website" /></span> <br />
+              Look More <span className="">Elegant</span> And
               Stylish!
             </motion.h2>
           </div>

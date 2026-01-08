@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: 'url-shortener.me',
         pathname: '/**', // Matches any pathname under this hostname
       },
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+        pathname: '/**', // Matches any pathname under this hostname
+      },
     ],
   },
 };

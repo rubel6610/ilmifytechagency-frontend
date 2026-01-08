@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import CustomBorder from "../customBorder/CustomBorder";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 
 export default function WeAre() {
   const typingVariant = {

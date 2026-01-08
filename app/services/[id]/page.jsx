@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import servicesData from "@/app/component/services/servicesData";
-import ServiceExample from "@/app/component/services/ServiceExample";
-import MajorService from "@/app/component/services/MajorService";
-import DemoVideo from "@/app/component/services/DemoVideo";
+import servicesData from "@/app/services/components/servicesData";
+import ServiceExample from "@/app/services/components/ServiceExample";
+import MajorService from "@/app/services/components/MajorService";
+import DemoVideo from "@/app/services/components/DemoVideo";
 
 export default function ServiceDetails() {
   const params = useParams();
