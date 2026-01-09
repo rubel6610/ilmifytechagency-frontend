@@ -1,12 +1,11 @@
 import React from "react";
-import PageWrapper from "../component/PageWrapper";
 import MapClient from "./components/MapClient";
 import ContactCard from "./components/ContactCard";
 import FormElement from "./components/FormElement";
 
 const Contact = () => {
   return (
-    <PageWrapper>
+
       <div className="overflow-hidden my-30 z-[-100]">
         {/* HEADER */}
         <h1 className=" text-primary py-10 text-[43px]  sm:text-[43px] text-center bg-[#F9F9F9] font-bold">
@@ -21,7 +20,7 @@ const Contact = () => {
         {/* FORM */}
         <FormElement />
       </div>
-    </PageWrapper>
+  
   );
 };
 
