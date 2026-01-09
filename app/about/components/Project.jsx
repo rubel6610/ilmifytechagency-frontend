@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "motion/react";
-import Button from "../button/Button";
+import Button from "../../component/button/Button";
 
 export default function Project() {
   // Variants for left-to-right animation
