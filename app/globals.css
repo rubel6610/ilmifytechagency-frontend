@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* 🔹 Root Variables */
 :root {
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.129 0.042 264.695);
@@ -12,50 +13,108 @@
   --font-ubuntu: "Ubuntu", sans-serif;
 }
 
+/* 🔹 Reset & Base Layout */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+ 
+  font-family: var(--font-quicksand);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+#lenis-wrapper {
+  /* height: 100vh; */
+  overflow-y: auto; 
+  overscroll-behavior: none;
+
+  /* WebKit scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+#lenis-wrapper::-webkit-scrollbar {
+  width: 12px;
+}
+
+#lenis-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 6px;
+}
+
+#lenis-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Prevent horizontal scroll */
+body, #lenis-wrapper {
+  overflow-x: hidden;
+}
+
+/* 🔹 Fonts */
+.font-ubuntu {
+  font-family: var(--font-ubuntu);
+}
+
+/* 🔹 Tailwind base overrides */
 @layer base {
-  body {
-    font-family: var(--font-quicksand);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+  .input {
+    @apply w-full border border-slate-300 px-4 py-2 rounded-md
+           focus:outline-none focus:ring-2 focus:ring-[#00c389];
   }
 
-  .font-ubuntu {
-    font-family: var(--font-ubuntu);
+  .section-title {
+    @apply text-lg font-semibold mb-3 text-slate-700;
   }
 }
 
-/* 🔹 Tailwind-friendly utility classes */
+/* 🔹 Tailwind utilities */
 @layer utilities {
-  .bg-primary {
-    background-color: var(--color-background);
-  }
-
-  .bg-secondary {
-    background-color: var(--color-foreground);
-  }
-
-  .text-primary {
-    color: var(--color-primary);
-  }
-
-  .text-secondary {
-    color: var(--color-secondary);
-  }
-
-  .border-primary {
-    border: 1px solid var(--color-primary);
-  }
-
-  .border-secondary {
-    border: 1px solid var(--color-secondary);
-  }
-
-  .border-default {
-    border: 1px solid var(--color-border);
-  }
+  .bg-primary { background-color: var(--color-background); }
+  .bg-secondary { background-color: var(--color-foreground); }
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .border-primary { border: 1px solid var(--color-primary); }
+  .border-secondary { border: 1px solid var(--color-secondary); }
+  .border-default { border: 1px solid var(--color-border); }
 }
 
-/* Logo */
+/* 🔹 Logos */
 .logo {
   filter: brightness(0%) contrast(167%) saturate(0%);
+}
+
+.logo-2 {
+  filter: grayscale(100%) brightness(40%) contrast(100%);
+}
+
+/* 🔹 Leaflet z-index fix */
+.leaflet-routing-container,
+.leaflet-routing-alt,
+.leaflet-control-container .leaflet-routing-container,
+.leaflet-container {
+  z-index: 0 !important; /* Ensure interactive maps stay clickable */
+}
+
+/* 🔹 For Webkit (Chrome, Safari) */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 🔹 Firefox fallback */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-background);
 }

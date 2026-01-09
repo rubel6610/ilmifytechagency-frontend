@@ -99,7 +99,7 @@ const WhoWeAre = () => {
 
             <CustomBorder />
 
-            <div className="space-y-6 text-gray-600 text-base md:text-lg leading-relaxed text-justify">
+            <div className="space-y-6 text-gray-600 text-base md:text-lg leading-relaxed text-justify font-ubuntu">
               <motion.p variants={fadeInUpVariants}>
                 At{" "}
                 <span className="font-semibold text-black italic">iLMiFY</span>,
@@ -135,7 +135,8 @@ const WhoWeAre = () => {
                    rounded-full
                    text-sm
                    tracking-wide
-                   shadow-xl
+                   shadow-[0px_0px_20px_5px_rgba(16,185,129,0.4)]
+                   hover:shadow-[0_0_0_0_rgba(0,0,0,0)]
                    inline-block
                  "
                 initial="rest"

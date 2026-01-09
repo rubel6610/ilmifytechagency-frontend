@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,12 +12,14 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import Image from "next/image";
-import { IoSearchSharp } from "react-icons/io5";
+import { motion, AnimatePresence } from "motion/react";
 
+import { role } from "../../dashboard/page";
+
+const MotionLink = motion(Link);
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
-
   const toggleNav = () => setNav(!nav);
 
   const menuItems = [
@@ -31,12 +32,34 @@ const Header = () => {
     { name: "Careers", path: "/careers" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1, 
+        delayChildren: 0.2
+      },
+    },
+  };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+  if(pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    return null; 
+  }
   return (
-    <header className="w-full">
+    <header className={`w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200  `}>
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">
-          <div className=" text-white py-1.25 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
+          <div className="text-white py-2 px-8.75 flex justify-between items-center text-sm max-w-400 mx-auto">
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
@@ -52,92 +75,154 @@ const Header = () => {
       )}
 
       {/* Main Navigation */}
-      <div className="bg-[#FFFFFF] shadow-xs sticky top-0 z-50">
-        <nav className="md:py-2.5 pt-2.5 pb-0 md:pt-6.5 md:pb-3.75 px-5 md:px-8.75 flex flex-col  xl:flex-row justify-between items-center max-w-400 mx-auto">
-          {/* Logo & Mobile Menu Button Section */}
-          <div className="flex justify-between items-center w-full xl:w-auto">
-            {!nav && (
-              <Link href="/" className="md:mx-auto xl:mx-0">
-                <Image
-                  className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43 pb-2"
-                  height={50}
-                  width={150}
-                  src="/logo.png"
-                  alt="website logo"
-                  priority
-                />
+      <nav className="md:py-2.5 lg:py-6 pt-5 pb-5 md:pt-6  px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
+        <div className="flex justify-between items-center w-full xl:w-auto">
+          <Link
+            href="/"
+            className={`${nav ? "invisible" : "visible"} md:mx-auto xl:mx-0`}
+          >
+            <Image
+              className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43"
+              height={50}
+              width={150}
+              src="/logo.png"
+              alt="website logo"
+              priority
+            />
+          </Link>
+
+          <div className="md:hidden flex gap-3 items-center">
+            {role === "admin" ? (
+              <Link href="/dashboard" className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">Admin Dashboard</Link>
+            ) : role === "user" ? (
+              <Link href="/dashboard" className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">User Dashboard</Link>
+            ) : (
+              <Link href="/login">
+                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">Login</button>
               </Link>
             )}
-            {/* Hamburger icon */}
-            {!nav && (
-              <div
-                className="md:hidden text-xl cursor-pointer text-gray-400"
-                onClick={toggleNav}
+            <div className="text-xl block md:hidden cursor-pointer text-gray-400" onClick={toggleNav}>
+              <FaBars />
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex gap-8 font-medium mt-6 xl:mt-0">
+          {menuItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                href={item.path}
+                className={`uppercase text-[14px] tracking-wide transition duration-300 ${pathname === item.path ? "text-gray-600 font-bold" : "text-gray-500"}`}
               >
-                <FaBars />
-              </div>
+                {item.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Right Side (Only XL) */}
+          <div className="hidden xl:flex items-center gap-6">
+            {role=== "admin" ? ( 
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                Admin Dashboard
+              </Link>
+            ) :  role=== "user" ? (
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+              >
+                User Dashboard
+              </Link>
+            ) : (
+              <Link href="/login">
+                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
+                  Login
+                </button>
+              </Link>
             )}
           </div>
+      </nav>
 
-          {/* Menu for Tablet and Desktop */}
-          <div className="mt-6 xl:mt-0">
-            <ul className="hidden md:flex gap-8 font-medium">
-              {menuItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    href={item.path}
-                    className={`uppercase text-[14px] tracking-wide transition duration-300 ${
-                      pathname === item.path
-                        ? "text-gray-600 font-bold"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+      
 
-          {/* Right Side: Login & Search (Only XL) */}
-          <div className="hidden xl:flex items-center gap-6">
-            <Link href="/contact">
-              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition duration-500 ease-in-out hover:bg-[#181818] hover:bg-none">
-                Login
-              </button>
-            </Link>
-            <IoSearchSharp className="text-teal-500 cursor-pointer text-[20px]" />
-          </div>
+      {/* Mobile Menu & Backdrop Overlay */}
+      <AnimatePresence>
+        {nav && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleNav}
+              className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-1250 md:hidden"
+            />
 
-          {/* Mobile Menu Dropdown */}
-          {nav && (
-            <div className="absolute top-full left-0 w-full bg-white z-50 flex flex-col items-center py-6 gap-4 shadow-xl md:hidden">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  onClick={() => setNav(false)}
-                  className={`uppercase text-[20px] font-semibold transition ${
-                    pathname === item.path ? "text-green-500" : "text-gray-800"
-                  }`}
+            {/* Side Menu */}
+            <motion.div
+              className="fixed p-6 top-0 right-0 w-2/3 h-screen bg-white z-1300 flex flex-col items-start justify-start gap-7 shadow-2xl md:hidden"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
+            >
+              {/* Top Section inside Sidebar */}
+              <div className="flex flex-col items-start gap-6 w-full">
+                <motion.div
+                  onClick={toggleNav}
+                  animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                  transition={{
+                    rotate: { repeat: Infinity, duration: 8, ease: "linear" },
+                    scale: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+                  }}
+                  className="cursor-pointer p-2 bg-gray-100 hover:bg-red-50 text-gray-500 hover:text-red-500 rounded-full transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200"
                 >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </nav>
-      </div>
+                  <FaTimes className="text-gray-500 text-lg" />
+                </motion.div>
 
-      {/* Center Cancel Button Overlay */}
-      {nav && (
-        <div
-          onClick={toggleNav}
-          className="fixed top-6 left-1/2 -translate-x-1/2 z-50 md:hidden"
-        >
-          <FaTimes className="text-[40px] p-1.5 text-gray-700 cursor-pointer" />
-        </div>
-      )}
+                <motion.div 
+                 initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+                className="flex items-center gap-10 w-full ">
+                  <MotionLink variants={fadeInRight} href="/" onClick={() => setNav(false)}>
+                    <Image className="logo-2 w-20 h-auto" height={50} width={150} src="/logo.png" alt="logo" priority />
+                  </MotionLink>
+                  <motion.div variants={fadeInRight} className="flex gap-3 text-gray-500">
+                    <Link href="https://www.facebook.com/ilmifyTech"><FaFacebookF /></Link>
+                    <Link href="https://www.instagram.com/ilmifytech.agency"><FaInstagram /></Link>
+                    <Link href="https://bd.linkedin.com/company/ilmifytechagency"><FaLinkedinIn /></Link>
+                    <Link href="https://linkedin.com"><FaTwitter /></Link>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Nav Links */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+                className="flex flex-col gap-3 w-full border-t pt-5 border-gray-100"
+              >
+                {menuItems.map((item) => (
+                  <motion.div key={item.path} variants={fadeInRight}>
+                    <Link
+                      href={item.path}
+                      onClick={() => setNav(false)}
+                      className={`uppercase text-[16px] font-semibold block transition-colors ${pathname === item.path ? "text-green-500" : "text-gray-600 hover:text-green-500"}`}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

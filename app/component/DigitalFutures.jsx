@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import { motion } from "motion/react";
+import TypingText from './TypingText';
 
 const DigitalFutures = () => {
   const containerVariants = {
@@ -26,7 +27,7 @@ const DigitalFutures = () => {
       <div className="absolute inset-0 bg-linear-to-r from-[#059669]/80 via-[#10b981]/70 to-[#34d399]/80 z-0"></div>
       
       {/* 2. Scrolling Text Container */}
-      <div className="relative z-10 w-full h-1/3 flex items-center justify-center p-6">
+      <div className="relative z-10 w-full h-1/3 flex items-center justify-center p-6 py-20 xl:py-40">
         <motion.div
         initial="hidden"
             whileInView="visible"
@@ -34,7 +35,7 @@ const DigitalFutures = () => {
             variants={containerVariants}
         className="max-w-4xl text-center text-white">
           <motion.h2 variants={fadeInUpVariants} className="text-3xl md:text-5xl font-bold mb-4 leading-tight drop-shadow-lg">
-            Innovating Digital Futures
+          Innovating   <TypingText text="Digital Futures" /> 
           </motion.h2>
           <motion.p variants={fadeInUpVariants} className="text-[24px] font-medium opacity-95 max-w-2xl mx-auto">
             At iLMIFY, we don’t just create websites and apps we build digital experiences 

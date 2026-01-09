@@ -2,8 +2,9 @@ import { Quicksand, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "./component/navbar/Navbar";
 import Footer from "./component/footer/Footer";
+import SmoothScroll from "./component/SmoothScroll";
 
-// Correct font imports from next/font/google
+
 const quicksand = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
@@ -17,17 +18,23 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata = {
-  title: "iLMiFY Techagency-",
+  title: "iLMiFY Techagency",
   description: "A proper solution for your business",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${quicksand.variable} ${ubuntu.variable} antialiased`} suppressHydrationWarning>
-        <Navbar/>
-        {children}
-        <Footer />
+      <body className={`${quicksand.variable} ${ubuntu.variable} font-sans bg-white text-gray-900`}>
+
+          <Navbar /> {/* fixed navbar outside scroll */}
+        <SmoothScroll>
+          <main id="page-content" >
+            {children}
+            <Footer />
+          </main>
+        </SmoothScroll>
+           
       </body>
     </html>
   );

@@ -1,628 +1,106 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import JobCard from "./components/JobCard";
 import { jobs } from "./components/JobData";
+import PageWrapper from "../component/PageWrapper";
+import CountUp from "react-countup";
+import JobFilters from "./components/JobFilters";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  Clock,
+  Users,
+  Building,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  X,
+} from "lucide-react";
 
-// export const jobs = [
-//   {
-//     id: 1,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 2,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 3,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 4,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 5,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 6,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 7,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 8,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 9,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 10,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 11,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 12,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 13,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 14,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//     id: 15,
-//     title: "Frontend Developer (React / Next.js)",
-//     company: "TechSoft Ltd.",
-//     location: "Dhaka, Bangladesh",
-//     type: "Full Time",
-//     salary: "৳60k – ৳90k",
-//     deadline: "30 Sep 2025",
-//   },
-//   {
-//     id: 16,
-//     title: "Backend Developer (Node.js)",
-//     company: "SoftCare",
-//     location: "Remote",
-//     type: "Remote",
-//     salary: "৳70k – ৳100k",
-//     deadline: "10 Oct 2025",
-//   },
-//   {
-//   id: 17,
-//   title: "UI/UX Designer",
-//   company: "Creative Minds",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳50k – ৳80k",
-//   deadline: "05 Oct 2025",
-// },
-// {
-//   id: 18,
-//   title: "Junior React Developer",
-//   company: "CodeSprint",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳40k – ৳65k",
-//   deadline: "12 Oct 2025",
-// },
-// {
-//   id: 19,
-//   title: "Laravel Backend Developer",
-//   company: "WebCraft",
-//   location: "Chattogram",
-//   type: "Full Time",
-//   salary: "৳60k – ৳95k",
-//   deadline: "15 Oct 2025",
-// },
-// {
-//   id: 20,
-//   title: "Digital Marketing Executive",
-//   company: "Brandify",
-//   location: "Dhaka, Bangladesh",
-//   type: "Part Time",
-//   salary: "৳30k – ৳50k",
-//   deadline: "20 Oct 2025",
-// },
-// {
-//   id: 21,
-//   title: "MERN Stack Developer",
-//   company: "DevHouse",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳80k – ৳120k",
-//   deadline: "25 Oct 2025",
-// },
-// {
-//   id: 22,
-//   title: "Software QA Engineer",
-//   company: "QualitySoft",
-//   location: "Sylhet",
-//   type: "Full Time",
-//   salary: "৳45k – ৳70k",
-//   deadline: "18 Oct 2025",
-// },
-// {
-//   id: 23,
-//   title: "Mobile App Developer (Flutter)",
-//   company: "AppNest",
-//   location: "Dhaka, Bangladesh",
-//   type: "Contract",
-//   salary: "৳70k – ৳110k",
-//   deadline: "22 Oct 2025",
-// },
-// {
-//   id: 24,
-//   title: "WordPress Theme Developer",
-//   company: "WPExperts",
-//   location: "Remote",
-//   type: "Freelance",
-//   salary: "৳35k – ৳60k",
-//   deadline: "28 Oct 2025",
-// },
-// {
-//   id: 25,
-//   title: "DevOps Engineer",
-//   company: "CloudNine",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳90k – ৳140k",
-//   deadline: "30 Oct 2025",
-// },
-// {
-//   id: 26,
-//   title: "Product Manager",
-//   company: "TechVision",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳100k – ৳150k",
-//   deadline: "01 Nov 2025",
-// },
-// {
-//   id: 27,
-//   title: "Graphic Designer",
-//   company: "DesignHub",
-//   location: "Khulna",
-//   type: "Part Time",
-//   salary: "৳25k – ৳40k",
-//   deadline: "08 Oct 2025",
-// },
-// {
-//   id: 28,
-//   title: "AI Research Assistant",
-//   company: "FutureAI",
-//   location: "Dhaka, Bangladesh",
-//   type: "Internship",
-//   salary: "৳20k – ৳30k",
-//   deadline: "18 Nov 2025",
-// },
-// {
-//   id: 29,
-//   title: "Data Analyst",
-//   company: "Insight Corp",
-//   location: "Remote",
-//   type: "Full Time",
-//   salary: "৳70k – ৳110k",
-//   deadline: "05 Nov 2025",
-// },
-// {
-//   id: 30,
-//   title: "Cyber Security Specialist",
-//   company: "SecureNet",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳95k – ৳145k",
-//   deadline: "10 Nov 2025",
-// },
-// {
-//   id: 31,
-//   title: "Content Writer (Tech)",
-//   company: "WriteNow",
-//   location: "Remote",
-//   type: "Freelance",
-//   salary: "৳20k – ৳35k",
-//   deadline: "12 Oct 2025",
-// },
-// {
-//   id: 32,
-//   title: "Business Analyst",
-//   company: "BizTech",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳60k – ৳90k",
-//   deadline: "15 Nov 2025",
-// },
-// {
-//   id: 33,
-//   title: "Customer Support Executive",
-//   company: "HelpDesk Pro",
-//   location: "Rajshahi",
-//   type: "Full Time",
-//   salary: "৳30k – ৳45k",
-//   deadline: "20 Oct 2025",
-// },
-// {
-//   id: 34,
-//   title: "SEO Specialist",
-//   company: "RankBoost",
-//   location: "Remote",
-//   type: "Contract",
-//   salary: "৳40k – ৳70k",
-//   deadline: "25 Oct 2025",
-// },
-// {
-//   id: 35,
-//   title: "Full Stack Engineer",
-//   company: "StackFlow",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳85k – ৳130k",
-//   deadline: "02 Nov 2025",
-// },
-// {
-//   id: 36,
-//   title: "IT Support Engineer",
-//   company: "SysCare",
-//   location: "Barishal",
-//   type: "Full Time",
-//   salary: "৳35k – ৳55k",
-//   deadline: "18 Oct 2025",
-// },
-// {
-//   id: 37,
-//   title: "Python Developer",
-//   company: "PyWorks",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳75k – ৳115k",
-//   deadline: "28 Oct 2025",
-// },
-// {
-//   id: 38,
-//   title: "HR Executive",
-//   company: "PeopleFirst",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳40k – ৳65k",
-//   deadline: "30 Oct 2025",
-// },
-// {
-//   id: 39,
-//   title: "Blockchain Developer",
-//   company: "ChainTech",
-//   location: "Remote",
-//   type: "Contract",
-//   salary: "৳120k – ৳180k",
-//   deadline: "15 Nov 2025",
-// },
-// {
-//   id: 40,
-//   title: "Game Developer (Unity)",
-//   company: "PlayZone",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳70k – ৳110k",
-//   deadline: "22 Nov 2025",
-// },
-// {
-//   id: 41,
-//   title: "System Analyst",
-//   company: "InfoSys BD",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳65k – ৳95k",
-//   deadline: "12 Nov 2025",
-// },
-// {
-//   id: 42,
-//   title: "Sales Executive",
-//   company: "SalesPro",
-//   location: "Comilla",
-//   type: "Full Time",
-//   salary: "৳30k – ৳50k",
-//   deadline: "10 Oct 2025",
-// },
-// {
-//   id: 43,
-//   title: "Technical Recruiter",
-//   company: "HireFast",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳45k – ৳70k",
-//   deadline: "18 Oct 2025",
-// },
-// {
-//   id: 44,
-//   title: "Cloud Solutions Architect",
-//   company: "SkyCloud",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳130k – ৳200k",
-//   deadline: "30 Nov 2025",
-// },
-// {
-//   id: 45,
-//   title: "Database Administrator",
-//   company: "DataCore",
-//   location: "Remote",
-//   type: "Contract",
-//   salary: "৳80k – ৳120k",
-//   deadline: "05 Nov 2025",
-// },
-// {
-//   id: 46,
-//   title: "Junior Software Engineer",
-//   company: "NextGen Soft",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳35k – ৳55k",
-//   deadline: "20 Oct 2025",
-// },
-// {
-//   id: 47,
-//   title: "E-commerce Manager",
-//   company: "ShopEase",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳60k – ৳90k",
-//   deadline: "25 Nov 2025",
-// },
-// {
-//   id: 48,
-//   title: "Network Engineer",
-//   company: "NetSecure",
-//   location: "Chattogram",
-//   type: "Full Time",
-//   salary: "৳55k – ৳85k",
-//   deadline: "10 Nov 2025",
-// },
-// {
-//   id: 49,
-//   title: "React Native Developer",
-//   company: "MobileX",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳75k – ৳115k",
-//   deadline: "28 Nov 2025",
-// },
-// {
-//   id: 50,
-//   title: "Project Coordinator",
-//   company: "BuildRight",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳45k – ৳70k",
-//   deadline: "15 Nov 2025",
-// },
-// {
-//   id: 51,
-//   title: "Junior Data Scientist",
-//   company: "DataLabs",
-//   location: "Remote",
-//   type: "Internship",
-//   salary: "৳25k – ৳40k",
-//   deadline: "05 Dec 2025",
-// },
-// {
-//   id: 52,
-//   title: "Technical Content Creator",
-//   company: "DevMedia",
-//   location: "Remote",
-//   type: "Freelance",
-//   salary: "৳30k – ৳50k",
-//   deadline: "12 Nov 2025",
-// },
-// {
-//   id: 53,
-//   title: "ERP Consultant",
-//   company: "BizSolutions",
-//   location: "Dhaka, Bangladesh",
-//   type: "Contract",
-//   salary: "৳90k – ৳140k",
-//   deadline: "18 Dec 2025",
-// },
-// {
-//   id: 54,
-//   title: "Software Trainer",
-//   company: "CodeAcademy",
-//   location: "Dhaka, Bangladesh",
-//   type: "Part Time",
-//   salary: "৳40k – ৳60k",
-//   deadline: "20 Nov 2025",
-// },
-// {
-//   id: 55,
-//   title: "IT Project Manager",
-//   company: "ManageIT",
-//   location: "Remote",
-//   type: "Full Time",
-//   salary: "৳110k – ৳170k",
-//   deadline: "30 Dec 2025",
-// },
-// {
-//   id: 56,
-//   title: "Technical Support Engineer",
-//   company: "Supportly",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳35k – ৳55k",
-//   deadline: "10 Nov 2025",
-// },
-// {
-//   id: 57,
-//   title: "Machine Learning Engineer",
-//   company: "MLWorks",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳120k – ৳180k",
-//   deadline: "15 Dec 2025",
-// },
-// {
-//   id: 58,
-//   title: "Web Accessibility Specialist",
-//   company: "InclusiveWeb",
-//   location: "Remote",
-//   type: "Contract",
-//   salary: "৳60k – ৳90k",
-//   deadline: "25 Nov 2025",
-// },
-// {
-//   id: 59,
-//   title: "Startup Operations Manager",
-//   company: "LaunchPad",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳70k – ৳110k",
-//   deadline: "05 Jan 2026",
-// },
-// {
-//   id: 60,
-//   title: "Junior QA Tester",
-//   company: "BugFree",
-//   location: "Remote",
-//   type: "Internship",
-//   salary: "৳20k – ৳30k",
-//   deadline: "15 Dec 2025",
-// },
-// {
-//   id: 61,
-//   title: "Salesforce Developer",
-//   company: "CRMPro",
-//   location: "Remote",
-//   type: "Remote",
-//   salary: "৳85k – ৳130k",
-//   deadline: "20 Dec 2025",
-// },
-// {
-//   id: 62,
-//   title: "Technical Project Lead",
-//   company: "LeadTech",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳100k – ৳160k",
-//   deadline: "31 Dec 2025",
-// },
-// {
-//   id: 63,
-//   title: "AR/VR Developer",
-//   company: "RealityX",
-//   location: "Remote",
-//   type: "Contract",
-//   salary: "৳110k – ৳170k",
-//   deadline: "10 Jan 2026",
-// },
-// {
-//   id: 64,
-//   title: "Startup Growth Hacker",
-//   company: "GrowthLab",
-//   location: "Remote",
-//   type: "Freelance",
-//   salary: "৳50k – ৳80k",
-//   deadline: "20 Jan 2026",
-// },
-// {
-//   id: 65,
-//   title: "IT Auditor",
-//   company: "AuditSafe",
-//   location: "Dhaka, Bangladesh",
-//   type: "Full Time",
-//   salary: "৳65k – ৳95k",
-//   deadline: "25 Jan 2026",
-// },
-// {
-//   id: 66,
-//   title: "Junior Cloud Engineer",
-//   company: "CloudStarter",
-//   location: "Remote",
-//   type: "Internship",
-//   salary: "৳30k – ৳45k",
-//   deadline: "05 Feb 2026",
-// }
-
-// ];
-
-
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 10;
 
 const Careers = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [locationFilter, setLocationFilter] = useState("All");
+  const [salaryFilter, setSalaryFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
-  //  Search + Filter logic
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        // Check if we're on mobile/tablet
+        if (window.innerWidth < 1024) {
+          setSidebarOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Close sidebar when resizing to larger screens
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Locations
+  const locations = [
+    "All",
+    ...new Set(jobs.map((job) => job.summary.location)),
+  ];
+
+  // Filter logic
   const filteredJobs = jobs.filter((job) => {
     const matchSearch =
       job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.companyInfo.address.toLowerCase().includes(search.toLowerCase()) ||
-      job.companyName.toLowerCase().includes(search.toLowerCase());
+      job.companyName.toLowerCase().includes(search.toLowerCase()) ||
+      job.companyInfo.address.toLowerCase().includes(search.toLowerCase());
 
-    const matchFilter = filter === "All" || job.type === filter;
+    const matchJobType =
+      filter === "All" ||
+      job.compensationAndBenefits.employmentStatus === filter ||
+      (filter === "Remote" &&
+        job.summary.location.toLowerCase().includes("remote"));
 
-    return matchSearch && matchFilter;
+    const getSalaryValue = (salary) => {
+      if (!salary || salary === "Negotiable") return null;
+      if (salary.includes("-")) return Number(salary.split("-")[1]);
+      return Number(salary);
+    };
+
+    const salaryValue = getSalaryValue(job.summary.salary);
+
+    const matchSalary =
+      salaryFilter === "All" ||
+      (salaryFilter === "High" && salaryValue > 80000) ||
+      (salaryFilter === "Medium" &&
+        salaryValue >= 50000 &&
+        salaryValue <= 80000) ||
+      (salaryFilter === "Low" && salaryValue < 50000);
+
+    const matchLocation =
+      locationFilter === "All" || job.summary.location === locationFilter;
+
+    return matchSearch && matchJobType && matchSalary && matchLocation;
   });
 
-  //  Pagination logic
+  // Pagination
   const totalPages = Math.ceil(filteredJobs.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedJobs = filteredJobs.slice(
@@ -630,70 +108,266 @@ const Careers = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
+  // Stats
+  const stats = {
+    total: jobs.length,
+    fullTime: jobs.filter(
+      (j) => j.compensationAndBenefits.employmentStatus === "Full Time"
+    ).length,
+    partTime: jobs.filter(
+      (j) => j.compensationAndBenefits.employmentStatus === "Part Time"
+    ).length,
+    remote: jobs.filter(
+      (j) =>
+        j.companyInfo.address.toLowerCase().includes("remote") ||
+        j.summary.location.toLowerCase().includes("remote")
+    ).length,
+  };
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // Scroll to top of job listings smoothly
+    setTimeout(() => {
+      const jobListings = document.querySelector('.job-listings-container');
+      if (jobListings) {
+        window.scrollTo({
+          top: jobListings.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }
+    }, 10);
+  };
+
+  // Generate page numbers
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5;
+    
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      const start = Math.max(1, currentPage - 2);
+      const end = Math.min(totalPages, start + maxVisiblePages - 1);
+      
+      for (let i = start; i <= end; i++) {
+        pageNumbers.push(i);
+      }
+    }
+    
+    return pageNumbers;
+  };
+
+  const resetFilters = () => {
+    setFilter("All");
+    setSalaryFilter("All");
+    setLocationFilter("All");
+    setSearch("");
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="max-w-400 mx-auto px-6 my-8">
-      {/* 🔹 Top Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center mb-6">
-        
-        {/* Left */}
-        <h3 className="text-primary font-semibold text-lg lg:text-2xl">
-          Total Jobs <span className="text-gray-500 text-base">| {filteredJobs.length}+</span>
-        </h3>
+    <PageWrapper>
+      {/* Mobile Filter Button */}
+      <button
+        onClick={() => setSidebarOpen(true)}
+        className="lg:hidden fixed bottom-6 right-6 z-50 bg-emerald-500 text-white p-4 rounded-full shadow-lg hover:bg-emerald-600 transition-colors"
+      >
+        <Filter size={24} />
+      </button>
 
-        {/* Center */}
-        <input
-          className="rounded-md border border-primary h-10 px-4 w-full focus:outline-none placeholder:text-sm"
-          type="search"
-          placeholder="Search Vacancies"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setSidebarOpen(false)} />
+      )}
 
-        {/* Right */}
-        <select
-          className="rounded-md border border-primary h-10 px-4 w-full md:w-auto justify-self-end"
-          value={filter}
-          onChange={(e) => {
-            setFilter(e.target.value);
-            setCurrentPage(1);
-          }}
-        >
-          <option value="All">All Jobs</option>
-          <option value="Full Time">Full Time</option>
-          <option value="Remote">Remote</option>
-          <option value="Part Time">Part Time</option>
-        </select>
+      {/* HERO */}
+      <div className="relative bg-[#0ddaa0] text-white py-12 md:py-20 px-4 mt-16 md:mt-20">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="relative max-w-7xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+            Find Your Dream <span className="text-yellow-300">Career</span>
+          </h1>
+          <p className="text-base md:text-xl mb-6 md:mb-10 opacity-90 px-2">
+            Discover amazing opportunities that match your skills
+          </p>
+
+          <div className="max-w-4xl mx-auto bg-white rounded-xl p-2 shadow-2xl">
+            <div className="flex flex-col md:flex-row gap-2">
+              <div className="flex-1 flex items-center px-3 md:px-4">
+                <Search className="text-gray-400 mr-2 md:mr-3" size={18} />
+                <input
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  placeholder="Job title, keywords, or company"
+                  className="w-full py-3 md:py-4 text-gray-800 focus:outline-none text-sm md:text-base"
+                />
+              </div>
+
+              <div className="flex-1 flex items-center px-3 md:px-4 border-l">
+                <MapPin className="text-gray-400 mr-2 md:mr-3" size={18} />
+                <select
+                  value={locationFilter}
+                  onChange={(e) => {
+                    setLocationFilter(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="w-full py-3 md:py-4 text-gray-800 bg-transparent text-sm md:text-base"
+                >
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/*  Job Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {paginatedJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
+      {/* STATS */}
+      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {[
+          { label: "Total Jobs", value: stats.total, icon: Briefcase },
+          { label: "Full Time", value: stats.fullTime, icon: Users },
+          { label: "Part Time", value: stats.partTime, icon: Clock },
+          { label: "Remote Jobs", value: stats.remote, icon: Building },
+        ].map(({ label, value, icon: Icon }) => (
+          <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
+            <div className="flex items-center">
+              <Icon className="mr-3 md:mr-4 text-emerald-600" size={20} />
+              <div>
+                <p className="text-xl md:text-2xl lg:text-3xl font-bold">
+                  <CountUp end={value} duration={2} />+
+                </p>
+                <p className="text-gray-600 text-sm md:text-base">{label}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
 
-      {/*  Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-10">
-          {Array.from({ length: totalPages }).map((_, index) => (
+      {/* CONTENT */}
+      <div className="max-w-400 mx-auto px-4 py-8 md:py-16 flex flex-col lg:flex-row gap-6 md:gap-8">
+        {/* Sidebar */}
+        <div
+          ref={sidebarRef}
+          className={`${
+            sidebarOpen
+              ? "fixed inset-y-0 left-0 w-80 z-50 bg-white p-6 overflow-y-auto shadow-2xl"
+              : "hidden"
+          } lg:block lg:w-1/4 lg:relative lg:z-auto lg:shadow-none lg:p-0 lg:bg-transparent`}
+        >
+          {/* Close button for mobile */}
+          <div className="flex justify-between items-center mb-6 lg:hidden">
+            <h3 className="text-xl font-bold text-gray-800">Filters</h3>
             <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={`px-4 py-2 rounded-md border transition ${
-                currentPage === index + 1
-                  ? "bg-white text-primary hover:bg-gray-100"
-                  : "bg-primary text-gray-500 border-gray-600"
-              }`}
+              onClick={() => setSidebarOpen(false)}
+              className="p-2 hover:bg-gray-100 rounded-lg"
             >
-              {index + 1}
+              <X size={24} />
             </button>
-          ))}
+          </div>
+
+          <JobFilters
+            filter={filter}
+            setFilter={(v) => {
+              setFilter(v);
+              setCurrentPage(1);
+            }}
+            salaryFilter={salaryFilter}
+            setSalaryFilter={(v) => {
+              setSalaryFilter(v);
+              setCurrentPage(1);
+            }}
+            locationFilter={locationFilter}
+            setLocationFilter={(v) => {
+              setLocationFilter(v);
+              setCurrentPage(1);
+            }}
+            locations={locations}
+            resetFilters={resetFilters}
+          />
         </div>
-      )}
-    </div>
+
+        {/* Main Content */}
+        <div className="lg:w-3/4">
+          {/* Results Count */}
+          <div className="mb-6 md:mb-8">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+              {filteredJobs.length} Job{filteredJobs.length !== 1 ? "s" : ""} Found
+            </h2>
+            {filteredJobs.length === 0 && (
+              <p className="text-gray-600 mt-2">
+                Try adjusting your filters to find more jobs
+              </p>
+            )}
+          </div>
+
+          {/* Job Listings */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 job-listings-container">
+            {paginatedJobs.map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-8 md:mt-12 flex justify-center items-center space-x-1 md:space-x-2" data-no-lenis="true">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              {getPageNumbers().map((page) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-lg text-sm md:text-base ${
+                    currentPage === page
+                      ? "bg-emerald-500 text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              {currentPage < totalPages - 2 && totalPages > 5 && (
+                <>
+                  <span className="px-1 md:px-2">...</span>
+                  <button
+                    onClick={() => handlePageChange(totalPages)}
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-lg hover:bg-gray-100 text-sm md:text-base ${
+                      currentPage === totalPages ? "bg-emerald-500 text-white" : ""
+                    }`}
+                  >
+                    {totalPages}
+                  </button>
+                </>
+              )}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </PageWrapper>
   );
 };
 

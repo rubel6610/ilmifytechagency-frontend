@@ -1,18 +1,19 @@
-import React from 'react';
+import React from "react";
 export const jobs = [
   {
     id: "1",
-     title: "Project Manager",
-    companyImage: "https://via.placeholder.com/150",
+    title: "Project Manager",
+    companyImage: "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
     companyName: "Sinotech Limited",
     deadline: "31 Dec 2025",
     summary: {
       vacancy: "02",
       age: "23 to 40 years",
       location: "Dhaka (Banani)",
-      salary: "Negotiable",
+      salary: "70000-90000",
       experience: "2 to 5 years",
       published: "27 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/Honors",
@@ -42,14 +43,14 @@ export const jobs = [
       "Industry Knowledge",
     ],
     compensationAndBenefits: {
-      workplace: "Work at office",
+      workplace: "Remote",
       employmentStatus: "Full Time",
       gender: "Only Male",
       jobLocation: "Dhaka (Banani)",
     },
     companyInfo: {
       name: "Sinotech Limited",
-      address: "House 52, Road 13/C, Block-E, Banani, Dhaka-1213",
+      address: "Banani, Dhaka",
       business:
         "Sinotech is in business of building & construction materials sourcing organization. Our main concentration is on building façade. We are agent of China No. 1 Brand SILANDE Silicone Sealant, SYP Pilkington Glass, Hardware and we are continuously expanding. We provide total solutions for prestigious commercial & residential projects curtain wall, aluminum window etc. We want to establish Sinotech as one of leading distribution companies in Bangladesh. We are looking for talented professionals with ambition, self-motivated to work in challenging business environment.",
     },
@@ -57,7 +58,8 @@ export const jobs = [
   {
     id: "2",
     title: "Senior Software Engineer",
-    companyImage: "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
+    companyImage:
+      "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
     companyName: "IlmiFyTech Agency",
     deadline: "15 Jan 2026",
     summary: {
@@ -67,6 +69,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "3 to 6 years",
       published: "20 Dec 2025",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "Bachelor/Masters",
@@ -81,10 +84,16 @@ export const jobs = [
       "Implement best coding practices",
       "Maintain code documentation",
     ],
-    skillsAndExpertise: ["React", "Node.js", "Next.js", "REST APIs", "Teamwork"],
+    skillsAndExpertise: [
+      "React",
+      "Node.js",
+      "Next.js",
+      "REST APIs",
+      "Teamwork",
+    ],
     compensationAndBenefits: {
       workplace: "Hybrid",
-      employmentStatus: "Full Time",
+      employmentStatus: "Part Time",
       gender: "Any",
       jobLocation: "Dhaka (Gulshan)",
     },
@@ -95,7 +104,7 @@ export const jobs = [
         "TechSoft Ltd. is a software development company focusing on web and mobile applications. We provide modern IT solutions to clients globally.",
     },
   },
-    {
+  {
     id: "3",
     title: "Marketing Manager",
     companyImage: "https://via.placeholder.com/150",
@@ -108,6 +117,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "4 to 7 years",
       published: "28 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -135,7 +145,6 @@ export const jobs = [
       business: "Marketing and advertising solutions provider.",
     },
   },
-
   {
     id: "4",
     title: "UI/UX Designer",
@@ -149,6 +158,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "2 to 4 years",
       published: "28 Dec 2025",
+      jobStatus: "closed",
     },
     requirements: {
       education: "Bachelor",
@@ -189,6 +199,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -217,7 +228,7 @@ export const jobs = [
   },
   {
     id: "6",
-     title: "Project Manager",
+    title: "Project Manager",
     companyImage: "https://via.placeholder.com/150",
     companyName: "Sinotech Limited",
     deadline: "31 Dec 2025",
@@ -228,6 +239,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "2 to 5 years",
       published: "27 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/Honors",
@@ -272,7 +284,8 @@ export const jobs = [
   {
     id: "7",
     title: "Senior Software Engineer",
-    companyImage: "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
+    companyImage:
+      "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
     companyName: "IlmiFyTech Agency",
     deadline: "15 Jan 2026",
     summary: {
@@ -282,6 +295,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "3 to 6 years",
       published: "20 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/Masters",
@@ -296,7 +310,13 @@ export const jobs = [
       "Implement best coding practices",
       "Maintain code documentation",
     ],
-    skillsAndExpertise: ["React", "Node.js", "Next.js", "REST APIs", "Teamwork"],
+    skillsAndExpertise: [
+      "React",
+      "Node.js",
+      "Next.js",
+      "REST APIs",
+      "Teamwork",
+    ],
     compensationAndBenefits: {
       workplace: "Hybrid",
       employmentStatus: "Full Time",
@@ -310,7 +330,7 @@ export const jobs = [
         "TechSoft Ltd. is a software development company focusing on web and mobile applications. We provide modern IT solutions to clients globally.",
     },
   },
-    {
+  {
     id: "8",
     title: "Marketing Manager",
     companyImage: "https://via.placeholder.com/150",
@@ -323,6 +343,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "4 to 7 years",
       published: "28 Dec 2025",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -364,6 +385,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "2 to 4 years",
       published: "28 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor",
@@ -380,7 +402,7 @@ export const jobs = [
     skillsAndExpertise: ["Figma", "Adobe XD", "User Research"],
     compensationAndBenefits: {
       workplace: "Remote",
-      employmentStatus: "Full Time",
+      employmentStatus: "Part Time",
       gender: "Any",
       jobLocation: "Remote",
     },
@@ -404,6 +426,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -443,6 +466,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -482,6 +506,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -521,6 +546,7 @@ export const jobs = [
       salary: "Negotiable",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "active",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -557,9 +583,10 @@ export const jobs = [
       vacancy: "01",
       age: "23 to 35 years",
       location: "Dhaka (Uttara)",
-      salary: "Negotiable",
+      salary: "50000-55000",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
+      jobStatus: "closed",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -586,16 +613,10 @@ export const jobs = [
       business: "HR consultancy and staffing services.",
     },
   },
-
- 
 ];
 
 const JobData = () => {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 };
 
 export default JobData;

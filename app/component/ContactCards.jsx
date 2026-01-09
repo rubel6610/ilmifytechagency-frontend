@@ -1,6 +1,9 @@
 "use client"
 import React from "react";
 import { motion } from "motion/react";
+import Link from "next/link";
+import Button from "./button/Button";
+import TypingText from "./TypingText";
 const ContactCards = () => {
 const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
@@ -30,12 +33,12 @@ const fadeInRight = {
     viewport={{ once: true }}
         className="bg-linear-to-r from-[#5a5757] to-[#111111] text-white rounded-xl px-3.75 pt-18 pb-13 flex flex-col items-center text-center justify-center shadow-2xl xl:h-87.25">
           <p className="text-white/50 text-[17px] font-medium mb-1.25">
-            Are You Ready?
+            <TypingText text="Are You Ready?" /> 
           </p>
           <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
             <div className="mr-2">Start a New</div> <div>Project</div>
           </div>
-          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5">
+          <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5 font-ubuntu">
             We&rsquo;d love to hear from you! Whether you&rsquo;re ready to start a project,
             have questions about our services, or just want to say hello, our
             team at iLMiFY is here to help.
@@ -50,15 +53,14 @@ const fadeInRight = {
     viewport={{ once: true }}
         className="bg-linear-to-r from-[#00D9A5] to-[#8FE481] mt-15 lg:mt-16 xl:mt-0 shadow-[10px_10px_20px_rgba(16,185,129,0.4)] text-white rounded-xl pt-15 pb-10 flex flex-col items-center text-center justify-center relative overflow-hidden xl:h-87.25">
           <p className="text-white/50 text-[17px] font-medium mb-1.25">
-            What Are You Waiting for?
+        What Are You Waiting for?
           </p>
           <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
             <div className="mr-2">Lets Talk About</div> <div>Work</div>
           </div>
 
-          <button className="bg-[#222] hover:bg-[#63DE77] text-white text-xs font-bold mt-8 py-4 px-10 rounded-full uppercase tracking-widest transition-all duration-300 shadow-lg active:scale-95">
-            Start Now
-          </button>
+         <Button address="/contact" label="Start Now"></Button>
+
         </motion.div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import CustomBorder from './customBorder/CustomBorder';
 import { motion } from "motion/react";
 import Lottie from 'lottie-react';
 import supportAnimation from '../../public/support.json'
+import TypingText from './TypingText';
 
 const Support = () => {
   const containerVariants = {
@@ -30,7 +31,7 @@ const Support = () => {
         className="w-full xl:w-1/2 order-2 xl:order-1">
           <div className="mb-6 mt-20 md:mt-0">
             <motion.h2 variants={fadeInUpVariants} className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-              With <span className="text-[#00D9A6]">Live Chat</span> <br />
+              With <span className="text-[#00D9A6]"><TypingText text="Live Chat" /></span> <br />
               <span className='text-[#00D9A6]'>24/7</span> Support
             </motion.h2>
 
@@ -40,7 +41,7 @@ const Support = () => {
 
           </div>
 
-          <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+          <div className="space-y-6 text-gray-600 text-lg leading-relaxed font-ubuntu">
             <motion.p variants={fadeInUpVariants}>
               At iLMIFY, we understand that exceptional customer service is crucial to building trust 
               and long-lasting relationships. That’s why we offer Live Chat and 24/7 Support to 
