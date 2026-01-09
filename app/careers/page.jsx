@@ -189,7 +189,7 @@ const Careers = () => {
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
-            Find Your Dream <span className="text-yellow-300"><TypingText text="Career" colors={["#ffc300"]}/></span>
+            Find Your Dream <span className="text-yellow-300"><TypingText text="Career" colors={["#fff"]}/></span>
           </h1>
           <p className="text-base md:text-xl mb-6 md:mb-10 opacity-90 px-2">
             Discover amazing opportunities that match your skills
