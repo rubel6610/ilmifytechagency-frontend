@@ -69,7 +69,7 @@ const Header = () => {
               />
             </Link>
 
-            {/* Hamburger icon */}
+            {/* Hamburger menu */}
             {!nav && (
               <div
                 className="md:hidden text-xl cursor-pointer text-gray-400"
