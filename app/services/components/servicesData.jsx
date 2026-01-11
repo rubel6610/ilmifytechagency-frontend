@@ -57,7 +57,7 @@ const servicesData = [
   },
   {
     id: "6",
-    title: "AI Development",
+    title: "AI Integration",
     subtitle: "Intelligent solutions for modern businesses",
     description:
       "At iLMiFY, we deliver advanced AI solutions that drive business efficiency and innovation. Our expertise in machine learning, NLP, and computer vision enables us to create custom AI systems.",
