@@ -84,11 +84,7 @@ export default function FormElement() {
         <motion.p
           className="w-auto text-center lg:text-left"
           variants={fadeUp}
-        >
-          When, while the lovely valley teems with vapour around me, and the
-          meridian sun strikes the upper surface of the impenetrable foliage of
-          my trees, and but a few stray gleams steal into the inner sanctuary.
-          When, while the lovely valley teems with vapour around me.
+        >Our team at iLMiFY is ready to understand your needs and provide the perfect solution. Whether it’s designing your brand identity, boosting your online presence, building custom websites or apps, or creating AI-driven solutions, we’re here to bring your vision to life. Let’s collaborate to make your project a success — contact us today and start turning ideas into results!
         </motion.p>
       </motion.div>
 
