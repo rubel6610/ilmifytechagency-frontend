@@ -46,7 +46,7 @@ const servicesData = [
   },
   {
     id: "5",
-    title: "Mobile App Development",
+    title: "App Development",
     subtitle: "Innovative apps for iOS and Android",
     description:
       "At iLMiFY, we specialize in creating innovative and user-friendly mobile apps for both iOS and Android. Our team combines cutting-edge technology with seamless design to deliver high-performance, scalable apps.",

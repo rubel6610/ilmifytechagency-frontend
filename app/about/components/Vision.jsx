@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "motion/react";
 
-export default function Vission() {
+export default function Vision() {
   const cardVariants = {
     hidden: {
       opacity: 0,
@@ -14,12 +14,20 @@ export default function Vission() {
       x: 0,
       transition: {
         duration: 3,
-        delay: index * 0.2, // stagger effect
+        delay: index * 0.2, 
         ease: "easeOut",
       },
     }),
   };
 
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
   return (
     <section
       className="relative bg-fixed bg-center bg-cover"
@@ -43,10 +51,16 @@ export default function Vission() {
             Our Vision & <span className="text-black">Mission</span>
           </motion.h2>
 
-          <div className="flex space-x-2 py-10 justify-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={fadeInRight}
+            className="flex space-x-2 py-10 justify-center"
+          >
             <div className="border-3 rounded-2xl border-white w-3"></div>
             <div className="border-3 rounded-2xl border-white w-10"></div>
-          </div>
+          </motion.div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-10 mt-14 text-sm">
@@ -75,7 +89,7 @@ export default function Vission() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.6 }}
                 variants={cardVariants}
-                className="hover:bg-white/20 rounded-2xl px-6 py-12 transition"
+                className="hover:bg-gray-500/30 rounded-2xl px-6 py-12 transition"
               >
                 <h4 className="text-2xl md:text-3xl text-center font-semibold mb-3">
                   {item.title}

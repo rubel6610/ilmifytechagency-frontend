@@ -3,40 +3,45 @@ import { useParams } from "next/navigation";
 import { motion } from "motion/react";
 import { jobs } from "../components/JobData";
 import { MdDoNotDisturbAlt } from "react-icons/md";
-
+import { useState } from "react";
+import ApplyJobForm from "./components/ApplyJobForm";
 
 const JobDetails = () => {
+  const [openForm, setOpenForm] = useState(false);
   const params = useParams();
   const job = jobs.find((j) => j.id === params.id);
 
   if (!job) {
-    return  <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-      className="flex flex-col items-center justify-center p-8 rounded-xl bg-linear-to-r from-red-100 to-red-200 shadow-lg text-center space-y-4"
-    >
+    return (
       <motion.div
-        animate={{ rotate: [0, 10, -10, 10, -10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="text-6xl"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+        className="flex flex-col items-center justify-center p-8 rounded-xl bg-linear-to-r from-red-100 to-red-200 shadow-lg text-center space-y-4"
       >
-       <MdDoNotDisturbAlt />
+        <motion.div
+          animate={{ rotate: [0, 10, -10, 10, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="text-6xl"
+        >
+          <MdDoNotDisturbAlt />
+        </motion.div>
+        <h2 className="text-2xl font-bold text-red-700">No Jobs Found</h2>
+        <p className="text-gray-600">
+          We couldn’t find any jobs matching your search or filters. Try
+          adjusting your search criteria.
+        </p>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="mt-4 px-6 py-2 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition"
+          onClick={() => window.location.reload()}
+        >
+          Refresh
+        </motion.button>
       </motion.div>
-      <h2 className="text-2xl font-bold text-red-700">No Jobs Found</h2>
-      <p className="text-gray-600">
-        We couldn’t find any jobs matching your search or filters. Try adjusting your search criteria.
-      </p>
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="mt-4 px-6 py-2 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition"
-        onClick={() => window.location.reload()}
-      >
-        Refresh
-      </motion.button>
-    </motion.div>
+    );
   }
 
   // Motion variants for sections
@@ -55,15 +60,17 @@ const JobDetails = () => {
   };
 
   return (
- 
-      <motion.div
-      className="mx-auto p-4 sm:p-6 md:p-8  max-w-400  rounded-2xl md:my-10"
-      style={{ backgroundColor: "#f4f9f9" }}
+    <motion.div
+      className="mx-auto p-4 sm:p-6 md:p-8  max-w-400  rounded-2xl my-27 md:my-40 bg-white shadow-2xl"
+      
       initial="hidden"
       animate="visible"
     >
       {/* Company Section */}
-      <motion.div className="flex flex-col sm:flex-row items-center mb-6" variants={sectionVariant}>
+      <motion.div
+        className="flex flex-col sm:flex-row items-center mb-6"
+        variants={sectionVariant}
+      >
         {job.companyImage && (
           <motion.img
             src={job.companyImage}
@@ -85,23 +92,30 @@ const JobDetails = () => {
       </motion.div>
 
       {/* Deadline & Apply */}
-      <motion.div className="flex flex-col sm:flex-row justify-between items-center mb-8" variants={sectionVariant}>
+      <motion.div
+        className="flex flex-col sm:flex-row justify-between items-center mb-8"
+        variants={sectionVariant}
+      >
         <motion.p
           className="text-gray-700 font-medium mb-2 sm:mb-0"
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <span className="font-bold">Application Deadline:</span> {job.deadline}
+          <span className="font-bold">Application Deadline:</span>{" "}
+          {job.deadline}
         </motion.p>
         <motion.button
           whileHover={{ scale: 1.05, backgroundColor: "#8ce064" }}
-          whileTap={{ scale: 0.95 }}
+          onClick={() => setOpenForm(true)}
           className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-colors"
         >
           Apply Now
         </motion.button>
       </motion.div>
+      {openForm && (
+        <ApplyJobForm job={job} onClose={() => setOpenForm(false)} />
+      )}
 
       {/* Summary */}
       <motion.div variants={sectionVariant} className="mb-8">
@@ -140,16 +154,20 @@ const JobDetails = () => {
           transition={{ delay: 0.2 }}
         >
           <p>
-            <span className="font-bold">Education:</span> {job.requirements.education}
+            <span className="font-bold">Education:</span>{" "}
+            {job.requirements.education}
           </p>
           <p>
-            <span className="font-bold">Experience:</span> {job.requirements.experience}
+            <span className="font-bold">Experience:</span>{" "}
+            {job.requirements.experience}
           </p>
           <p>
             <span className="font-bold">Business Areas:</span>{" "}
             {job.requirements.businessAreas.join(", ")}
           </p>
-          {job.requirements.freshers && <p>Freshers are encouraged to apply.</p>}
+          {job.requirements.freshers && (
+            <p>Freshers are encouraged to apply.</p>
+          )}
           <p>{job.requirements.additional}</p>
         </motion.div>
       </motion.div>
@@ -206,17 +224,20 @@ const JobDetails = () => {
           transition={{ delay: 0.3 }}
         >
           <p>
-            <span className="font-bold">Workplace:</span> {job.compensationAndBenefits.workplace}
+            <span className="font-bold">Workplace:</span>{" "}
+            {job.compensationAndBenefits.workplace}
           </p>
           <p>
             <span className="font-bold">Employment Status:</span>{" "}
             {job.compensationAndBenefits.employmentStatus}
           </p>
           <p>
-            <span className="font-bold">Gender:</span> {job.compensationAndBenefits.gender}
+            <span className="font-bold">Gender:</span>{" "}
+            {job.compensationAndBenefits.gender}
           </p>
           <p>
-            <span className="font-bold">Job Location:</span> {job.compensationAndBenefits.jobLocation}
+            <span className="font-bold">Job Location:</span>{" "}
+            {job.compensationAndBenefits.jobLocation}
           </p>
         </motion.div>
       </motion.div>
@@ -233,19 +254,20 @@ const JobDetails = () => {
           transition={{ delay: 0.3 }}
         >
           <p>
-            <span className="font-bold">Company Name:</span> {job.companyInfo.name}
+            <span className="font-bold">Company Name:</span>{" "}
+            {job.companyInfo.name}
           </p>
           <p>
-            <span className="font-bold">Address:</span> {job.companyInfo.address}
+            <span className="font-bold">Address:</span>{" "}
+            {job.companyInfo.address}
           </p>
           <p>
-            <span className="font-bold">Business:</span> {job.companyInfo.business}
+            <span className="font-bold">Business:</span>{" "}
+            {job.companyInfo.business}
           </p>
         </motion.div>
       </motion.div>
     </motion.div>
-
-    
   );
 };
 

@@ -1,13 +1,32 @@
 "use client";
 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../public/assets/lotties/login";
 import Image from "next/image";
 import Link from "next/link";
-const MotionLink = motion(Link);
 import { motion } from "motion/react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log("Login Data:", data);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 bg-white rounded-2xl shadow-xl p-8">
@@ -15,81 +34,76 @@ export default function Login() {
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-bold mb-6">Login your account</h2>
 
-          {/* Email */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* Password */}
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1">Password</label>
-            <div className="relative">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Email</label>
               <input
-                type="password"
-                placeholder="Password"
-                className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="email"
+                placeholder="Email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                className="w-full border rounded-md focus:border-none px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
-              <span className="absolute right-3 top-2.5 text-gray-400 cursor-pointer">
-                👁
-              </span>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
-          </div>
 
-          <div className="text-sm text-blue-600 mb-4 cursor-pointer">
-            Forgot password?
-          </div>
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Minimum 6 characters required",
+                    },
+                  })}
+                  className="w-full  border rounded-md focus:border-none focus:outline-none px-4 py-2  focus:ring-2 focus:ring-emerald-500"
+                />
 
-          <MotionLink
-            href="/contact"
-            className="
-              w-full
-              text-center
-             relative
-             overflow-hidden
-           bg-linear-to-r
-               from-[#0ddaa0]
-               to-[#8ce064]
-               text-white
-               mt-12
-             px-8
-             py-3
-             rounded-lg
-             text-sm
-             tracking-wide
-             shadow-xl
-             inline-block
-           "
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-          >
-            {/* Hover Gradient */}
-            <motion.span
-              variants={{
-                rest: { scale: 0 },
-                hover: { scale: 1 },
-              }}
-              transition={{ duration: 0.17, ease: "easeOut" }}
-              className="
-               absolute
-               inset-0
-              bg-linear-to-r
-               from-[#3D3D3D]
-               to-[#151515]
-             text-white
-               rounded-lg
-               z-0
-             "
-              style={{ originX: 0.5, originY: 0.5 }}
-            />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-2.5 text-gray-400"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
 
-            <span className="relative z-10">Register</span>
-          </MotionLink>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <div className="text-sm text-primary cursor-pointer">
+              Forgot password?
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full mt-4 bg-linear-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg text-sm tracking-wide shadow-lg"
+            >
+              Login
+            </motion.button>
+          </form>
 
           {/* Register */}
           <p className="text-sm text-center mt-4">
@@ -101,31 +115,29 @@ export default function Login() {
 
           {/* Divider */}
           <div className="flex items-center my-6">
-            <div className="grow h-px bg-gray-300"></div>
+            <div className="grow h-px bg-gray-300" />
             <span className="px-3 text-sm text-gray-500">OR</span>
-            <div className="grow h-px bg-gray-300"></div>
+            <div className="grow h-px bg-gray-300" />
           </div>
 
-          {/* Social Login */}
+          {/* Google Login */}
           <button
             type="button"
-            aria-label="Continue with Google"
-            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full flex items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 hover:shadow-sm"
           >
             <Image
               src="/assets/google.png"
               alt="Google logo"
               width={20}
               height={20}
-              className="object-contain"
             />
-            <span>Continue with Google</span>
+            Continue with Google
           </button>
         </div>
 
         {/* RIGHT: LOTTIE */}
         <div className="hidden md:flex items-center justify-center bg-gray-50">
-          <Lottie animationData={loginAnimation} loop={true} className="w-96" />
+          <Lottie animationData={loginAnimation} loop className="w-96" />
         </div>
       </div>
     </div>

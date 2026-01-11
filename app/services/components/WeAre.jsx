@@ -1,7 +1,9 @@
+
 "use client";
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 
 export default function WeAre() {
   const typingVariant = {
@@ -14,14 +16,23 @@ export default function WeAre() {
       },
     }),
   };
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className="container mx-auto my-28  px-4 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div className="grid items-center grid-cols-1 gap-12 px-4 py-16 mx-auto max-w-400 my-28 md:px-12 lg:grid-cols-2">
       {/* Left Content */}
       <div>
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left">
+        <h1 className="text-2xl font-semibold leading-tight text-center md:text-4xl lg:text-5xl lg:text-left">
           {/* Line 1 */}
           <motion.span
-            className="block text-gray-800 overflow-hidden whitespace-nowrap"
+            className="block overflow-hidden text-gray-800 whitespace-nowrap"
             variants={typingVariant}
             initial="hidden"
             animate="visible"
@@ -43,14 +54,19 @@ export default function WeAre() {
           </motion.span>
         </h1>
 
-        <div className="flex space-x-2 py-10 items-center justify-center lg:justify-start">
-          <div className="border-3 rounded-2xl border-green-500 w-3"></div>
-          <div className="border-3 rounded-2xl border-green-500 w-10"></div>
-        </div>
+        <motion.div
+        className="flex justify-center lg:justify-start mt-4"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.6 }}
+        variants={fadeInRight}
+      >
+        <CustomBorder />
+      </motion.div>
 
         <div className="text-justify">
           <motion.p
-            className="text-gray-600 md:leading-relaxed items-start px-8 md:px-0"
+            className="items-start px-8 text-gray-600 md:leading-relaxed md:px-0"
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -67,7 +83,7 @@ export default function WeAre() {
 
           <br />
           <motion.p
-            className="text-gray-600 md:leading-relaxed px-8 md:px-0"
+            className="px-8 text-gray-600 md:leading-relaxed md:px-0"
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -88,7 +104,7 @@ export default function WeAre() {
       {/* Right Image */}
       <div>
         <motion.div
-          className="relative w-full h-55 md:h-125 rounded-lg overflow-hidden order-1 md:order-2 "
+          className="relative order-1 w-full overflow-hidden rounded-lg h-55 md:h-125 md:order-2 "
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{
@@ -100,7 +116,7 @@ export default function WeAre() {
             src="/outside.jpg"
             alt="Team discussion"
             fill
-            className="object-cover  px-8 md:px-0 "
+            className="object-cover px-8 md:px-0 "
             priority
           />
         </motion.div>

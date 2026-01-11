@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const AppliedJobCard = ({ job }) => {
   return (
-    <div className="bg-white  shadow-md rounded-md p-4 ">
+    <div className="bg-white hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-md rounded-md p-4 ">
       <div className="flex gap-4 items-center">
         <Image
           src={job.companyImage}
@@ -26,7 +26,7 @@ const AppliedJobCard = ({ job }) => {
       </div>
 
       <div className="mt-4 text-right">
-        <Link href={`/applied-job/${job.id}`} passHref>
+        <Link href={`/dashboard/userdashboard/applied-jobs/${job.id}`} >
           <button className="text-sm text-teal-500 hover:underline">
             View Details
           </button>

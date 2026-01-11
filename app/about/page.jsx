@@ -1,18 +1,19 @@
-import Agency from "../component/about/Agency";
-import Project from "../component/about/Project";
-import Question from "../component/about/Question";
-import Team from "../component/about/Team";
-import Vission from "../component/about/Vission";
-
+import Agency from "./components/Agency";
+import Project from "./components/Project";
+import Question from "./components/Question";
+import Team from "./components/Team";
+import Vision from "./components/Vision";
 
 export default function AboutPage() {
   return (
-    <main>
+    <main className="my-30">
       <div>
-        <h2 className="text-3xl  md:text-4xl lg:text-5xl font-semibold text-center bg-[#F9F9F9] py-14 text-[#00D9A6]">About Page</h2>
+        <h2 className="text-3xl  md:text-4xl lg:text-5xl font-semibold text-center bg-[#F9F9F9] py-14 text-[#00D9A6]">
+          About Page
+        </h2>
       </div>
       <Agency />
-      <Vission />
+      <Vision />
       <Team />
       <Question />
       <Project />

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode:false,
   images: {
     remotePatterns: [
       {
@@ -10,6 +11,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'url-shortener.me',
+        pathname: '/**', // Matches any pathname under this hostname
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
         pathname: '/**', // Matches any pathname under this hostname
       },
     ],
