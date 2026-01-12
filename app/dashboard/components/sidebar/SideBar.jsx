@@ -40,7 +40,7 @@ export default function Sidebar({ role = "user" }) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 260, damping: 25 }}
-              className="fixed z-50  left-0 w-64 min-h-[calc(100vh-30px)] md:min-h-[calc(100vh-70px)]
+              className="fixed z-50  left-0 w-64 min-h-screen
                 bg-linear-to-b from-[#00c389] to-[#86e062]
                 text-white p-5 flex flex-col"
             >

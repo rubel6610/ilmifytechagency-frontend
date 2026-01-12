@@ -3,7 +3,6 @@ import { useParams } from "next/navigation";
 import { motion } from "motion/react";
 import { jobs } from "../components/JobData";
 import { MdDoNotDisturbAlt } from "react-icons/md";
-import { useState } from "react";
 import ApplyJobForm from "./components/ApplyJobForm";
 
 const JobDetails = () => {

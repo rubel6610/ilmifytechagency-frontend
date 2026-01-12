@@ -60,8 +60,8 @@ export default function PostJobPage() {
       return;
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    // Validate file size (max 3MB)
+    const maxSize = 3 * 1024 * 1024; // 3MB in bytes
     if (file.size > maxSize) {
       setError("photo", {
         type: "manual",
@@ -143,9 +143,9 @@ export default function PostJobPage() {
         return "Please upload a valid image (JPEG, PNG, WebP)";
       }
 
-      const maxSize = 5 * 1024 * 1024;
+      const maxSize = 3 * 1024 * 1024;
       if (value.size > maxSize) {
-        return "Image size should be less than 5MB";
+        return "Image size should be less than 3MB";
       }
     }
 
@@ -359,7 +359,7 @@ export default function PostJobPage() {
                           Upload image
                         </span>
                         <p className="text-xs text-gray-400 mt-1">
-                          JPEG, PNG, WebP (max 5MB)
+                          JPEG, PNG, WebP (max 3MB)
                         </p>
                       </div>
                     )}

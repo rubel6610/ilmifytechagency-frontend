@@ -33,7 +33,7 @@ const JobCard = ({ job }) => {
     switch (status?.toLowerCase()) {
       case "active":
         return "bg-green-100 text-green-800";
-      case "pending":
+      case "inactive":
         return "bg-red-100 text-red-800";
       case "closed":
         return "bg-red-600 text-white";
@@ -204,7 +204,7 @@ const JobCard = ({ job }) => {
             <div className="flex space-x-2">
               <motion.div
                 whileHover={
-                  job.summary.jobStatus !== "pending" &&
+                  job.summary.jobStatus !== "inactive" &&
                   job.summary.jobStatus !== "closed"
                     ? { x: -4 }
                     : {}
@@ -212,14 +212,14 @@ const JobCard = ({ job }) => {
               >
                 <Link
                   href={
-                    job.summary.jobStatus === "pending" ||
+                    job.summary.jobStatus === "inactive" ||
                     job.summary.jobStatus === "closed"
                       ? "#"
                       : `/careers/${job.id}`
                   }
                   onClick={(e) => {
                     if (
-                      job.summary.jobStatus === "pending" ||
+                      job.summary.jobStatus === "inactive" ||
                       job.summary.jobStatus === "closed"
                     ) {
                       e.preventDefault(); // Prevents navigation
@@ -227,7 +227,7 @@ const JobCard = ({ job }) => {
                   }}
                   className={`px-4 py-2 border rounded-lg font-medium text-sm transition-all inline-flex items-center 
       ${
-        job.summary.jobStatus === "pending" ||
+        job.summary.jobStatus === "inactive" ||
         job.summary.jobStatus === "closed"
           ? "border-gray-300 text-gray-400 bg-gray-100 cursor-not-allowed pointer-events-none opacity-70"
           : "border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white"

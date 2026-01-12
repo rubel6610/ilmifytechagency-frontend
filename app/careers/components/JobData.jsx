@@ -96,7 +96,7 @@ export const jobs = [
       salary: "70000 - 90000",
       experience: "3 to 5 years",
       published: "28 Dec 2025",
-      jobStatus: "pending",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "Bachelor/MBA",
@@ -219,7 +219,7 @@ export const jobs = [
       salary: "45000 - 60000",
       experience: "3 to 5 years",
       published: "26 Dec 2025",
-      jobStatus: "active",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "B.Com/M.Com",
@@ -260,7 +260,7 @@ export const jobs = [
       salary: "50000 - 70000",
       experience: "2 to 4 years",
       published: "25 Dec 2025",
-      jobStatus: "active",
+      jobStatus: "inactive",
     },
     requirements: {
       education: "BSc in CSE",

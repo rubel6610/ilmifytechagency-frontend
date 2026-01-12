@@ -39,7 +39,7 @@ export const adminLinks = [
   {
     name: "Manage Jobs",
     href: "/dashboard/manage-jobs",
-    icon: Columns3Cog,
+    icon: Briefcase,
   }
 
 ];
