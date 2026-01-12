@@ -59,8 +59,8 @@ const BlogPage = () => {
                         src={blogs.image} 
                         alt={blogs.title} 
                         width={1400} 
-                        height={800} 
-                        className='w-full h-auto object-cover' 
+                        height={500} 
+                        className='w-full lg:h-175 object-cover' 
                         priority
                     />
                 </div>
@@ -104,7 +104,7 @@ const BlogPage = () => {
                 </div>
 
                 {/* TAGS & SHARE BAR - Fixed responsive layout */}
-                <div className='my-12 mt-10 md:my-16 py-4 sm:py-6 border-y flex flex-row justify-between items-center w-full max-w-300 mx-auto gap-2 sm:gap-4 px-2'>
+                {/* <div className='my-12 mt-10 md:my-16 py-4 sm:py-6 border-y flex flex-row justify-between items-center w-full max-w-300 mx-auto gap-2 sm:gap-4 px-2'>
                     <h2 className='text-[14px] sm:text-[16px] md:text-[22px] font-bold truncate flex-1 min-w-0'>Tags: No tags</h2>
                     
                     <div className='flex gap-3 sm:gap-4 md:gap-6 text-[18px] sm:text-[20px] md:text-[26px] shrink-0 items-center'>
@@ -123,7 +123,7 @@ const BlogPage = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* COMMENT SECTION */}
                 <section className='text-left w-full -mt-8 max-w-300 mx-auto mb-20 overflow-hidden px-2'>
