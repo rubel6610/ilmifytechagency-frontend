@@ -36,7 +36,7 @@ const Blog = () => {
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      window.scrollTo({ top: 180, behavior: "smooth" });
+      window.scrollTo({ top: 150, behavior: "smooth" });
     }
   };
 
@@ -95,13 +95,7 @@ const Blog = () => {
       {/* BLOG GRID */}
       <div className="bg-background py-16">
         <div className="max-w-345 mx-auto px-4 md:px-10 lg:px-6">
-          {/* Blog count info */}
-          <div className="text-center mb-8">
-            <p className="text-gray-500">
-              Showing {startIndex + 1}-{Math.min(endIndex, blogsData.length)} of{" "}
-              {blogsData.length} articles
-            </p>
-          </div>
+
 
           {/* AnimatePresence for smooth page transitions */}
           <AnimatePresence mode="wait">
@@ -187,6 +181,7 @@ const Blog = () => {
               )}
             </motion.div>
           </AnimatePresence>
+          
 
           {/* PAGINATION */}
           {totalPages > 1 && (
@@ -296,6 +291,13 @@ const Blog = () => {
               </button>
             </motion.div>
           )}
+                    {/* Blog count info */}
+          <div className="text-center mt-8">
+            <p className="text-gray-500">
+              Showing {startIndex + 1}-{Math.min(endIndex, blogsData.length)} of{" "}
+              {blogsData.length} articles
+            </p>
+          </div>
         </div>
       </div>
     </section>
