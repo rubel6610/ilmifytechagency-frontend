@@ -33,7 +33,7 @@ const JobFilters = ({
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 sticky top-24 z-40">
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 sticky top-24 z-50">
       <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-6 flex items-center">
         <Filter className="mr-2" size={20} />
         Filters
@@ -42,7 +42,7 @@ const JobFilters = ({
       {/* Job Type */}
       <div className="mb-6 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4">Job Type</h4>
-        <div className="space-y-1 md:space-y-2">
+        <div className="space-y-1">
           {["All", "Full Time", "Part Time"].map((type) => (
             <button
               key={type}

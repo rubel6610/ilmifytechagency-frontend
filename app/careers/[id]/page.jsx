@@ -7,7 +7,6 @@ import { useState } from "react";
 import ApplyJobForm from "./components/ApplyJobForm";
 
 const JobDetails = () => {
-  const [openForm, setOpenForm] = useState(false);
   const params = useParams();
   const job = jobs.find((j) => j.id === params.id);
 
@@ -44,7 +43,6 @@ const JobDetails = () => {
     );
   }
 
-  // Motion variants for sections
   const sectionVariant = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -61,214 +59,162 @@ const JobDetails = () => {
 
   return (
     <motion.div
-      className="mx-auto p-4 sm:p-6 md:p-8  max-w-400  rounded-2xl my-27 md:my-40 bg-white shadow-2xl"
-      
+      className="mx-auto p-4 sm:p-6 md:p-8 max-w-400 rounded-2xl my-27 md:my-40 bg-white shadow-2xl"
       initial="hidden"
       animate="visible"
     >
-      {/* Company Section */}
-      <motion.div
-        className="flex flex-col sm:flex-row items-center mb-6"
-        variants={sectionVariant}
-      >
-        {job.companyImage && (
-          <motion.img
-            src={job.companyImage}
-            alt={job.companyName}
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-[#0ddaa0] mb-2 sm:mb-0 sm:mr-4"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-          />
-        )}
-        <motion.h1
-          className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          {job.companyName}
-        </motion.h1>
-      </motion.div>
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        
+        {/* LEFT SIDE: Content (Spans 2 columns on large screens) */}
+        <div className="lg:col-span-2">
+          {/* Company Section */}
+          <motion.div
+            className="flex flex-col sm:flex-row items-center mb-6"
+            variants={sectionVariant}
+          >
+            {job.companyImage && (
+              <motion.img
+                src={job.companyImage}
+                alt={job.companyName}
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-[#0ddaa0] mb-2 sm:mb-0 sm:mr-4"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+              />
+            )}
+            <motion.h1
+              className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              {job.companyName}
+            </motion.h1>
+          </motion.div>
 
-      {/* Deadline & Apply */}
-      <motion.div
-        className="flex flex-col sm:flex-row justify-between items-center mb-8"
-        variants={sectionVariant}
-      >
-        <motion.p
-          className="text-gray-700 font-medium mb-2 sm:mb-0"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <span className="font-bold">Application Deadline:</span>{" "}
-          {job.deadline}
-        </motion.p>
-      
-      </motion.div>
-      {openForm && (
-        <ApplyJobForm job={job} onClose={() => setOpenForm(false)} />
-      )}
-
-      {/* Summary */}
-      <motion.div variants={sectionVariant} className="mb-8">
-        <motion.h2
-          className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          Summary
-        </motion.h2>
-        <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-gray-700">
-          {Object.entries(job.summary).map(([key, value], i) => (
+          {/* Deadline */}
+          <motion.div
+            className="flex flex-col sm:flex-row justify-between items-center mb-8"
+            variants={sectionVariant}
+          >
             <motion.p
-              key={key}
-              custom={i}
-              variants={listItemVariant}
-              initial="hidden"
-              animate="visible"
+              className="text-gray-700 font-medium mb-2 sm:mb-0"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <span className="font-bold capitalize">{key}:</span> {value}
+              <span className="font-bold">Application Deadline:</span>{" "}
+              {job.deadline}
             </motion.p>
-          ))}
-        </motion.div>
-      </motion.div>
+          </motion.div>
 
-      {/* Requirements */}
-      <motion.div className="mt-8 mb-8" variants={sectionVariant}>
-        <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
-          Requirements
-        </motion.h2>
-        <motion.div
-          className="text-gray-700 space-y-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <p>
-            <span className="font-bold">Education:</span>{" "}
-            {job.requirements.education}
-          </p>
-          <p>
-            <span className="font-bold">Experience:</span>{" "}
-            {job.requirements.experience}
-          </p>
-          <p>
-            <span className="font-bold">Business Areas:</span>{" "}
-            {job.requirements.businessAreas.join(", ")}
-          </p>
-          {job.requirements.freshers && (
-            <p>Freshers are encouraged to apply.</p>
-          )}
-          <p>{job.requirements.additional}</p>
-        </motion.div>
-      </motion.div>
-
-      {/* Responsibilities */}
-      <motion.div className="mt-8 mb-8" variants={sectionVariant}>
-        <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]">
-          Responsibilities
-        </motion.h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-1">
-          {job.responsibilities.map((item, i) => (
-            <motion.li
-              key={i}
-              custom={i}
-              variants={listItemVariant}
-              initial="hidden"
-              animate="visible"
+          {/* Summary Details - Two Columns inside Left Side */}
+          <motion.div variants={sectionVariant} className="mb-8">
+            <motion.h2
+              className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
+              Summary
+            </motion.h2>
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
+              {Object.entries(job.summary).map(([key, value], i) => (
+                <motion.p
+                  key={key}
+                  custom={i}
+                  variants={listItemVariant}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <span className="font-bold capitalize">{key}:</span> {value}
+                </motion.p>
+              ))}
+            </motion.div>
+          </motion.div>
 
-      {/* Skills & Expertise */}
-      <motion.div className="mt-8 mb-8" variants={sectionVariant}>
-        <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
-          Skills & Expertise
-        </motion.h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-1">
-          {job.skillsAndExpertise.map((skill, i) => (
-            <motion.li
-              key={i}
-              custom={i}
-              variants={listItemVariant}
-              initial="hidden"
-              animate="visible"
+          {/* Requirements */}
+          <motion.div className="mt-8 mb-8" variants={sectionVariant}>
+            <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
+              Requirements
+            </motion.h2>
+            <motion.div
+              className="text-gray-700 space-y-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
             >
-              {skill}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
+              <p><span className="font-bold">Education:</span> {job.requirements.education}</p>
+              <p><span className="font-bold">Experience:</span> {job.requirements.experience}</p>
+              <p><span className="font-bold">Business Areas:</span> {job.requirements.businessAreas.join(", ")}</p>
+              {job.requirements.freshers && <p>Freshers are encouraged to apply.</p>}
+              <p>{job.requirements.additional}</p>
+            </motion.div>
+          </motion.div>
 
-      {/* Compensation & Benefits */}
-      <motion.div className="mt-8 mb-8" variants={sectionVariant}>
-        <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]">
-          Compensation & Benefits
-        </motion.h2>
-        <motion.div
-          className="text-gray-700 space-y-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <p>
-            <span className="font-bold">Workplace:</span>{" "}
-            {job.compensationAndBenefits.workplace}
-          </p>
-          <p>
-            <span className="font-bold">Employment Status:</span>{" "}
-            {job.compensationAndBenefits.employmentStatus}
-          </p>
-          <p>
-            <span className="font-bold">Gender:</span>{" "}
-            {job.compensationAndBenefits.gender}
-          </p>
-          <p>
-            <span className="font-bold">Job Location:</span>{" "}
-            {job.compensationAndBenefits.jobLocation}
-          </p>
-        </motion.div>
-      </motion.div>
+          {/* Responsibilities */}
+          <motion.div className="mt-8 mb-8" variants={sectionVariant}>
+            <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]">
+              Responsibilities
+            </motion.h2>
+            <ul className="list-disc list-inside text-gray-700 space-y-1">
+              {job.responsibilities.map((item, i) => (
+                <motion.li key={i} custom={i} variants={listItemVariant} initial="hidden" animate="visible">
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
 
-      {/* Company Info */}
-      <motion.div className="mt-8 mb-8" variants={sectionVariant}>
-        <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
-          Company Information
-        </motion.h2>
-        <motion.div
-          className="text-gray-700 space-y-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <p>
-            <span className="font-bold">Company Name:</span>{" "}
-            {job.companyInfo.name}
-          </p>
-          <p>
-            <span className="font-bold">Address:</span>{" "}
-            {job.companyInfo.address}
-          </p>
-          <p>
-            <span className="font-bold">Business:</span>{" "}
-            {job.companyInfo.business}
-          </p>
-        </motion.div>
-      </motion.div>
-        <motion.button
-          whileHover={{ scale: 1.05, backgroundColor: "#8ce064" }}
-          onClick={() => setOpenForm(true)}
-          className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-colors"
-          
-        >
-          Apply Now
-        </motion.button>
+          {/* Skills & Expertise */}
+          <motion.div className="mt-8 mb-8" variants={sectionVariant}>
+            <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
+              Skills & Expertise
+            </motion.h2>
+            <ul className="list-disc list-inside text-gray-700 space-y-1">
+              {job.skillsAndExpertise.map((skill, i) => (
+                <motion.li key={i} custom={i} variants={listItemVariant} initial="hidden" animate="visible">
+                  {skill}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Compensation & Benefits */}
+          <motion.div className="mt-8 mb-8" variants={sectionVariant}>
+            <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#0ddaa0]">
+              Compensation & Benefits
+            </motion.h2>
+            <motion.div className="text-gray-700 space-y-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              <p><span className="font-bold">Workplace:</span> {job.compensationAndBenefits.workplace}</p>
+              <p><span className="font-bold">Employment Status:</span> {job.compensationAndBenefits.employmentStatus}</p>
+              <p><span className="font-bold">Gender:</span> {job.compensationAndBenefits.gender}</p>
+              <p><span className="font-bold">Job Location:</span> {job.compensationAndBenefits.jobLocation}</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Company Info */}
+          <motion.div className="mt-8 mb-8" variants={sectionVariant}>
+            <motion.h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#8ce064]">
+              Company Information
+            </motion.h2>
+            <motion.div className="text-gray-700 space-y-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              <p><span className="font-bold">Company Name:</span> {job.companyInfo.name}</p>
+              <p><span className="font-bold">Address:</span> {job.companyInfo.address}</p>
+              <p><span className="font-bold">Business:</span> {job.companyInfo.business}</p>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* RIGHT SIDE: Form Column */}
+        <div className="lg:col-span-1">
+          {/* We make the form sticky so it stays in view while scrolling details */}
+          <div className="lg:sticky lg:top-40">
+            <ApplyJobForm job={job} isInline={true} />
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };

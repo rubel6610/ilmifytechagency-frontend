@@ -1,6 +1,8 @@
 "use client";
-import AdminDashboard from "./admindashboard/AdminDashboard";
-import UserDashboard from "./userdashboard/UserDashboard";
+
+import AdminDashboard from "./components/adminDashboard/AdminDashboard";
+import UserDashboard from "./components/userDashboard/UserDashboard";
+
 export const role = "admin";
 
 const Page = () => {
