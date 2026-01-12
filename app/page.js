@@ -11,14 +11,16 @@ import ContactCards from "./component/ContactCards";
 import LogoSlider from "./component/LogoSlider";
 import ShowcaseSection from "./component/ShowcaseSection";
 import OverviewSection from "./component/OverviewSection";
+import AnimatedMap from "./component/AnimatedMap";
 
 export default function Home() {
+  
   return (
     <main className="overflow-hidden mt-25 md:mt-30 lg:mt-32">
       <HeroSection />
 
       <ServicesSection />
-
+      
       <WhoWeAre />
 
       <ShowcaseSection />
@@ -32,6 +34,8 @@ export default function Home() {
       <DigitalFutures />
 
       <BlogPostSection />
+
+      <AnimatedMap />
 
       <ContactCards />
 
