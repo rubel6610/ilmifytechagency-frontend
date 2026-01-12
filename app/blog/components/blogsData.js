@@ -72,7 +72,6 @@ export const blogsData = [
       bussiness: "business",
       image: "/hardest-things.png",
     },
-
 ]
 
  export const blogs = [
