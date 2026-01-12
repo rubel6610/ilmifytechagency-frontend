@@ -107,7 +107,7 @@ const CardDetails = () => {
   );
 
   return (
-    <div className="mx-auto flex flex-col lg:flex-row justify-center px-6 py-20 lg:max-w-400 overflow-x-hidden lg:overflow-x-visible">
+    <div className="mx-auto flex flex-col lg:flex-row justify-center mt-25 px-6 py-20 lg:max-w-400 overflow-x-hidden lg:overflow-x-visible">
       {/* LEFT CONTENT */}
       <div className="w-197.5 lg:mx-20 mx-auto max-w-full">
         <Image
