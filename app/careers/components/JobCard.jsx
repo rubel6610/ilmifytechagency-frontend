@@ -28,8 +28,6 @@ const cardVariants = {
 };
 
 const JobCard = ({ job }) => {
- 
-
   // Get job status color
   const getJobStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -44,36 +42,7 @@ const JobCard = ({ job }) => {
     }
   };
 
-  // Format salary display
-  const formatSalary = (salary) => {
-    if (typeof salary === "string" && salary.includes("-")) {
-      const [min, max] = job.summary.salary.split("-").map((s) => s.trim());
-      const minNum = parseInt(min);
-      const maxNum = parseInt(max);
-      if (!isNaN(minNum) && !isNaN(maxNum)) {
-        return `$${minNum.toLocaleString()} - $${maxNum.toLocaleString()}`;
-      }
-    }
-    // Try to extract numbers
-    const num = salary?.match(/\d+/g)?.[0];
-    if (num) {
-      return `$${parseInt(num).toLocaleString()}`;
-    }
-    return salary || "Negotiable";
-  };
-
-  // Calculate average salary for sorting
-  const getAverageSalary = (salary) => {
-    if (typeof salary === "string" && job.summary.salary.includes("-")) {
-      const [min, max] = job.summary.salary.split("-").map((s) => parseInt(s.trim()));
-      if (!isNaN(min) && !isNaN(max)) {
-        return Math.floor((min + max) / 2);
-      }
-    }
-    const num = salary?.match(/\d+/g)?.[0];
-    return num ? parseInt(num) : 0;
-  };
-
+ 
   return (
     <motion.div
       variants={cardVariants}
@@ -115,7 +84,6 @@ const JobCard = ({ job }) => {
                 </p>
               </div>
             </div>
-            
           </div>
 
           {/* Job Tags */}
@@ -164,9 +132,11 @@ const JobCard = ({ job }) => {
               className="flex items-center text-gray-600"
               whileHover={{ x: 4 }}
             >
-              <DollarSign size={16} className="mr-2 text-gray-400 shrink-0" />
+              <span className="mr-2 text-gray-400 shrink-0 text-sm">
+                &#x09F3;
+              </span>
               <span className="text-sm font-medium text-gray-800">
-                {formatSalary(job.summary.salary)}
+              {job.summary.salary}
               </span>
             </motion.div>
 
@@ -232,12 +202,11 @@ const JobCard = ({ job }) => {
               <motion.div whileHover={{ x: -4 }}>
                 <Link
                   href={`/careers/${job.id}`}
-                  className="px-4 py-2 border border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-lg font-medium text-sm transition-colors inline-flex items-center"
+                  className="px-4 py-2 border border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white rounded-lg font-medium text-sm transition-colors inline-flex items-center"
                 >
                   View Details
                 </Link>
               </motion.div>
-            
             </div>
           </div>
         </div>

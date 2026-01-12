@@ -4,33 +4,25 @@
 :root {
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.129 0.042 264.695);
-
   --color-primary: #0ddaa0;
   --color-secondary: #8ce064;
   --color-border: #dcdcdc;
-
   --font-quicksand: "Quicksand", sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 }
 
 /* 🔹 Reset & Base Layout */
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0; 
+  padding: 0;
   font-family: var(--font-quicksand);
   background-color: var(--color-background);
   color: var(--color-foreground);
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) transparent;
-}
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
 }
 
 .lenis.lenis-smooth [data-lenis-prevent] {
@@ -40,7 +32,7 @@ html.lenis {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
-  html {
+html {
   scroll-behavior: auto !important;
 }
 
@@ -51,13 +43,13 @@ html.lenis {
 .lenis.lenis-smooth {
   scroll-behavior: auto;
 }
+
 /* Mobile dropdown fix */
 @media (max-width: 768px) {
   .lenis.lenis-smooth {
     overflow: auto !important;
   }
 }
-
 
 /* 🔹 Fonts */
 .font-ubuntu {
@@ -70,7 +62,6 @@ html.lenis {
     @apply w-full border border-slate-300 px-4 py-2 rounded-md
            focus:outline-none focus:ring-2 focus:ring-[#00c389];
   }
-
   .section-title {
     @apply text-lg font-semibold mb-3 text-slate-700;
   }
@@ -78,13 +69,27 @@ html.lenis {
 
 /* 🔹 Tailwind utilities */
 @layer utilities {
-  .bg-primary { background-color: var(--color-background); }
-  .bg-secondary { background-color: var(--color-foreground); }
-  .text-primary { color: var(--color-primary); }
-  .text-secondary { color: var(--color-secondary); }
-  .border-primary { border: 1px solid var(--color-primary); }
-  .border-secondary { border: 1px solid var(--color-secondary); }
-  .border-default { border: 1px solid var(--color-border); }
+  .bg-primary {
+    background-color: var(--color-background);
+  }
+  .bg-secondary {
+    background-color: var(--color-foreground);
+  }
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  .border-primary {
+    border: 1px solid var(--color-primary);
+  }
+  .border-secondary {
+    border: 1px solid var(--color-secondary);
+  }
+  .border-default {
+    border: 1px solid var(--color-border);
+  }
 }
 
 /* 🔹 Logos */
@@ -101,5 +106,5 @@ html.lenis {
 .leaflet-routing-alt,
 .leaflet-control-container .leaflet-routing-container,
 .leaflet-container {
-  z-index: 0 !important; /* Ensure interactive maps stay clickable */
+  z-index: 0 !important;
 }

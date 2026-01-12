@@ -43,7 +43,7 @@ const JobFilters = ({
       <div className="mb-6 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4">Job Type</h4>
         <div className="space-y-1 md:space-y-2">
-          {["All", "Full Time", "Part Time", "Remote"].map((type) => (
+          {["All", "Full Time", "Part Time"].map((type) => (
             <button
               key={type}
               onClick={() => setFilter(type)}
@@ -108,7 +108,7 @@ const JobFilters = ({
                   setLocationFilter(loc);
                   setLocationDropdownOpen(false);
                 }}
-                className={`px-3 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
+                className={`px-3 md:px-4 py-2 md:py-3 mt-1 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
                   locationFilter === loc ? "bg-emerald-500 text-white" : ""
                 }`}
               >

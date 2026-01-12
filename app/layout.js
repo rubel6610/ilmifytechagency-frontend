@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${quicksand.variable} ${ubuntu.variable} font-sans bg-white text-gray-900`}
+        suppressHydrationWarning
       >
         <LenisProvider>
           <Navbar />
