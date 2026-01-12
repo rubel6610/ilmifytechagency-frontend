@@ -4,6 +4,7 @@ import CustomBorder from "./customBorder/CustomBorder";
 import { motion } from "motion/react";
 import Link from "next/link";
 import Cards from "../showcase/components/Cards";
+import TypingText from "./TypingText";
 
 const MotionLink = motion(Link);
 const ShowcaseSection = () => {
@@ -37,7 +38,7 @@ const ShowcaseSection = () => {
             variants={fadeInRight}
             className="font-semibold text-4xl md:text-5xl mb-10 md:mb-0  tracking-wide leading-10 md:leading-14 "
           >
-            Our recent <span className="text-primary">web designs</span> &{" "}
+            Our recent <span className="text-primary"><TypingText text="web designs" /></span> &{" "}
             <br /> some examples of <br /> past{" "}
             <span className="text-primary">projects</span>{" "}
           </motion.h1>

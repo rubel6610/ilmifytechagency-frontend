@@ -3,14 +3,14 @@ export const jobs = [
   {
     id: "1",
     title: "Project Manager",
-    companyImage: "https://via.placeholder.com/150",
+    companyImage: "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=1768435200&v=beta&t=9D4LPDEYypGRUd15g4Sm-zXlnT2RgW_qoVJfFyl9vBo",
     companyName: "Sinotech Limited",
     deadline: "31 Dec 2025",
     summary: {
       vacancy: "02",
       age: "23 to 40 years",
       location: "Dhaka (Banani)",
-      salary: "Negotiable",
+      salary: "70000-90000",
       experience: "2 to 5 years",
       published: "27 Dec 2025",
       jobStatus: "active",
@@ -43,14 +43,14 @@ export const jobs = [
       "Industry Knowledge",
     ],
     compensationAndBenefits: {
-      workplace: "Work at office",
+      workplace: "Remote",
       employmentStatus: "Full Time",
       gender: "Only Male",
       jobLocation: "Dhaka (Banani)",
     },
     companyInfo: {
       name: "Sinotech Limited",
-      address: "House 52, Road 13/C, Block-E, Banani, Dhaka-1213",
+      address: "Banani, Dhaka",
       business:
         "Sinotech is in business of building & construction materials sourcing organization. Our main concentration is on building façade. We are agent of China No. 1 Brand SILANDE Silicone Sealant, SYP Pilkington Glass, Hardware and we are continuously expanding. We provide total solutions for prestigious commercial & residential projects curtain wall, aluminum window etc. We want to establish Sinotech as one of leading distribution companies in Bangladesh. We are looking for talented professionals with ambition, self-motivated to work in challenging business environment.",
     },
@@ -93,7 +93,7 @@ export const jobs = [
     ],
     compensationAndBenefits: {
       workplace: "Hybrid",
-      employmentStatus: "Full Time",
+      employmentStatus: "Part Time",
       gender: "Any",
       jobLocation: "Dhaka (Gulshan)",
     },
@@ -583,7 +583,7 @@ export const jobs = [
       vacancy: "01",
       age: "23 to 35 years",
       location: "Dhaka (Uttara)",
-      salary: "Negotiable",
+      salary: "50000-55000",
       experience: "1 to 3 years",
       published: "29 Dec 2025",
       jobStatus: "closed",

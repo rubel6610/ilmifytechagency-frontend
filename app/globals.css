@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* 🔹 Root Variables */
 :root {
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.129 0.042 264.695);
@@ -11,79 +12,82 @@
   --font-quicksand: "Quicksand", sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 }
-/* Remove native vertical scrollbar on html and body */
+
+/* 🔹 Reset & Base Layout */
 html, body {
-  overflow-y: hidden; /* Hide browser native vertical scrollbar */
   height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0; 
+  font-family: var(--font-quicksand);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-secondary);
+  scrollbar-color: var(--color-primary) transparent;
+}
+html.lenis {
+  height: auto;
 }
 
-/* Lenis wrapper fills full viewport and enables scrolling */
-#lenis-wrapper {
-  overflow-y: auto; /* Enable scroll only here */
-  height: 100vh;
-  width: 100%;
-  overscroll-behavior: none;
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
 }
 
-/* Prevent horizontal scroll */
-body, #lenis-wrapper {
-  overflow-x: hidden;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+  html {
+  scroll-behavior: auto !important;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+/* Mobile dropdown fix */
+@media (max-width: 768px) {
+  .lenis.lenis-smooth {
+    overflow: auto !important;
+  }
 }
 
 
+/* 🔹 Fonts */
+.font-ubuntu {
+  font-family: var(--font-ubuntu);
+}
 
+/* 🔹 Tailwind base overrides */
 @layer base {
-  
-  body {
-    font-family: var(--font-quicksand);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+  .input {
+    @apply w-full border border-slate-300 px-4 py-2 rounded-md
+           focus:outline-none focus:ring-2 focus:ring-[#00c389];
   }
 
-  .font-ubuntu {
-    font-family: var(--font-ubuntu);
+  .section-title {
+    @apply text-lg font-semibold mb-3 text-slate-700;
   }
 }
 
-/* 🔹 Tailwind-friendly utility classes */
+/* 🔹 Tailwind utilities */
 @layer utilities {
-  .bg-primary {
-    background-color: var(--color-background);
-  }
-
-  .bg-secondary {
-    background-color: var(--color-foreground);
-  }
-
-  .text-primary {
-    color: var(--color-primary);
-  }
-
-  .text-secondary {
-    color: var(--color-secondary);
-  }
-
-  .border-primary {
-    border: 1px solid var(--color-primary);
-  }
-
-  .border-secondary {
-    border: 1px solid var(--color-secondary);
-  }
-
-  .border-default {
-    border: 1px solid var(--color-border);
-  }
+  .bg-primary { background-color: var(--color-background); }
+  .bg-secondary { background-color: var(--color-foreground); }
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .border-primary { border: 1px solid var(--color-primary); }
+  .border-secondary { border: 1px solid var(--color-secondary); }
+  .border-default { border: 1px solid var(--color-border); }
 }
 
-
-
-/* Logo */
+/* 🔹 Logos */
 .logo {
   filter: brightness(0%) contrast(167%) saturate(0%);
 }
@@ -91,42 +95,11 @@ body, #lenis-wrapper {
 .logo-2 {
   filter: grayscale(100%) brightness(40%) contrast(100%);
 }
-.input {
-  @apply w-full border border-slate-300 px-4 py-2 rounded-md
-  focus:outline-none focus:ring-2 focus:ring-[#00c389];
-}
 
-.section-title {
-  @apply text-lg font-semibold mb-3 text-slate-700;
-}
-
-
+/* 🔹 Leaflet z-index fix */
 .leaflet-routing-container,
 .leaflet-routing-alt,
-.leaflet-control-container .leaflet-routing-container,.leaflet-container {
-  z-index: -1 !important;
- 
-}
-/* For Webkit browsers (Chrome, Safari, etc.) */
-body {
-  overflow: hidden;
-}
-
-body::-webkit-scrollbar {
-  width: 12px; /* Adjust width of the scrollbar */
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  
-}
-
-body::-webkit-scrollbar-track {
-  background: transparent; /* Makes the track (the area the thumb moves along) invisible */
-}
-
-/* For Firefox */
-body {
-  scrollbar-width: thin; 
-  scrollbar-color: var(--color-primary) var(--color-background); 
+.leaflet-control-container .leaflet-routing-container,
+.leaflet-container {
+  z-index: 0 !important; /* Ensure interactive maps stay clickable */
 }

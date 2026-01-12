@@ -1,10 +1,8 @@
 "use client";
-
-import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
-import CustomBorder from "../customBorder/CustomBorder";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 const MotionLink = motion(Link);
 
 export default function Agency() {

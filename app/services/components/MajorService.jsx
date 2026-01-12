@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/app/component/ui/button";
+import { Button } from "@/app/about/components/ui/button";
 
 const majorServicesData = [
   {

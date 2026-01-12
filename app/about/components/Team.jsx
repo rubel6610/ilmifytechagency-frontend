@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaPinterestP } from "react-icons/fa";
-import CustomBorder from "../customBorder/CustomBorder";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 
 const teamMembers = [
   {

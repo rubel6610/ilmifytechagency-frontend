@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { Card, CardContent } from "@/app/component/ui/card";
+import { Card, CardContent } from "@/app/about/components/ui/card";
 import { motion } from "framer-motion";
 import servicesData from "./servicesData";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import CustomBorder from "../customBorder/CustomBorder";
+import { Button } from "../../about/components/ui/button";
+import CustomBorder from "../../component/customBorder/CustomBorder";
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {

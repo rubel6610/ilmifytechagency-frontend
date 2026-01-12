@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
+import TypingText from "./TypingText";
 
 export default function HeroSection() {
   const swiperRef = useRef(null);
@@ -135,7 +136,7 @@ export default function HeroSection() {
                     <br></br>
                     <span className="text-black">{slide.highlight}</span>
                     <span className="text-emerald-400 ml-5">
-                      {slide.subHighlight}
+                     <TypingText text={slide.subHighlight} />
                     </span>
                   </motion.h1>
 

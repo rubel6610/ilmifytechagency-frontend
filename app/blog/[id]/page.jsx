@@ -1,17 +1,18 @@
 "use client";
 
 import React, { useState } from 'react';
-import { blogsData } from '../blogsData';
+
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { FaRegHeart, FaGooglePlusG, FaPinterestP, FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { FaRegHeart,  FaInstagram } from 'react-icons/fa';
 import { MdShare } from "react-icons/md";
-import { TiSocialFacebook, TiSocialTwitter } from "react-icons/ti";
-import { RiTelegram2Line } from "react-icons/ri";
+import { TiSocialFacebook,} from "react-icons/ti";
+
 import { IoLogoLinkedin } from "react-icons/io5";
-import CommentForm from '../CommentForm';
+import CommentForm from '../components/CommentForm';
 import { GrYoutube } from 'react-icons/gr';
-import BlogNotFound from '../BlogNotFound';
+import BlogNotFound from '../components/BlogNotFound';
+import { blogsData } from '../components/blogsData';
 
 const BlogPage = () => {
     const { id } = useParams();

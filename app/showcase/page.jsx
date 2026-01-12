@@ -4,7 +4,7 @@ import Cards from "./components/Cards";
 import CustomBorder from "../component/customBorder/CustomBorder";
 import CallToActionCard from "./components/CallToActionCard";
 import { motion } from "motion/react";
-import PageWrapper from "../component/PageWrapper";
+
 
 
 
@@ -25,7 +25,7 @@ const Showcase = () => {
     },
   };
   return (
-    <PageWrapper>
+
 
       <div className="max-w-400 mx-auto py-10 md:py-20 xl:pt-30 xl:pb-20 bg-[#FFFFFF] overflow-x-hidden mt-30">
       <motion.div
@@ -76,7 +76,7 @@ const Showcase = () => {
         <CallToActionCard />
       </div>
     </div>
-    </PageWrapper>
+ 
    
   );
 };
