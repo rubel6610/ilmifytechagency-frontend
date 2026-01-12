@@ -54,9 +54,9 @@ const cardVariants = {
 
 const ContactCard = () => {
   return (
-    <div className="px-4">
+    <div className="px-4 pt-10">
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-350 mx-auto "
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-400 mx-auto "
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
