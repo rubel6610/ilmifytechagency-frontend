@@ -6,16 +6,18 @@ import { Users, Briefcase, Star, Award } from "lucide-react";
 // Counter Component for Smooth Animation
 const Counter = ({ value }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
+  const inView = useInView(ref);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
-    damping: 30,
-    stiffness: 100,
+    damping: 40,
+    stiffness: 60,
   });
 
   useEffect(() => {
     if (inView) {
       motionValue.set(value);
+    }else{
+      motionValue.set(0);
     }
   }, [inView, value, motionValue]);
 
