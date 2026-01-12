@@ -236,7 +236,7 @@ export default function WeDo() {
         >
           {servicesData.map((service) => (
             <motion.div key={service.id} variants={cardVariants}>
-              <Link href={`/services/${service.id}`} className="block h-full">
+              <Link href={`/services/${service.slug}`} className="block h-full">
                 <Card
                   className="
                     h-full

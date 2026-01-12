@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/app/about/components/ui/button";
+import  SecondaryButton  from "@/app/component/button/SecondaryButton";
 
 const majorServicesData = [
   {
@@ -81,7 +81,8 @@ export default function MajorService() {
               <div className="lg:w-1/2 text-gray-700 text-justify">
                 <p className="mb-4">{service.description}</p>
                 <p className="mb-4 font-semibold text-gray-800">
-                  Here's a list of potential {service.platform} website services you can offer:
+                  Here is s a list of potential {service.platform} website
+                  services you can offer:
                 </p>
 
                 {/* Features List */}
@@ -93,9 +94,11 @@ export default function MajorService() {
 
                 {/* CTA Button */}
                 <div className="mt-6 text-center md:text-left">
-                  <Button className="bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]">
-                    Get Started
-                  </Button>
+                  <SecondaryButton
+                    className="bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
+                    address="/contact"
+                    label="Get Started"
+                  />
                 </div>
               </div>
 

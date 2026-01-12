@@ -2,8 +2,11 @@
 
 import servicesData from "./servicesData";
 
-export default function ServiceExample({ serviceId }) {
-  const service = servicesData.find((s) => String(s.id) === String(serviceId));
+export default function ServiceExample({ slug }) {
+  console.log("ServiceExample slug:", slug);
+  // const service = servicesData.find((s) => String(s.id) === String(serviceId));
+
+  const service = servicesData.find((s) => s.slug === slug);
 
   if (!service) return null;
 
@@ -35,7 +38,7 @@ export default function ServiceExample({ serviceId }) {
               {service.description3}
             </p>
           </div>
-     
+
           <div className="lg:w-1/2 w-full">
             <video
               src="/assets/videos/demo-video1.mp4" // public/assets/videos/...

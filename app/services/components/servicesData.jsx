@@ -2,6 +2,7 @@
 const servicesData = [
   {
     id: "1",
+    slug: "cms-services",
     title: "CMS Services",
     subtitle: "Manage content easily and efficiently",
     description:
@@ -13,6 +14,7 @@ const servicesData = [
   },
   {
     id: "2",
+    slug: "custom-development",
     title: "Custom Development",
     subtitle: "Tailored websites for your business needs",
     description:
@@ -24,6 +26,7 @@ const servicesData = [
   },
   {
     id: "3",
+    slug: "digital-marketing",
     title: "Digital Marketing",
     subtitle: "Boost online presence and engagement",
     description:
@@ -35,6 +38,7 @@ const servicesData = [
   },
   {
     id: "4",
+    slug: "graphic-design",
     title: "Graphic Design",
     subtitle: "Create impactful visual brand identity",
     description:
@@ -46,6 +50,7 @@ const servicesData = [
   },
   {
     id: "5",
+    slug: "app-development",
     title: "App Development",
     subtitle: "Innovative apps for iOS and Android",
     description:
@@ -57,6 +62,7 @@ const servicesData = [
   },
   {
     id: "6",
+    slug: "ai-integration",
     title: "AI Integration",
     subtitle: "Intelligent solutions for modern businesses",
     description:
