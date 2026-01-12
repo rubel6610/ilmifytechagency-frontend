@@ -135,7 +135,7 @@ export default function FormElement() {
   // ];
 
   return (
-    <div className="relative py-20 overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-linear-to-br from-slate-50 via-white to-emerald-50/30 pointer-events-none" />
 
@@ -213,7 +213,7 @@ export default function FormElement() {
 
       {/* Main Container */}
       <motion.div
-        className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-6 md:p-8 lg:p-12 mt-10 md:mt-20 max-w-400 mx-4 lg:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 shadow-[0_8px_60px_-15px_rgba(16,185,129,0.2)] border border-white/50"
+        className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-1 md:p-1 lg:p-12 mt-10 md:mt-20 max-w-400 mx-4 lg:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 shadow-[0_8px_60px_-15px_rgba(16,185,129,0.2)] border border-white/50"
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
@@ -368,7 +368,7 @@ export default function FormElement() {
                   Send us a message
                 </h2>
                 <p className="text-gray-500 text-sm md:text-base">
-                  We&apos;ll respond within 24 hours
+                  We&apos;ll respond you accordingly.
                 </p>
               </div>
             </motion.div>

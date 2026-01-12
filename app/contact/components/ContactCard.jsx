@@ -54,7 +54,7 @@ const cardVariants = {
 
 const ContactCard = () => {
   return (
-    <div className="px-4 pt-10">
+    <div className="px-4 pt-10 pb-6">
       <motion.div
         className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-400 mx-auto "
         variants={containerVariants}
