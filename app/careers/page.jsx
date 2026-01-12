@@ -17,6 +17,7 @@ import {
   Filter,
   X,
 } from "lucide-react";
+import TypingText from "../component/TypingText";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -67,14 +68,12 @@ const Careers = () => {
   const filteredJobs = jobs.filter((job) => {
     const matchSearch =
       job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.companyName.toLowerCase().includes(search.toLowerCase()) ||
-      job.companyInfo.address.toLowerCase().includes(search.toLowerCase());
+      job.summary.location.toLowerCase().includes(search.toLowerCase());
 
     const matchJobType =
       filter === "All" ||
-      job.compensationAndBenefits.employmentStatus === filter ||
-      (filter === "Remote" &&
-        job.summary.location.toLowerCase().includes("remote"));
+      job.compensationAndBenefits.employmentStatus === filter;
+    
 
     const getSalaryValue = (salary) => {
       if (!salary || salary === "Negotiable") return null;
@@ -190,7 +189,7 @@ const Careers = () => {
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
-            Find Your Dream <span className="text-yellow-300">Career</span>
+            Find Your Dream <span className="text-yellow-300"><TypingText text="Career" colors={["#fff"]}/></span>
           </h1>
           <p className="text-base md:text-xl mb-6 md:mb-10 opacity-90 px-2">
             Discover amazing opportunities that match your skills
@@ -206,7 +205,7 @@ const Careers = () => {
                     setSearch(e.target.value);
                     setCurrentPage(1);
                   }}
-                  placeholder="Job title, keywords, or company"
+                  placeholder="Job title, Address "
                   className="w-full py-3 md:py-4 text-gray-800 focus:outline-none text-sm md:text-base"
                 />
               </div>
@@ -234,12 +233,11 @@ const Careers = () => {
       </div>
 
       {/* STATS */}
-      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {[
           { label: "Total Jobs", value: stats.total, icon: Briefcase },
           { label: "Full Time", value: stats.fullTime, icon: Users },
-          { label: "Part Time", value: stats.partTime, icon: Clock },
-          { label: "Remote Jobs", value: stats.remote, icon: Building },
+          { label: "Part Time", value: stats.partTime, icon: Clock }
         ].map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
             <div className="flex items-center">

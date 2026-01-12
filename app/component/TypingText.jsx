@@ -7,7 +7,7 @@ export default function TypingText({
   text,
   speed = 400,
   loop = true,
-  colors = ["#B8DB80", "#0ddaa0", "#8ce064"],
+  colors = ["#7bdc69", "#0ddaa0", "#8ce064"],
   className = "",
 }) {
   const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
