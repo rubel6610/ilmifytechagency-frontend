@@ -85,11 +85,11 @@ const Careers = () => {
 
     const matchSalary =
       salaryFilter === "All" ||
-      (salaryFilter === "High" && salaryValue > 80000) ||
+      (salaryFilter === "High" && salaryValue >= 50000) ||
       (salaryFilter === "Medium" &&
-        salaryValue >= 50000 &&
-        salaryValue <= 80000) ||
-      (salaryFilter === "Low" && salaryValue < 50000);
+        salaryValue >= 30000 &&
+        salaryValue < 50000) ||
+      (salaryFilter === "Low" && salaryValue < 29000);
 
     const matchLocation =
       locationFilter === "All" || job.summary.location === locationFilter;

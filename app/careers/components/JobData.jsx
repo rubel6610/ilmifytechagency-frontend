@@ -55,7 +55,7 @@ export const jobs = [
       salary: "80000 - 65000",
       experience: "1 to 2 years",
       published: "29 Dec 2025",
-      jobStatus: "active",
+      jobStatus: "closed",
     },
     requirements: {
       education: "Bachelor in Marketing",
@@ -96,7 +96,7 @@ export const jobs = [
       salary: "70000 - 90000",
       experience: "3 to 5 years",
       published: "28 Dec 2025",
-      jobStatus: "active",
+      jobStatus: "pending",
     },
     requirements: {
       education: "Bachelor/MBA",
