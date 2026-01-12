@@ -31,7 +31,7 @@ export default function ServiceDetails() {
       <ServiceExample slug={service.slug} />
       <DemoVideo />
       {/* Other Services Section */}
-      <MajorService />
+      <MajorService slug={service.slug} />
     </main>
   );
 }

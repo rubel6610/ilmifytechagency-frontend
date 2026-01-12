@@ -38,8 +38,8 @@ const servicesData = [
   },
   {
     id: "4",
-    slug: "graphic-design",
-    title: "Graphic Design",
+    slug: "graphics-design",
+    title: "Graphics Design",
     subtitle: "Create impactful visual brand identity",
     description:
       "At iLMiFY, we offer professional graphic design services to enhance your brand's visual identity. Our team creates impactful logos, branding, and marketing materials that resonate with your target audience.",
@@ -62,8 +62,8 @@ const servicesData = [
   },
   {
     id: "6",
-    slug: "ai-integration",
-    title: "AI Integration",
+    slug: "tracking-analytics",
+    title: "Tracking & Analytics",
     subtitle: "Intelligent solutions for modern businesses",
     description:
       "At iLMiFY, we deliver advanced AI solutions that drive business efficiency and innovation. Our expertise in machine learning, NLP, and computer vision enables us to create custom AI systems.",
