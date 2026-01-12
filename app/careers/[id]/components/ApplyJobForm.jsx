@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import Button from "@/app/component/button/Button";
 
 export default function ApplyJobForm({ job, onClose }) {
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,7 @@ export default function ApplyJobForm({ job, onClose }) {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         onSubmit={handleSubmit}
-        className="bg-white rounded-xl shadow-2xl mt-20 mx-4 w-full max-w-lg p-6"
+        className="bg-white rounded-xl shadow-2xl mt-40 mx-4 w-full max-w-400 p-6 space-y-20"
       >
         <h2 className="text-xl font-bold mb-4">
           Apply for {job.companyName}
