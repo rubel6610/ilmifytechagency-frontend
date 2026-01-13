@@ -82,8 +82,8 @@ export default function CommentForm({
     // Comment validation
     if (!formData.comment.trim()) {
       errors.comment = "Comment is required";
-    } else if (formData.comment.trim().length < 10) {
-      errors.comment = "Comment must be at least 10 characters";
+    } else if (formData.comment.trim().length < 3) {
+      errors.comment = "Comment must be at least 3 characters";
     }
 
     setValidationErrors(errors);
@@ -207,11 +207,11 @@ export default function CommentForm({
   ];
 
   return (
-    <div className="relative py-16 px-4">
+    <div className="relative py-16 px-0 md:px-1 lg:px-2">
       {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-lime-200/20 to-green-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-linear-to-br from- to-teal-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-linear-to-br from-lime-200/20 to-green-200/20 rounded-full blur-3xl" />
       </div>
 
       <motion.div
@@ -222,17 +222,17 @@ export default function CommentForm({
         className="relative max-w-3xl mx-auto"
       >
         {/* Main Card */}
-        <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-[0_20px_80px_-20px_rgba(16,185,129,0.15)] border border-white/60 overflow-hidden">
+        <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-3 md:p-12 shadow-[0_20px_80px_-20px_rgba(16,185,129,0.15)] border border-white/60 overflow-hidden">
           {/* Decorative Elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-100/10 to-transparent rounded-tl-3xl pointer-events-none" />
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-lime-100/10 to-transparent rounded-br-3xl pointer-events-none" />
+          <div className="absolute top-0 left-0 w-32 h-32 bg-linear-to-br from-emerald-100/10 to-transparent rounded-tl-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-linear-to-tl from-lime-100/10 to-transparent rounded-br-3xl pointer-events-none" />
           
           {/* Animated Border */}
-          <div className="absolute inset-0 rounded-3xl p-[1px] overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 rounded-3xl p-px overflow-hidden pointer-events-none">
             <motion.div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.3), transparent)",
+                background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.20), transparent)",
               }}
               animate={{
                 x: ["-100%", "100%"],
@@ -255,7 +255,7 @@ export default function CommentForm({
           >
             {/* Icon */}
             <motion.div
-              className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-400 to-lime-400 rounded-2xl shadow-lg shadow-emerald-500/30 mb-6"
+              className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-emerald-400 to-lime-400 rounded-2xl shadow-lg shadow-emerald-500/30 mb-6"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -265,10 +265,10 @@ export default function CommentForm({
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                 Leave a
               </span>{" "}
-              <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
                 Comment
               </span>
             </h2>
@@ -285,7 +285,7 @@ export default function CommentForm({
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                className="mb-8 p-5 bg-gradient-to-r from-emerald-500 to-lime-500 rounded-2xl text-white flex items-center gap-4 shadow-lg shadow-emerald-500/30"
+                className="mb-8 p-5 bg-linear-to-r from-emerald-500 to-lime-500 rounded-2xl text-white flex items-center gap-4 shadow-lg shadow-emerald-500/30"
               >
                 <motion.div
                   initial={{ scale: 0 }}
@@ -320,7 +320,7 @@ export default function CommentForm({
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                className="mb-8 p-5 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl text-white flex items-center gap-4 shadow-lg shadow-red-500/30"
+                className="mb-8 p-5 bg-linear-to-r from-red-500 to-rose-500 rounded-2xl text-white flex items-center gap-4 shadow-lg shadow-red-500/30"
               >
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -358,7 +358,7 @@ export default function CommentForm({
                 >
                   {/* Glow Effect */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-r from-emerald-400 to-lime-400 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 pointer-events-none ${
+                    className={`absolute inset-0 bg-linear-to-r from-emerald-400/20 to-lime-400 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 pointer-events-none ${
                       focusedField === field.name ? "opacity-20" : ""
                     }`}
                   />
@@ -443,7 +443,7 @@ export default function CommentForm({
 
                     {/* Bottom Line Animation */}
                     <motion.div
-                      className={`h-0.5 ${validationErrors[field.name] ? "bg-red-400" : "bg-gradient-to-r from-emerald-400 to-lime-400"}`}
+                      className={`h-0.5 ${validationErrors[field.name] ? "bg-red-400" : "bg-linear-to-r from-emerald-400 to-lime-400"}`}
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: focusedField === field.name || validationErrors[field.name] ? 1 : 0 }}
                       style={{ transformOrigin: "left" }}
@@ -482,7 +482,7 @@ export default function CommentForm({
             >
               {/* Glow Effect */}
               <div
-                className={`absolute inset-0 bg-gradient-to-r from-emerald-400 to-lime-400 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 pointer-events-none ${
+                className={`absolute inset-0 bg-linear-to-r from-emerald-700 to-lime-400 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 pointer-events-none ${
                   focusedField === "comment" ? "opacity-20" : ""
                 }`}
               />
@@ -521,7 +521,7 @@ export default function CommentForm({
                       onChange={(e) => handleInputChange("comment", e.target.value)}
                       onFocus={() => setFocusedField("comment")}
                       onBlur={() => setFocusedField(null)}
-                      maxLength={1000}
+                      maxLength={3000}
                       className="peer w-full bg-transparent pt-4 pb-2 outline-none resize-none text-gray-700 font-medium"
                       placeholder=" "
                       aria-invalid={!!validationErrors.comment}
@@ -548,8 +548,8 @@ export default function CommentForm({
                     <motion.div
                       className={`h-full rounded-full ${
                         formData.comment.length > 2800
-                          ? "bg-gradient-to-r from-amber-400 to-orange-400"
-                          : "bg-gradient-to-r from-emerald-400 to-lime-400"
+                          ? "bg-linear-to-r from-amber-400 to-orange-400"
+                          : "bg-linear-to-r from-emerald-400 to-lime-400"
                       }`}
                       animate={{ width: `${Math.min((formData.comment.length / 3000) * 100, 100)}%` }}
                       transition={{ duration: 0.2 }}
@@ -559,7 +559,7 @@ export default function CommentForm({
 
                 {/* Bottom Line Animation */}
                 <motion.div
-                  className={`h-0.5 ${validationErrors.comment ? "bg-red-400" : "bg-gradient-to-r from-emerald-400 to-lime-400"}`}
+                  className={`h-0.5 ${validationErrors.comment ? "bg-red-400" : "bg-linear-to-r from-emerald-400 to-lime-400"}`}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: focusedField === "comment" || validationErrors.comment ? 1 : 0 }}
                   style={{ transformOrigin: "left" }}
@@ -606,7 +606,7 @@ export default function CommentForm({
                   htmlFor="saveInfo"
                   className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
                     formData.saveInfo
-                      ? "bg-gradient-to-br from-emerald-400 to-lime-400 border-emerald-400"
+                      ? "bg-linear-to-br from-emerald-400 to-lime-400 border-emerald-400"
                       : "border-gray-300 hover:border-emerald-300"
                   }`}
                 >
@@ -644,10 +644,10 @@ export default function CommentForm({
                 disabled={loading}
                 whileHover={!loading ? { scale: 1.02, y: -3 } : {}}
                 whileTap={!loading ? { scale: 0.98 } : {}}
-                className="relative w-full group overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-500 to-lime-500 text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="relative w-full group overflow-hidden bg-linear-to-r from-emerald-500 via-teal-500 to-lime-500 text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {/* Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
 
                 {/* Button Content */}
                 <span className="relative flex items-center justify-center gap-3">
@@ -702,7 +702,7 @@ export default function CommentForm({
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-400 to-lime-400"
+              className="w-2 h-2 rounded-full bg-linear-to-r from-emerald-400 to-lime-400"
               initial={{ opacity: 0.3 }}
               animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
