@@ -5,6 +5,7 @@ import { jobs } from "../components/JobData";
 import { MdDoNotDisturbAlt } from "react-icons/md";
 import ApplyJobForm from "./components/ApplyJobForm";
 
+
 const JobDetails = () => {
   const params = useParams();
   const job = jobs.find((j) => j.id === params.id);
@@ -82,14 +83,24 @@ const JobDetails = () => {
                 transition={{ duration: 0.5 }}
               />
             )}
-            <motion.h1
+            <div>
+              <motion.h1
               className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              {job.title}
+            </motion.h1>
+              <motion.h1
+              className="  font-bold text-gray-800 text-center sm:text-left"
               initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.6 }}
             >
               {job.companyName}
             </motion.h1>
+            </div>
           </motion.div>
 
           {/* Deadline */}

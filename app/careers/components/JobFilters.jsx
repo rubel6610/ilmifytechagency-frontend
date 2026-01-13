@@ -43,7 +43,7 @@ const JobFilters = ({
       <div className="mb-6 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4">Job Type</h4>
         <div className="space-y-1">
-          {["All", "Full Time", "Part Time"].map((type) => (
+          {["All", "Full Time", "Part Time","Remote"].map((type) => (
             <button
               key={type}
               onClick={() => setFilter(type)}

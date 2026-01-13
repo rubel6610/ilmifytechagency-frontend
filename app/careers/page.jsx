@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import JobCard from "./components/JobCard";
-import { jobs } from "./components/JobData";
+import {jobs} from "./components/JobData";
 import CountUp from "react-countup";
 import JobFilters from "./components/JobFilters";
 import {
@@ -11,7 +11,6 @@ import {
   Briefcase,
   Clock,
   Users,
-  Building,
   ChevronLeft,
   ChevronRight,
   Filter,
@@ -72,8 +71,9 @@ const Careers = () => {
 
     const matchJobType =
       filter === "All" ||
+      (filter === "Remote" &&
+      job.compensationAndBenefits.workplace?.toLowerCase() === "remote") ||
       job.compensationAndBenefits.employmentStatus === filter;
-    
 
     const getSalaryValue = (salary) => {
       if (!salary || salary === "Negotiable") return null;
@@ -126,11 +126,11 @@ const Careers = () => {
     setCurrentPage(page);
     // Scroll to top of job listings
     setTimeout(() => {
-      const jobListings = document.querySelector('.job-listings-container');
+      const jobListings = document.querySelector(".job-listings-container");
       if (jobListings) {
         window.scrollTo({
           top: jobListings.offsetTop - 100,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }, 10);
@@ -140,7 +140,7 @@ const Careers = () => {
   const getPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 5;
-    
+
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
@@ -148,12 +148,12 @@ const Careers = () => {
     } else {
       const start = Math.max(1, currentPage - 2);
       const end = Math.min(totalPages, start + maxVisiblePages - 1);
-      
+
       for (let i = start; i <= end; i++) {
         pageNumbers.push(i);
       }
     }
-    
+
     return pageNumbers;
   };
 
@@ -177,8 +177,8 @@ const Careers = () => {
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
-        <div 
-          className="lg:hidden fixed inset-0 bg-black/50 z-40" 
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setSidebarOpen(false)}
           data-lenis-prevent
         />
@@ -189,7 +189,10 @@ const Careers = () => {
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
-            Find Your Dream <span className="text-yellow-300"><TypingText text="Career" colors={["#fff"]}/></span>
+            Find Your Dream{" "}
+            <span className="text-yellow-300">
+              <TypingText text="Career" colors={["#fff"]} />
+            </span>
           </h1>
           <p className="text-base md:text-xl mb-6 md:mb-10 opacity-90 px-2">
             Discover amazing opportunities that match your skills
@@ -210,7 +213,7 @@ const Careers = () => {
                 />
               </div>
 
-              <div className="flex-1 flex items-center px-3 md:px-4 border-l">
+              {/* <div className="flex-1 flex items-center px-3 md:px-4 border-l">
                 <MapPin className="text-gray-400 mr-2 md:mr-3" size={18} />
                 <select
                   value={locationFilter}
@@ -226,7 +229,7 @@ const Careers = () => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -237,7 +240,7 @@ const Careers = () => {
         {[
           { label: "Total Jobs", value: stats.total, icon: Briefcase },
           { label: "Full Time", value: stats.fullTime, icon: Users },
-          { label: "Part Time", value: stats.partTime, icon: Clock }
+          { label: "Part Time", value: stats.partTime, icon: Clock },
         ].map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
             <div className="flex items-center">
@@ -301,7 +304,8 @@ const Careers = () => {
           {/* Results Count */}
           <div className="mb-6 md:mb-8">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-              {filteredJobs.length} Job{filteredJobs.length !== 1 ? "s" : ""} Found
+              {filteredJobs.length} Job{filteredJobs.length !== 1 ? "s" : ""}{" "}
+              Found
             </h2>
             {filteredJobs.length === 0 && (
               <p className="text-gray-600 mt-2">
@@ -319,7 +323,10 @@ const Careers = () => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8 md:mt-12 flex justify-center items-center space-x-1 md:space-x-2" data-lenis-prevent>
+            <div
+              className="mt-8 md:mt-12 flex justify-center items-center space-x-1 md:space-x-2"
+              data-lenis-prevent
+            >
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -348,7 +355,9 @@ const Careers = () => {
                   <button
                     onClick={() => handlePageChange(totalPages)}
                     className={`w-8 h-8 md:w-10 md:h-10 rounded-lg hover:bg-gray-100 text-sm md:text-base ${
-                      currentPage === totalPages ? "bg-emerald-500 text-white" : ""
+                      currentPage === totalPages
+                        ? "bg-emerald-500 text-white"
+                        : ""
                     }`}
                   >
                     {totalPages}
