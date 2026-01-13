@@ -88,7 +88,7 @@ const AnimatedMap = () => {
               </Marker>
             ))}
 
-            {/* Trishal Hub */}
+            {/* iLmify Hub */}
             <Marker coordinates={[90.4219, 24.5245]}>
               <g className="animate-bounce">
                 <circle r={6} fill="#ef4444" fillOpacity={0.3} />

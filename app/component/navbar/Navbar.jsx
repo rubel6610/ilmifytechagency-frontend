@@ -10,6 +10,7 @@ import {
   FaPhoneAlt,
   FaBars,
   FaTimes,
+  FaYoutube,
 } from "react-icons/fa";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
@@ -36,9 +37,9 @@ const Header = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { 
-        staggerChildren: 0.1, 
-        delayChildren: 0.2
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
       },
     },
   };
@@ -51,11 +52,13 @@ const Header = () => {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
-  if(pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
-    return null; 
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    return null;
   }
   return (
-    <header className={`w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200  `}>
+    <header
+      className={`w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200  `}
+    >
       {/* Top Black Bar */}
       {!nav && (
         <div className="bg-[#3C3C3C]">
@@ -64,15 +67,42 @@ const Header = () => {
               <FaPhoneAlt className="text-xs" />
               <span>+13072696920</span>
             </div>
+            {/* Social Icons */}
             <div className="flex gap-4">
-              <FaFacebookF className="cursor-pointer hover:text-green-400 transition" />
-              <FaInstagram className="cursor-pointer hover:text-green-400 transition" />
-              <FaLinkedinIn className="cursor-pointer hover:text-green-400 transition" />
-              <FaTwitter className="cursor-pointer hover:text-green-400 transition" />
+              {[
+                {
+                  Icon: FaFacebookF,
+                  link: "https://www.facebook.com/ilmifyTech",
+                },
+                { Icon: FaTwitter, link: "https://twitter.com" },
+                {
+                  Icon: FaLinkedinIn,
+                  link: "https://bd.linkedin.com/company/ilmifytechagency",
+                },
+                {
+                  Icon: FaInstagram,
+                  link: "https://www.instagram.com/ilmifytech.agency",
+                },
+                {
+                  Icon: FaYoutube,
+                  link: "https://www.youtube.com/@ilmifyTechAgency",
+                },
+              ].map(({ Icon, link }, idx) => (
+                <Link
+                  key={idx}
+                  href={link}
+                  target="_blank"
+                  className="cursor-pointer hover:text-green-400 transition"
+                >
+                  <Icon size={14} />
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       )}
+
+      
 
       {/* Main Navigation */}
       <nav className="md:py-2.5 lg:py-6 pt-5 pb-5 md:pt-6  px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
@@ -93,15 +123,30 @@ const Header = () => {
 
           <div className="md:hidden flex gap-3 items-center">
             {role === "admin" ? (
-              <Link href="/dashboard" className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">Admin Dashboard</Link>
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
+              >
+                Admin Dashboard
+              </Link>
             ) : role === "user" ? (
-              <Link href="/dashboard" className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">User Dashboard</Link>
+              <Link
+                href="/dashboard"
+                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
+              >
+                User Dashboard
+              </Link>
             ) : (
               <Link href="/login">
-                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">Login</button>
+                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">
+                  Login
+                </button>
               </Link>
             )}
-            <div className="text-xl block md:hidden cursor-pointer text-gray-400" onClick={toggleNav}>
+            <div
+              className="text-xl block md:hidden cursor-pointer text-gray-400"
+              onClick={toggleNav}
+            >
               <FaBars />
             </div>
           </div>
@@ -113,7 +158,11 @@ const Header = () => {
             <li key={item.path}>
               <Link
                 href={item.path}
-                className={`uppercase text-[14px] tracking-wide transition duration-300 ${pathname === item.path ? "text-gray-600 font-bold" : "text-gray-500"}`}
+                className={`uppercase text-[14px] tracking-wide transition duration-300 ${
+                  pathname === item.path
+                    ? "text-gray-600 font-bold"
+                    : "text-gray-500"
+                }`}
               >
                 {item.name}
               </Link>
@@ -122,32 +171,30 @@ const Header = () => {
         </ul>
 
         {/* Right Side (Only XL) */}
-          <div className="hidden xl:flex items-center gap-6">
-            {role=== "admin" ? ( 
-              <Link
-                href="/dashboard"
-                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
-              >
-                Admin Dashboard
-              </Link>
-            ) :  role=== "user" ? (
-              <Link
-                href="/dashboard"
-                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
-              >
-                User Dashboard
-              </Link>
-            ) : (
-              <Link href="/login">
-                <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
-                  Login
-                </button>
-              </Link>
-            )}
-          </div>
+        <div className="hidden xl:flex items-center gap-6">
+          {role === "admin" ? (
+            <Link
+              href="/dashboard"
+              className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+            >
+              Admin Dashboard
+            </Link>
+          ) : role === "user" ? (
+            <Link
+              href="/dashboard"
+              className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
+            >
+              User Dashboard
+            </Link>
+          ) : (
+            <Link href="/login">
+              <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">
+                Login
+              </button>
+            </Link>
+          )}
+        </div>
       </nav>
-
-      
 
       {/* Mobile Menu & Backdrop Overlay */}
       <AnimatePresence>
@@ -183,19 +230,42 @@ const Header = () => {
                   <FaTimes className="text-gray-500 text-lg" />
                 </motion.div>
 
-                <motion.div 
-                 initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-                className="flex items-center gap-10 w-full ">
-                  <MotionLink variants={fadeInRight} href="/" onClick={() => setNav(false)}>
-                    <Image className="logo-2 w-20 h-auto" height={50} width={150} src="/logo.png" alt="logo" priority />
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={containerVariants}
+                  className="flex items-center gap-10 w-full "
+                >
+                  <MotionLink
+                    variants={fadeInRight}
+                    href="/"
+                    onClick={() => setNav(false)}
+                  >
+                    <Image
+                      className="logo-2 w-20 h-auto"
+                      height={50}
+                      width={150}
+                      src="/logo.png"
+                      alt="logo"
+                      priority
+                    />
                   </MotionLink>
-                  <motion.div variants={fadeInRight} className="flex gap-3 text-gray-500">
-                    <Link href="https://www.facebook.com/ilmifyTech"><FaFacebookF /></Link>
-                    <Link href="https://www.instagram.com/ilmifytech.agency"><FaInstagram /></Link>
-                    <Link href="https://bd.linkedin.com/company/ilmifytechagency"><FaLinkedinIn /></Link>
-                    <Link href="https://linkedin.com"><FaTwitter /></Link>
+                  <motion.div
+                    variants={fadeInRight}
+                    className="flex gap-3 text-gray-500"
+                  >
+                    <Link href="https://www.facebook.com/ilmifyTech">
+                      <FaFacebookF />
+                    </Link>
+                    <Link href="https://www.instagram.com/ilmifytech.agency">
+                      <FaInstagram />
+                    </Link>
+                    <Link href="https://bd.linkedin.com/company/ilmifytechagency">
+                      <FaLinkedinIn />
+                    </Link>
+                    <Link href="https://linkedin.com">
+                      <FaTwitter />
+                    </Link>
                   </motion.div>
                 </motion.div>
               </div>
@@ -212,7 +282,11 @@ const Header = () => {
                     <Link
                       href={item.path}
                       onClick={() => setNav(false)}
-                      className={`uppercase text-[16px] font-semibold block transition-colors ${pathname === item.path ? "text-green-500" : "text-gray-600 hover:text-green-500"}`}
+                      className={`uppercase text-[16px] font-semibold block transition-colors ${
+                        pathname === item.path
+                          ? "text-green-500"
+                          : "text-gray-600 hover:text-green-500"
+                      }`}
                     >
                       {item.name}
                     </Link>

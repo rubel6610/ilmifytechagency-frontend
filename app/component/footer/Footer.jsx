@@ -39,7 +39,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#FFFFFF] font-sans text-gray-600 mt-6 overflow-x-hidden -z-4">
       {/* Top Section */}
-      <div className="max-w-400 mx-auto px-5 md:px-8.75 pb-20 xl:pb-33.75">
+      <div className="max-w-400 mx-auto px-5 md:px-8.75">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 w-full items-start">
           {/* 1. Logo & About */}
           <div className="space-y-5">
@@ -119,41 +119,7 @@ const Footer = () => {
                 </span>
               </li>
             </ul>
-            {/* Social Icons */}
-            <div className="flex gap-2.5 mt-6">
-              {[
-                {
-                  Icon: FaFacebookF,
-                  link: "https://www.facebook.com/ilmifyTech",
-                },
-                { Icon: FaTwitter, link: "https://twitter.com" },
-                {
-                  Icon: FaLinkedinIn,
-                  link: "https://bd.linkedin.com/company/ilmifytechagency",
-                },
-                {
-                  Icon: FaInstagram,
-                  link: "https://www.instagram.com/ilmifytech.agency",
-                },
-                {
-                  Icon: FaYoutube,
-                  link: "https://www.youtube.com/@ilmifyTechAgency",
-                },
-              ].map(({ Icon, link }, idx) => (
-                <Link
-                  key={idx}
-                  href={link}
-                  target="_blank"
-                  className="w-6 h-6 rounded-full bg-[#00D9A5] text-white flex items-center justify-center 
-      transition-all duration-300 
-      hover:bg-[#A5E46D]
-      hover:translate-y-2 
-      active:translate-y-0"
-                >
-                  <Icon size={12} />
-                </Link>
-              ))}
-            </div>
+            
           </div>
 
           {/* 4. Policy */}
@@ -184,30 +150,13 @@ const Footer = () => {
       </div>
 
       {/* Bottom Black Bar */}
-      <div className="bg-linear-to-r from-[#5a5757] to-[#111111]">
-        <div className="max-w-400 mx-auto flex flex-col md:flex-row md:justify-between items-center md:items-center gap-6 py-8.75 pt-8.5 pb-9.5 px-5 md:px-8.75">
+      <div className="bg-[#FFFFFF]">
+        <div className="max-w-400 mx-auto flex justify-center items-center gap-6 py-8.75 pt-8.5 pb-10 px-5 md:px-8.75">
           {/* Left Side: Copyright Text */}
           <p className="text-gray-400 text-[16px] tracking-wide order-1 font-ubuntu text-center md:text-left">
             © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
           </p>
 
-          <div className="flex flex-col md:flex-row items-center md:items-center gap-5 order-2">
-            {/* Social Icons Container */}
-            <div className="flex gap-6 text-gray-400">
-              <Link href="https://www.facebook.com/ilmifyTech">
-                <FaFacebookF className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              </Link>
-              <Link href="https://www.instagram.com/ilmifytech.agency">
-                <FaInstagram className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              </Link>
-              <Link href="https://bd.linkedin.com/company/ilmifytechagency">
-                <FaLinkedinIn className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              </Link>
-              <Link href="https://twitter.com">
-                <FaTwitter className="cursor-pointer hover:text-white transition-colors text-[16px]" />
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </footer>
