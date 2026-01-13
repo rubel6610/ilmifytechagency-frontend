@@ -343,9 +343,9 @@ const CardDetails = () => {
 
       </div>
     </div>
-    <div className="lg:hidden">
+    {/* <div className="lg:hidden">
       <RelatedProjects></RelatedProjects>
-    </div>
+    </div> */}
     </div>
   );
 };
