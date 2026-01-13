@@ -12,7 +12,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
-import EditJobModal from "./components/EditJobModal";
+import EditJobModal from "./Components/EditJobModal";
+
 
 export default function JobManagementPage() {
   const [jobs, setJobs] = useState([]);

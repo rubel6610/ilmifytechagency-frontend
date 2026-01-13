@@ -1,21 +1,22 @@
- [
+import React from "react";
+export const jobs =  [
   {
     "id": "1",
     "title": "Frontend Developer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "15 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "23 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "90000 - 120000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "30 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE/CSIT",
@@ -31,13 +32,13 @@
     ],
     "skillsAndExpertise": ["React", "JavaScript", "HTML/CSS", "Redux"],
     "compensationAndBenefits": {
-      "workplace": "Office",
+      "workplace": "Hybrid",
       "employmentStatus": "Full Time",
       "gender": "Any",
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -45,20 +46,20 @@
   {
     "id": "2",
     "title": "Frontend Developer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "15 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "23 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "90000 - 120000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "30 Dec 2025",
-      "jobStatus": "inactive"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE/CSIT",
@@ -74,13 +75,13 @@
     ],
     "skillsAndExpertise": ["React", "JavaScript", "HTML/CSS", "Redux"],
     "compensationAndBenefits": {
-      "workplace": "Office",
+      "workplace": "Hybrid",
       "employmentStatus": "Full Time",
       "gender": "Any",
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -88,20 +89,20 @@
   {
     "id": "3",
     "title": "Frontend Developer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "15 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "23 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
-      "salary": "9000 - 29000",
+      "branchNo": "01",
+      "salary": "90000 - 120000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "30 Dec 2025",
-      "jobStatus": "closed"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE/CSIT",
@@ -117,13 +118,13 @@
     ],
     "skillsAndExpertise": ["React", "JavaScript", "HTML/CSS", "Redux"],
     "compensationAndBenefits": {
-      "workplace": "Office",
+      "workplace": "Hybrid",
       "employmentStatus": "Full Time",
       "gender": "Any",
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -139,12 +140,12 @@
       "vacancy": "01",
       "age": "28 to 40 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "120000 - 150000",
       "experience": "5 to 7 years",
       "level_of_experience": "senior",
       "published": "28 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "MBA in HR",
@@ -174,20 +175,20 @@
   {
     "id": "5",
     "title": "Graphic Designer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "20 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "03",
       "age": "21 to 30 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "35000 - 55000",
       "experience": "1 to 3 years",
       "level_of_experience": "junior",
       "published": "01 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Diploma in Graphic Design",
@@ -209,7 +210,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -225,12 +226,12 @@
       "vacancy": "02",
       "age": "24 to 32 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "70000 - 100000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "29 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in Statistics/Mathematics",
@@ -260,20 +261,20 @@
   {
     "id": "7",
     "title": "Sales Executive",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "25 Feb 2026",
     "remote": false,
     "summary": {
       "vacancy": "04",
       "age": "22 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "30000 + Commission",
       "experience": "0 to 1 years",
       "level_of_experience": "fresher",
       "published": "02 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Bachelor in any discipline",
@@ -295,7 +296,7 @@
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -303,20 +304,20 @@
   {
     "id": "8",
     "title": "Backend Developer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "18 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "25 to 35 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "100000 - 140000",
       "experience": "3 to 5 years",
       "level_of_experience": "mid",
       "published": "30 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE",
@@ -338,7 +339,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -354,7 +355,7 @@
       "vacancy": "01",
       "age": "22 to 30 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "40000 - 60000",
       "experience": "1 to 2 years",
       "level_of_experience": "junior",
@@ -389,20 +390,20 @@
   {
     "id": "10",
     "title": "Accountant",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "08 Feb 2026",
     "remote": false,
     "summary": {
       "vacancy": "01",
       "age": "25 to 40 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "50000 - 70000",
       "experience": "3 to 5 years",
       "level_of_experience": "mid",
       "published": "31 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BBA/MBA in Accounting",
@@ -424,7 +425,7 @@
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -432,20 +433,20 @@
   {
     "id": "11",
     "title": "UI/UX Designer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "22 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "23 to 32 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "60000 - 90000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "02 Jan 2026",
-      "jobStatus": "inactive"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Bachelor in any discipline",
@@ -467,7 +468,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -483,12 +484,12 @@
       "vacancy": "01",
       "age": "30 to 45 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
-      "salary": "18000 - 19000",
+      "branchNo": "02",
+      "salary": "150000 - 200000",
       "experience": "8 to 10 years",
       "level_of_experience": "senior",
       "published": "29 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "MBA/MPM",
@@ -504,8 +505,8 @@
     ],
     "skillsAndExpertise": ["Project Management", "Agile", "Scrum", "Risk Management"],
     "compensationAndBenefits": {
-      "workplace": "Office",
-      "employmentStatus": "Part Time",
+      "workplace": "Hybrid",
+      "employmentStatus": "Full Time",
       "gender": "Any",
       "jobLocation": "Dhaka Branch"
     },
@@ -518,20 +519,20 @@
   {
     "id": "13",
     "title": "DevOps Engineer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "14 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "01",
       "age": "26 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "130000 - 180000",
       "experience": "4 to 6 years",
       "level_of_experience": "senior",
       "published": "01 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE",
@@ -553,7 +554,7 @@
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -561,20 +562,20 @@
   {
     "id": "14",
     "title": "Video Editor",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "19 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "02",
       "age": "21 to 30 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "35000 - 50000",
       "experience": "1 to 2 years",
       "level_of_experience": "junior",
       "published": "03 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Diploma in Multimedia",
@@ -596,7 +597,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -612,12 +613,12 @@
       "vacancy": "02",
       "age": "24 to 32 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "55000 - 80000",
       "experience": "2 to 3 years",
       "level_of_experience": "junior",
       "published": "30 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE",
@@ -647,20 +648,20 @@
   {
     "id": "16",
     "title": "Business Analyst",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "24 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "01",
       "age": "26 to 35 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "90000 - 130000",
       "experience": "4 to 6 years",
       "level_of_experience": "mid",
       "published": "31 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "MBA/BBA",
@@ -676,13 +677,13 @@
     ],
     "skillsAndExpertise": ["Requirements Gathering", "Documentation", "UML", "SQL"],
     "compensationAndBenefits": {
-      "workplace": "Office",
+      "workplace": "Hybrid",
       "employmentStatus": "Full Time",
       "gender": "Any",
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -690,20 +691,20 @@
   {
     "id": "17",
     "title": "Social Media Manager",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "16 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "01",
       "age": "22 to 30 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "45000 - 65000",
       "experience": "2 to 3 years",
       "level_of_experience": "junior",
       "published": "02 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Bachelor in Marketing",
@@ -725,7 +726,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -741,12 +742,12 @@
       "vacancy": "03",
       "age": "25 to 35 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "110000 - 160000",
       "experience": "3 to 5 years",
       "level_of_experience": "mid",
       "published": "29 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "BSc in CSE",
@@ -776,20 +777,20 @@
   {
     "id": "19",
     "title": "Customer Support Executive",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency.",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4E0BAQH5X6LwZk7Q9A/company-logo_200_200/0/1630647312345/techsolutions_logo?e=2147483647&v=beta&t=YXj7KjPJ9q8N8W9c8v7k8l2m1n3p4o5q6r7s8t9",
+    "companyName": "TechSolutions Ltd.",
     "deadline": "27 Feb 2026",
     "remote": false,
     "summary": {
       "vacancy": "05",
       "age": "20 to 28 years",
       "location": "Uttara, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "25000 - 35000",
       "experience": "0 to 1 years",
       "level_of_experience": "fresher",
       "published": "03 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "HSC/Bachelor",
@@ -811,7 +812,7 @@
       "jobLocation": "Uttara, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency.",
+      "name": "TechSolutions Ltd.",
       "address": "Uttara, Dhaka",
       "business": "IT services and software development"
     }
@@ -819,20 +820,20 @@
   {
     "id": "20",
     "title": "Motion Graphics Designer",
-    "companyImage": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
-    "companyName": "IlmifyTech Agency",
+    "companyImage": "https://media.licdn.com/dms/image/v2/C4D0BAQH_abcdefg/company-logo_200_200/0/1234567890123/creativeminds_logo?e=2147483647&v=beta&t=abc123",
+    "companyName": "Creative Minds Ltd.",
     "deadline": "23 Feb 2026",
     "remote": true,
     "summary": {
       "vacancy": "01",
       "age": "23 to 30 years",
       "location": "Mirpur, Dhaka",
-      "branch_no": "01",
+      "branchNo": "01",
       "salary": "50000 - 70000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "01 Jan 2026",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Diploma in Animation",
@@ -854,7 +855,7 @@
       "jobLocation": "Mirpur, Dhaka"
     },
     "companyInfo": {
-      "name": "IlmifyTech Agency",
+      "name": "Creative Minds Ltd.",
       "address": "Mirpur, Dhaka",
       "business": "Creative design agency"
     }
@@ -870,12 +871,12 @@
       "vacancy": "02",
       "age": "24 to 32 years",
       "location": "Dhaka Branch",
-      "branch_no": "02",
+      "branchNo": "02",
       "salary": "50000 - 75000",
       "experience": "2 to 4 years",
       "level_of_experience": "mid",
       "published": "30 Dec 2025",
-      "jobStatus": "active"
+      "jobStatus": "open"
     },
     "requirements": {
       "education": "Bachelor in any discipline",
@@ -903,3 +904,9 @@
     }
   }
 ]
+
+const JobData = () => {
+  return <div></div>;
+};
+
+export default JobData;
