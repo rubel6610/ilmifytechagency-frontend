@@ -8,12 +8,9 @@ import MajorService from "@/app/services/components/MajorService";
 import DemoVideo from "@/app/services/components/DemoVideo";
 
 export default function ServiceDetails() {
-  const params = useParams();
-  const serviceId = params.id; // URL param
+  const { slug } = useParams();
 
-  const service = servicesData.find(
-    (item) => String(item.id) === String(serviceId)
-  );
+  const service = servicesData.find((item) => item.slug === slug);
 
   if (!service) {
     return (
@@ -22,12 +19,12 @@ export default function ServiceDetails() {
   }
 
   return (
-    <>
+    <main>
       {/* Service Main Content */}
-      <ServiceExample serviceId={service.id} />
+      <ServiceExample slug={service.slug} />
       <DemoVideo />
       {/* Other Services Section */}
-      <MajorService />
-    </>
+      <MajorService slug={service.slug} />
+    </main>
   );
 }

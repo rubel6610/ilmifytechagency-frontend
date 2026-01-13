@@ -2,6 +2,7 @@
 const servicesData = [
   {
     id: "1",
+    slug: "cms-services",
     title: "CMS Services",
     subtitle: "Manage content easily and efficiently",
     description:
@@ -13,6 +14,7 @@ const servicesData = [
   },
   {
     id: "2",
+    slug: "custom-development",
     title: "Custom Development",
     subtitle: "Tailored websites for your business needs",
     description:
@@ -24,6 +26,7 @@ const servicesData = [
   },
   {
     id: "3",
+    slug: "digital-marketing",
     title: "Digital Marketing",
     subtitle: "Boost online presence and engagement",
     description:
@@ -35,7 +38,8 @@ const servicesData = [
   },
   {
     id: "4",
-    title: "Graphic Design",
+    slug: "graphics-design",
+    title: "Graphics Design",
     subtitle: "Create impactful visual brand identity",
     description:
       "At iLMiFY, we offer professional graphic design services to enhance your brand's visual identity. Our team creates impactful logos, branding, and marketing materials that resonate with your target audience.",
@@ -46,6 +50,7 @@ const servicesData = [
   },
   {
     id: "5",
+    slug: "app-development",
     title: "App Development",
     subtitle: "Innovative apps for iOS and Android",
     description:
@@ -57,7 +62,8 @@ const servicesData = [
   },
   {
     id: "6",
-    title: "AI Development",
+    slug: "tracking-analytics",
+    title: "Tracking & Analytics",
     subtitle: "Intelligent solutions for modern businesses",
     description:
       "At iLMiFY, we deliver advanced AI solutions that drive business efficiency and innovation. Our expertise in machine learning, NLP, and computer vision enables us to create custom AI systems.",
@@ -65,29 +71,6 @@ const servicesData = [
       "We design AI applications that automate processes, analyze data, and enhance decision-making. Our solutions help organizations optimize operations, reduce costs, and improve customer experiences using cutting-edge technology.",
     description3:
       "iLMiFY’s AI development ensures scalable and secure implementations tailored to business needs, empowering companies to leverage data-driven insights for real results.",
-  },
-  // IMAGE CARDS
-  {
-    id: "7",
-    title: "Launching Shortly",
-    subtitle: "Exciting services coming soon this month",
-    isImageCard: true,
-    image: "/january.png",
-    description2:
-      "Stay tuned for our upcoming offerings designed to enhance your business capabilities. We are preparing innovative solutions to meet modern market demands.",
-    description3:
-      "These new services will provide advanced tools and features to help businesses grow efficiently and stay ahead in the competitive landscape.",
-  },
-  {
-    id: "8",
-    title: "Coming Soon 2026",
-    subtitle: "New features arriving next year",
-    isImageCard: true,
-    image: "/sixteen.png",
-    description2:
-      "We are developing new solutions to launch in 2026, aimed at addressing emerging business needs and technological trends. These will expand your digital capabilities.",
-    description3:
-      "Our upcoming services will offer advanced integrations and user-friendly features, ensuring that businesses can leverage the latest innovations for growth and efficiency.",
   },
 ];
 

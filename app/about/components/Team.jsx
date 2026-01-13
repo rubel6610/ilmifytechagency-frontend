@@ -81,7 +81,6 @@ export default function Team() {
       >
         Get to know
         <br />
-        <br />
         <span className="text-[#00D9A6]">our team</span>
       </motion.h2>
 
