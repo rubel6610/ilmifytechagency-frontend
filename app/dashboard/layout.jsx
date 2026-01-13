@@ -1,5 +1,6 @@
 "use client";
-import Sidebar from "./components/SideBar";
+
+import Sidebar from "./components/sidebar/SideBar";
 import { role } from "./page";
 
 export default function DashboardLayout({children}) {
