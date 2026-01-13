@@ -12,13 +12,13 @@ const fadeUp = {
   visible: (index) => ({
     opacity: 1,
     y: 0,
-    transition: { 
-      duration: 0.7, 
+    transition: {
+      duration: 0.7,
       ease: "easeOut",
-      delay: index * 0.1 // Stagger effect
+      delay: index * 0.1, // Stagger effect
     },
   }),
-  exit: { opacity: 0, y: -20 }
+  exit: { opacity: 0, y: -20 },
 };
 
 const BLOGS_PER_PAGE = 6;
@@ -95,8 +95,6 @@ const Blog = () => {
       {/* BLOG GRID */}
       <div className="bg-background py-16">
         <div className="max-w-345 mx-auto px-4 md:px-10 lg:px-6">
-
-
           {/* AnimatePresence for smooth page transitions */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -164,24 +162,49 @@ const Blog = () => {
                             {blog.author}
                           </p>
                         </div>
-                        
-                    <h2 className="flex items-center gap-3 text-lg md:text-xl font-semibold mt-3 group-hover:text-white group-active:text-white">
-                    <span className="w-3 h-3 rounded-full bg-[#00D9A6] group-hover:bg-white group-active:bg-white" />
-                    {blog.title}
-                  </h2>
-
+                          
+                        <h2 className="flex items-center gap-3 text-lg md:text-xl font-semibold mt-3 group-hover:text-white group-active:text-white">
+                          <span className="w-3 h-3 rounded-full bg-[#00D9A6] group-hover:bg-white group-active:bg-white" />
+                          {blog.title}
+                        </h2>
+                        <div>
+                            <p className="justify-end flex -mr-5 -mt-18 pb-12 md:pb-7 md:-mt-10 items-center gap-0.5 ml-6 md:ml-2 text-[10px] md:text-sm  text-gray-500 group-hover:text-white group-active:text-white"> 
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                              />
+                            </svg>
+                            <span>{blog.views || "1.2k"} </span>
+                          </p>
+                        </div>
                       </div>
+                      
                     </motion.div>
                   </Link>
                 ))
               ) : (
                 <div className="col-span-2 text-center py-20">
-                  <p className="text-gray-500 text-lg">No blogs found on this page.</p>
+                  <p className="text-gray-500 text-lg">
+                    No blogs found on this page.
+                  </p>
                 </div>
               )}
             </motion.div>
           </AnimatePresence>
-          
 
           {/* PAGINATION */}
           {totalPages > 1 && (
@@ -291,7 +314,7 @@ const Blog = () => {
               </button>
             </motion.div>
           )}
-                    {/* Blog count info */}
+          {/* Blog count info */}
           <div className="text-center mt-8">
             <p className="text-gray-500">
               Showing {startIndex + 1}-{Math.min(endIndex, blogsData.length)} of{" "}
