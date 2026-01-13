@@ -89,13 +89,13 @@ export default function Vision() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.6 }}
                 variants={cardVariants}
-                className="hover:bg-gray-500/30 rounded-2xl px-6 py-12 transition"
+                className="hover:bg-gray-500/30 rounded-2xl px-6 py-6 transition"
               >
                 <h4 className="text-2xl md:text-3xl text-center font-semibold mb-3">
                   {item.title}
                 </h4>
 
-                <p className="pt-6 opacity-90 leading-relaxed text-justify font-medium">
+                <p className="pt-6 text-base text-justify font-medium">
                   {item.text}
                 </p>
               </motion.div>

@@ -1,12 +1,12 @@
 "use client";
+
 import Image from "next/image";
 import { motion } from "motion/react";
-import Link from "next/link";
 import CustomBorder from "../../component/customBorder/CustomBorder";
-const MotionLink = motion(Link);
+import Button from "../../component/button/Button";
 
 export default function Agency() {
-  const typingVariant = { 
+  const typingVariant = {
     hidden: { width: 0 },
     visible: (duration) => ({
       width: "100%",
@@ -27,7 +27,7 @@ export default function Agency() {
   };
   return (
     <div className="bg-[#F9F9F9]">
-      <div className="max-w-400 mx-auto my-28 px-8 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
+      <div className="max-w-400 mx-auto px-8 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
         {/* Left Content */}
         <div className="order-2 md:order-1">
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left mb-6">
@@ -56,14 +56,14 @@ export default function Agency() {
           </h1>
 
           <motion.div
-        className="flex justify-center lg:justify-start"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-      >
-        <CustomBorder />
-      </motion.div>
+            className="flex justify-center lg:justify-start"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={fadeInRight}
+          >
+            <CustomBorder />
+          </motion.div>
 
           <div className="text-justify">
             <motion.p
@@ -79,7 +79,7 @@ export default function Agency() {
               branding, and digital marketing services that help businesses grow
               and stand out.
             </motion.p>
-            
+
             <br />
             <motion.p
               className="text-gray-600 md:leading-relaxed"
@@ -95,51 +95,9 @@ export default function Agency() {
               technology partner for your business success.
             </motion.p>
           </div>
-
-          <MotionLink
-            href="/contact"
-            className="
-             relative
-             overflow-hidden
-           bg-linear-to-r
-               from-[#0ddaa0]
-               to-[#8ce064]
-               text-white
-               mt-12
-             px-8
-             py-4
-             rounded-full
-             text-sm
-             tracking-wide
-             shadow-xl
-             inline-block
-           "
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-          >
-            {/* Hover Gradient */}
-            <motion.span
-              variants={{
-                rest: { scale: 0 },
-                hover: { scale: 1 },
-              }}
-              transition={{ duration: 0.17, ease: "easeOut" }}
-              className="
-               absolute
-               inset-0
-              bg-linear-to-r
-               from-[#3D3D3D]
-               to-[#151515]
-             text-white
-               rounded-full
-               z-0
-             "
-              style={{ originX: 0.5, originY: 0.5 }}
-            />
-
-            <span className="relative z-10">GET IN TOUCH</span>
-          </MotionLink>
+          <div className="mt-10">
+            <Button address="/contact" label="GET IN TOUCH" />
+          </div>
         </div>
 
         {/* Right Image (Animated Reveal) */}

@@ -2,8 +2,10 @@
 
 import servicesData from "./servicesData";
 
-export default function ServiceExample({ serviceId }) {
-  const service = servicesData.find((s) => String(s.id) === String(serviceId));
+export default function ServiceExample({ slug }) {
+  
+
+  const service = servicesData.find((s) => s.slug === slug);
 
   if (!service) return null;
 
@@ -23,8 +25,8 @@ export default function ServiceExample({ serviceId }) {
         <div className="container mx-auto px-8 flex flex-col lg:flex-row items-center gap-10">
           <div className="lg:w-1/2 space-y-6 text-gray-700">
             <h2 className="text-3xl md:text-4xl font-semibold">
-              Empowering Your Business with Seamless Website{" "}
-              <span className="text-[#00D9A6]">{service.subtitle}</span>
+              Empowering Your Business with {" "}
+              <span className="text-[#00D9A6]">{service.title}</span>
             </h2>
 
             <p className="text-base md:text-lg leading-relaxed">
@@ -35,7 +37,7 @@ export default function ServiceExample({ serviceId }) {
               {service.description3}
             </p>
           </div>
-     
+
           <div className="lg:w-1/2 w-full">
             <video
               src="/assets/videos/demo-video1.mp4" // public/assets/videos/...
