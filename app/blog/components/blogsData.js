@@ -8,6 +8,8 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/Marketing-ideas.png",
+      description: "Explore innovative marketing ideas to boost your business growth.",
+      like_count: 125 ,
     },
     {
       id: 2,
@@ -17,6 +19,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",   
       image: "/Rest-office.png",
+       like_count: 110 ,
     },
     {
       id: 3,
@@ -26,6 +29,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/startup-ideas.png",
+       like_count: 109 ,
     },
     {
       id: 4,
@@ -35,6 +39,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/travelandwork.png",
+      like_count: 149,
     },
     {
       id: 5,
@@ -44,6 +49,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/plan-business.png",
+       like_count: 137 ,
     },
     {
       id: 6,  
@@ -53,6 +59,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/diversity-PTZ4RGN-1400x788.png",
+       like_count: 104 ,
     },
     {
       id: 7,
@@ -62,6 +69,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/woman-business.png",
+       like_count: 124 ,
     },
     {
       id: 8,
@@ -71,6 +79,7 @@ export const blogsData = [
       category: "uncategorized",
       bussiness: "business",
       image: "/hardest-things.png",
+       like_count: 119 ,
     },
 ]
 

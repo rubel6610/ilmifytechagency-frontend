@@ -232,7 +232,7 @@ export default function CommentForm({
             <motion.div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.20), transparent)",
+                background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.18), transparent)",
               }}
               animate={{
                 x: ["-100%", "100%"],
@@ -644,7 +644,7 @@ export default function CommentForm({
                 disabled={loading}
                 whileHover={!loading ? { scale: 1.02, y: -3 } : {}}
                 whileTap={!loading ? { scale: 0.98 } : {}}
-                className="relative w-full group overflow-hidden bg-linear-to-r from-emerald-500 via-teal-500 to-lime-500 text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="relative w-full group overflow-hidden bg-linear-to-r from-[#86e062] to-[#00c389] text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {/* Shine Effect */}
                 <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
