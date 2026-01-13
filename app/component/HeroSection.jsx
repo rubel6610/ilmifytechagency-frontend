@@ -151,7 +151,7 @@ export default function HeroSection() {
                     {" "}
                     <motion.button
                       variants={fadeInUpVariants}
-                      className="bg-[#1a1a1a] text-white px-10 py-4 rounded-full hover:shadow-[0px_0px_20px_10px_rgba(0,217,166,0.3)] font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest shadow-lg cursor-pointer"
+                      className="bg-[#1a1a1a] shadow-[0_0_20px_5px_rgba(0,0,0,0.4)] text-white px-10 py-4 rounded-full hover:shadow-[0px_0px_20px_10px_rgba(0,217,166,0.3)] font-medium hover:bg-[#00D9A6] transition-all text-[11px] tracking-widest cursor-pointer"
                     >
                       {slide.btnText}
                     </motion.button>
