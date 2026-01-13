@@ -580,7 +580,7 @@ const majorServiceData = [
     title: "Server-Side Tracking Implementation",
     description: `We implement server-side tracking solutions to improve data accuracy, bypass ad blockers, 
     enhance website performance, and ensure compliance with modern privacy regulations.`,
-    image: "/assets/server-side-tracking.jpg",
+    image: "/assets/images/server-side-tracking.jpg",
     features: [
       "Server-Side Google Tag Manager Setup",
       "GA4 Server-Side Tracking",
