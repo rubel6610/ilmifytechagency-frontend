@@ -20,14 +20,12 @@ const DigitalFutures = () => {
     <section 
       className="relative w-full max-h-150 flex items-center justify-center bg-fixed bg-cover bg-center bg-no-repeat overflow-hidden "
       style={{
-        backgroundImage: `url('https://i.ibb.co.com/JwcDnrt1/46830.jpg')`,
+        backgroundImage: `linear-gradient(to right, rgba(5, 150, 105, 0.8), rgba(16, 185, 129, 0.7), rgba(52, 211, 153, 0.8)), url('https://i.ibb.co.com/JwcDnrt1/46830.jpg')`,
       }}
     >
-      {/* 1. Static Blur & Green Overlay Layer */}
-      <div className="absolute inset-0 bg-linear-to-r from-[#059669]/80 via-[#10b981]/70 to-[#34d399]/80 z-0"></div>
       
       {/* 2. Scrolling Text Container */}
-      <div className="relative z-10 w-full h-1/3 flex items-center justify-center p-6 py-20 xl:py-40">
+      <div className="relative z-0 w-full h-1/3 flex items-center justify-center p-6 py-20 xl:py-40">
         <motion.div
         initial="hidden"
             whileInView="visible"

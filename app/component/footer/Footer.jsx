@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-  FaYoutube,
-} from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import CustomBorder from "../customBorder/CustomBorder";
 import Image from "next/image";

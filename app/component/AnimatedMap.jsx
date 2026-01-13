@@ -90,7 +90,7 @@ const AnimatedMap = () => {
 
             {/* iLmify Hub */}
             <Marker coordinates={[90.4219, 24.5245]}>
-              <g className="animate-bounce">
+              <g className="">
                 <circle r={6} fill="#ef4444" fillOpacity={0.3} />
                 <circle r={3} fill="#ef4444" stroke="#ffffff" strokeWidth={1} />
               </g>
