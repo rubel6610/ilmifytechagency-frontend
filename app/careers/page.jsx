@@ -1,5 +1,6 @@
 "use client";
 
+import "./components/career.css"
 import React, { useState, useEffect, useRef } from "react";
 import JobCard from "./components/JobCard";
 import CountUp from "react-countup";
@@ -31,7 +32,7 @@ const Careers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const sidebarRef = useRef(null);
-  const filterButtonRef = useRef(null); // Ref for filter button
+  const filterButtonRef = useRef(null);
   const jobListingsRef = useRef(null);
 
   // Fetch jobs from JSON file
@@ -60,12 +61,10 @@ const Careers = () => {
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Don't close if clicking on filter button
       if (filterButtonRef.current && filterButtonRef.current.contains(event.target)) {
         return;
       }
       
-      // Close if clicking outside sidebar
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         if (window.innerWidth < 1024) {
           setSidebarOpen(false);
@@ -245,6 +244,12 @@ const Careers = () => {
     setSidebarOpen(prev => !prev);
   };
 
+  // Handle search input change - WITHOUT scroll
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // Only reset to page 1, no scroll
+  };
+
   // Loading state
   if (loading) {
     return (
@@ -302,7 +307,7 @@ const Careers = () => {
       <div className="relative bg-[#0ddaa0] text-white py-12 md:py-20 px-4 mt-16 md:mt-20">
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
             Find Your Dream{" "}
             <span className="text-yellow-300">
               <TypingText text="Career" colors={["#fff"]} />
@@ -318,11 +323,7 @@ const Careers = () => {
                 <Search className="text-gray-400 mr-2 md:mr-3" size={18} />
                 <input
                   value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setCurrentPage(1);
-                    handleFilterChange();
-                  }}
+                  onChange={handleSearchChange} // Use the new handler WITHOUT scroll
                   placeholder="Job title, company, or location"
                   className="w-full py-3 md:py-4 text-gray-800 focus:outline-none text-sm md:text-base"
                 />
@@ -493,20 +494,7 @@ const Careers = () => {
         </div>
       </div>
 
-      {/* Add some CSS for animation */}
-      <style jsx>{`
-        @keyframes slide-in {
-          from {
-            transform: translateX(-100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out;
-        }
-      `}</style>
+     
     </>
   );
 };
