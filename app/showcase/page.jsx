@@ -4,6 +4,8 @@ import Cards from "./components/Cards";
 import CustomBorder from "../component/customBorder/CustomBorder";
 import CallToActionCard from "./components/CallToActionCard";
 import { motion } from "motion/react";
+import TypingText from "../component/TypingText";
+
 
 
 
@@ -24,7 +26,9 @@ const Showcase = () => {
     },
   };
   return (
-   <div className="max-w-400 mx-auto py-10 md:py-20 xl:pt-30 xl:pb-20 bg-[#FFFFFF] overflow-x-hidden">
+
+
+      <div className="max-w-400 mx-auto py-10 md:py-20 xl:pt-30 xl:pb-20 bg-[#FFFFFF] overflow-x-hidden mt-30">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -37,7 +41,7 @@ const Showcase = () => {
             variants={fadeInRight}
             className="font-semibold text-4xl md:text-5xl mb-10 md:mb-0  tracking-wide leading-10 md:leading-14 "
           >
-            Our recent <span className="text-primary">web designs</span> &{" "}
+            Our recent <TypingText text="web designs" /> &{" "}
             <br /> some examples of <br /> past{" "}
             <span className="text-primary">projects</span>{" "}
           </motion.h1>
@@ -73,6 +77,8 @@ const Showcase = () => {
         <CallToActionCard />
       </div>
     </div>
+ 
+   
   );
 };
 

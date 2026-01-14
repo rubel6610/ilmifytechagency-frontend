@@ -1,12 +1,12 @@
-import React from "react";
+"use client";
 
-// import { role } from "./layout";
-import AdminDashboard from "./admindashboard/AdminDashboard";
-import UserDashboard from "./userdashboard/UserDashboard";
-export const role = "user"; // "user" | "admin"
-const page = () => {
-    
- return role === "admin" ? <AdminDashboard /> : <UserDashboard />;
+import AdminDashboard from "./components/adminDashboard/JobManagementPage";
+import UserDashboard from "./components/userDashboard/UserDashboard";
+
+export const role = "admin";
+
+const Page = () => {
+  return role === "admin" ? <AdminDashboard /> : <UserDashboard />;
 };
 
-export default page;
+export default Page;

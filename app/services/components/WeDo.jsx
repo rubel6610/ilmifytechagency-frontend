@@ -1,0 +1,135 @@
+
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/app/about/components/ui/card";
+import { Button } from "@/app/about/components/ui/button";
+import servicesData from "./servicesData";
+import CustomBorder from "../../component/customBorder/CustomBorder";
+
+/* ------------------ Animation Variants ------------------ */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    x: 60,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
+
+export default function WeDo() {
+  return (
+    <section className="w-full py-20">
+      <div className="container px-4 mx-auto">
+        {/* ---------------- Heading ---------------- */}
+        <div className="mb-14 text-center">
+          <motion.h2
+            className="text-3xl font-semibold md:text-5xl"
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            We have <span className="text-[#00D9A6]">everything</span>
+            <br />
+            you <span className="text-[#00D9A6]">need</span>
+          </motion.h2>
+
+          <motion.div
+            className="flex justify-center mt-8"
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+          >
+            <CustomBorder />
+          </motion.div>
+        </div>
+
+        {/* ---------------- Cards ---------------- */}
+        <motion.div
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {servicesData.map((service) => (
+            <motion.div key={service.id} variants={cardVariants}>
+              <Link href={`/services/${service.slug}`} className="block h-full">
+                <Card
+                  className="
+                    h-full
+                    cursor-pointer
+                    rounded-xl
+                    border-none
+                    bg-white
+                    shadow-2xl
+                    transition-all
+                    duration-300
+                    ease-out
+                    hover:-translate-y-4
+                    hover:shadow-xl
+                    hover:bg-linear-to-b
+                    hover:from-[#86e062]
+                    hover:to-[#00c389]
+                    hover:text-white
+                  "
+                >
+                  <CardContent className="flex flex-col h-full p-6 text-center">
+                    {/* Title */}
+                    <h3 className="mb-4 text-2xl font-semibold">
+                      {service.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="grow text-sm leading-relaxed text-justify text-muted-foreground py-4 px-4">
+                      {service.description}
+                    </p>
+
+                    {/* Button (visual only, card handles navigation) */}
+                    <div className="pt-6">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="px-6 rounded-full pointer-events-none"
+                      >
+                        Read More
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
