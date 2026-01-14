@@ -63,7 +63,7 @@ const Footer = () => {
               Quick Links
             </h3>
             <CustomBorder />
-            <ul className="space-y-2 text-[16px] font-ubuntu">
+            <ul className="space-y-1.5 text-[16px] font-ubuntu">
               {[
                 "Home",
                 "About",

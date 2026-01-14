@@ -9,3 +9,17 @@
         .animate-slide-in {
           animation: slide-in 0.3s ease-out;
         }
+
+  /* Remove all scrollbars for sidebar and mobile menu */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Ensure the sticky sidebar works with Lenis */
+aside {
+    height: fit-content;
+}

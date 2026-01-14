@@ -10,7 +10,7 @@ export default function DashboardLayout({children}) {
       {/* Sidebar */}
       <Sidebar role={role} />
 
-      <div className="flex-1  p-6 "> 
+      <div className="flex-1"> 
         {/* Nested routes */}
                  {children}
       </div>

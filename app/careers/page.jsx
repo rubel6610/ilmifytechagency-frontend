@@ -1,6 +1,6 @@
 "use client";
 
-import "./components/career.css"
+import "./components/career.css";
 import React, { useState, useEffect, useRef } from "react";
 import JobCard from "./components/JobCard";
 import CountUp from "react-countup";
@@ -93,57 +93,63 @@ const Careers = () => {
   // Get unique locations from jobs
   const locations =
     jobs.length > 0
-      ? ["All", ...new Set(jobs.map((job) => job.summary.location))]
+      ? ["All", ...new Set(jobs.map((job) => job.employmentInfo.jobLocation.district))]
       : ["All"];
 
-  // Filter logic
-  const filteredJobs = jobs.filter((job) => {
-    const matchSearch =
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.summary.location.toLowerCase().includes(search.toLowerCase()) ||
-      job.companyName.toLowerCase().includes(search.toLowerCase());
+  // Salary parsing utility - fixed for your format
+  const getSalaryValue = (salaryRange) => {
+    if (!salaryRange || typeof salaryRange !== "string") return null;
+    
+    try {
+      // Remove commas and get the highest value from range "10,000 – 20,000"
+      const cleanRange = salaryRange.replace(/,/g, '').replace(' ', '');
+      const parts = cleanRange.split('–');
+      
+      if (parts.length === 2) {
+        const highValue = parseInt(parts[1].trim(), 10);
+        return isNaN(highValue) ? null : highValue;
+      } else {
+        // Try to parse single value
+        const num = parseInt(cleanRange.replace(/[^\d]/g, ''), 10);
+        return isNaN(num) ? null : num;
+      }
+    } catch (err) {
+      return null;
+    }
+  };
 
+  // Filter logic - FIXED
+  const filteredJobs = jobs.filter((job) => {
+    // Search across multiple fields
+    const matchSearch =
+      search === "" ||
+      job.title.toLowerCase().includes(search.toLowerCase()) ||
+      job.company.name.toLowerCase().includes(search.toLowerCase()) ||
+      job.employmentInfo.jobLocation.city.toLowerCase().includes(search.toLowerCase()) ||
+      job.employmentInfo.jobLocation.district.toLowerCase().includes(search.toLowerCase()) 
+
+    // Job type filter - FIXED
     const matchJobType =
       filter === "All" ||
-      (filter === "Remote" &&
-        job.compensationAndBenefits.workplace?.toLowerCase() === "remote") ||
-      (filter === "Full Time" &&
-        job.compensationAndBenefits.employmentStatus === "Full Time") ||
-      (filter === "Part Time" &&
-        job.compensationAndBenefits.employmentStatus === "Part Time") ||
-      (filter === "Contract" &&
-        job.compensationAndBenefits.employmentStatus === "Contract");
+      (filter === "Remote" && job.employmentInfo.remoteAllowed === true) ||
+      (filter === "Full Time" && job.jobType === "Full Time") ||
+      (filter === "Part Time" && job.jobType === "Part Time");
 
-    // Salary parsing utility
-    const getSalaryValue = (salary) => {
-      if (!salary || typeof salary !== "string") return null;
-
-      if (salary.includes("-")) {
-        const parts = salary.split("-");
-        const highValue = parts[1]?.trim().replace(/[^\d]/g, "");
-        return highValue ? parseInt(highValue, 10) : null;
-      }
-
-      const num = salary.replace(/[^\d]/g, "");
-      return num ? parseInt(num, 10) : null;
-    };
-
-    const salaryValue = getSalaryValue(job.summary.salary);
+    // Salary filter - FIXED
+    const salaryValue = getSalaryValue(job.salaryAndBenefits.salary.range);
+    const salaryNegotiable = job.salaryAndBenefits.salary.negotiable;
 
     const matchSalary =
       salaryFilter === "All" ||
       (salaryFilter === "High" && salaryValue && salaryValue >= 50000) ||
-      (salaryFilter === "Medium" &&
-        salaryValue &&
-        salaryValue >= 30000 &&
-        salaryValue < 50000) ||
+      (salaryFilter === "Medium" && salaryValue && salaryValue >= 30000 && salaryValue < 50000) ||
       (salaryFilter === "Low" && salaryValue && salaryValue < 30000) ||
-      (salaryFilter === "Negotiable" &&
-        (!salaryValue ||
-          job.summary.salary?.toLowerCase().includes("negotiable")));
+      (salaryFilter === "Negotiable" && salaryNegotiable === true);
 
+    // Location filter - FIXED
     const matchLocation =
-      locationFilter === "All" || job.summary.location === locationFilter;
+      locationFilter === "All" || 
+      job.employmentInfo.jobLocation.district === locationFilter;
 
     return matchSearch && matchJobType && matchSalary && matchLocation;
   });
@@ -156,20 +162,12 @@ const Careers = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  // Stats
+  // Stats - FIXED
   const stats = {
     total: jobs.length,
-    fullTime: jobs.filter(
-      (j) => j.compensationAndBenefits.employmentStatus === "Full Time"
-    ).length,
-    partTime: jobs.filter(
-      (j) => j.compensationAndBenefits.employmentStatus === "Part Time"
-    ).length,
-    remote: jobs.filter(
-      (j) =>
-        j.compensationAndBenefits.workplace?.toLowerCase().includes("remote") ||
-        j.summary.location.toLowerCase().includes("remote")
-    ).length,
+    fullTime: jobs.filter(job => job.jobType === "Full Time").length,
+    partTime: jobs.filter(job => job.jobType === "Part Time").length,
+    remote: jobs.filter(job => job.employmentInfo.remoteAllowed === true).length,
   };
 
   // Handle page change
@@ -323,7 +321,7 @@ const Careers = () => {
                 <Search className="text-gray-400 mr-2 md:mr-3" size={18} />
                 <input
                   value={search}
-                  onChange={handleSearchChange} // Use the new handler WITHOUT scroll
+                  onChange={handleSearchChange}
                   placeholder="Job title, company, or location"
                   className="w-full py-3 md:py-4 text-gray-800 focus:outline-none text-sm md:text-base"
                 />
@@ -361,12 +359,12 @@ const Careers = () => {
           ref={sidebarRef}
           className={`${
             sidebarOpen
-              ? "fixed inset-y-0 left-0 w-80 z-50 bg-white p-6 overflow-y-auto shadow-2xl animate-slide-in"
+              ? "fixed inset-y-0 left-0 w-80 z-50 bg-white  px-6 py-2 md:p-6 mt-5 md:mt-8 lg:mt-0 overflow-y-auto shadow-2xl animate-slide-in"
               : "hidden"
           } lg:block lg:w-1/4 lg:relative lg:z-auto lg:shadow-none lg:p-0 lg:bg-transparent lg:animate-none`}
         >
           {/* Close button for mobile */}
-          <div className="flex justify-between items-center mb-6 lg:hidden">
+          <div className="flex justify-between items-center mb-3 lg:hidden">
             <h3 className="text-xl font-bold text-gray-800">Filters</h3>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -398,14 +396,6 @@ const Careers = () => {
                 {filteredJobs.length} Job{filteredJobs.length !== 1 ? "s" : ""}{" "}
                 Found
               </h2>
-
-              {filteredJobs.length > 0 && (
-                <div className="text-sm text-gray-600">
-                  Showing {startIndex + 1}-
-                  {Math.min(startIndex + ITEMS_PER_PAGE, filteredJobs.length)}{" "}
-                  of {filteredJobs.length}
-                </div>
-              )}
             </div>
 
             {filteredJobs.length === 0 && (
@@ -493,8 +483,6 @@ const Careers = () => {
           )}
         </div>
       </div>
-
-     
     </>
   );
 };
