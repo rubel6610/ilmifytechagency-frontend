@@ -36,13 +36,12 @@ const JobCard = ({ job }) => {
       case "inactive":
         return "bg-red-100 text-red-800";
       case "closed":
-        return "bg-gray-100 text-gray-800";
+        return "bg-red-600 text-white";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
 
- 
   return (
     <motion.div
       variants={cardVariants}
@@ -53,7 +52,7 @@ const JobCard = ({ job }) => {
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1  flex flex-col">
         {/* Card Header */}
         <div className="p-5 md:p-6 flex-1">
-          <div className="flex justify-between items-start mb-4">
+          <div className="flex justify-between items-center mb-4">
             <div className="flex items-start space-x-3">
               <motion.div
                 className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-linear-to-br from-emerald-100 to-teal-100 flex items-center justify-center overflow-hidden border border-emerald-200"
@@ -72,6 +71,7 @@ const JobCard = ({ job }) => {
                   <Building className="text-emerald-600" size={24} />
                 )}
               </motion.div>
+
               <div>
                 <motion.h3
                   className="font-bold text-lg md:text-xl text-gray-800 group-hover:text-emerald-600 transition-colors line-clamp-1"
@@ -83,6 +83,16 @@ const JobCard = ({ job }) => {
                   {job.companyName}
                 </p>
               </div>
+            </div>
+            <div>
+              <motion.span
+                whileHover={{ scale: 1.05 }}
+                className={`px-3 py-1 rounded-full text-xs font-medium ${getJobStatusColor(
+                  job.summary.jobStatus
+                )}`}
+              >
+                {job.summary.jobStatus?.toUpperCase()}
+              </motion.span>
             </div>
           </div>
 
@@ -100,14 +110,7 @@ const JobCard = ({ job }) => {
             >
               {job.summary.experience}
             </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className={`px-3 py-1 rounded-full text-xs font-medium ${getJobStatusColor(
-                job.summary.jobStatus
-              )}`}
-            >
-              {job.summary.jobStatus?.toUpperCase()}
-            </motion.span>
+
             {job.compensationAndBenefits.workplace && (
               <motion.span
                 whileHover={{ scale: 1.05 }}
@@ -136,7 +139,7 @@ const JobCard = ({ job }) => {
                 &#x09F3;
               </span>
               <span className="text-sm font-medium text-gray-800">
-              {job.summary.salary}
+                {job.summary.salary}
               </span>
             </motion.div>
 
@@ -199,12 +202,40 @@ const JobCard = ({ job }) => {
               <span>Posted {job.summary.published}</span>
             </div>
             <div className="flex space-x-2">
-              <motion.div whileHover={{ x: -4 }}>
+              <motion.div
+                whileHover={
+                  job.summary.jobStatus !== "inactive" &&
+                  job.summary.jobStatus !== "closed"
+                    ? { x: -4 }
+                    : {}
+                }
+              >
                 <Link
-                  href={`/careers/${job.id}`}
-                  className="px-4 py-2 border border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white rounded-lg font-medium text-sm transition-colors inline-flex items-center"
+                  href={
+                    job.summary.jobStatus === "inactive" ||
+                    job.summary.jobStatus === "closed"
+                      ? "#"
+                      : `/careers/${job.id}`
+                  }
+                  onClick={(e) => {
+                    if (
+                      job.summary.jobStatus === "inactive" ||
+                      job.summary.jobStatus === "closed"
+                    ) {
+                      e.preventDefault(); // Prevents navigation
+                    }
+                  }}
+                  className={`px-4 py-2 border rounded-lg font-medium text-sm transition-all inline-flex items-center 
+      ${
+        job.summary.jobStatus === "inactive" ||
+        job.summary.jobStatus === "closed"
+          ? "border-gray-300 text-gray-400 bg-gray-100 cursor-not-allowed pointer-events-none opacity-70"
+          : "border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+      }`}
                 >
-                  View Details
+                  {job.summary.jobStatus === "closed"
+                    ? "Position Closed"
+                    : "View Details"}
                 </Link>
               </motion.div>
             </div>
