@@ -182,7 +182,6 @@ const BlogPage = () => {
                       <h3 className="font-semibold text-gray-800 text-sm md:text-base">
                         {role}
                       </h3>
-                      <span className="text-xs text-gray-400">Just now</span>
                     </div>
                   </>
                 ) : (
@@ -207,7 +206,7 @@ const BlogPage = () => {
                     px-3 py-1.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300
                     ${
                       isLiked
-                        ? "bg-gradient-to-r from-emerald-50 to-lime-50 text-emerald-600"
+                        ? "bg-linear-to-r from-emerald-50 to-lime-50 text-emerald-600"
                         : "bg-gray-50 text-gray-500"
                     }
                 `}
@@ -233,7 +232,7 @@ const BlogPage = () => {
                         }
                         ${
                           isLiked
-                            ? "bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
+                            ? "bg-linear-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
                             : "bg-gray-100 text-gray-400 hover:bg-emerald-50 hover:text-emerald-500"
                         }
                     `}

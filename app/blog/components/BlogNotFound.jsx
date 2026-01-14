@@ -21,7 +21,6 @@ const BlogNotFound = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            {/* ✅ Fixed: href added */}
             <Link  
               href="/blog"
               className="px-8 py-3 bg-primary text-primary font-semibold rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 text-center"
