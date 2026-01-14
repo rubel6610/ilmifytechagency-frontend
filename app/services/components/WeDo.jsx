@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -8,6 +7,7 @@ import { Card, CardContent } from "@/app/about/components/ui/card";
 import { Button } from "@/app/about/components/ui/button";
 import servicesData from "./servicesData";
 import CustomBorder from "../../component/customBorder/CustomBorder";
+import SecondaryButton from "@/app/component/button/SecondaryButton";
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {
@@ -104,7 +104,7 @@ export default function WeDo() {
                 >
                   <CardContent className="flex flex-col h-full p-6 text-center">
                     {/* Title */}
-                    <h3 className="mb-4 text-2xl font-semibold">
+                    <h3 className="mb-4 text-2xl font-semibold text-left px-4">
                       {service.title}
                     </h3>
 
@@ -113,15 +113,11 @@ export default function WeDo() {
                       {service.description}
                     </p>
 
-                    {/* Button (visual only, card handles navigation) */}
-                    <div className="pt-6">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="px-6 rounded-full pointer-events-none"
-                      >
-                        Read More
-                      </Button>
+                    <div className="w-40 flex mx-4">
+                      <SecondaryButton
+                        address={`/services/${service.slug}`}
+                        label="Read More"
+                      />
                     </div>
                   </CardContent>
                 </Card>
