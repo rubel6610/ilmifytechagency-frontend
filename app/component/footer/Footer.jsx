@@ -63,7 +63,7 @@ const Footer = () => {
               Quick Links
             </h3>
             <CustomBorder />
-            <ul className="space-y-3 text-[16px] font-ubuntu">
+            <ul className="space-y-2 text-[16px] font-ubuntu">
               {[
                 "Home",
                 "About",
@@ -91,7 +91,7 @@ const Footer = () => {
               Contact
             </h3>
             <CustomBorder />
-            <ul className="space-y-4 text-[15px] font-ubuntu">
+            <ul className="space-y-3 text-[15px] font-ubuntu">
               <li className="flex items-center gap-3">
                 <MdOutlineMail className="text-[#8FE481] text-xl shrink-0" />
                 <a
@@ -121,7 +121,7 @@ const Footer = () => {
               Policy
             </h3>
             <CustomBorder />
-            <ul className="space-y-3 text-[15px]">
+            <ul className="space-y-2 text-[15px]">
               {[
                 "Refund Policy",
                 "Privacy policy",

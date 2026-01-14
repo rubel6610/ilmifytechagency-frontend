@@ -11,7 +11,11 @@ import ContactCards from "./component/ContactCards";
 import LogoSlider from "./component/LogoSlider";
 import ShowcaseSection from "./component/ShowcaseSection";
 import OverviewSection from "./component/OverviewSection";
-import AnimatedMap from "./component/AnimatedMap";
+import dynamic from 'next/dynamic';
+
+const AnimatedMap = dynamic(() => import('./component/AnimatedMap'), { 
+  ssr: false 
+});
 
 export default function Home() {
   
