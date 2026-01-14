@@ -227,7 +227,7 @@ export default function PostJobPage() {
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6 }}
-      className="max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg"
+      className="max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg mt-25"
     >
       {/* Progress Indicator */}
       <div className="mb-8">

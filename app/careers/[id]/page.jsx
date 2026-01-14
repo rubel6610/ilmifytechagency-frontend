@@ -6,7 +6,6 @@ import {
   MdOutlineHourglassEmpty, 
   MdLocationOn, 
   MdWork, 
-  MdAttachMoney, 
   MdEvent 
 } from "react-icons/md";
 import { FiCheckCircle, FiClock, FiUsers, FiTarget } from "react-icons/fi";
@@ -142,9 +141,9 @@ const JobDetails = () => {
 
           {/* 4. Description & Responsibilities */}
           <motion.div variants={sectionVariant} className="mb-10">
-           
-            
-            <h3 className="text-xl font-bold mb-4">Key Responsibilities</h3>
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+               <span className="w-1.5 h-6 bg-[#0ddaa0] rounded-full"> </span> Key Responsibilities
+               </h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {job.jobDescription.responsibilities.map((item, i) => (
                 <li key={i} className="flex gap-3 text-gray-600 text-sm leading-relaxed">
@@ -159,37 +158,30 @@ const JobDetails = () => {
           {/* 6. Compensation & Company Culture */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             <motion.div variants={sectionVariant}>
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><MdAttachMoney className="text-[#0ddaa0]" /> Benefits</h3>
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2"> 
+                 <span className="w-1.5 h-6 bg-[#0ddaa0] rounded-full"></span>  Benefits</h3>
               <ul className="space-y-2">
                 {job.salaryAndBenefits.bonuses.map((bonus, i) => <li key={i} className="text-sm text-gray-600 flex items-center gap-2">💰 {bonus}</li>)}
                 {job.salaryAndBenefits.additionalBenefits.map((benefit, i) => <li key={i} className="text-sm text-gray-600 flex items-center gap-2">✨ {benefit}</li>)}
               </ul>
             </motion.div>
-            <motion.div variants={sectionVariant}>
+            {/* company mission */}
+            {/* <motion.div variants={sectionVariant}>
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><FiTarget className="text-[#0ddaa0]" /> Company Mission</h3>
               <p className="text-sm text-gray-600 italic leading-relaxed border-l-4 border-gray-100 pl-4">
                 {job.company.mission}
               </p>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE: 4 Columns (Sidebar) */}
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32 space-y-6">
-            
-            {/* The Application/Quiz Form */}
-            <ApplyJobForm job={job} />
-
-            {/* Quick Employment Info Card */}
-            <div className="bg-gray-50 rounded-3xl p-6 border border-gray-100">
-              <h4 className="font-bold text-gray-800 mb-4">Employment Details</h4>
+            </motion.div> */}
+ {/* Quick Employment Info Card */}
+            <div className="  ">
+              <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+                 <span className="w-1.5 h-6 bg-[#0ddaa0] rounded-full"></span>  Employment Details</h4>
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-sm">
                   <FiClock className="text-[#0ddaa0]" />
                   <div>
-                    <p className="text-gray-400 text-[10px] font-bold uppercase">Working Hours</p>
-                    <p className="text-gray-700 font-semibold">{job.employmentInfo.workingHours}</p>
+                    <p className="text-gray-400 text-sm font-bold uppercase">Working Hours</p>
+                    <p className="text-gray-700 font-bold">{job.employmentInfo.workingHours}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
@@ -208,6 +200,16 @@ const JobDetails = () => {
                 </div>
               </div>
             </div>
+
+          </div>
+        </div>
+
+        {/* RIGHT SIDE: 4 Columns (Sidebar) */}
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-32 space-y-6">
+            
+            {/* The Application/Quiz Form */}
+            <ApplyJobForm job={job} />
 
             {/* Support Info */}
             <div className="text-center">

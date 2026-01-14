@@ -135,7 +135,7 @@ const JobCard = ({ job }) => {
 
             <motion.div className="flex items-center text-gray-600" whileHover={{ x: 4 }}>
               <Calendar size={16} className="mr-2 text-gray-400 shrink-0" />
-              <span className="text-sm">Due: {job.jobSummary?.applicationDeadline}</span>
+              <span className="text-sm">Deadline: {job.jobSummary?.applicationDeadline}</span>
             </motion.div>
           </div>
 
@@ -179,7 +179,7 @@ const JobCard = ({ job }) => {
             </div>
             <div className="flex space-x-2">
                 <Link
-                  href={job.jobSummary?.jobStatus?.toLowerCase() === "active" ? `/careers/${job.slug}` : "#"}
+                  href={job.jobSummary?.jobStatus?.toLowerCase() === "active" ? `/careers/${job.id || job.slug}` : "#"}
                   className={`px-4 py-2 border rounded-lg font-bold text-xs transition-all inline-flex items-center 
                     ${
                       job.jobSummary?.jobStatus?.toLowerCase() !== "active"

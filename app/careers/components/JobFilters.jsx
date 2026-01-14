@@ -60,13 +60,13 @@ const JobFilters = ({
 
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 sticky top-24 z-50">
-      <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-6 flex items-center">
+      <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 flex items-center">
         <Filter className="mr-2" size={20} />
         Filters
       </h3>
 
       {/* Job Type */}
-      <div className="mb-6 md:mb-8">
+      <div className="mb-2 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4">Job Type</h4>
         <div className="space-y-1">
           {["All", "Full Time", "Part Time", "Remote"].map((type) => (
@@ -86,7 +86,7 @@ const JobFilters = ({
       </div>
 
       {/* Salary */}
-      <div className="mb-6 md:mb-8">
+      <div className="mb-3 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4 flex items-center">
           <DollarSign size={16} className="mr-2" />
           Salary Range
@@ -135,7 +135,7 @@ const JobFilters = ({
               <div
                 key={loc}
                 onClick={() => handleLocationFilterChange(loc)}
-                className={`px-3 mt-0.5 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
+                className={`px-3 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
                   locationFilter === loc ? "bg-emerald-500 text-white" : ""
                 }`}
               >
@@ -148,7 +148,7 @@ const JobFilters = ({
 
       <button
         onClick={handleResetFilters}
-        className="w-full mt-6 md:mt-8 py-2 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium text-sm md:text-base"
+        className="w-full mt-3 md:mt-8 py-2 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium text-sm md:text-base"
       >
         Clear All Filters
       </button>
