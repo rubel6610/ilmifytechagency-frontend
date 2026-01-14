@@ -3,7 +3,7 @@ import {
   LayoutDashboard,
   Plus,
   Dock,
-
+  Columns3Cog
 } from "lucide-react";
 
 export const userLinks = [
@@ -14,8 +14,8 @@ export const userLinks = [
   },
   {
     name: "Applied Jobs",
-    href: "/dashboard/userdashboard/applied-jobs",
-    icon:  Dock,
+    href: "/dashboard/applied-jobs",
+    icon: Dock,
   },
   {
     name: "All Jobs",
@@ -33,8 +33,7 @@ export const adminLinks = [
   },
   {
     name: "Post Job",
-    href: "/dashboard/admindashboard/post-job",
+    href: "/dashboard/post-job",
     icon: Plus,
   },
-  
 ];

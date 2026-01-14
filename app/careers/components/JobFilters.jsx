@@ -12,6 +12,7 @@ const JobFilters = ({
   setLocationFilter,
   locations,
   resetFilters,
+  onFilterChange,
 }) => {
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -32,8 +33,33 @@ const JobFilters = ({
     };
   }, []);
 
+  // Handle filter change with scroll
+  const handleFilterChange = (type) => {
+    setFilter(type);
+    if (onFilterChange) onFilterChange();
+  };
+
+  // Handle salary filter change with scroll
+  const handleSalaryFilterChange = (range) => {
+    setSalaryFilter(range);
+    if (onFilterChange) onFilterChange();
+  };
+
+  // Handle location filter change with scroll
+  const handleLocationFilterChange = (loc) => {
+    setLocationFilter(loc);
+    setLocationDropdownOpen(false);
+    if (onFilterChange) onFilterChange();
+  };
+
+  // Handle reset with scroll
+  const handleResetFilters = () => {
+    resetFilters();
+    if (onFilterChange) onFilterChange();
+  };
+
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 sticky top-24 z-40">
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 sticky top-24 z-50">
       <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-6 flex items-center">
         <Filter className="mr-2" size={20} />
         Filters
@@ -42,11 +68,11 @@ const JobFilters = ({
       {/* Job Type */}
       <div className="mb-6 md:mb-8">
         <h4 className="font-semibold text-gray-700 mb-3 md:mb-4">Job Type</h4>
-        <div className="space-y-1 md:space-y-2">
-          {["All", "Full Time", "Part Time"].map((type) => (
+        <div className="space-y-1">
+          {["All", "Full Time", "Part Time", "Remote"].map((type) => (
             <button
               key={type}
-              onClick={() => setFilter(type)}
+              onClick={() => handleFilterChange(type)}
               className={`w-full text-left px-3 md:px-4 py-2 md:py-3 rounded-lg transition-all text-sm md:text-base ${
                 filter === type
                   ? "bg-emerald-500 text-white shadow-md"
@@ -69,7 +95,7 @@ const JobFilters = ({
           {["All", "Low", "Medium", "High"].map((range) => (
             <button
               key={range}
-              onClick={() => setSalaryFilter(range)}
+              onClick={() => handleSalaryFilterChange(range)}
               className={`w-full text-left px-3 md:px-4 py-2 md:py-3 rounded-lg transition-all text-sm md:text-base ${
                 salaryFilter === range
                   ? "bg-emerald-500 text-white shadow-md"
@@ -94,21 +120,22 @@ const JobFilters = ({
           onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
         >
           {locationFilter}
-          <ChevronDown size={16} />
+          <ChevronDown size={16} className={`transition-transform ${locationDropdownOpen ? "rotate-180" : ""}`} />
         </div>
         {locationDropdownOpen && (
           <div 
-            className="dropdown-fixed absolute top-full left-0 right-0 mt-1 bg-white border rounded-lg max-h-48 md:max-h-60 overflow-y-auto shadow-2xl"
+            className="absolute left-0 right-0 top-5 mt-1 bg-white border rounded-lg max-h-48 md:max-h-60 overflow-y-auto shadow-2xl"
             data-lenis-prevent
+            style={{
+              bottom: "auto",
+              transform: "translateY(-100%)"
+            }}
           >
             {locations.map((loc) => (
               <div
                 key={loc}
-                onClick={() => {
-                  setLocationFilter(loc);
-                  setLocationDropdownOpen(false);
-                }}
-                className={`px-3 md:px-4 py-2 md:py-3 mt-1 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
+                onClick={() => handleLocationFilterChange(loc)}
+                className={`px-3 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
                   locationFilter === loc ? "bg-emerald-500 text-white" : ""
                 }`}
               >
@@ -120,7 +147,7 @@ const JobFilters = ({
       </div>
 
       <button
-        onClick={resetFilters}
+        onClick={handleResetFilters}
         className="w-full mt-6 md:mt-8 py-2 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium text-sm md:text-base"
       >
         Clear All Filters
