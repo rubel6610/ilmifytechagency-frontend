@@ -181,7 +181,7 @@ export default function JobManagementPage() {
                     </button>
 
                     {activeMenu === job.id && (
-                      <div className="absolute right-8 top-10 w-40 bg-white shadow-2xl rounded-xl border z-50 py-2">
+                      <div className="absolute right-12 -top-10 w-40 bg-white shadow-2xl rounded-xl border z-50 py-2">
                         <Link
                           href={`/careers/${job.id}`}
                           className="flex items-center gap-2 px-4 py-3 hover:bg-gray-50 text-sm"

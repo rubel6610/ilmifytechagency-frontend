@@ -5,7 +5,6 @@ import {
   MapPin,
   Clock,
   Calendar,
-  DollarSign,
   Users,
   Building,
   TrendingUp,
@@ -13,22 +12,16 @@ import {
 import Image from "next/image";
 
 const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
 const JobCard = ({ job }) => {
-  // Get job status color
+  // Updated status color logic for new JSON status
   const getJobStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "active":
@@ -49,7 +42,7 @@ const JobCard = ({ job }) => {
       animate="visible"
       className="group"
     >
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1  flex flex-col">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
         {/* Card Header */}
         <div className="p-5 md:p-6 flex-1">
           <div className="flex justify-between items-center mb-4">
@@ -59,12 +52,12 @@ const JobCard = ({ job }) => {
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                {job.companyImage ? (
+                {job.company?.logo ? (
                   <Image
                     height={150}
                     width={150}
-                    src={job.companyImage}
-                    alt={job.companyName}
+                    src={job.company.logo}
+                    alt={job.company.name}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -80,7 +73,7 @@ const JobCard = ({ job }) => {
                   {job.title}
                 </motion.h3>
                 <p className="text-emerald-600 font-medium text-sm md:text-base">
-                  {job.companyName}
+                  {job.company?.name}
                 </p>
               </div>
             </div>
@@ -88,10 +81,10 @@ const JobCard = ({ job }) => {
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 className={`px-3 py-1 rounded-full text-xs font-medium ${getJobStatusColor(
-                  job.summary.jobStatus
+                  job.jobSummary?.jobStatus
                 )}`}
               >
-                {job.summary.jobStatus?.toUpperCase()}
+                {job.jobSummary?.jobStatus?.toUpperCase() || "UNKNOWN"}
               </motion.span>
             </div>
           </div>
@@ -100,72 +93,58 @@ const JobCard = ({ job }) => {
           <div className="flex flex-wrap gap-2 mb-4">
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className={`px-3 py-1 rounded-full text-xs font-medium bg-emerald-300`}
+              className="px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700"
             >
-              {job.compensationAndBenefits.employmentStatus}
+              {job.jobType}
             </motion.span>
             <motion.span
               whileHover={{ scale: 1.05 }}
               className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
             >
-              {job.summary.experience}
+              {job.jobSummary?.experienceRequired}
             </motion.span>
 
-            {job.compensationAndBenefits.workplace && (
+            {job.employmentInfo?.workplaceType && (
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 className="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800"
               >
-                {job.compensationAndBenefits.workplace}
+                {job.employmentInfo.workplaceType}
               </motion.span>
             )}
           </div>
 
           {/* Job Details Grid */}
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <motion.div
-              className="flex items-center text-gray-600"
-              whileHover={{ x: 4 }}
-            >
+            <motion.div className="flex items-center text-gray-600" whileHover={{ x: 4 }}>
               <MapPin size={16} className="mr-2 text-gray-400 shrink-0" />
-              <span className="text-sm truncate">{job.summary.location}</span>
+              <span className="text-sm truncate">{job.employmentInfo?.jobLocation?.city}</span>
             </motion.div>
 
-            <motion.div
-              className="flex items-center text-gray-600"
-              whileHover={{ x: 4 }}
-            >
-              <span className="mr-2 text-gray-400 shrink-0 text-sm">
-                &#x09F3;
-              </span>
-              <span className="text-sm font-medium text-gray-800">
-                {job.summary.salary}
+            <motion.div className="flex items-center text-gray-600" whileHover={{ x: 4 }}>
+              <span className="mr-2 text-gray-400 shrink-0 text-sm font-bold">৳</span>
+              <span className="text-sm font-medium text-gray-800 truncate">
+                {job.salaryAndBenefits?.salary?.range}
               </span>
             </motion.div>
 
-            <motion.div
-              className="flex items-center text-gray-600"
-              whileHover={{ x: 4 }}
-            >
+            <motion.div className="flex items-center text-gray-600" whileHover={{ x: 4 }}>
               <Users size={16} className="mr-2 text-gray-400 shrink-0" />
-              <span className="text-sm">Vacancy: {job.summary.vacancy}</span>
+              <span className="text-sm">Vacancy: {job.vacancy}</span>
             </motion.div>
 
-            <motion.div
-              className="flex items-center text-gray-600"
-              whileHover={{ x: 4 }}
-            >
+            <motion.div className="flex items-center text-gray-600" whileHover={{ x: 4 }}>
               <Calendar size={16} className="mr-2 text-gray-400 shrink-0" />
-              <span className="text-sm">Deadline: {job.deadline}</span>
+              <span className="text-sm">Due: {job.jobSummary?.applicationDeadline}</span>
             </motion.div>
           </div>
 
           {/* Age Requirement */}
-          {job.summary.age && (
+          {job.jobSummary?.ageLimit && (
             <div className="mb-4">
               <div className="flex items-center text-gray-600">
                 <Clock size={16} className="mr-2 text-gray-400" />
-                <span className="text-sm">Age: {job.summary.age}</span>
+                <span className="text-sm">Age: {job.jobSummary.ageLimit}</span>
               </div>
             </div>
           )}
@@ -174,22 +153,19 @@ const JobCard = ({ job }) => {
           {job.skillsAndExpertise && job.skillsAndExpertise.length > 0 && (
             <div className="mb-4">
               <div className="flex flex-wrap gap-2">
-                {job.skillsAndExpertise.slice(0, 2).map((skill, index) => (
+                {job.skillsAndExpertise.slice(0, 3).map((skill, index) => (
                   <motion.span
                     key={index}
                     whileHover={{ scale: 1.1 }}
-                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded-md text-xs"
+                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded-md text-[10px] font-bold uppercase tracking-wider"
                   >
                     {skill}
                   </motion.span>
                 ))}
                 {job.skillsAndExpertise.length > 3 && (
-                  <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded-md text-xs"
-                  >
+                  <span className="text-[10px] text-gray-400 mt-1">
                     +{job.skillsAndExpertise.length - 3} more
-                  </motion.span>
+                  </span>
                 )}
               </div>
             </div>
@@ -197,47 +173,22 @@ const JobCard = ({ job }) => {
 
           {/* Action Buttons */}
           <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-auto">
-            <div className="flex items-center text-sm text-gray-500">
+            <div className="flex items-center text-[10px] text-gray-500">
               <TrendingUp size={14} className="mr-1" />
-              <span>Posted {job.summary.published}</span>
+              <span>Posted {job.jobSummary?.publishedDate}</span>
             </div>
             <div className="flex space-x-2">
-              <motion.div
-                whileHover={
-                  job.summary.jobStatus !== "inactive" &&
-                  job.summary.jobStatus !== "closed"
-                    ? { x: -4 }
-                    : {}
-                }
-              >
                 <Link
-                  href={
-                    job.summary.jobStatus === "inactive" ||
-                    job.summary.jobStatus === "closed"
-                      ? "#"
-                      : `/careers/${job.id}`
-                  }
-                  onClick={(e) => {
-                    if (
-                      job.summary.jobStatus === "inactive" ||
-                      job.summary.jobStatus === "closed"
-                    ) {
-                      e.preventDefault(); // Prevents navigation
-                    }
-                  }}
-                  className={`px-4 py-2 border rounded-lg font-medium text-sm transition-all inline-flex items-center 
-      ${
-        job.summary.jobStatus === "inactive" ||
-        job.summary.jobStatus === "closed"
-          ? "border-gray-300 text-gray-400 bg-gray-100 cursor-not-allowed pointer-events-none opacity-70"
-          : "border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white"
-      }`}
+                  href={job.jobSummary?.jobStatus?.toLowerCase() === "active" ? `/careers/${job.slug}` : "#"}
+                  className={`px-4 py-2 border rounded-lg font-bold text-xs transition-all inline-flex items-center 
+                    ${
+                      job.jobSummary?.jobStatus?.toLowerCase() !== "active"
+                        ? "border-gray-300 text-gray-400 bg-gray-100 cursor-not-allowed pointer-events-none opacity-70"
+                        : "border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+                    }`}
                 >
-                  {job.summary.jobStatus === "closed"
-                    ? "Position Closed"
-                    : "View Details"}
+                  {job.jobSummary?.jobStatus?.toLowerCase() === "closed" ? "Closed" : "View Details"}
                 </Link>
-              </motion.div>
             </div>
           </div>
         </div>

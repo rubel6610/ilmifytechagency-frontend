@@ -135,7 +135,7 @@ const JobFilters = ({
               <div
                 key={loc}
                 onClick={() => handleLocationFilterChange(loc)}
-                className={`px-3 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
+                className={`px-3 mt-0.5 md:px-4 py-2 md:py-3 cursor-pointer hover:bg-emerald-500 hover:text-white text-sm md:text-base ${
                   locationFilter === loc ? "bg-emerald-500 text-white" : ""
                 }`}
               >
