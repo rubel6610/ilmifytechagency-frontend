@@ -2,7 +2,7 @@
 import CustomBorder from './customBorder/CustomBorder';
 import { motion } from "motion/react";
 import Lottie from 'lottie-react';
-import supportAnimation from '../../public/support.json'
+import supportAnimation from '../../public/Lottie-file.json'
 import TypingText from './TypingText';
 
 const Support = () => {
