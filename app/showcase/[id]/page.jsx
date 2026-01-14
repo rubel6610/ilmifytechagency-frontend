@@ -61,8 +61,8 @@ const CardDetails = () => {
   const socialLinks = (
     <ul
       className={`
-        absolute top-full right-0 mt-4
-        flex flex-col lg:flex-row items-center gap-3
+        absolute top-full right-0 mt-4 
+        flex flex-row md:flex-row lg:flex-row items-center gap-3
         bg-white text-gray-700
         px-5 py-4
         rounded-2xl
@@ -70,7 +70,7 @@ const CardDetails = () => {
         border border-gray-100
         z-50
         transform transition-all duration-300 ease-out
-        ${social ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}
+        ${social ? 'opacity-100 translate-y-0 scale-80 md:scale-100' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}
       `}
     >
       {[

@@ -182,7 +182,6 @@ const BlogPage = () => {
                       <h3 className="font-semibold text-gray-800 text-sm md:text-base">
                         {role}
                       </h3>
-                      <span className="text-xs text-gray-400">Just now</span>
                     </div>
                   </>
                 ) : (
