@@ -11,7 +11,7 @@ const cards = [
     title: "ADDRESS",
     icon: VscLocation,
     paragraph: "17/1 Ahmed Sarker Road, Trishal, Mymensingh, Bangladesh",
-    gradient: "from-emerald-500 to-lime-400",
+    gradient: "from-emerald-400 to-lime-400",
     bgGradient: "from-emerald-50 to-cyan-50",
   },
   {
@@ -19,7 +19,7 @@ const cards = [
     icon: TfiMobile,
     paragraph: "+1 307 269 6920",
     paragraph2: "info@ilmifytech.com",
-    gradient: "from-emerald-500 to-lime-400",
+    gradient: "from-emerald-400 to-lime-400",
     bgGradient: "from-emerald-50 to-cyan-50",
   },
   {
@@ -27,7 +27,7 @@ const cards = [
     icon: IoMdTime,
     paragraph: "Monday - Friday 09.00 - 23.00",
     paragraph2: "Sunday 09.00 - 16.00",
-    gradient: "from-emerald-500 to-lime-400",
+    gradient: "from-emerald-400 to-lime-400",
     bgGradient: "from-emerald-50 to-cyan-50",
   },
 ];
@@ -107,18 +107,18 @@ const ContactCard = () => {
             >
               {/* Card glow effect on hover */}
               <div
-                className={`absolute -inset-1 bg-linear-to-r ${card.gradient} rounded-3xl blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-500 h-full`}
+                className={`absolute -inset-1 bg-linear-to-r ${card.gradient} rounded-3xl blur-sm opacity-0 group-hover:opacity-15 transition-opacity duration-500 h-full`}
               />
 
               <div
                 className={`
                   relative
                   bg-white
-                  backdrop-blur-xl
+                  backdrop-blur-md
                   rounded-3xl
                   border border-gray-100
                   shadow-xl
-                  hover:shadow-2xl
+                  hover:shadow-lg
                   flex flex-col
                   items-center
                   text-center

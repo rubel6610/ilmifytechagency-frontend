@@ -274,7 +274,7 @@ export default function FormElement() {
             Our team at iLMiFY is ready to understand your needs and provide the
             perfect solution. Whether it&apos;s designing your brand identity,
             boosting your online presence, building custom websites or apps, or
-            creating AI-driven solutions, we&apos;re here to bring your vision
+            creating opmtimized solutions, we&apos;re here to bring your vision
             to life.
           </motion.p>
 
