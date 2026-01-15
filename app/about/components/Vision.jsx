@@ -218,7 +218,6 @@ export default function Vision() {
                         mb-5
                         group-hover:bg-white/30
                         group-hover:scale-110
-                        group-hover:rotate-3
                         transition-all duration-300
                       "
                     >

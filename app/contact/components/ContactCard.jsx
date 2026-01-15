@@ -138,19 +138,18 @@ const ContactCard = () => {
                   variants={iconVariants}
                   className={`
                     relative z-10
-                    w-15 h-15 sm:w-18 sm:h-18 md:w-21 md:h-21
+                    w-11 h-11 sm:w-18 sm:h-18 md:w-18 md:h-18
                     bg-linear-to-br ${card.gradient}
                     rounded-2xl
                     flex items-center justify-center
                     shadow-lg
                     mb-4 sm:mb-5 md:mb-6
                     group-hover:scale-110
-                    group-hover:rotate-3
                     transition-all duration-300
                     shrink-0
                   `}
                 >
-                  <Icon className="text-white text-3xl sm:text-4xl md:text-[54px]" />
+                  <Icon className="text-white text-3xl sm:text-4xl md:text-[48px]" />
 
                   {/* Floating ring effect */}
                   <div
@@ -175,7 +174,7 @@ const ContactCard = () => {
 
                 {/* Divider line */}
                 <div
-                  className={`w-12 sm:w-16 h-1 bg-linear-to-r ${card.gradient} rounded-full mb-3 sm:mb-4 group-hover:w-20 sm:group-hover:w-24 transition-all duration-300 shrink-0`}
+                  className={`w-12 sm:w-16 h-1 bg-linear-to-r ${card.gradient} rounded-full mb-3 lg:-mt-2 sm:mb-4 group-hover:w-20 sm:group-hover:w-20 transition-all duration-300 shrink-0`}
                 />
 
                 {/* Content - This will grow to fill remaining space */}
