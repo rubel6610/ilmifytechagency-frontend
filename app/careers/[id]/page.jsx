@@ -16,6 +16,7 @@ import Image from "next/image";
 const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  
   const params = useParams();
 
   useEffect(() => {

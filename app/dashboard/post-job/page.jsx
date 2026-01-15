@@ -1,13 +1,55 @@
 "use client";
 
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Field } from "./components/Field";
 import { useState, useRef } from "react";
-import Image from "next/image";
 
 export default function PostJobPage() {
   const fileInputRef = useRef(null);
+
+  const defaultValues = {
+    title: "",
+    jobCategory: "",
+    jobType: "Full Time",
+    jobLevel: "Mid Level",
+    photo: null,
+    jobSummary: {
+      applicationDeadline: "",
+      ageLimit: "",
+      experienceRequired: "",
+      gender: "Any",
+      freshersAllowed: false,
+    },
+    employmentInfo: {
+      workplaceType: "Hybrid",
+      remoteAllowed: false,
+      jobLocation: {
+        city: "",
+        district: "",
+        country: "Bangladesh",
+      },
+    },
+    salaryAndBenefits: {
+      salary: {
+        range: "",
+        negotiable: false,
+        type: "Monthly",
+      },
+    },
+    jobDescription: {
+      overview: "",
+      requirements: {
+        education: "",
+      },
+      responsibilities: [""],
+    },
+    skillsAndExpertise: [""],
+    adminControl: {
+      featured: false,
+      priority: "Medium",
+    },
+  };
 
   const {
     register,
@@ -17,665 +59,402 @@ export default function PostJobPage() {
     trigger,
     setValue,
     getValues,
-    clearErrors,
-    setError,
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      responsibilities: [""],
-      photo: null,
-    },
+    defaultValues,
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields: respFields, append: appendResp, remove: removeResp } =
+    useFieldArray({
+      control,
+      name: "jobDescription.responsibilities",
+    });
+
+  const { fields: skillsFields, append: appendSkills, remove: removeSkills } =
+    useFieldArray({
+      control,
+      name: "skillsAndExpertise",
+    });
+
+  const salaryNegotiable = useWatch({
     control,
-    name: "responsibilities",
+    name: "salaryAndBenefits.salary.negotiable",
+  });
+
+  const remoteAllowed = useWatch({
+    control,
+    name: "employmentInfo.remoteAllowed",
   });
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
-  const [preview, setPreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  /** Fields to validate per step */
   const stepFields = {
-    1: ["title", "companyName", "photo", "deadline"],
-    2: ["vacancy", "age", "location", "salary", "experience"],
-    3: ["education"],
-    4: ["responsibilities"],
+    1: [
+      "title",
+      "jobCategory",
+      "jobType",
+      "jobLevel",
+      "photo",
+      "jobSummary.applicationDeadline",
+    ],
+    2: [
+      "jobSummary.ageLimit",
+      "jobSummary.experienceRequired",
+      "employmentInfo.jobLocation.city",
+      "employmentInfo.jobLocation.district",
+      "employmentInfo.jobLocation.country",
+      "employmentInfo.workplaceType",
+      "employmentInfo.remoteAllowed",
+      "jobSummary.gender",
+      "jobSummary.freshersAllowed",
+    ],
+    3: [
+      "salaryAndBenefits.salary.range",
+      "salaryAndBenefits.salary.negotiable",
+      "jobDescription.requirements.education",
+    ],
+    4: [
+      "jobDescription.responsibilities",
+      "skillsAndExpertise",
+      "jobDescription.overview",
+      "adminControl.featured",
+      "adminControl.priority",
+    ],
   };
 
-  /** Image Upload Handler */
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type
-    const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-    if (!validTypes.includes(file.type)) {
-      setError("photo", {
-        type: "manual",
-        message: "Please upload a valid image (JPEG, PNG, WebP)",
-      });
-      return;
-    }
-
-    // Validate file size (max 3MB)
-    const maxSize = 3 * 1024 * 1024; // 3MB in bytes
-    if (file.size > maxSize) {
-      setError("photo", {
-        type: "manual",
-        message: "Image size should be less than 5MB",
-      });
-      return;
-    }
-
-    // Clear any existing errors
-    clearErrors("photo");
-
-    // Set form value
-    setValue("photo", file, { shouldValidate: true });
-
-    // Create preview
-    const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result);
-    reader.readAsDataURL(file);
-  };
-
-  /** Remove Image */
-  const removeImage = () => {
-    setPreview(null);
-    setValue("photo", null, { shouldValidate: true });
-    setError("photo", {
-      type: "manual",
-      message: "Photo is required",
-    });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  /** Trigger file input click */
-  const triggerFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  /** Navigation */
   const handleNext = async () => {
-    // Trigger validation for current step
     const fieldsToValidate = stepFields[step];
     const isValid = await trigger(fieldsToValidate);
-
     if (!isValid) {
-      // Scroll to first error
       const firstError = document.querySelector(".text-red-500");
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-
-    // Save current step data
-    const currentValues = getValues();
-    setFormData((prev) => ({ ...prev, ...currentValues }));
+    setFormData((prev) => ({ ...prev, ...getValues() }));
     setStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
-    // Save current step data before going back
-    const currentValues = getValues();
-    setFormData((prev) => ({ ...prev, ...currentValues }));
+    setFormData((prev) => ({ ...prev, ...getValues() }));
     setStep((prev) => prev - 1);
   };
 
-  /** Custom validation for photo */
-  const validatePhoto = (value) => {
-    if (!value) {
-      return "Photo is required";
-    }
-
-    // If value is a File object
-    if (value instanceof File) {
-      const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-      if (!validTypes.includes(value.type)) {
-        return "Please upload a valid image (JPEG, PNG, WebP)";
-      }
-
-      const maxSize = 3 * 1024 * 1024;
-      if (value.size > maxSize) {
-        return "Image size should be less than 3MB";
-      }
-    }
-
-    return true;
+  const handleNegotiableChange = (e) => {
+    const checked = e.target.checked;
+    setValue("salaryAndBenefits.salary.negotiable", checked);
+    if (checked) setValue("salaryAndBenefits.salary.range", "Negotiable");
   };
 
-  /** Final submit handler */
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-
     try {
-      // Validate all steps before final submission
-      let allValid = true;
-      let firstInvalidStep = 1;
-
+      // Final validation
       for (const stepKey in stepFields) {
         const isValid = await trigger(stepFields[stepKey]);
         if (!isValid) {
-          allValid = false;
-          firstInvalidStep = parseInt(stepKey);
-          break;
+          alert(`Complete step ${stepKey}`);
+          setStep(parseInt(stepKey));
+          setIsSubmitting(false);
+          return;
         }
       }
 
-      if (!allValid) {
-        alert(
-          `Please complete all required fields in step ${firstInvalidStep}`
-        );
-        setStep(firstInvalidStep);
-        setIsSubmitting(false);
-        return;
-      }
-
+      // Merge final form data
       const finalData = { ...formData, ...data };
+      console.log("FINAL JOB DATA", finalData);
 
-      // Create FormData for file upload
-      const formDataToSend = new FormData();
-
-      // Append all form data
-      Object.keys(finalData).forEach((key) => {
-        if (key === "responsibilities") {
-          finalData[key].forEach((item, index) => {
-            formDataToSend.append(`responsibilities[${index}]`, item);
-          });
-        } else if (key === "photo" && finalData[key]) {
-          formDataToSend.append("photo", finalData[key]);
-        } else if (finalData[key] !== null && finalData[key] !== undefined) {
-          formDataToSend.append(key, finalData[key]);
-        }
-      });
-
-      // Log for demo
-      console.log("FINAL JOB DATA 👉", finalData);
-
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
       alert("Job Posted Successfully!");
 
-      // Reset form
       setStep(1);
       setFormData({});
-      setPreview(null);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Error posting job. Please try again.");
+      console.error(error);
+      alert("Error posting job.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  let i = 0;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6 }}
-      className="max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg mt-25"
-    >
-      {/* Progress Indicator */}
-      <div className="mb-8">
+    <div className="max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg   ">
+      {/* Progress timeline */}
+      <div className="mb-8 relative">
         <h2 className="text-2xl font-bold mb-2 text-center text-slate-800">
           Post New Job
         </h2>
-        <div className="flex justify-between items-center mt-6">
+
+        <div className="flex items-center justify-between mt-6 relative">
+          {/* Horizontal lines */}
+          <div className="absolute left-0 right-0 top-5 flex">
+            {[1, 2, 3].map((lineIdx) => (
+              <motion.div
+                key={lineIdx}
+                className={`h-1 ms-4 flex-1 ${
+                  step > lineIdx ? "bg-[#00c389]" : "bg-gray-200"
+                }`}
+                initial={false}
+                animate={{ scaleX: step > lineIdx ? 1 : 0 }}
+                transition={{ duration: 0.4 }}
+                style={{ originX: 0 }}
+              />
+            ))}
+          </div>
+
           {[1, 2, 3, 4].map((stepNumber) => (
-            <div key={stepNumber} className="flex flex-col items-center">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+            <div key={stepNumber} className="relative z-10 flex flex-col items-center">
+              <motion.div
+                initial={false}
+                animate={{ scale: step === stepNumber ? 1.1 : 1 }}
+                transition={{ duration: 0.2 }}
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                   step >= stepNumber
-                    ? "bg-[#00c389] text-white"
+                    ? "bg-[#00c389] text-white shadow-lg"
                     : "bg-gray-200 text-gray-500"
-                } font-semibold`}
+                }`}
               >
                 {stepNumber}
-              </div>
-              <span className="text-xs mt-2 text-gray-600">
-                {stepNumber === 1 && "Basic Info"}
-                {stepNumber === 2 && "Summary"}
-                {stepNumber === 3 && "Requirements"}
-                {stepNumber === 4 && "Responsibilities"}
+              </motion.div>
+              <span className="text-xs mt-2 text-gray-600 capitalize">
+                {["Basic Info", "Employment", "Requirements", "Details"][stepNumber - 1]}
               </span>
             </div>
           ))}
         </div>
       </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(onSubmit)(e);
-        }}
-        className="space-y-8"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* STEP 1 */}
         {step === 1 && (
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-3"
-          >
-            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
-              Basic Information
-            </h3>
-
-            <Field label="Job Title" index={i++} error={errors.title?.message}>
+          <div className="space-y-6">
+            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Basic Information</h3>
+            <Field label="Job Title *" error={errors.title?.message}>
               <input
                 className="input"
-                placeholder="e.g., Senior Frontend Developer"
-                {...register("title", {
-                  required: "Job title is required",
-                  minLength: {
-                    value: 3,
-                    message: "Job title must be at least 3 characters",
-                  },
-                })}
+                {...register("title", { required: "Required", minLength: { value: 3, message: "Min 3 chars" } })}
+                placeholder="Frontend Developer (React.js)"
               />
             </Field>
 
-            
+            <Field label="Job Category *" error={errors.jobCategory?.message}>
+              <input
+                className="input"
+                {...register("jobCategory", { required: "Required" })}
+                placeholder="IT / Software"
+              />
+            </Field>
 
-            {/* IMAGE UPLOAD - FIXED VERSION */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Job Thumbnail *
-              </label>
-
-              <div
-                className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-emerald-500 transition-colors cursor-pointer"
-                onClick={triggerFileInput}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.add(
-                    "border-emerald-500",
-                    "bg-emerald-50"
-                  );
-                }}
-                onDragLeave={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.remove(
-                    "border-emerald-500",
-                    "bg-emerald-50"
-                  );
-                }}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.remove(
-                    "border-emerald-500",
-                    "bg-emerald-50"
-                  );
-                  if (e.dataTransfer.files[0]) {
-                    const file = e.dataTransfer.files[0];
-                    // Create a fake event to reuse handleImageChange
-                    const fakeEvent = {
-                      target: { files: [file] },
-                    };
-                    handleImageChange(fakeEvent);
-                  }
-                }}
-              >
-                <div className="flex flex-col md:flex-row items-center gap-4">
-                  <div className="w-32 h-32 rounded-lg border-2 flex items-center justify-center overflow-hidden bg-gray-50 relative">
-                    {preview ? (
-                      <>
-                        <Image
-                          src={preview}
-                          alt="Preview"
-                          fill
-                          className="object-cover"
-                          sizes="128px"
-                        />
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation(); // Prevent triggering file input
-                            removeImage();
-                          }}
-                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 z-10"
-                        >
-                          ✕
-                        </button>
-                      </>
-                    ) : (
-                      <div className="text-center p-4">
-                        <div className="text-3xl text-gray-400 mb-2">📁</div>
-                        <span className="text-sm text-gray-500">
-                          Upload image
-                        </span>
-                        <p className="text-xs text-gray-400 mt-1">
-                          JPEG, PNG, WebP (max 3MB)
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1 text-center md:text-left">
-                    <label className="cursor-pointer">
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/jpeg,image/jpg,image/png,image/webp"
-                        {...register("photo", { validate: validatePhoto })}
-                        onChange={handleImageChange}
-                      />
-                      <span  className="px-4 py-3 bg-[#00c389] text-white rounded">
-                        Choose File
-                      </span>
-                    </label>
-                    <div className="space-y-3 mt-4">
-                      <p className="text-xs text-gray-500">
-                        {errors.photo?.message ||
-                          "Upload a company logo or job-related image"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {errors.photo && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.photo.message}
-                </p>
-              )}
+            <div className="grid md:grid-cols-2 gap-6">
+              <Field label="Job Type *" error={errors.jobType?.message}>
+                <select className="input" {...register("jobType", { required: "Required" })}>
+                  <option>Full Time</option>
+                  <option>Part Time</option>
+                </select>
+              </Field>
+              <Field label="Job Level *" error={errors.jobLevel?.message}>
+                <select className="input" {...register("jobLevel", { required: "Required" })}>
+                  <option>Mid Level</option>
+                  <option>Senior Level</option>
+                  <option>Entry Level</option>
+                </select>
+              </Field>
             </div>
 
-            <Field
-              label="Application Deadline"
-              index={i++}
-              error={errors.deadline?.message}
-            >
+            <Field label="Application Deadline *" error={errors.jobSummary?.applicationDeadline?.message}>
               <input
                 type="date"
                 className="input"
                 min={new Date().toISOString().split("T")[0]}
-                {...register("deadline", {
-                  required: "Deadline is required",
-                  validate: (value) => {
-                    const selectedDate = new Date(value);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    return (
-                      selectedDate >= today || "Deadline must be in the future"
-                    );
-                  },
+                {...register("jobSummary.applicationDeadline", {
+                  required: "Required",
+                  validate: (v) => new Date(v) >= new Date() || "Future date",
                 })}
               />
             </Field>
 
-            <div className="flex justify-end ">
-              <button
-                type="button"
-                onClick={handleNext}
-                className="bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors"
-              >
-                Next: Job Summary →
+            <div className="flex justify-center lg:justify-end">
+              <button type="button" onClick={handleNext} className="bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                Next: Employment →
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* STEP 2 */}
         {step === 2 && (
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
-              Job Summary
-            </h3>
+          <div className="space-y-6">
+            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Employment Summary</h3>
+
+            {/* Employment fields */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <Field label="Age Limit *" error={errors.jobSummary?.ageLimit?.message}>
+                <input className="input" {...register("jobSummary.ageLimit", { required: "Required" })} placeholder="23–35 Years" />
+              </Field>
+              <Field label="Experience Required *" error={errors.jobSummary?.experienceRequired?.message}>
+                <input className="input" {...register("jobSummary.experienceRequired", { required: "Required" })} placeholder="2–4 Years" />
+              </Field>
+            </div>
+
+            <h4 className="font-semibold text-xl text-[#00c389] border-b pb-2">Job Location</h4>
+            <div className="grid md:grid-cols-3 gap-4">
+              <Field label="City *" error={errors.employmentInfo?.jobLocation?.city?.message}>
+                <input className="input" {...register("employmentInfo.jobLocation.city", { required: "Required" })} placeholder="Uttara" />
+              </Field>
+              <Field label="District *" error={errors.employmentInfo?.jobLocation?.district?.message}>
+                <input className="input" {...register("employmentInfo.jobLocation.district", { required: "Required" })} placeholder="Dhaka" />
+              </Field>
+              <Field label="Country *" error={errors.employmentInfo?.jobLocation?.country?.message}>
+                <input className="input" {...register("employmentInfo.jobLocation.country", { required: "Required" })} placeholder="Bangladesh" />
+              </Field>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <Field
-                label="Vacancy *"
-                index={i++}
-                error={errors.vacancy?.message}
-              >
-                <input
-                  className="input"
-                  type="number"
-                  min="1"
-                  placeholder="Number of positions"
-                  {...register("vacancy", {
-                    required: "Vacancy is required",
-                    min: { value: 1, message: "At least 1 vacancy required" },
-                  })}
-                />
+              <Field label="Workplace Type *" error={errors.employmentInfo?.workplaceType?.message}>
+                <select
+                  className={`input ${remoteAllowed ? "bg-gray-100 cursor-not-allowed" : ""}`}
+                  disabled={remoteAllowed}
+                  {...register("employmentInfo.workplaceType", { required: !remoteAllowed && "Required" })}
+                >
+                  <option>Hybrid</option>
+                  <option>Onsite</option>
+                </select>
               </Field>
 
-              <Field
-                label="Age Limit *"
-                index={i++}
-                error={errors.age?.message}
-              >
-                <input
-                  className="input"
-                  placeholder="e.g., 21-40"
-                  {...register("age", {
-                    required: "Age limit is required",
-                  })}
-                />
-              </Field>
-
-              <Field
-                label="Location *"
-                index={i++}
-                error={errors.location?.message}
-              >
-                <input
-                  className="input"
-                  placeholder="e.g., Remote, New York, etc."
-                  {...register("location", {
-                    required: "Location is required",
-                  })}
-                />
-              </Field>
-
-              <Field
-                label="Salary *"
-                index={i++}
-                error={errors.salary?.message}
-              >
-                <input
-                  className="input"
-                  placeholder="e.g., $80,000 - $100,000"
-                  {...register("salary", {
-                    required: "Salary range is required",
-                  })}
-                />
-              </Field>
-
-              <Field
-                label="Experience *"
-                index={i++}
-                error={errors.experience?.message}
-              >
-                <input
-                  className="input"
-                  placeholder="e.g., 3-5 years"
-                  {...register("experience", {
-                    required: "Experience requirement is required",
-                  })}
-                />
-              </Field>
+              <div className="space-y-2">
+                <label className="flex items-center">
+                  <input type="checkbox" className="mr-2" {...register("employmentInfo.remoteAllowed")} />
+                  Remote Allowed
+                </label>
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center">
+                    <input type="radio" value="Any" {...register("jobSummary.gender")} className="mr-2" />
+                    Any
+                  </label>
+                  <label className="flex items-center">
+                    <input type="radio" value="Male" {...register("jobSummary.gender")} className="mr-2" />
+                    Male
+                  </label>
+                  <label className="flex items-center">
+                    <input type="radio" value="Female" {...register("jobSummary.gender")} className="mr-2" />
+                    Female
+                  </label>
+                </div>
+                <label className="flex items-center">
+                  <input type="checkbox" className="mr-2" {...register("jobSummary.freshersAllowed")} />
+                  Freshers Allowed
+                </label>
+              </div>
             </div>
 
             <div className="flex justify-between pt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors"
-              >
+              <button type="button" onClick={handleBack} className=" px-2 lg:px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 ← Back
               </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors"
-              >
+              <button type="button" onClick={handleNext} className="bg-[#00c389] hover:bg-[#00b37d] text-white px-3 lg:px-8 py-3 rounded-lg font-medium transition-colors">
                 Next: Requirements →
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* STEP 3 */}
         {step === 3 && (
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
-              Requirements
-            </h3>
+          <div className="space-y-6">
+            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Salary & Requirements</h3>
 
-            <Field
-              label="Education *"
-              index={i++}
-              error={errors.education?.message}
-            >
-              <input
-                className="input"
-                placeholder="e.g., Bachelor's Degree in Computer Science"
-                {...register("education", {
-                  required: "Education requirement is required",
-                })}
-              />
-            </Field>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Field label="Salary Range *" error={errors.salaryAndBenefits?.salary?.range?.message}>
+                <input
+                  className="input"
+                  placeholder="10,000 – 20,000"
+                  disabled={salaryNegotiable}
+                  {...register("salaryAndBenefits.salary.range", { required: !salaryNegotiable && "Required" })}
+                />
+              </Field>
 
-            <Field label="Additional Requirements" index={i++}>
-              <textarea
-                className="input h-32"
-                placeholder="Any additional requirements or preferred qualifications..."
-                {...register("additional")}
-              />
+              <div className="space-y-2">
+                <label className="flex items-center font-medium">
+                  <input type="checkbox" className="mr-2 w-4 h-4" onChange={handleNegotiableChange} />
+                  Salary Negotiable
+                </label>
+                {salaryNegotiable && <p className="text-sm text-gray-600">Salary set to Negotiable</p>}
+              </div>
+            </div>
+
+            <Field label="Education *" error={errors.jobDescription?.requirements?.education?.message}>
+              <input className="input" {...register("jobDescription.requirements.education", { required: "Required" })} placeholder="BSc in CSE or equivalent" />
             </Field>
 
             <div className="flex justify-between pt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors"
-              >
+              <button type="button" onClick={handleBack} className="px-2 lg:px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 ← Back
               </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors"
-              >
-                Next: Responsibilities →
+              <button type="button" onClick={handleNext} className="bg-[#00c389] hover:bg-[#00b37d] text-white px-2 lg:px-8 py-3 rounded-lg font-medium transition-colors">
+                Next: Details →
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* STEP 4 */}
         {step === 4 && (
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
-            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
-              Responsibilities
-            </h3>
+          <div className="space-y-6">
+            <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Job Details</h3>
 
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-gray-700">
-                Job Responsibilities *
-              </label>
+            <Field label="Job Overview">
+              <textarea className="input h-32" {...register("jobDescription.overview")} placeholder="Looking for a skilled React developer..." />
+            </Field>
 
-              {fields.map((field, idx) => (
-                <div key={field.id} className="flex gap-2 items-start">
-                  <div className="flex-1">
-                    <input
-                      className="input"
-                      placeholder={`Responsibility ${idx + 1}`}
-                      {...register(`responsibilities.${idx}`, {
-                        required: "Responsibility cannot be empty",
-                        validate: (value) =>
-                          value.trim() !== "" ||
-                          "Responsibility cannot be empty",
-                      })}
-                    />
-                    {errors.responsibilities?.[idx] && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.responsibilities[idx].message}
-                      </p>
-                    )}
-                  </div>
-                  {fields.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => remove(idx)}
-                      className="mt-2 px-3 py-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
-                    >
+            {/* Skills */}
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-3 block">Skills & Expertise *</label>
+              {skillsFields.map((field, idx) => (
+                <div key={field.id} className="flex gap-2 items-start mb-3">
+                  <input className="input flex-1" {...register(`skillsAndExpertise.${idx}`, { required: "Cannot be empty" })} />
+                  {skillsFields.length > 1 && (
+                    <button type="button" onClick={() => removeSkills(idx)} className="px-3 py-2 text-red-500 hover:bg-red-50 rounded">
                       Remove
                     </button>
                   )}
                 </div>
               ))}
+              <button type="button" onClick={() => appendSkills("")} className="w-full border-2 border-dashed border-gray-300 hover:border-[#00c389] p-4 rounded-lg text-gray-600 hover:text-[#00c389] transition-all">
+                + Add Skill
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => append("")}
-              className="w-full border-2 border-dashed border-gray-300 hover:border-emerald-500 px-6 py-4 my-3 rounded-lg text-gray-600 hover:text-emerald-600 transition-colors"
-            >
-              + Add Another Responsibility
-            </button>
+            {/* Responsibilities */}
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-3 block">Responsibilities *</label>
+              {respFields.map((field, idx) => (
+                <div key={field.id} className="flex gap-2 items-start mb-3">
+                  <input className="input flex-1" {...register(`jobDescription.responsibilities.${idx}`, { required: "Cannot be empty" })} />
+                  {respFields.length > 1 && (
+                    <button type="button" onClick={() => removeResp(idx)} className="px-3 py-2 text-red-500 hover:bg-red-50 rounded">
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button type="button" onClick={() => appendResp("")} className="w-full border-2 border-dashed border-gray-300 hover:border-[#00c389] p-4 rounded-lg text-gray-600 hover:text-[#00c389] transition-all">
+                + Add Responsibility
+              </button>
+            </div>
 
             <div className="flex justify-between pt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors"
-              >
+              <button type="button" onClick={handleBack} className="px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 ← Back
               </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors ${
-                  isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                }`}
-              >
-                {isSubmitting ? "Posting..." : " Post Job"}
+              <button type="submit" disabled={isSubmitting} className="bg-[#00c389] hover:bg-[#00b37d] text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                {isSubmitting ? "Submitting..." : "Post Job"}
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
       </form>
-
-      {/* Step Indicator Dots */}
-      <div className="flex justify-center mt-6 space-x-2">
-        {[1, 2, 3, 4].map((dot) => (
-          <div
-            key={dot}
-            className={`w-3 h-3 rounded-full ${
-              step === dot ? "bg-[#00c389]" : "bg-gray-300"
-            }`}
-          />
-        ))}
-      </div>
-    </motion.div>
+    </div>
   );
 }

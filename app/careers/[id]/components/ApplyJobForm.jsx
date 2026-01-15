@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiFileText,
@@ -7,17 +7,41 @@ import {
   FiCheckCircle,
   FiUploadCloud,
   FiX,
+  FiClock, // Added icon for the timer
 } from "react-icons/fi";
 
 export default function ApplyJobForm({ job }) {
-  const [step, setStep] = useState("initial"); // initial | prompt | loading | quiz | form
+  const [step, setStep] = useState("initial");
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [loading, setLoading] = useState(false);
   const [fileError, setFileError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  
+  // New state for timer
+  const [timeLeft, setTimeLeft] = useState(60);
 
+  // --- 1. QUIZ TIMER LOGIC ---
+  useEffect(() => {
+    let interval;
+    if (step === "quiz") {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            // Time is up
+            clearInterval(interval);
+            handleNextQuestion(true); // true indicates forced by timeout
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [step, currentIdx ]); // Re-run when step or question index changes
+
+  // --- 2. API: GENERATE QUIZ ---
   const startAIGeneration = async () => {
     setStep("loading");
     try {
@@ -31,8 +55,11 @@ export default function ApplyJobForm({ job }) {
       });
       const data = await res.json();
       setQuestions(data);
+      setCurrentIdx(0); // Ensure start at 0
+      setTimeLeft(15);  // Reset timer for first question
       setStep("quiz");
     } catch (err) {
+      // Fallback or error handling
       setStep("form");
     }
   };
@@ -55,7 +82,7 @@ export default function ApplyJobForm({ job }) {
         setSelectedFile(null);
         e.target.value = "";
       } else {
-        setSelectedFile(file); // Store file for preview
+        setSelectedFile(file);
       }
     }
   };
@@ -66,14 +93,84 @@ export default function ApplyJobForm({ job }) {
   };
 
   const handleAnswer = (optionIdx) => {
+    // Prevent answering if time is 0 (though UI usually handles next immediately)
+    if (timeLeft === 0) return;
+
     setQuizAnswers({
       ...quizAnswers,
       [currentIdx]: {
         question: questions[currentIdx].question,
         selected: questions[currentIdx].options[optionIdx],
         isCorrect: questions[currentIdx].answer === optionIdx,
+        timeTaken: 60 - timeLeft, // Optional: track how long they took
       },
     });
+  };
+
+  // --- 3. HANDLE NEXT / TIMEOUT LOGIC ---
+  const handleNextQuestion = (isTimeout = false) => {
+    // If timeout occurred and no answer was selected, record it as missed
+    if (isTimeout && !quizAnswers[currentIdx]) {
+      setQuizAnswers((prev) => ({
+        ...prev,
+        [currentIdx]: {
+          question: questions[currentIdx].question,
+          selected: null,
+          isCorrect: false,
+          timedOut: true,
+        },
+      }));
+    }
+
+    if (currentIdx < questions.length - 1) {
+      setCurrentIdx((prev) => prev + 1);
+      setTimeLeft(15); // Reset timer for next question
+    } else {
+      setStep("form");
+    }
+  };
+
+  // --- 4. FINAL SUBMISSION TO API ---
+  const handleSubmitApplication = async (e) => {
+    e.preventDefault();
+    if (!selectedFile) {
+      setFileError("Please upload a resume");
+      return;
+    }
+    
+    setLoading(true);
+
+    try {
+      // Create FormData to send file + JSON data
+      const formData = new FormData();
+      formData.append("resume", selectedFile);
+      formData.append("quizData", JSON.stringify(quizAnswers));
+      formData.append("jobId", job?.id || "unknown");
+
+      // Demo API address
+      const response = await fetch("/api/submit-application", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Application Submitted Successfully!");
+        // Reset or redirect logic here
+      } else {
+        alert("Submission failed.");
+      }
+    } catch (error) {
+      console.error("Error submitting:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Helper to format time (e.g. 0:59)
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (
@@ -134,9 +231,17 @@ export default function ApplyJobForm({ job }) {
               className="space-y-6"
             >
               <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                <span className="text-[10px] font-bold text-[#00c389] uppercase">
-                  Question {currentIdx + 1}/{questions.length}
-                </span>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-[10px] font-bold text-[#00c389] uppercase">
+                    Question {currentIdx + 1}/{questions.length}
+                  </span>
+                  {/* TIMER DISPLAY */}
+                  <div className={`flex items-center gap-1 text-xs font-bold ${timeLeft < 10 ? 'text-red-500' : 'text-gray-500'}`}>
+                    <FiClock />
+                    <span>{formatTime(timeLeft)}</span>
+                  </div>
+                </div>
+                
                 <h3 className="text-md font-semibold text-gray-800 mt-1">
                   {questions[currentIdx]?.question}
                 </h3>
@@ -145,11 +250,13 @@ export default function ApplyJobForm({ job }) {
                 {questions[currentIdx]?.options.map((opt, i) => (
                   <button
                     key={i}
+                    // Disable options if time is out (handled by auto-skip, but for safety)
+                    disabled={timeLeft === 0} 
                     onClick={() => handleAnswer(i)}
                     className={`w-full text-left p-3 rounded-xl border text-sm transition-all ${
                       quizAnswers[currentIdx]?.selected === opt
                         ? "border-[#00c389] bg-[#86e062]/10"
-                        : "border-gray-200"
+                        : "border-gray-200 hover:border-[#00c389]/50"
                     }`}
                   >
                     {opt}
@@ -157,13 +264,11 @@ export default function ApplyJobForm({ job }) {
                 ))}
               </div>
               <button
+                // Button is disabled if no answer selected AND time is still remaining
+                // If time runs out, the effect handles the transition automatically
                 disabled={!quizAnswers[currentIdx]}
-                onClick={() =>
-                  currentIdx < questions.length - 1
-                    ? setCurrentIdx(currentIdx + 1)
-                    : setStep("form")
-                }
-                className="w-full py-4 bg-[#00c389] text-white font-bold rounded-2xl flex items-center justify-center gap-2"
+                onClick={() => handleNextQuestion(false)}
+                className="w-full py-4 bg-[#00c389] text-white font-bold rounded-2xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {currentIdx === questions.length - 1 ? "Complete Quiz" : "Next"}{" "}
                 <FiChevronRight />
@@ -178,6 +283,7 @@ export default function ApplyJobForm({ job }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-4"
+              onSubmit={handleSubmitApplication}
             >
               <div className="flex items-center gap-2 text-[#00c389] font-bold text-sm">
                 <FiCheckCircle /> Assessment Completed
@@ -212,7 +318,6 @@ export default function ApplyJobForm({ job }) {
                         type="file"
                         accept=".pdf,.docx"
                         onChange={handleFileChange}
-                        required
                         className="hidden"
                       />
                     </motion.label>
@@ -257,9 +362,10 @@ export default function ApplyJobForm({ job }) {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-[#00c389] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl hover:bg-[#00ab78] transition-all transform active:scale-[0.98]"
+                disabled={loading}
+                className="w-full py-4 bg-[#00c389] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl hover:bg-[#00ab78] transition-all transform active:scale-[0.98] disabled:bg-gray-400 disabled:shadow-none"
               >
-                Submit Application
+                {loading ? "Submitting..." : "Submit Application"}
               </button>
             </motion.form>
           )}
