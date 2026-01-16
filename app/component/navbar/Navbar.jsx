@@ -57,7 +57,7 @@ const Header = () => {
   }
   return (
     <header
-      className={`w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-1200  `}
+      className={`w-full  bg-[#FFFFFF] shadow-xs fixed left-0  top-0 z-50  `}
     >
       {/* Top Black Bar */}
       {!nav && (

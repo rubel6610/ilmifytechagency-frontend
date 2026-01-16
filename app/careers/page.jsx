@@ -332,11 +332,11 @@ const Careers = () => {
       </div>
 
       {/* STATS */}
-      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-3 gap-4 md:gap-6">
         {[
           { label: "Total Jobs", value: stats.total, icon: Briefcase },
           { label: "Full Time", value: stats.fullTime, icon: Users },
-          { label: "Remote Jobs", value: stats.remote, icon: MapPin },
+          { label: "Remote", value: stats.remote, icon: MapPin },
         ].map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
             <div className="flex items-center">
@@ -353,27 +353,16 @@ const Careers = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="max-w-400 mx-auto px-4 py-8 md:py-16 flex flex-col lg:flex-row gap-6 md:gap-8">
+      <div className="max-w-400 mx-auto  px-4 py-8 md:py-16 flex flex-col  lg:flex-row gap-6 md:gap-8">
         {/* Sidebar */}
         <div
           ref={sidebarRef}
           className={`${
             sidebarOpen
-              ? "fixed inset-y-0 left-0 w-80 z-50 bg-white  px-6 py-2 md:p-6 mt-5 md:mt-8 lg:mt-0 overflow-y-auto shadow-2xl animate-slide-in"
+              ? "fixed inset-y-0 left-0 w-65 z-50 bg-white  px-3 py-2 flex items-center lg:items-start  lg:flex-row   shadow-2xl animate-slide-in"
               : "hidden"
           } lg:block lg:w-1/4 lg:relative lg:z-auto lg:shadow-none lg:p-0 lg:bg-transparent lg:animate-none`}
         >
-          {/* Close button for mobile */}
-          <div className="flex justify-between items-center mb-3 lg:hidden">
-            <h3 className="text-xl font-bold text-gray-800">Filters</h3>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
           <JobFilters
             filter={filter}
             setFilter={setFilter}

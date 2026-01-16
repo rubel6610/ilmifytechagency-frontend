@@ -16,6 +16,7 @@ import Image from "next/image";
 const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  
   const params = useParams();
 
   useEffect(() => {
@@ -64,18 +65,18 @@ const JobDetails = () => {
         <div className="lg:col-span-8">
           
           {/* 1. Header Section */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-10 pb-8 border-b border-gray-100">
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-10 pb-8 border-b border-gray-100">
             <Image width={100} height={100} 
               src={job.company.logo} 
               alt={job.company.name} 
               className="w-20 h-20 rounded-2xl object-cover shadow-lg border-2 border-gray-50"
             />
             <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+              <h1 className="text-2xl text-center md:text-4xl font-extrabold text-gray-900 leading-tight">
                 {job.title}
               </h1>
               <div className="flex flex-wrap items-center gap-4 mt-2 text-gray-500 font-medium">
-                <span className="flex items-center gap-1 text-[#0ddaa0]"><MdWork /> {job.company.name}</span>
+                <span className="flex items-center  gap-1 text-[#0ddaa0]"><MdWork /> {job.company.name}</span>
                 <span className="flex items-center gap-1"><MdLocationOn /> {job.employmentInfo.jobLocation.city}, {job.employmentInfo.jobLocation.district}</span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full text-xs font-bold uppercase">{job.jobType}</span>
               </div>
@@ -83,10 +84,10 @@ const JobDetails = () => {
           </div>
 
           {/* 2. Job Summary Grid */}
-          <motion.div variants={sectionVariant} className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+          <motion.div variants={sectionVariant} className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 items-center">
             <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
               <p className="text-[10px] uppercase text-gray-400 font-bold mb-1">Salary Range</p>
-              <p className="text-sm font-bold text-gray-800">{job.salaryAndBenefits.salary.range}</p>
+              <p className="text-[13px] md:text-sm font-bold text-gray-800">{job.salaryAndBenefits.salary.range}</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
               <p className="text-[10px] uppercase text-gray-400 font-bold mb-1">Experience</p>
@@ -206,7 +207,7 @@ const JobDetails = () => {
 
         {/* RIGHT SIDE: 4 Columns (Sidebar) */}
         <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32 space-y-6">
+          <div className="lg:sticky lg:top-42 space-y-6">
             
             {/* The Application/Quiz Form */}
             <ApplyJobForm job={job} />
