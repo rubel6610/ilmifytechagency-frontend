@@ -332,11 +332,11 @@ const Careers = () => {
       </div>
 
       {/* STATS */}
-      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-3 gap-4 md:gap-6">
         {[
           { label: "Total Jobs", value: stats.total, icon: Briefcase },
           { label: "Full Time", value: stats.fullTime, icon: Users },
-          { label: "Remote Jobs", value: stats.remote, icon: MapPin },
+          { label: "Remote", value: stats.remote, icon: MapPin },
         ].map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
             <div className="flex items-center">

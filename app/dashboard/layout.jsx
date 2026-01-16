@@ -6,9 +6,12 @@ import { role } from "./page";
 export default function DashboardLayout({children}) {
   return (
 
-      <div className="flex  bg-slate-100 min-h-screen ">
+      <div className="flex  bg-slate-100  min-h-screen ">
       {/* Sidebar */}
-      <Sidebar role={role} />
+
+        <Sidebar role={role} />
+
+      
 
       <div className="flex-1 "> 
         {/* Nested routes */}

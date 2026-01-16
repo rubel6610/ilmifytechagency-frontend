@@ -180,7 +180,8 @@ export default function PostJobPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg   ">
+  <div className="flex justify-center items-center min-h-screen p-4">
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 md:p-8">
       {/* Progress timeline */}
       <div className="mb-8 relative">
         <h2 className="text-2xl font-bold mb-2 text-center text-slate-800">
@@ -218,7 +219,7 @@ export default function PostJobPage() {
               >
                 {stepNumber}
               </motion.div>
-              <span className="text-xs mt-2 text-gray-600 capitalize">
+              <span className="text-xs mt-2 text-gray-600 capitalize ">
                 {["Basic Info", "Employment", "Requirements", "Details"][stepNumber - 1]}
               </span>
             </div>
@@ -226,10 +227,10 @@ export default function PostJobPage() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 w-full max-w-5xl mx-auto">
         {/* STEP 1 */}
         {step === 1 && (
-          <div className="space-y-6">
+          <div className="space-y-6 w-full min-h-[520px]">
             <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Basic Information</h3>
             <Field label="Job Title *" error={errors.title?.message}>
               <input
@@ -247,7 +248,7 @@ export default function PostJobPage() {
               />
             </Field>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 w-full">
               <Field label="Job Type *" error={errors.jobType?.message}>
                 <select className="input" {...register("jobType", { required: "Required" })}>
                   <option>Full Time</option>
@@ -285,11 +286,11 @@ export default function PostJobPage() {
 
         {/* STEP 2 */}
         {step === 2 && (
-          <div className="space-y-6">
+          <div className="space-y-3  w-full min-h-[520px]">
             <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Employment Summary</h3>
 
             {/* Employment fields */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4 w-full">
               <Field label="Age Limit *" error={errors.jobSummary?.ageLimit?.message}>
                 <input className="input" {...register("jobSummary.ageLimit", { required: "Required" })} placeholder="23–35 Years" />
               </Field>
@@ -299,7 +300,7 @@ export default function PostJobPage() {
             </div>
 
             <h4 className="font-semibold text-xl text-[#00c389] border-b pb-2">Job Location</h4>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-4 w-full">
               <Field label="City *" error={errors.employmentInfo?.jobLocation?.city?.message}>
                 <input className="input" {...register("employmentInfo.jobLocation.city", { required: "Required" })} placeholder="Uttara" />
               </Field>
@@ -362,10 +363,10 @@ export default function PostJobPage() {
 
         {/* STEP 3 */}
         {step === 3 && (
-          <div className="space-y-6">
+          <div className="space-y-6  w-full min-h-[520px]">
             <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Salary & Requirements</h3>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 w-full">
               <Field label="Salary Range *" error={errors.salaryAndBenefits?.salary?.range?.message}>
                 <input
                   className="input"
@@ -401,7 +402,7 @@ export default function PostJobPage() {
 
         {/* STEP 4 */}
         {step === 4 && (
-          <div className="space-y-6">
+          <div className="space-y-6  w-full min-h-[520px]">
             <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">Job Details</h3>
 
             <Field label="Job Overview">
@@ -456,5 +457,6 @@ export default function PostJobPage() {
         )}
       </form>
     </div>
+  </div>
   );
 }

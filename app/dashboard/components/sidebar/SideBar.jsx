@@ -17,7 +17,7 @@ export default function Sidebar({ role = "user" }) {
   return (
     <>
       {/* ---------- Mobile Top Bar ---------- */}
-      <div className="lg:hidden px-2 py-3 bg-[#00c389] text-white  z-50">
+      <div className="lg:hidden px-3 py-3 bg-[#00c389] text-white  z-50">
        
         <nav className="space-y-3 flex-1">
            <button

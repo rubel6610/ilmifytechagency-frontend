@@ -54,8 +54,8 @@ const JobCard = ({ job }) => {
               >
                 {job.company?.logo ? (
                   <Image
-                    height={150}
-                    width={150}
+                    height={200}
+                    width={200}
                     src={job.company.logo}
                     alt={job.company.name}
                     className="w-full h-full object-cover"

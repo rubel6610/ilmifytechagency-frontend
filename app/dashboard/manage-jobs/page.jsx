@@ -23,7 +23,7 @@ export default function JobManagementPage() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch("/jobs.json"); // This will eventually be your API route
+        const res = await fetch("/jobs.json");
         const data = await res.json();
         setJobs(data);
       } catch (err) {
@@ -90,7 +90,7 @@ export default function JobManagementPage() {
 
         {/* Table Container */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <table className="w-full text-left">
+          <table className="w-full text-left ">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                 <th className="px-6 py-4">Position</th>
