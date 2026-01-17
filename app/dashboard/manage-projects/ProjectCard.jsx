@@ -74,7 +74,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                 </div>
                 <div className="flex items-center gap-1.5">
                     <FiCalendar size={14} className="text-gray-400" />
-                    <span>{project.deadline ? new Date(project.deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No deadline'}</span>
+                    <span>{project.publishingDate ? new Date(project.publishingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No publishing date'}</span>
                 </div>
             </div>
 

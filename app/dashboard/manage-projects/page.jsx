@@ -16,7 +16,7 @@ const mockProjects = [
         description: 'Complete overhaul of company website with modern design and improved UX',
         status: 'published-to-showcase',
         client: 'John Doe',
-        deadline: '2024-03-15',
+        publishingDate: '2024-03-15',
         progress: 65,
     },
     {
@@ -25,7 +25,7 @@ const mockProjects = [
         description: 'Build iOS and Android applications for the e-commerce platform',
         status: 'published-to-showcase',
         client: 'Jane Smith',
-        deadline: '2024-04-20',
+        publishingDate: '2024-04-20',
         progress: 0,
     },
     {
@@ -34,7 +34,7 @@ const mockProjects = [
         description: 'Connect third-party services with REST API endpoints',
         status: 'draft',
         client: 'Mike Johnson',
-        deadline: '2024-02-28',
+        publishingDate: '2024-02-28',
         progress: 100,
     },
     {
@@ -43,7 +43,7 @@ const mockProjects = [
         description: 'Migrate legacy SQL database to MongoDB cluster for better scalability',
         status: 'published-to-showcase',
         client: 'Sarah Wilson',
-        deadline: '2024-03-30',
+        publishingDate: '2024-03-30',
         progress: 40,
     },
     {
@@ -52,7 +52,7 @@ const mockProjects = [
         description: 'Comprehensive security review and vulnerability assessment',
         status: 'draft',
         client: 'Tom Brown',
-        deadline: '2024-04-01',
+        publishingDate: '2024-04-01',
         progress: 0,
     },
     {
@@ -61,7 +61,7 @@ const mockProjects = [
         description: 'Enhance user interface based on customer feedback and analytics',
         status: 'draft',
         client: 'Lisa Anderson',
-        deadline: '2024-01-15',
+        publishingDate: '2024-01-15',
         progress: 25,
     },
 ];
@@ -99,7 +99,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, projectName, isLoading
                     </h3>
                     
                     <p className="text-gray-600 mb-6">
-                        Are you sure you want to delete <span className="font-semibold text-gray-800">"{projectName}"</span>? This action cannot be undone.
+                        Are you sure you want to delete <span className="font-semibold text-gray-800">&ldquo;{projectName}&ldquo;</span>? This action cannot be undone.
                     </p>
 
                     <div className="flex gap-3">
@@ -378,8 +378,8 @@ const ProjectsPage = () => {
                     <div className="mb-4 text-sm text-gray-500">
                         Showing <span className="font-semibold text-gray-700">{filteredProjects.length}</span> 
                         {filteredProjects.length === 1 ? ' project' : ' projects'}
-                        {searchQuery && <span> for "<span className="font-semibold text-gray-700">{searchQuery}</span>"</span>}
-                        {statusFilter !== 'all' && <span> with status "<span className="font-semibold text-gray-700">{statusFilter.replace('-', ' ')}</span>"</span>}
+                        {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&ldquo;</span>}
+                        {statusFilter !== 'all' && <span> with status &ldquo;<span className="font-semibold text-gray-700">{statusFilter.replace('-', ' ')}</span>&ldquo;</span>}
                     </div>
                 )}
 

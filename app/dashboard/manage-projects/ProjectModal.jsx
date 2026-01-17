@@ -22,7 +22,6 @@ const INITIAL_FORM = {
     description: '',
     client: '',
     status: 'draft',
-    deadline: '',
     progress: 0,
     image: '',
     publishingDate: '',
