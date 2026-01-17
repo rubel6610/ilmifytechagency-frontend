@@ -5,7 +5,7 @@ import {
   Dock,
   Columns3Cog
 } from "lucide-react";
-import { HiOutlineViewGridAdd } from "react-icons/hi";
+import { HiOutlineNewspaper } from "react-icons/hi";
 
 export const userLinks = [
   {
@@ -43,9 +43,9 @@ export const adminLinks = [
     icon: Briefcase,
   },
   {
-    name: "Add Blog",
-    href: "/dashboard/add-blog",
-    icon: HiOutlineViewGridAdd,
+    name: "Manage Blog",
+    href: "/dashboard/manage-blog",
+    icon: HiOutlineNewspaper,
   }
   
 ];
