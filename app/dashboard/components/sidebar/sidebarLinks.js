@@ -6,6 +6,7 @@ import {
   Columns3Cog
 } from "lucide-react";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
+import { VscProject } from "react-icons/vsc";
 
 export const userLinks = [
   {
@@ -46,6 +47,11 @@ export const adminLinks = [
     name: "Add Blog",
     href: "/dashboard/add-blog",
     icon: HiOutlineViewGridAdd,
-  }
+  },
+  {
+    name: "Manage Projects",
+    href: "/dashboard/manage-projects",
+    icon: VscProject,
+  },
   
 ];

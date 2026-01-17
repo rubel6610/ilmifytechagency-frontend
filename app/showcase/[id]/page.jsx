@@ -273,7 +273,7 @@ const CardDetails = () => {
               I had the privilege of designing and developing the AkiMed™
               Science website for HarryBlaq, with a focus on creating a
               professional, informative, and visually engaging platform for the
-              brand's scientific products and services.
+              brand&apos;s scientific products and services.
             </p>
             
             <Link
