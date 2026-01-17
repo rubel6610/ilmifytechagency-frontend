@@ -5,6 +5,7 @@ import {
   Dock,
   Columns3Cog
 } from "lucide-react";
+import { VscProject } from "react-icons/vsc";
 import { HiOutlineNewspaper } from "react-icons/hi";
 
 export const userLinks = [
@@ -38,7 +39,11 @@ export const adminLinks = [
     icon: Briefcase,
   },
   {
-    name: "Manage Blog",
+    name: "Manage Projects",
+    href: "/dashboard/manage-projects",
+    icon: Columns3Cog,
+  },
+  {  name: "Manage Blog",
     href: "/dashboard/manage-blog",
     icon: HiOutlineNewspaper,
   }
