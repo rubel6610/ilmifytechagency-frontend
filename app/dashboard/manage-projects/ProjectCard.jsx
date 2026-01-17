@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import { FiCalendar, FiEdit2, FiTrash2, FiUser } from 'react-icons/fi';
 
@@ -34,6 +35,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
             {/* Header */}
             <div className="flex justify-between items-start mb-4">
                 <div className="flex-1 min-w-0">
+                    <Image src={project.projectImage} alt={project.name} width={100} height={100} className="w-full  h-48 object-cover rounded-lg mb-3" />
                     <h3 className="text-lg font-bold text-gray-800 truncate mb-2">
                         {project.name}
                     </h3>
@@ -46,7 +48,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={() => onEdit(project)}
-                        className="p-2 text-primary hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-primary hover:bg-blue-50 rounded-lg transition-colors" 
                         title="Edit"
                     >
                         <FiEdit2 size={16} />
@@ -62,7 +64,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+            <p className="text-gray-600 text-sm mb-4 line-clamp-2 h-12 leading-relaxed">
                 {project.description || 'No description provided'}
             </p>
 

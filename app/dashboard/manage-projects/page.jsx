@@ -13,6 +13,7 @@ const mockProjects = [
     {
         _id: '1',
         name: 'Website Redesign',
+        projectImage: '/assets/insurance_pic.jpg',
         description: 'Complete overhaul of company website with modern design and improved UX',
         status: 'published-to-showcase',
         client: 'John Doe',
@@ -22,6 +23,7 @@ const mockProjects = [
     {
         _id: '2',
         name: 'Mobile App Development',
+        projectImage: '/assets/woman_pic.jpg',
         description: 'Build iOS and Android applications for the e-commerce platform',
         status: 'published-to-showcase',
         client: 'Jane Smith',
@@ -31,6 +33,7 @@ const mockProjects = [
     {
         _id: '3',
         name: 'API Integration',
+        projectImage: '/assets/helping_hand.webp',
         description: 'Connect third-party services with REST API endpoints',
         status: 'draft',
         client: 'Mike Johnson',
@@ -40,6 +43,7 @@ const mockProjects = [
     {
         _id: '4',
         name: 'Database Migration',
+        projectImage: '/assets/store_design.jpg',
         description: 'Migrate legacy SQL database to MongoDB cluster for better scalability',
         status: 'published-to-showcase',
         client: 'Sarah Wilson',
@@ -49,6 +53,7 @@ const mockProjects = [
     {
         _id: '5',
         name: 'Security Audit',
+        projectImage: '/customtrading_pic.jpg',
         description: 'Comprehensive security review and vulnerability assessment',
         status: 'draft',
         client: 'Tom Brown',
@@ -58,6 +63,7 @@ const mockProjects = [
     {
         _id: '6',
         name: 'UI/UX Improvements',
+        projectImage: '/assets/shopping_pic.avif',
         description: 'Enhance user interface based on customer feedback and analytics',
         status: 'draft',
         client: 'Lisa Anderson',
