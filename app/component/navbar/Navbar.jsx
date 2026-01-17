@@ -14,8 +14,10 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
+import { role } from "@/app/dashboard/page";
 
-import { role } from "../../dashboard/page";
+
+
 
 const MotionLink = motion(Link);
 const Header = () => {
@@ -106,10 +108,11 @@ const Header = () => {
 
       {/* Main Navigation */}
       <nav className="md:py-2.5 lg:py-6 pt-5 pb-5 md:pt-6  px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
-        <div className="flex justify-between items-center w-full xl:w-auto">
-          <Link
+        <div className="flex justify-between items-center w-full xl:w-auto max-w-150">
+         <div>
+           <Link
             href="/"
-            className={`${nav ? "invisible" : "visible"} md:mx-auto xl:mx-0`}
+            className={`${nav ? "invisible" : "visible"}  xl:mx-0`}
           >
             <Image
               className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43"
@@ -120,21 +123,22 @@ const Header = () => {
               priority
             />
           </Link>
+         </div>
 
-          <div className="md:hidden flex gap-3 items-center">
+          <div className="xl:hidden flex gap-3 items-center">
             {role === "admin" ? (
               <Link
                 href="/dashboard"
                 className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
               >
-                Admin Dashboard
+               Dashboard
               </Link>
             ) : role === "user" ? (
               <Link
                 href="/dashboard"
                 className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
               >
-                User Dashboard
+              Dashboard
               </Link>
             ) : (
               <Link href="/login">
@@ -144,7 +148,7 @@ const Header = () => {
               </Link>
             )}
             <div
-              className="text-xl block md:hidden cursor-pointer text-gray-400"
+              className="text-xl block lg:hidden cursor-pointer text-gray-400"
               onClick={toggleNav}
             >
               <FaBars />
@@ -153,7 +157,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 font-medium mt-6 xl:mt-0">
+        <ul className="hidden lg:flex gap-8 font-medium mt-6 xl:mt-0">
           {menuItems.map((item) => (
             <li key={item.path}>
               <Link
@@ -177,14 +181,14 @@ const Header = () => {
               href="/dashboard"
               className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
             >
-              Admin Dashboard
+    Dashboard
             </Link>
           ) : role === "user" ? (
             <Link
               href="/dashboard"
               className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
             >
-              User Dashboard
+   Dashboard
             </Link>
           ) : (
             <Link href="/login">
@@ -205,12 +209,12 @@ const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={toggleNav}
-              className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-1250 md:hidden"
+              className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-1250 lg:hidden"
             />
 
             {/* Side Menu */}
             <motion.div
-              className="fixed p-6 top-0 right-0 w-2/3 h-screen bg-white z-1300 flex flex-col items-start justify-start gap-7 shadow-2xl md:hidden"
+              className="fixed p-6 top-0 right-0 w-2/3 md:w-1/3 h-screen bg-white z-1300 flex flex-col items-start justify-start gap-7 shadow-2xl lg:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

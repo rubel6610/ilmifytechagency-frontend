@@ -5,7 +5,6 @@ import {
   Dock,
   Columns3Cog
 } from "lucide-react";
-import { HiOutlineViewGridAdd } from "react-icons/hi";
 import { VscProject } from "react-icons/vsc";
 import { HiOutlineNewspaper } from "react-icons/hi";
 
@@ -35,26 +34,16 @@ export const adminLinks = [
     icon: LayoutDashboard,
   },
   {
-    name: "Post Job",
-    href: "/dashboard/post-job",
-    icon: Plus,
-  },
-  {
      name: "Manage Jobs",
     href: "/dashboard/manage-jobs",
     icon: Briefcase,
   },
   {
-    name: "Add Blog",
-    href: "/dashboard/add-blog",
-    icon: HiOutlineViewGridAdd,
-  },
-  {
     name: "Manage Projects",
     href: "/dashboard/manage-projects",
-    icon: VscProject,
+    icon: Columns3Cog,
   },
-    name: "Manage Blog",
+  {  name: "Manage Blog",
     href: "/dashboard/manage-blog",
     icon: HiOutlineNewspaper,
   }

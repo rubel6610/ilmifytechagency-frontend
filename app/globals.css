@@ -108,3 +108,13 @@ html.lenis {
 .leaflet-container {
   z-index: 0 !important;
 }
+
+
+@layer utilities {
+  .h-dvh {
+    height: 100dvh;
+  }
+  .min-h-dvh {
+    min-height: 100dvh;
+  }
+}
