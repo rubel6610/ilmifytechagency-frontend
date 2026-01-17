@@ -3,9 +3,10 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { role } from "../page";
+
 import { HiX } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
+import { role } from "../page";
 
 const AddBlog = () => {
   const fileInputRef = useRef(null);

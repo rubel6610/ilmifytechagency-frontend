@@ -33,11 +33,6 @@ export const adminLinks = [
     icon: LayoutDashboard,
   },
   {
-    name: "Post Job",
-    href: "/dashboard/post-job",
-    icon: Plus,
-  },
-  {
      name: "Manage Jobs",
     href: "/dashboard/manage-jobs",
     icon: Briefcase,

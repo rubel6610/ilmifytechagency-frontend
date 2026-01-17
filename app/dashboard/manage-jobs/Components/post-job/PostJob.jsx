@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Field } from "./components/Field";
 import { useState, useRef } from "react";
 
-export default function PostJobPage() {
+export default function PostJob({onClose}) {
   const fileInputRef = useRef(null);
 
   const defaultValues = {
@@ -186,8 +186,8 @@ export default function PostJobPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 md:p-8">
+    <div className="flex justify-center items-center min-h-screen p-4 " onClick={()=>onClose(false)}>
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 md:p-8" onClick={(e)=>e.stopPropagation()}>
         {/* Progress timeline */}
         <div className="mb-8 relative">
           <h2 className="text-2xl font-bold mb-2 text-center text-slate-800">

@@ -302,10 +302,10 @@ const Careers = () => {
       )}
 
       {/* HERO */}
-      <div className="relative bg-[#0ddaa0] text-white py-12 md:py-20 px-4 mt-16 md:mt-20">
+      <div className="relative bg-[#0ddaa0] text-white py-12 md:py-20 px-4 mt-20 md:mt-30 lg:mt-34">
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+          <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
             Find Your Dream{" "}
             <span className="text-yellow-300">
               <TypingText text="Career" colors={["#fff"]} />
