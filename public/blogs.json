@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "title": "Marketing Ideas",
+    "date": "May 24, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/Marketing-ideas.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 125,
+    "views": 30
+  },
+  {
+    "id": 2,
+    "title": "Rest During Working Hours",
+    "date": "June 10, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/Rest-office.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 110,
+    "views": 67
+  },
+  {
+    "id": 3,
+    "title": "Develop Your Startup Idea",
+    "date": "July 02, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/startup-ideas.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 109,
+    "views": 80
+  },
+  {
+    "id": 4,
+    "title": "Travel and Work During Spring",
+    "date": "August 15, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/travelandwork.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 149,
+    "views": 120
+  },
+  {
+    "id": 5,
+    "title": "Plan Your Business",
+    "date": "September 01, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/plan-business.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 137,
+    "views": 130
+  },
+  {
+    "id": 6,
+    "title": "Diversity in the Workplace",
+    "date": "October 20, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/diversity-PTZ4RGN-1400x788.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 104,
+    "views": 150
+  },
+  {
+    "id": 7,
+    "title": "Women in Business",
+    "date": "November 11, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/woman-business.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 124,
+    "views": 30
+  },
+  {
+    "id": 8,
+    "title": "Hardest Things in Programming",
+    "date": "December 05, 2018",
+    "author": "tufael4736@gmail.com",
+    "bussiness": "business",
+    "image": "/hardest-things.png",
+    "description": "Explore innovative marketing ideas to boost your business growth and stay ahead in the competitive market.",
+    "like_count": 119,
+    "views": 70
+  }
+]
