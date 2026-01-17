@@ -36,8 +36,8 @@
 // }
 
 
-import PricingData from "../component/PricingData";
-import PricingCard from "../component/PricingCard";
+import PricingData from "../pricing/component/PricingData";
+import PricingCard from "../pricing/component/PricingCard";
 import { notFound } from "next/navigation";
 
 export default function PricingPage({ params }) {

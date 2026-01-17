@@ -25,52 +25,7 @@ const majorServiceData = [
       "WordPress Multisite Management",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+  
   },
 
   {
@@ -99,52 +54,7 @@ const majorServiceData = [
       "Multi-language Store Setup",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
 
   {
@@ -173,52 +83,7 @@ const majorServiceData = [
       "Third-Party App Integrations",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
 
   {
@@ -247,52 +112,7 @@ const majorServiceData = [
       "Third-Party Integrations",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 5,
@@ -320,52 +140,7 @@ const majorServiceData = [
       "Frontend Code Refactoring",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 6,
@@ -393,52 +168,7 @@ const majorServiceData = [
       "Scalable Server Architecture",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 7,
@@ -466,52 +196,7 @@ const majorServiceData = [
       "Scalable Database Architecture",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 8,
@@ -539,52 +224,7 @@ const majorServiceData = [
       "Security Best Practices Implementation",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 9,
@@ -612,52 +252,6 @@ const majorServiceData = [
       "Monthly Performance Reports",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
   },
   {
     id: 10,
@@ -685,52 +279,7 @@ const majorServiceData = [
       "Long-Term Ranking Growth",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 11,
@@ -758,52 +307,6 @@ const majorServiceData = [
       "Detailed Ad Reports",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
   },
   {
     id: 12,
@@ -831,52 +334,7 @@ const majorServiceData = [
       "Long-Term Content Growth",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 13,
@@ -898,52 +356,7 @@ const majorServiceData = [
       "Fast Turnaround Time",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+ 
   },
   {
     id: 14,
@@ -964,52 +377,7 @@ const majorServiceData = [
       "Eye-Catching Visuals",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 15,
@@ -1030,52 +398,7 @@ const majorServiceData = [
       "Rebranding Solutions",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 16,
@@ -1096,52 +419,7 @@ const majorServiceData = [
       "Platform-Optimized Sizes",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 17,
@@ -1169,52 +447,7 @@ const majorServiceData = [
       "Ongoing Support & Maintenance",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 18,
@@ -1242,52 +475,7 @@ const majorServiceData = [
       "Ongoing Support & Maintenance",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 19,
@@ -1315,52 +503,7 @@ const majorServiceData = [
       "Maintenance & Support",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 20,
@@ -1388,52 +531,7 @@ const majorServiceData = [
       "Maintenance & Support",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 21,
@@ -1461,52 +559,7 @@ const majorServiceData = [
       "Ongoing GTM Maintenance",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 22,
@@ -1534,52 +587,7 @@ const majorServiceData = [
       "Ongoing Monitoring & Support",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+
   },
   {
     id: 23,
@@ -1607,52 +615,7 @@ const majorServiceData = [
       "Ongoing Analytics Support",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+  
   },
   {
     id: 24,
@@ -1680,52 +643,7 @@ const majorServiceData = [
       "Ongoing Server Maintenance",
     ],
 
-    pricing: {
-      basic: {
-        name: "Basic",
-        price: "$199",
-        deliveryTime: "5 Days",
-        revisions: "2 Revisions",
-        features: [
-          "CMS Installation & Setup",
-          "Pre-made Theme Setup",
-          "Up to 5 Pages",
-          "Responsive Design",
-          "Basic SEO Setup",
-          "Contact Form Setup",
-        ],
-      },
-      standard: {
-        name: "Standard",
-        price: "$399",
-        deliveryTime: "7 Days",
-        revisions: "4 Revisions",
-        features: [
-          "Custom CMS Design",
-          "Up to 10 Pages",
-          "Theme Customization",
-          "SEO Optimization",
-          "Speed Optimization",
-          "Security Setup",
-          "Analytics Integration",
-        ],
-      },
-      premium: {
-        name: "Premium",
-        price: "$699",
-        deliveryTime: "10 Days",
-        revisions: "Unlimited Revisions",
-        features: [
-          "Fully Custom CMS Website",
-          "Unlimited Pages",
-          "Advanced SEO",
-          "Performance Optimization",
-          "Security Hardening",
-          "E-commerce Integration",
-          "Post-Launch Support",
-        ],
-      },
-    },
+ 
   },
 ];
 
