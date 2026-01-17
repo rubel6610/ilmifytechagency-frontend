@@ -21,9 +21,11 @@ const INITIAL_FORM = {
     name: '',
     description: '',
     client: '',
+    status: 'draft',
     deadline: '',
     progress: 0,
     image: '',
+    publishingDate: '',
     phases: [
         { name: '', description: '', deadline: '', },
         { name: '', description: '', deadline: '', },
@@ -61,30 +63,35 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
     // EFFECTS
     // ==========================================
 
-    useEffect(() => {
-        if (project) {
-            setFormData({
-                name: project.name || '',
-                description: project.description || '',
-                status: project.status || 'pending',
-                client: project.client || '',
-                deadline: project.deadline ? project.deadline.split('T')[0] : '',
-                progress: project.progress || 0,
-                image: project.image || '',
-                phases: project.phases || INITIAL_FORM.phases,
-                conclusion: project.conclusion || '',
-                finalNotes: project.finalNotes || '',
-                lessonsLearned: project.lessonsLearned || '',
-            });
-            setImagePreview(project.image || '');
-        } else {
-            setFormData(INITIAL_FORM);
-            setImagePreview('');
-        }
-        setErrors({});
-        setCurrentStep(1);
-    }, [project, isOpen]);
+   useEffect(() => {
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
+  if (project) {
+    setFormData({
+      name: project.name || '',
+      description: project.description || '',
+      status: 'draft',
+      client: project.client || '',
+    //   deadline: project.deadline ? project.deadline.split('T')[0] : '',
+      progress: project.progress || 0,
+      image: project.image || '',
+      phases: project.phases || INITIAL_FORM.phases,
+      conclusion: project.conclusion || '',
+      finalNotes: project.finalNotes || '',
+      lessonsLearned: project.lessonsLearned || '',
+      publishingDate: project.publishingDate
+        ? project.publishingDate.split('T')[0]
+        : '', // ✅ keep controlled
+    });
+    setImagePreview(project.image || '');
+  } else {
+    setFormData({ ...INITIAL_FORM, publishingDate: today }); // ✅ today for new
+    setImagePreview('');
+  }
+
+  setErrors({});
+  setCurrentStep(1);
+}, [project, isOpen]);
     // Lock body scroll
     useEffect(() => {
         if (isOpen) {
@@ -228,6 +235,7 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateStep3()) onSubmit(formData);
+
     };
 
     // ==========================================
@@ -346,7 +354,7 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
                                         type="submit"
                                         form="project-form"
                                         disabled={isLoading}
-                                        className="flex items-center gap-2 px-4 sm:px-6 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 font-medium transition-colors disabled:opacity-50"
+                                        className="flex items-center gap-2 px-4 sm:px-6 py-2.5 bg-emerald-400 text-white rounded-xl hover:bg-emerald-500 font-medium transition-colors disabled:opacity-50"
                                     >
                                         {isLoading ? (
                                             <>
@@ -426,7 +434,7 @@ const StepIndicator = ({ currentStep, steps }) => {
                         <div
                             className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
                                 currentStep > step.number
-                                    ? 'bg-green-500 text-white'
+                                    ? 'bg-emerald-500 text-white'
                                     : currentStep === step.number
                                     ? 'bg-emerald-400 text-white ring-4 ring-blue-100'
                                     : 'bg-gray-200 text-gray-400'
@@ -443,7 +451,7 @@ const StepIndicator = ({ currentStep, steps }) => {
                     
                     {index < steps.length - 1 && (
                         <div className={`flex-1 h-1 mx-2 sm:mx-4 rounded-full transition-colors ${
-                            currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
+                            currentStep > step.number ? 'bg-emerald-500' : 'bg-gray-200'
                         }`} />
                     )}
                 </React.Fragment>
@@ -741,7 +749,7 @@ const Step3Conclusion = ({ formData, errors, handleChange }) => {
                         >
                             <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
                                 phase.status === 'completed' 
-                                    ? 'bg-green-500 text-white' 
+                                    ? 'bg-emerald-500 text-white' 
                                     : phase.status === 'in-progress'
                                     ? 'bg-blue-500 text-white'
                                     : 'bg-gray-200 text-gray-500'
@@ -776,20 +784,18 @@ const Step3Conclusion = ({ formData, errors, handleChange }) => {
                 {errors.conclusion && <ErrorMessage message={errors.conclusion} />}
             </div>
 
-            {/* Final Notes & Lessons Learned */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Lessons Learned</label>
-                    <textarea
-                        name="lessonsLearned"
-                        value={formData.lessonsLearned}
-                        onChange={handleChange}
-                        rows={3}
-                        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white resize-none"
-                        placeholder="What did you learn?"
-                    />
-                </div>
+            {/* publishing Date as today */}
+            <div className="mt-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Publishing Date</label>
+                <input
+                    type="date"
+                    name="publishingDate"
+                    value={formData.publishingDate ?? ''}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 focus:bg-white"
+                />
             </div>
+
         </div>
     );
 };
