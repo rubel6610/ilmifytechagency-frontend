@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, LogOut, ArrowLeftToLine } from "lucide-react";
 import { userLinks, adminLinks } from "./sidebarLinks";
-import Image from "next/image";
 
 export default function Sidebar({ role = "user" }) {
   const pathname = usePathname();

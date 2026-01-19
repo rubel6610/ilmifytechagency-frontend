@@ -1,12 +1,13 @@
 "use client";
 
 import Sidebar from "./components/sidebar/SideBar";
+import { role } from "./page";
 
 export default function DashboardLayout({ children }) {
   return (
     <div className="relative min-h-screen bg-slate-100">
       {/* Sidebar - Fixed position */}
-      <Sidebar role="admin" />
+      <Sidebar role={role} />
 
       {/* Main content - with margin for mini sidebar on mobile */}
       <main className="min-h-screen ml-16 lg:ml-64">

@@ -122,7 +122,7 @@ export default function JobManagementPage() {
 
             <button
               onClick={() => setPostJob(!postJob)}
-              className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"
+              className="bg-emerald-500 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 cursor-pointer"
             >
               <Plus size={20} />
               Post New Job
@@ -226,7 +226,7 @@ export default function JobManagementPage() {
           <div className="overflow-x-auto">
             <table className="w-full md:table-fixed border-collapse">
               <colgroup>
-                <col className="md:w-[40%]" />
+                <col className="md:w-[30%]" />
                 <col className="md:w-[15%]" />
                 <col className="md:w-[15%]" />
                 <col className="md:w-[5%]" />
@@ -316,7 +316,7 @@ export default function JobManagementPage() {
                     </td>
 
                     {/* STATUS */}
-                    <td className="block md:table-cell px-4 py-2 md:px-6 md:py-4 w-full">
+                    <td className="block md:table-cell px-4 py-2 md:px-6 md:py-4 w-full md:text-center">
                       <span className="md:hidden text-xs text-gray-500 font-semibold mb-1 block">
                         Status
                       </span>
