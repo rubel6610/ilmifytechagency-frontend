@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, LogOut, ArrowLeftToLine } from "lucide-react";
+import { Menu, X, LogOut, ArrowLeftToLine, User } from "lucide-react";
 import { userLinks, adminLinks } from "./sidebarLinks";
 
 export default function Sidebar({ role = "user" }) {
@@ -78,7 +78,16 @@ export default function Sidebar({ role = "user" }) {
               title="Profile"
             >
               <div className="w-7 h-7 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">
-                AD
+                <User/>
+              </div>
+            </Link>
+            <Link
+              href="/"
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Profile"
+            >
+              <div className="w-7 h-7 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">
+                <ArrowLeftToLine size={18} />
               </div>
             </Link>
 
