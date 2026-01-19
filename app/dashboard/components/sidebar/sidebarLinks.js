@@ -41,6 +41,6 @@ export const adminLinks = [
   {  name: "Manage Blog",
     href: "/dashboard/manage-blog",
     icon: HiOutlineNewspaper,
-  }
+  },
   
 ];

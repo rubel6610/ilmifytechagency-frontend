@@ -5,8 +5,10 @@ import Image from "next/image";
 import SecondaryButton from "@/app/component/button/SecondaryButton";
 import majorServiceData from "./majorServiceData";
 import CustomBorder from "@/app/component/customBorder/CustomBorder";
+import Link from "next/link";
 
-export default function MajorService({ slug }) {
+export default function MajorService({slug} ) {
+
   const services = majorServiceData.filter((service) => service.slug === slug);
 
   if (!services.length) return null;
@@ -42,7 +44,7 @@ export default function MajorService({ slug }) {
                   !isEven ? "lg:text-left" : ""
                 }`}
               >
-                <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
+                <h3 className="text-4xl font-semibold mb-8">{service.title}</h3>
 
                 <p className="mb-4 text-justify lg:text-inherit">
                   {service.description}
@@ -59,15 +61,22 @@ export default function MajorService({ slug }) {
                 </ul>
 
                 <div
-                  className={`mt-6 ${
+                  className={`mt-8 ${
                     !isEven ? "lg:flex lg:justify-start" : ""
                   }`}
                 >
-                  <SecondaryButton
+                  {/* <SecondaryButton
                     className="bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
-                    address={`/services/${service.slug}/pricing`}
+                    address={`/services/${service.slug}/${service.serviceSlug}/pricing`}
                     label="Get Started"
-                  />
+                  /> */}
+
+                  <Link
+                    href={`/services/${service.slug}/${service.serviceSlug}/pricing`}
+                    className="inline-block bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
+                  >
+                    Get Started
+                  </Link>
                 </div>
               </div>
 

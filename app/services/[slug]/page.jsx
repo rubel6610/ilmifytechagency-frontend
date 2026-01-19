@@ -3,9 +3,8 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import servicesData from "@/app/services/components/servicesData";
-import ServiceExample from "@/app/services/components/ServiceExample";
 import MajorService from "@/app/services/components/MajorService";
-import DemoVideo from "@/app/services/components/DemoVideo";
+import ServiceBanner from "@/app/services/components/ServiceBanner";
 
 export default function ServiceDetails() {
   const { slug } = useParams();
@@ -19,10 +18,10 @@ export default function ServiceDetails() {
   }
 
   return (
-    <main>
+    <main className="pb-8">
       {/* Service Main Content */}
-      <ServiceExample slug={service.slug} />
-      <DemoVideo />
+      <ServiceBanner slug={service.slug} />
+   
       {/* Other Services Section */}
       <MajorService slug={service.slug} />
     </main>

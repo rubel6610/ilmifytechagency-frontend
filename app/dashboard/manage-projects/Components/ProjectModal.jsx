@@ -1,7 +1,7 @@
 // components/projects/ProjectModal.jsx
 
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { 
     FiAlertTriangle, 
     FiX, 
@@ -26,12 +26,12 @@ const INITIAL_FORM = {
     image: '',
     publishingDate: '',
     phases: [
-        { name: '', description: '', deadline: '', },
-        { name: '', description: '', deadline: '', },
-        { name: '', description: '', deadline: '', },
-        { name: '', description: '', deadline: '', },
-        { name: '', description: '', deadline: '', },
-        { name: '', description: '', deadline: '', },
+        { name: '', description: '', deadline: '' },
+        { name: '', description: '', deadline: '' },
+        { name: '', description: '', deadline: '' },
+        { name: '', description: '', deadline: '' },
+        { name: '', description: '', deadline: '' },
+        { name: '', description: '', deadline: '' },
     ],
     conclusion: '',
     finalNotes: '',
@@ -62,35 +62,37 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
     // EFFECTS
     // ==========================================
 
-   useEffect(() => {
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    useEffect(() => {
+        if (!isOpen) return; // Only run when modal opens
+        
+        const today = new Date().toISOString().slice(0, 10);
 
-  if (project) {
-    setFormData({
-      name: project.name || '',
-      description: project.description || '',
-      status: 'draft',
-      client: project.client || '',
-    //   deadline: project.deadline ? project.deadline.split('T')[0] : '',
-      progress: project.progress || 0,
-      image: project.image || '',
-      phases: project.phases || INITIAL_FORM.phases,
-      conclusion: project.conclusion || '',
-      finalNotes: project.finalNotes || '',
-      lessonsLearned: project.lessonsLearned || '',
-      publishingDate: project.publishingDate
-        ? project.publishingDate.split('T')[0]
-        : '', // ✅ keep controlled
-    });
-    setImagePreview(project.image || '');
-  } else {
-    setFormData({ ...INITIAL_FORM, publishingDate: today }); // ✅ today for new
-    setImagePreview('');
-  }
+        if (project) {
+            setFormData({
+                name: project.name || '',
+                description: project.description || '',
+                status: 'draft',
+                client: project.client || '',
+                progress: project.progress || 0,
+                image: project.image || '',
+                phases: project.phases || INITIAL_FORM.phases,
+                conclusion: project.conclusion || '',
+                finalNotes: project.finalNotes || '',
+                lessonsLearned: project.lessonsLearned || '',
+                publishingDate: project.publishingDate
+                    ? project.publishingDate.split('T')[0]
+                    : '',
+            });
+            setImagePreview(project.image || '');
+        } else {
+            setFormData({ ...INITIAL_FORM, publishingDate: today });
+            setImagePreview('');
+        }
 
-  setErrors({});
-  setCurrentStep(1);
-}, [project, isOpen]);
+        setErrors({});
+        setCurrentStep(1);
+    }, [project, isOpen]);
+
     // Lock body scroll
     useEffect(() => {
         if (isOpen) {
@@ -105,26 +107,36 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
     // HANDLERS
     // ==========================================
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: name === 'progress' ? parseInt(value) : value
         }));
-        if (errors[name]) {
-            setErrors(prev => ({ ...prev, [name]: '' }));
-        }
-    };
+        setErrors(prev => {
+            if (prev[name]) {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                return newErrors;
+            }
+            return prev;
+        });
+    }, []);
 
-    const handlePhaseChange = (index, field, value) => {
-        const updatedPhases = [...formData.phases];
-        updatedPhases[index] = { ...updatedPhases[index], [field]: value };
-        setFormData(prev => ({ ...prev, phases: updatedPhases }));
-    };
+    const handlePhaseChange = useCallback((index, field, value) => {
+        setFormData(prev => {
+            const updatedPhases = [...prev.phases];
+            updatedPhases[index] = { ...updatedPhases[index], [field]: value };
+            return { ...prev, phases: updatedPhases };
+        });
+    }, []);
 
     // Image Upload with Preview
     const handleImageUpload = async (e) => {
-        const file = e.target.files[0];
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const file = e.target.files?.[0];
         if (!file) return;
 
         // Validate
@@ -157,46 +169,44 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
             const data = await response.json();
 
             if (data.success) {
-                // Replace local preview with uploaded URL
                 URL.revokeObjectURL(localPreview);
                 setFormData(prev => ({ ...prev, image: data.data.url }));
                 setImagePreview(data.data.url);
             }
-            //  else {
-            //     throw new Error('Upload failed');
-            // }
         } catch (error) {
             console.error('Image upload error:', error);
             setErrors(prev => ({ ...prev, image: 'Failed to upload. Using local preview.' }));
-            // Keep local preview even if upload fails
             setFormData(prev => ({ ...prev, image: localPreview }));
         } finally {
             setImageUploading(false);
         }
     };
 
-    const removeImage = () => {
+    const removeImage = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         if (imagePreview.startsWith('blob:')) {
             URL.revokeObjectURL(imagePreview);
         }
         setFormData(prev => ({ ...prev, image: '' }));
         setImagePreview('');
-    };
+    }, [imagePreview]);
 
     // ==========================================
     // VALIDATION
     // ==========================================
 
-    const validateStep1 = () => {
+    const validateStep1 = useCallback(() => {
         const newErrors = {};
         if (!formData.name.trim()) newErrors.name = 'Project name is required';
         if (!formData.description.trim()) newErrors.description = 'Description is required';
         if (!formData.client.trim()) newErrors.client = 'Client is required';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    }, [formData.name, formData.description, formData.client]);
 
-    const validateStep2 = () => {
+    const validateStep2 = useCallback(() => {
         const newErrors = {};
         formData.phases.forEach((phase, index) => {
             if (!phase.name.trim()) {
@@ -205,37 +215,70 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
         });
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    }, [formData.phases]);
 
-    const validateStep3 = () => {
+    const validateStep3 = useCallback(() => {
         const newErrors = {};
         if (!formData.conclusion.trim()) {
             newErrors.conclusion = 'Conclusion is required';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    }, [formData.conclusion]);
 
     // ==========================================
     // NAVIGATION
     // ==========================================
 
-    const handleNext = () => {
+    const handleNext = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         let isValid = false;
         if (currentStep === 1) isValid = validateStep1();
         if (currentStep === 2) isValid = validateStep2();
-        if (isValid && currentStep < 3) setCurrentStep(prev => prev + 1);
-    };
+        
+        if (isValid && currentStep < 3) {
+            setCurrentStep(prev => prev + 1);
+        }
+    }, [currentStep, validateStep1, validateStep2]);
 
-    const handleBack = () => {
-        if (currentStep > 1) setCurrentStep(prev => prev - 1);
-    };
-
-    const handleSubmit = (e) => {
+    const handleBack = useCallback((e) => {
         e.preventDefault();
-        if (validateStep3()) onSubmit(formData);
+        e.stopPropagation();
+        
+        if (currentStep > 1) {
+            setCurrentStep(prev => prev - 1);
+        }
+    }, [currentStep]);
 
-    };
+    const handleSubmit = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (validateStep3()) {
+            onSubmit(formData);
+        }
+    }, [formData, onSubmit, validateStep3]);
+
+    // Handle modal close
+    const handleClose = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClose();
+    }, [onClose]);
+
+    // Handle backdrop click
+    const handleBackdropClick = useCallback((e) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    }, [onClose]);
+
+    // Prevent click propagation from modal content
+    const handleModalClick = useCallback((e) => {
+        e.stopPropagation();
+    }, []);
 
     // ==========================================
     // RENDER
@@ -246,12 +289,12 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
     return (
         <>
             {/* ===== MAIN MODAL ===== */}
-            <div className="fixed inset-0 z-50 overflow-hidden">
+            <div 
+                className="fixed inset-0 z-50 overflow-hidden"
+                onClick={handleBackdropClick}
+            >
                 {/* Backdrop */}
-                <div 
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                    onClick={onClose}
-                />
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
                 
                 {/* Modal Wrapper - Centers the modal */}
                 <div className="fixed inset-0 flex items-center justify-center p-0 sm:p-4">
@@ -260,7 +303,7 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
                     <div 
                         data-lenis-prevent
                         className="relative bg-white w-full h-full sm:h-auto sm:max-h-[85vh] sm:max-w-3xl sm:rounded-2xl shadow-2xl flex flex-col"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={handleModalClick}
                     >
                         
                         {/* ===== HEADER (Fixed) ===== */}
@@ -271,7 +314,7 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
                                 </h2>
                                 <button 
                                     type="button"
-                                    onClick={onClose}
+                                    onClick={handleClose}
                                     className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                                 >
                                     <FiX size={22} />
@@ -283,38 +326,35 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
                         {/* ===== SCROLLABLE CONTENT ===== */}
                         <div className="flex-1 overflow-y-auto min-h-0 overscroll-contain">
                             <div className="p-4 sm:p-6">
-                                <form id="project-form" onSubmit={handleSubmit}>
-                                    
-                                    {currentStep === 1 && (
-                                        <Step1ProjectDetails
-                                            formData={formData}
-                                            errors={errors}
-                                            handleChange={handleChange}
-                                            imagePreview={imagePreview}
-                                            imageUploading={imageUploading}
-                                            handleImageUpload={handleImageUpload}
-                                            removeImage={removeImage}
-                                            onPreviewClick={() => setShowImagePreview(true)}
-                                        />
-                                    )}
+                                {/* Remove the form wrapper from here - we'll handle submission via button */}
+                                {currentStep === 1 && (
+                                    <Step1ProjectDetails
+                                        formData={formData}
+                                        errors={errors}
+                                        handleChange={handleChange}
+                                        imagePreview={imagePreview}
+                                        imageUploading={imageUploading}
+                                        handleImageUpload={handleImageUpload}
+                                        removeImage={removeImage}
+                                        onPreviewClick={() => setShowImagePreview(true)}
+                                    />
+                                )}
 
-                                    {currentStep === 2 && (
-                                        <Step2Phases
-                                            phases={formData.phases}
-                                            errors={errors}
-                                            handlePhaseChange={handlePhaseChange}
-                                        />
-                                    )}
+                                {currentStep === 2 && (
+                                    <Step2Phases
+                                        phases={formData.phases}
+                                        errors={errors}
+                                        handlePhaseChange={handlePhaseChange}
+                                    />
+                                )}
 
-                                    {currentStep === 3 && (
-                                        <Step3Conclusion
-                                            formData={formData}
-                                            errors={errors}
-                                            handleChange={handleChange}
-                                        />
-                                    )}
-
-                                </form>
+                                {currentStep === 3 && (
+                                    <Step3Conclusion
+                                        formData={formData}
+                                        errors={errors}
+                                        handleChange={handleChange}
+                                    />
+                                )}
                             </div>
                         </div>
 
@@ -350,8 +390,8 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
                                     </button>
                                 ) : (
                                     <button
-                                        type="submit"
-                                        form="project-form"
+                                        type="button"
+                                        onClick={handleSubmit}
                                         disabled={isLoading}
                                         className="flex items-center gap-2 px-4 sm:px-6 py-2.5 bg-emerald-400 text-white rounded-xl hover:bg-emerald-500 font-medium transition-colors disabled:opacity-50"
                                     >
@@ -392,28 +432,37 @@ const ProjectModal = ({ isOpen, onClose, onSubmit, project, isLoading }) => {
 // ==========================================
 
 const ImagePreviewModal = ({ isOpen, imageUrl, onClose }) => {
+    const handleClose = useCallback((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClose();
+    }, [onClose]);
+
     if (!isOpen || !imageUrl) return null;
 
     return (
         <div 
             className="fixed inset-0 z-60 bg-black/90 flex items-center justify-center p-4"
-            onClick={onClose}
+            onClick={handleClose}
         >
             <button
-                onClick={onClose}
+                type="button"
+                onClick={handleClose}
                 className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
             >
                 <FiX size={24} />
             </button>
             
-            <div className="relative max-w-4xl max-h-[90vh] w-full">
+            <div 
+                className="relative max-w-4xl max-h-[90vh] w-full"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <Image
                     src={imageUrl}
                     alt="Preview"
                     width={1200}
                     height={800}
                     className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
-                    onClick={(e) => e.stopPropagation()}
                 />
             </div>
         </div>
@@ -424,7 +473,7 @@ const ImagePreviewModal = ({ isOpen, imageUrl, onClose }) => {
 // STEP INDICATOR
 // ==========================================
 
-const StepIndicator = ({ currentStep, steps }) => {
+const StepIndicator = React.memo(({ currentStep, steps }) => {
     return (
         <div className="flex items-center justify-between">
             {steps.map((step, index) => (
@@ -457,13 +506,15 @@ const StepIndicator = ({ currentStep, steps }) => {
             ))}
         </div>
     );
-};
+});
+
+StepIndicator.displayName = 'StepIndicator';
 
 // ==========================================
 // STEP 1: PROJECT DETAILS
 // ==========================================
 
-const Step1ProjectDetails = ({
+const Step1ProjectDetails = React.memo(({
     formData,
     errors,
     handleChange,
@@ -473,6 +524,12 @@ const Step1ProjectDetails = ({
     removeImage,
     onPreviewClick,
 }) => {
+    const handlePreviewClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onPreviewClick();
+    };
+
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
@@ -499,7 +556,7 @@ const Step1ProjectDetails = ({
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                             <button
                                 type="button"
-                                onClick={onPreviewClick}
+                                onClick={handlePreviewClick}
                                 className="flex items-center gap-2 px-4 py-2 bg-white text-gray-800 rounded-lg hover:bg-gray-100 transition-colors"
                             >
                                 <FiZoomIn size={16} />
@@ -618,18 +675,17 @@ const Step1ProjectDetails = ({
                 />
                 {errors.description && <ErrorMessage message={errors.description} />}
             </div>
-
-        
-
         </div>
     );
-};
+});
+
+Step1ProjectDetails.displayName = 'Step1ProjectDetails';
 
 // ==========================================
 // STEP 2: PROJECT PHASES
 // ==========================================
 
-const Step2Phases = ({ phases, errors, handlePhaseChange }) => {
+const Step2Phases = React.memo(({ phases, errors, handlePhaseChange }) => {
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
@@ -652,7 +708,6 @@ const Step2Phases = ({ phases, errors, handlePhaseChange }) => {
                                 {index + 1}
                             </span>
                             <span className="font-semibold text-gray-700">Phase {index + 1}</span>
-                            
                         </div>
 
                         {/* Phase Fields */}
@@ -684,13 +739,15 @@ const Step2Phases = ({ phases, errors, handlePhaseChange }) => {
             </div>
         </div>
     );
-};
+});
+
+Step2Phases.displayName = 'Step2Phases';
 
 // ==========================================
 // STEP 3: CONCLUSION
 // ==========================================
 
-const Step3Conclusion = ({ formData, errors, handleChange }) => {
+const Step3Conclusion = React.memo(({ formData, errors, handleChange }) => {
     const completedPhases = formData.phases.filter(p => p.status === 'completed').length;
 
     return (
@@ -783,7 +840,7 @@ const Step3Conclusion = ({ formData, errors, handleChange }) => {
                 {errors.conclusion && <ErrorMessage message={errors.conclusion} />}
             </div>
 
-            {/* publishing Date as today */}
+            {/* Publishing Date */}
             <div className="mt-4">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Publishing Date</label>
                 <input
@@ -794,37 +851,26 @@ const Step3Conclusion = ({ formData, errors, handleChange }) => {
                     className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 focus:bg-white"
                 />
             </div>
-
         </div>
     );
-};
+});
+
+Step3Conclusion.displayName = 'Step3Conclusion';
 
 // ==========================================
 // HELPER COMPONENTS
 // ==========================================
 
-const ErrorMessage = ({ message }) => (
+const ErrorMessage = React.memo(({ message }) => (
     <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
         <FiAlertTriangle size={12} />
         {message}
     </p>
-);
+));
 
-const StatusBadge = ({ status }) => {
-    const styles = {
-        completed: 'bg-green-100 text-green-700',
-        'in-progress': 'bg-blue-100 text-blue-700',
-        pending: 'bg-gray-100 text-gray-600',
-    };
+ErrorMessage.displayName = 'ErrorMessage';
 
-    return (
-        <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize ${styles[status] || styles.pending}`}>
-            {status.replace('-', ' ')}
-        </span>
-    );
-};
-
-const LoadingSpinner = () => (
+const LoadingSpinner = React.memo(() => (
     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
         <circle 
             className="opacity-25" 
@@ -839,6 +885,8 @@ const LoadingSpinner = () => (
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" 
         />
     </svg>
-);
+));
+
+LoadingSpinner.displayName = 'LoadingSpinner';
 
 export default ProjectModal;

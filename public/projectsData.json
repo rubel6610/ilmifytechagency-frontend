@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/insurance_pic.jpg",
+    "title": "Insurance website for",
+    "author": "yas_som",
+    "client": "John Doe",
+    "type": "CMS",
+    "date": "10 december 2024",
+    "description": "Complete overhaul of company website with modern design and improved UX",
+    "status": "published-to-showcase",
+    "progress": 65
+  },
+  {
+    "id": 2,
+    "image": "/assets/woman_pic.jpg",
+    "title": "AkiMed™ Science Website",
+    "author": "Harry Blaq",
+    "client": "Jane Smith",
+    "type": "CMS",
+    "date": "18 november 2024",
+    "description": "Build iOS and Android applications for the e-commerce platform",
+    "status": "published-to-showcase",
+    "progress": 0
+  },
+  {
+    "id": 3,
+    "image": "/assets/helping_hand.webp",
+    "title": "Hopes Promise Respite",
+    "author": "LLC Hopejekakye",
+    "client": "Mike Johnson",
+    "type": "CMS",
+    "date": "02 october 2024",
+    "description": "Connect third-party services with REST API endpoints",
+    "status": "draft",
+    "progress": 100
+  },
+  {
+    "id": 4,
+    "image": "/assets/store_design.jpg",
+    "title": "Shopify Store Design",
+    "author": "CHARM",
+    "client": "Sarah Wilson",
+    "type": "CMS",
+    "date": "21 september 2024",
+    "description": "Migrate legacy SQL database to MongoDB cluster for better scalability",
+    "status": "published-to-showcase",
+    "progress": 40
+  },
+  {
+    "id": 5,
+    "image": "/customtrading_pic.jpg",
+    "title": "Custom Trading Website",
+    "author": "John",
+    "client": "Tom Brown",
+    "type": "Costum",
+    "date": "05 august 2024",
+    "description": "Comprehensive security review and vulnerability assessment",
+    "status": "draft",
+    "progress": 0
+  },
+  {
+    "id": 6,
+    "image": "/assets/shopping_pic.avif",
+    "title": "Custom E-Commerce",
+    "author": "Website Daneal",
+    "client": "Lisa Anderson",
+    "type": "Costum",
+    "date": "14 july 2024",
+    "description": "Enhance user interface based on customer feedback and analytics",
+    "status": "draft",
+    "progress": 25
+  },
+  {
+    "id": 7,
+    "image": "/assets/tour_travel_pic.jpg",
+    "title": "Tour Travel Website",
+    "author": "Monalisa",
+    "client": "Monalisa Corp",
+    "type": "Costum",
+    "date": "30 june 2024",
+    "description": "Full-stack travel booking platform with itinerary management Full-stack travel booking platform with itinerary managementFull-stack travel booking platform with itinerary managementFull-stack travel booking platform with itinerary managementFull-stack travel booking platform with itinerary managementFull-stack travel booking platform with itinerary management Full-stack travel booking platform with itinerary management",
+    "status": "published-to-showcase",
+    "progress": 90
+  },
+  {
+    "id": 8,
+    "image": "/assets/app_development.jpg",
+    "title": "Mobile App Development",
+    "author": "Mackkalam",
+    "client": "TechStart Inc",
+    "type": "App",
+    "date": "11 may 2024",
+    "description": "Cross-platform mobile application development for startup",
+    "status": "draft",
+    "progress": 15
+  }
+]

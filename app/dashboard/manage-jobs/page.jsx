@@ -89,7 +89,7 @@ export default function JobManagementPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg font-semibold text-gray-700">
@@ -101,13 +101,13 @@ export default function JobManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
-      <div className="max-w-[1600px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6">
+    <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      <div className="max-w-400 mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6">
         {/* HEADER */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row justify-between items-start lg:items-center gap-4 mb-6">
             <div className="flex items-center gap-3 mb-2">
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 rounded-2xl shadow-lg">
+              <div className="bg-linear-to-br from-emerald-500 to-teal-600 p-3 rounded-2xl shadow-lg">
                 <Briefcase className="text-white" size={28} />
               </div>
               <div>
@@ -131,7 +131,7 @@ export default function JobManagementPage() {
 
           {/* Stats Cards */}
           <div className="mb-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 max-w-[1200px] mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 max-w-300 mx-auto">
               {/* Total Jobs */}
               <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between">
@@ -144,7 +144,7 @@ export default function JobManagementPage() {
                     </p>
                   </div>
                   <div className="bg-blue-50 p-3 rounded-xl ">
-                    <Briefcase className="text-blue-600" size={24} />
+                    <Briefcase className="text-primary" size={24} />
                   </div>
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default function JobManagementPage() {
               </colgroup>
 
               {/* Table Header */}
-              <thead className="hidden md:table-header-group bg-gradient-to-r from-gray-50 to-gray-100">
+              <thead className="hidden md:table-header-group bg-linear-to-r from-gray-50 to-gray-100">
                 <tr>
                   <th className="px-4 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                     Position
@@ -263,7 +263,7 @@ export default function JobManagementPage() {
                 {paginatedJobs.map((job) => (
                   <tr
                     key={job.id}
-                    className="block md:table-row w-full hover:bg-gradient-to-r hover:from-emerald-50/50 hover:to-teal-50/50 transition-all duration-200"
+                    className="block md:table-row w-full hover:bg-linear-to-r hover:from-emerald-50/50 hover:to-teal-50/50 transition-all duration-200"
                   >
                     {/* POSITION */}
                     <td className="block md:table-cell px-4 py-4 md:px-6 w-full">
@@ -323,8 +323,8 @@ export default function JobManagementPage() {
                       <span
                         className={`px-3 py-1.5 text-xs font-bold uppercase rounded-full inline-block ${
                           job.jobSummary?.jobStatus === "active"
-                            ? "bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border border-emerald-200"
-                            : "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
+                            ? "bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 border border-emerald-200"
+                            : "bg-linear-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
                         }`}
                       >
                         {job.jobSummary?.jobStatus}
@@ -406,7 +406,7 @@ export default function JobManagementPage() {
                   onClick={() => setCurrentPage(i + 1)}
                   className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all shadow-sm ${
                     currentPage === i + 1
-                      ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg scale-105"
+                      ? "bg-linear-to-r from-emerald-500 to-teal-600 text-white shadow-lg scale-105"
                       : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                   }`}
                 >

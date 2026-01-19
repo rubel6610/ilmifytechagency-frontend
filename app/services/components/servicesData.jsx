@@ -1,4 +1,4 @@
-// app/lib/servicesData.jsx
+
 const servicesData = [
   {
     id: "1",
