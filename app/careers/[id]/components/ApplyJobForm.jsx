@@ -201,7 +201,7 @@ export default function ApplyJobForm({ job }) {
               </h3>
               <p className="text-gray-600 text-sm">
                 You need to answer 20 technical questions for this position.
-                This helps us evaluate your skill match.
+                This helps us evaluate your skill match. For each question you will have 15 seconds.
               </p>
               <button
                 onClick={startAIGeneration}

@@ -89,7 +89,7 @@ export const blogsData = [
       image: "/hardest-things.png",
        like_count: 119 ,
         views:70 , 
-    },
+    }
 ]
 
  export const blogs = [
