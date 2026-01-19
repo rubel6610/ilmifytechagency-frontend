@@ -314,7 +314,7 @@ const ProjectsPage = () => {
                                 <VscProject className="text-primary" />
                                 Projects <span className="text-primary">Management</span>
                             </h1>
-                            <p className='text-gray-500'> Found Total <span className='font-bold'>{stats.total}</span> Projects</p>
+                            <p className='z'> Found Total <span className='font-bold'>{stats.total}</span> Projects</p>
 
                         </div>
                         
