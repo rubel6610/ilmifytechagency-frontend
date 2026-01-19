@@ -1,138 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { VscProject } from "react-icons/vsc";
-import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiEdit2, FiTrash2, FiCalendar, FiUser, FiX, FiAlertTriangle } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiAlertTriangle } from 'react-icons/fi';
 import ProjectCard from './Components/ProjectCard';
 import ProjectModal from './Components/ProjectModal';
+import DeleteConfirmModal from './Components/DeleteConfirmModal';
+import ProjectDetailsModal from './Components/ProjectDetailsModal';
+import Pagination from './Components/Pagination';
 
-// ============================================
-// MOCK DATA
-// ============================================
-const mockProjects = [
-    {
-        _id: '1',
-        name: 'Website Redesign',
-        projectImage: '/assets/insurance_pic.jpg',
-        description: 'Complete overhaul of company website with modern design and improved UX',
-        status: 'published-to-showcase',
-        client: 'John Doe',
-        publishingDate: '2024-03-15',
-        progress: 65,
-    },
-    {
-        _id: '2',
-        name: 'Mobile App Development',
-        projectImage: '/assets/woman_pic.jpg',
-        description: 'Build iOS and Android applications for the e-commerce platform',
-        status: 'published-to-showcase',
-        client: 'Jane Smith',
-        publishingDate: '2024-04-20',
-        progress: 0,
-    },
-    {
-        _id: '3',
-        name: 'API Integration',
-        projectImage: '/assets/helping_hand.webp',
-        description: 'Connect third-party services with REST API endpoints',
-        status: 'draft',
-        client: 'Mike Johnson',
-        publishingDate: '2024-02-28',
-        progress: 100,
-    },
-    {
-        _id: '4',
-        name: 'Database Migration',
-        projectImage: '/assets/store_design.jpg',
-        description: 'Migrate legacy SQL database to MongoDB cluster for better scalability',
-        status: 'published-to-showcase',
-        client: 'Sarah Wilson',
-        publishingDate: '2024-03-30',
-        progress: 40,
-    },
-    {
-        _id: '5',
-        name: 'Security Audit',
-        projectImage: '/customtrading_pic.jpg',
-        description: 'Comprehensive security review and vulnerability assessment',
-        status: 'draft',
-        client: 'Tom Brown',
-        publishingDate: '2024-04-01',
-        progress: 0,
-    },
-    {
-        _id: '6',
-        name: 'UI/UX Improvements',
-        projectImage: '/assets/shopping_pic.avif',
-        description: 'Enhance user interface based on customer feedback and analytics',
-        status: 'draft',
-        client: 'Lisa Anderson',
-        publishingDate: '2024-01-15',
-        progress: 25,
-    },
-];
-
-// ============================================
-// DELETE CONFIRMATION MODAL
-// ============================================
-const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, projectName, isLoading }) => {
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div 
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={onClose}
-            />
-            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-                <button 
-                    onClick={onClose}
-                    className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500"
-                >
-                    <FiX size={18} />
-                </button>
-
-                <div className="text-center">
-                    <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                        <FiAlertTriangle className="text-red-600" size={32} />
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
-                        Delete Project
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-6">
-                        Are you sure you want to delete <span className="font-semibold text-gray-800">&ldquo;{projectName}&rdquo;</span>? This action cannot be undone.
-                    </p>
-
-                    <div className="flex gap-3">
-                        <button
-                            onClick={onClose}
-                            className="flex-1 px-6 py-3 border-2 border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-semibold"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            onClick={onConfirm}
-                            disabled={isLoading}
-                            className="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-semibold disabled:opacity-50 shadow-lg shadow-red-600/25"
-                        >
-                            {isLoading ? (
-                                <span className="flex items-center justify-center gap-2">
-                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                    </svg>
-                                    Deleting...
-                                </span>
-                            ) : 'Delete'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
+const ITEMS_PER_PAGE = 6;
 
 // ============================================
 // SKELETON LOADER COMPONENT
@@ -171,6 +48,10 @@ const ProjectsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+    const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
     
     // Modal States
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -181,15 +62,37 @@ const ProjectsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
 
-    // Fetch Projects (Simulated)
+    // ============================================
+    // FETCH PROJECTS
+    // ============================================
     const fetchProjects = async () => {
         try {
             setIsLoading(true);
             setError(null);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            setProjects(mockProjects);
-            setFilteredProjects(mockProjects);
-        } catch (err) {
+            const response = await fetch('/projectsData.json');
+            
+            if (!response.ok) {
+                throw new Error('Failed to load projects');
+            }
+
+            const data = await response.json();
+
+            const mappedData = data.map(item => ({
+                _id: item.id,
+                name: item.title,
+                projectImage: item.image,
+                description: item.description,
+                status: item.status,
+                client: item.client,
+                publishingDate: item.date,
+                progress: item.progress,
+                manager: item.author
+            }));
+
+            setProjects(mappedData);
+            setFilteredProjects(mappedData); 
+        }
+        catch (err) {
             setError('Failed to fetch projects. Please try again.');
             console.error(err);
         } finally {
@@ -197,19 +100,21 @@ const ProjectsPage = () => {
         }
     };
 
+    // Initial Fetch
     useEffect(() => {
         fetchProjects();
     }, []);
 
     // Filter Projects
     useEffect(() => {
-        let result = projects;
+        const currentProjectsList = Array.isArray(projects) ? projects : [];
+        let result = currentProjectsList;
 
         if (searchQuery) {
             result = result.filter(project =>
-                project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                project.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                project.manager?.toLowerCase().includes(searchQuery.toLowerCase())
+                (project.name && project.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.description && project.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.manager && project.manager.toLowerCase().includes(searchQuery.toLowerCase()))
             );
         }
 
@@ -220,7 +125,36 @@ const ProjectsPage = () => {
         setFilteredProjects(result);
     }, [searchQuery, statusFilter, projects]);
 
-    // Handlers
+    // ============================================
+    // PAGINATION LOGIC
+    // ============================================
+    const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+
+    const paginatedProjects = useMemo(() => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return filteredProjects.slice(startIndex, endIndex);
+    }, [filteredProjects, currentPage]);
+
+    useEffect(() => {
+        if (currentPage > totalPages && totalPages > 0) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+    };
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, statusFilter, projects.length]);
+
+    // ============================================
+    // HANDLERS
+    // ============================================
     const handleAddProject = () => {
         setSelectedProject(null);
         setIsModalOpen(true);
@@ -251,6 +185,7 @@ const ProjectsPage = () => {
                     ...formData,
                 };
                 setProjects(prev => [newProject, ...prev]);
+                setCurrentPage(1); // Go to first page to see new project
             }
             setIsModalOpen(false);
         } catch (err) {
@@ -275,21 +210,28 @@ const ProjectsPage = () => {
         }
     };
 
+    const handleViewDetails = (project) => {
+        setSelectedProject(project);
+        setIsViewModalOpen(true);
+    };
+
+    // Safe stats calculation
+    const safeProjects = Array.isArray(projects) ? projects : [];
     const stats = {
-        total: projects.length,
-        pending: projects.filter(p => p.status === 'pending').length,
-        inProgress: projects.filter(p => p.status === 'in-progress').length,
-        completed: projects.filter(p => p.status === 'completed').length,
+        total: safeProjects.length,
+        pending: safeProjects.filter(p => p.status === 'draft').length,
+        inProgress: safeProjects.filter(p => p.status === 'in-progress').length,
+        completed: safeProjects.filter(p => p.status === 'published-to-showcase').length,
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
             {/* Header Section */}
             <div className=" ">
                 <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-800">
+                            <h1 className=" text-xl md:text-3xl font-bold flex gap-2 items-center text-gray-800">
                                 <VscProject className="text-emerald-600" />
                                 Projects <span className="text-emerald-600">Management</span>
                             </h1>
@@ -334,20 +276,9 @@ const ProjectsPage = () => {
                                 onChange={(e) => setStatusFilter(e.target.value)}
                                 className="px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none bg-white font-medium"
                             >
-                                <option value="all">All Statuses</option>
+                                <option value="all">All Projects</option>
                                 <option value="published-to-showcase">Published</option>
-                                <option value="draft">Draft</option>
                             </select>
-
-                            {/* Refresh Button */}
-                            <button
-                                onClick={fetchProjects}
-                                disabled={isLoading}
-                                className="p-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all disabled:opacity-50 flex justify-center items-center"
-                                title="Refresh"
-                            >
-                                <FiRefreshCw className={isLoading ? 'animate-spin text-emerald-500' : 'text-gray-600'} size={20} />
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -420,16 +351,28 @@ const ProjectsPage = () => {
                     </div>
                 ) : (
                     /* Projects Grid */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredProjects.map((project) => (
-                            <ProjectCard
-                                key={project._id}
-                                project={project}
-                                onEdit={handleEditProject}
-                                onDelete={handleDeleteClick}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {paginatedProjects.map((project) => (
+                                <ProjectCard
+                                    key={project._id}
+                                    project={project}
+                                    onEdit={handleEditProject}
+                                    onDelete={handleDeleteClick}
+                                    onViewDetails={handleViewDetails}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Pagination */}
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            totalItems={filteredProjects.length}
+                            itemsPerPage={ITEMS_PER_PAGE}
+                        />
+                    </>
                 )}
             </div>
 
@@ -440,6 +383,12 @@ const ProjectsPage = () => {
                 onSubmit={handleSubmitProject}
                 project={selectedProject}
                 isLoading={isSubmitting}
+            />
+
+            <ProjectDetailsModal
+                isOpen={isViewModalOpen}
+                onClose={() => setIsViewModalOpen(false)}
+                project={selectedProject}
             />
 
             <DeleteConfirmModal

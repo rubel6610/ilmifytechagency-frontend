@@ -13,9 +13,11 @@ import {
 } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
 
-const ProjectCard = ({ project, onEdit, onDelete }) => {
+
+// 1. Add onViewDetails to props
+const ProjectCard = ({ project, onEdit, onDelete, onViewDetails }) => {
     
-    // Status Configuration
+    // ... (Keep existing Status Configuration and Handlers) ...
     const statusConfig = {
         'published-to-showcase': {
             bg: 'bg-emerald-500',
@@ -26,24 +28,22 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
         'draft': {
             bg: 'bg-gray-500',
             text: 'text-white',
-            label: 'Draft',
+            label: 'Not Published',
             icon: <FiEyeOff size={12} />,
         },
     };
-
-    // Default to draft if status not found
     const status = statusConfig[project.status] || statusConfig['draft'];
 
-    // Handlers
     const handleAddToShowcase = () => {
-        alert(`Adding "${project.name}" to showcase`);
-    };
-
+            console.log('project added');
+            
+    }
+    
     const handleRemoveFromShowcase = () => {
-        alert(`Removing "${project.name}" from showcase`);
-    };
-
-    // Format Date
+      console.log('project removed from showcase');
+      
+    }
+    
     const formatDate = (date) => {
         if (!date) return 'No date';
         return new Date(date).toLocaleDateString('en-US', {
@@ -56,9 +56,8 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
     return (
         <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200 flex flex-col h-full">
             
-            {/* ===== IMAGE SECTION ===== */}
-            <div className="relative w-full h-52 overflow-hidden flex-shrink-0">
-                {/* Project Image */}
+            {/* ... (Keep Image Section exactly as is) ... */}
+            <div className="relative w-full h-52 overflow-hidden shrink-0">
                 {project.projectImage ? (
                     <Image
                         src={project.projectImage}
@@ -67,8 +66,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                 ) : (
-                    // Fixed: changed bg-linear-to-br to standard bg-gradient-to-br
-                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div className="w-full h-full bg-linear-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                         <div className="text-center text-gray-400">
                             <FiExternalLink size={32} className="mx-auto mb-2" />
                             <span className="text-sm">No Image</span>
@@ -76,10 +74,8 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                     </div>
                 )}
 
-                {/* Gradient Overlay - Fixed syntax */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                {/* Status Badge - Top Left */}
                 <div className="absolute top-3 left-3 z-10">
                     <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${status.bg} ${status.text} shadow-lg backdrop-blur-sm`}>
                         {status.icon}
@@ -87,50 +83,39 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                     </span>
                 </div>
 
-                {/* Action Buttons - Top Right */}
                 <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <button
-                        onClick={() => onEdit(project)}
-                        className="p-2.5 bg-white/90 backdrop-blur-sm text-blue-600 rounded-xl hover:bg-white hover:scale-110 transition-all shadow-lg"
-                        title="Edit Project"
-                    >
+                    <button onClick={() => onEdit(project)} className="p-2.5 bg-white/90 backdrop-blur-sm text-primary rounded-xl hover:bg-white hover:scale-110 transition-all shadow-lg">
                         <FiEdit2 size={16} />
                     </button>
-                    <button
-                        onClick={() => onDelete(project)}
-                        className="p-2.5 bg-white/90 backdrop-blur-sm text-red-500 rounded-xl hover:bg-white hover:scale-110 transition-all shadow-lg"
-                        title="Delete Project"
-                    >
+                    <button onClick={() => onDelete(project)} className="p-2.5 bg-white/90 backdrop-blur-sm text-red-500 rounded-xl hover:bg-white hover:scale-110 transition-all shadow-lg">
                         <FiTrash2 size={16} />
                     </button>
                 </div>
 
-                {/* Quick View Button */}
+                {/* 2. UPDATE VIEW DETAILS BUTTON */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-full text-sm font-medium hover:bg-white transition-colors shadow-lg">
+                    <button 
+                        onClick={() => onViewDetails && onViewDetails(project)} 
+                        className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-full text-sm font-medium hover:bg-white transition-colors shadow-lg"
+                    >
                         <FiExternalLink size={14} />
                         View Details
                     </button>
                 </div>
             </div>
 
-            {/* ===== CONTENT SECTION ===== */}
-            <div className="p-5 flex flex-col flex-grow">
-                {/* Title */}
+            {/* ... (Keep Content Section exactly as is) ... */}
+            <div className="p-5 flex flex-col grow">
                 <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-emerald-600 transition-colors">
                     {project.name}
                 </h3>
-
-                {/* Description - Fixed height for consistency */}
                 <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 h-10">
                     {project.description || 'No description provided for this project.'}
                 </p>
-
-                {/* Meta Info */}
                 <div className="flex items-center justify-between text-xs text-gray-400 pb-4 border-b border-gray-100 mt-auto">
                     <div className="flex items-center gap-1.5">
                         <FiUser size={13} />
-                        <span className="font-medium truncate max-w-[100px]">
+                        <span className="font-medium truncate max-w-25">
                             {project.client || 'No Client'}
                         </span>
                     </div>
@@ -139,25 +124,14 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
                         <span>{formatDate(project.publishingDate)}</span>
                     </div>
                 </div>
-
-                {/* ===== SHOWCASE ACTION ===== */}
                 <div className="pt-4 mt-auto">
                     {project.status !== 'published-to-showcase' ? (
-                        // Fixed bg-linear-to-r to bg-gradient-to-r
-                        <button
-                            onClick={handleAddToShowcase}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-medium text-sm hover:from-emerald-600 hover:to-teal-600 transition-all shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5"
-                        >
-                            <HiSparkles size={16} />
-                            Add to Showcase
+                        <button onClick={handleAddToShowcase} className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-linear-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-medium text-sm hover:from-emerald-600 hover:to-teal-600 transition-all shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5">
+                            <HiSparkles size={16} /> Add to Showcase
                         </button>
                     ) : (
-                        <button
-                            onClick={handleRemoveFromShowcase}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-gray-50 text-gray-600 rounded-xl font-medium text-sm hover:bg-red-50 hover:text-red-600 transition-all border border-gray-100 hover:border-red-200"
-                        >
-                            <FiEyeOff size={14} />
-                            Remove from Showcase
+                        <button onClick={handleRemoveFromShowcase} className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-gray-50 text-gray-600 rounded-xl font-medium text-sm hover:bg-red-50 hover:text-red-600 transition-all border border-gray-100 hover:border-red-200">
+                            <FiEyeOff size={14} /> Remove from Showcase
                         </button>
                     )}
                 </div>
