@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function JobDetailsModal({ job, onClose }) {
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-100 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="sticky top-0 bg-white px-8 py-6 border-b flex justify-between items-center z-10">
           <h2 className="text-xl font-black text-gray-800 tracking-tight">JOB SPECIFICATIONS</h2>

@@ -7,7 +7,8 @@ import { FaRegHeart, FaHeart,  } from "react-icons/fa";
 
 import BlogNotFound from "../components/BlogNotFound";
 import { blogsData } from "../components/blogsData";
-import { role } from "../../dashboard/page";
+import { role } from "@/app/dashboard/page";
+
 
 const BlogPage = () => {
   const { id } = useParams();

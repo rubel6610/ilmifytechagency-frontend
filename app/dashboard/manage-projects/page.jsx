@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { VscProject } from "react-icons/vsc";
-import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiX, FiAlertTriangle } from 'react-icons/fi';
-import ProjectCard from './ProjectCard';
-import ProjectModal from './ProjectModal';
+import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiEdit2, FiTrash2, FiCalendar, FiUser, FiX, FiAlertTriangle } from 'react-icons/fi';
+import ProjectCard from './Components/ProjectCard';
+import ProjectModal from './Components/ProjectModal';
 
 // ============================================
 // MOCK DATA
@@ -285,9 +285,8 @@ const ProjectsPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Header Section */}
-            <div className="bg-white shadow-sm border-b border-gray-200">
-                {/* FIXED: Changed max-w-400 to max-w-7xl to ensure proper responsive width */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className=" ">
+                <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-800">
@@ -308,9 +307,7 @@ const ProjectsPage = () => {
                 </div>
             </div>
 
-            {/* Content Section */}
-            {/* FIXED: Changed max-w-400 to max-w-7xl for consistent layout */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Search and Filter Bar */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
                     <div className="flex flex-col md:flex-row gap-4">
