@@ -2,11 +2,12 @@ const majorServiceData = [
   {
     id: 1,
     slug: "cms-services",
+    serviceSlug: "wordpress",
     category: "WordPress",
     title: "WordPress CMS Services",
     description: `At iLMiFY, we provide professional WordPress CMS services to help businesses manage content efficiently.
     From custom theme development to performance optimization, we build scalable, secure, and user-friendly WordPress solutions.`,
-    image: "/assets/images/wordpress.avif",
+    image: "/assets/images/wordpress.jpeg",
     features: [
       "Custom WordPress Website Design",
       "WordPress Theme Customization",
@@ -29,11 +30,12 @@ const majorServiceData = [
   {
     id: 2,
     slug: "cms-services",
+    serviceSlug: "shopify",
     category: "Shopify",
     title: "Shopify CMS Services",
     description: `We deliver powerful Shopify CMS solutions that help businesses build, manage, and scale high-performing online stores.
     Our Shopify services focus on design, conversion optimization, and seamless integrations.`,
-    image: "/assets/images/shopify.avif",
+    image: "/assets/images/shopify.jpeg",
     features: [
       "Custom Shopify Store Design",
       "Shopify Theme Customization",
@@ -56,11 +58,12 @@ const majorServiceData = [
   {
     id: 3,
     slug: "cms-services",
+    serviceSlug: "wix",
     category: "Wix",
     title: "Wix CMS Services",
     description: `Our Wix CMS services help businesses create visually stunning and easy-to-manage websites.
     We focus on custom design, performance optimization, and business-driven functionality using Wix.`,
-    image: "/assets/images/wix.avif",
+    image: "/assets/images/wix.jpg",
     features: [
       "Custom Wix Website Design",
       "Wix Editor & Editor X Customization",
@@ -83,11 +86,12 @@ const majorServiceData = [
   {
     id: 4,
     slug: "cms-services",
+    serviceSlug: "squarespace",
     category: "Squarespace",
     title: "Squarespace CMS Services",
     description: `We offer professional Squarespace CMS solutions for businesses seeking elegant, high-quality websites.
     Our services focus on design excellence, content management, and smooth user experience.`,
-    image: "/assets/images/squrespace.avif",
+    image: "/assets/images/squrespace.jpg",
     features: [
       "Custom Squarespace Website Design",
       "Squarespace Template Customization",
@@ -109,6 +113,7 @@ const majorServiceData = [
   {
     id: 5,
     slug: "custom-development",
+    serviceSlug: "frontend",
     category: "Frontend",
     title: "Frontend Development Services",
     description: `At iLMiFY, we build modern, fast, and responsive frontend applications using the latest technologies.
@@ -135,6 +140,7 @@ const majorServiceData = [
   {
     id: 6,
     slug: "custom-development",
+    serviceSlug: "backend",
     category: "Backend",
     title: "Backend Development Services",
     description: `We develop secure, scalable, and high-performance backend systems that power modern web applications.
@@ -161,6 +167,7 @@ const majorServiceData = [
   {
     id: 7,
     slug: "custom-development",
+    serviceSlug: "databases",
     category: "Databases",
     title: "Database Design & Management",
     description: `We design and manage efficient, secure, and scalable databases to ensure data integrity and performance.
@@ -187,11 +194,12 @@ const majorServiceData = [
   {
     id: 8,
     slug: "custom-development",
+    serviceSlug: "authentication",
     category: "Authentication",
     title: "Authentication & Security Services",
     description: `We implement secure authentication and authorization systems to protect user data and applications.
     Our solutions follow industry best practices and modern security standards.`,
-    image: "/assets/images/authentication.avif",
+    image: "/assets/images/authentication.jpeg",
     features: [
       "JWT Authentication",
       "Firebase Authentication",
@@ -213,6 +221,7 @@ const majorServiceData = [
   {
     id: 9,
     slug: "digital-marketing",
+    serviceSlug: "social-media-marketing",
     category: "Social Media Marketing",
     title: "Social Media Marketing Services",
     description: `At iLMiFY, we help brands grow and engage their audience through powerful social media marketing strategies.
@@ -239,11 +248,12 @@ const majorServiceData = [
   {
     id: 10,
     slug: "digital-marketing",
+    serviceSlug: "search-engine-optimization",
     category: "Search Engine Optimization",
     title: "SEO Services",
     description: `At iLMiFY, we provide data-driven SEO services to improve your website’s visibility on search engines.
     Our proven strategies help increase organic traffic, rankings, and long-term online growth.`,
-    image: "/assets/images/seo.avif",
+    image: "/assets/images/seo2.jpeg",
     features: [
       "Keyword Research & Analysis",
       "On-Page SEO Optimization",
@@ -265,11 +275,12 @@ const majorServiceData = [
   {
     id: 11,
     slug: "digital-marketing",
+    serviceSlug: "search-engine-marketing",
     category: "Search Engine Marketing",
     title: "Search Engine Marketing (SEM) Services",
     description: `At iLMiFY, we run high-converting search engine marketing campaigns to bring instant traffic and qualified leads.
     Our SEM strategies maximize ROI through smart bidding, targeting, and ad optimization.`,
-    image: "/assets/images/search-engine marketing.avif",
+    image: "/assets/images/search-engine marketing.jpg",
     features: [
       "Google Ads Campaign Setup",
       "Keyword & Bid Strategy",
@@ -291,6 +302,7 @@ const majorServiceData = [
   {
     id: 12,
     slug: "digital-marketing",
+    serviceSlug: "content-marketing",
     category: "Content Marketing",
     title: "Content Marketing Services",
     description: `At iLMiFY, we create valuable and engaging content that attracts, educates, and converts your audience.
@@ -317,11 +329,12 @@ const majorServiceData = [
   {
     id: 13,
     slug: "graphics-design",
+    serviceSlug: "creative-design",
     category: "Creative Design",
     title: "Graphics Design Services",
     description: `At iLMiFY, we offer creative graphic design services that help businesses communicate visually and stand out.
     Our designs are modern, impactful, and aligned with your brand goals.`,
-    image: "/assets/images/creative-design.avif",
+    image: "/assets/images/creative.avif",
     features: [
       "Creative Visual Design",
       "Custom Graphic Concepts",
@@ -337,6 +350,7 @@ const majorServiceData = [
   {
     id: 14,
     slug: "graphics-design",
+    serviceSlug: "ad-creatives",
     category: "Ad Creatives",
     title: "Ad Creative Design",
     description: `We design high-converting ad creatives that capture attention and drive results across digital platforms.
@@ -356,6 +370,7 @@ const majorServiceData = [
   {
     id: 15,
     slug: "graphics-design",
+    serviceSlug: "brand-identity-design",
     category: "Brand Identity Design",
     title: "Brand Identity Design",
     description: `We build strong and consistent brand identities that reflect your business values and vision.
@@ -375,6 +390,7 @@ const majorServiceData = [
   {
     id: 16,
     slug: "graphics-design",
+    serviceSlug: "social-media-design",
     category: "Social Media Posts & Banners",
     title: "Social Media Design",
     description: `We design engaging social media posts and banners to boost your online presence.
@@ -394,6 +410,7 @@ const majorServiceData = [
   {
     id: 17,
     slug: "app-development",
+    serviceSlug: "android-app",
     category: "Android App",
     title: "Android App Development Services",
     description: `At iLMiFY, we provide high-quality Android app development services tailored to your business needs.
@@ -420,11 +437,12 @@ const majorServiceData = [
   {
     id: 18,
     slug: "app-development",
+    serviceSlug: "ios-app",
     category: "IOS App",
     title: "iOS App Development Services",
     description: `At iLMiFY, we build powerful and elegant iOS applications for iPhone and iPad devices.
     Our apps are optimized for performance, security, and seamless user experience.`,
-    image: "/assets/images/ios.jpg",
+    image: "/assets/images/ios-app.avif",
     features: [
       "Custom iOS App Development",
       "UI/UX Design for iOS Apps",
@@ -446,6 +464,7 @@ const majorServiceData = [
   {
     id: 19,
     slug: "app-development",
+    serviceSlug: "web-app",
     category: "Web App",
     title: "Web Application Development Services",
     description: `At iLMiFY, we create fast, scalable, and secure web applications for modern businesses.
@@ -472,6 +491,7 @@ const majorServiceData = [
   {
     id: 20,
     slug: "app-development",
+    serviceSlug: "desktop-app",
     category: "Desktop App",
     title: "Desktop Application Development Services",
     description: `At iLMiFY, we develop robust and secure desktop applications for Windows, macOS, and Linux.
@@ -498,11 +518,12 @@ const majorServiceData = [
   {
     id: 21,
     slug: "tracking-analytics",
+    serviceSlug: "google-tag-manager",
     category: "Google Tag Manager",
     title: "Google Tag Manager Setup & Management",
     description: `We provide professional Google Tag Manager (GTM) services to help businesses manage tracking scripts efficiently 
     without touching website code. Our GTM solutions ensure accurate data collection, faster deployment, and better marketing insights.`,
-    image: "/assets/images/google-tag-manager.avif",
+    image: "/assets/images/google-tag-manager.jpeg",
     features: [
       "Google Tag Manager Account Setup",
       "Tag & Trigger Configuration",
@@ -524,11 +545,12 @@ const majorServiceData = [
   {
     id: 22,
     slug: "tracking-analytics",
+    serviceSlug: "meta-pixel-conversion-api",
     category: "Meta Pixel Conversion API",
     title: "Meta Pixel & Conversion API Integration",
     description: `We implement Meta Pixel and Conversion API (CAPI) to ensure accurate event tracking, even with ad blockers 
     and browser privacy restrictions. This helps improve Facebook ad performance and conversion attribution.`,
-    image: "/assets/images/meta-pixel.avif",
+    image: "/assets/images/meta.jpeg",
     features: [
       "Meta Pixel Setup",
       "Conversion API (CAPI) Integration",
@@ -550,6 +572,7 @@ const majorServiceData = [
   {
     id: 23,
     slug: "tracking-analytics",
+    serviceSlug: "google-analytics",
     category: "Google Analytics",
     title: "Google Analytics 4 (GA4)",
     description: `We help businesses set up and optimize Google Analytics 4 to gain deep insights into user behavior, 
@@ -576,11 +599,12 @@ const majorServiceData = [
   {
     id: 24,
     slug: "tracking-analytics",
+    serviceSlug: "server-side-tracking",
     category: "Server Side Tracking",
     title: "Server-Side Tracking Implementation",
     description: `We implement server-side tracking solutions to improve data accuracy, bypass ad blockers, 
     enhance website performance, and ensure compliance with modern privacy regulations.`,
-    image: "/assets/images/server-side-tracking.jpg",
+    image: "/assets/images/server-side.jpeg",
     features: [
       "Server-Side Google Tag Manager Setup",
       "GA4 Server-Side Tracking",

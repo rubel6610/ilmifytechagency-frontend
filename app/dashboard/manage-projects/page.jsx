@@ -1,135 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { VscProject } from "react-icons/vsc";
-import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiEdit2, FiTrash2, FiCalendar, FiUser, FiX, FiAlertTriangle } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiAlertTriangle } from 'react-icons/fi';
 import ProjectCard from './Components/ProjectCard';
 import ProjectModal from './Components/ProjectModal';
+import DeleteConfirmModal from './Components/DeleteConfirmModal';
+import ProjectDetailsModal from './Components/ProjectDetailsModal';
+import Pagination from './Components/Pagination';
 
-// ============================================
-// MOCK DATA - Replace with API calls later
-// ============================================
-const mockProjects = [
-    {
-        _id: '1',
-        name: 'Website Redesign',
-        description: 'Complete overhaul of company website with modern design and improved UX',
-        status: 'published-to-showcase',
-        client: 'John Doe',
-        publishingDate: '2024-03-15',
-        progress: 65,
-    },
-    {
-        _id: '2',
-        name: 'Mobile App Development',
-        description: 'Build iOS and Android applications for the e-commerce platform',
-        status: 'published-to-showcase',
-        client: 'Jane Smith',
-        publishingDate: '2024-04-20',
-        progress: 0,
-    },
-    {
-        _id: '3',
-        name: 'API Integration',
-        description: 'Connect third-party services with REST API endpoints',
-        status: 'draft',
-        client: 'Mike Johnson',
-        publishingDate: '2024-02-28',
-        progress: 100,
-    },
-    {
-        _id: '4',
-        name: 'Database Migration',
-        description: 'Migrate legacy SQL database to MongoDB cluster for better scalability',
-        status: 'published-to-showcase',
-        client: 'Sarah Wilson',
-        publishingDate: '2024-03-30',
-        progress: 40,
-    },
-    {
-        _id: '5',
-        name: 'Security Audit',
-        description: 'Comprehensive security review and vulnerability assessment',
-        status: 'draft',
-        client: 'Tom Brown',
-        publishingDate: '2024-04-01',
-        progress: 0,
-    },
-    {
-        _id: '6',
-        name: 'UI/UX Improvements',
-        description: 'Enhance user interface based on customer feedback and analytics',
-        status: 'draft',
-        client: 'Lisa Anderson',
-        publishingDate: '2024-01-15',
-        progress: 25,
-    },
-];
-
-// ============================================
-// DELETE CONFIRMATION MODAL
-// ============================================
-const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, projectName, isLoading }) => {
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
-            <div 
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={onClose}
-            />
-            
-            {/* Modal */}
-            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-                <button 
-                    onClick={onClose}
-                    className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500"
-                >
-                    <FiX size={18} />
-                </button>
-
-                <div className="text-center">
-                    <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                        <FiAlertTriangle className="text-red-600" size={32} />
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
-                        Delete Project
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-6">
-                        Are you sure you want to delete <span className="font-semibold text-gray-800">&ldquo;{projectName}&ldquo;</span>? This action cannot be undone.
-                    </p>
-
-                    <div className="flex gap-3">
-                        <button
-                            onClick={onClose}
-                            className="flex-1 px-6 py-3 border-2 border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-semibold"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            onClick={onConfirm}
-                            disabled={isLoading}
-                            className="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-semibold disabled:opacity-50 shadow-lg shadow-red-600/25"
-                        >
-                            {isLoading ? (
-                                <span className="flex items-center justify-center gap-2">
-                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                    </svg>
-                                    Deleting...
-                                </span>
-                            ) : 'Delete'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
+const ITEMS_PER_PAGE = 6;
 
 // ============================================
 // SKELETON LOADER COMPONENT
@@ -159,23 +39,6 @@ const SkeletonCard = () => (
 );
 
 // ============================================
-// STAT CARD COMPONENT
-// ============================================
-const StatCard = ({ title, value, color, icon }) => (
-    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-        <div className="flex items-center justify-between">
-            <div>
-                <p className="text-sm text-gray-500 font-medium">{title}</p>
-                <p className={`text-3xl font-bold mt-1 ${color}`}>{value}</p>
-            </div>
-            <div className={`p-3 rounded-xl ${color.replace('text-', 'bg-').replace('600', '100').replace('800', '100')}`}>
-                {icon}
-            </div>
-        </div>
-    </div>
-);
-
-// ============================================
 // MAIN PAGE COMPONENT
 // ============================================
 const ProjectsPage = () => {
@@ -185,6 +48,10 @@ const ProjectsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+    const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
     
     // Modal States
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -195,16 +62,37 @@ const ProjectsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
 
-    // Fetch Projects (Simulated)
+    // ============================================
+    // FETCH PROJECTS
+    // ============================================
     const fetchProjects = async () => {
         try {
             setIsLoading(true);
             setError(null);
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            setProjects(mockProjects);
-            setFilteredProjects(mockProjects);
-        } catch (err) {
+            const response = await fetch('/projectsData.json');
+            
+            if (!response.ok) {
+                throw new Error('Failed to load projects');
+            }
+
+            const data = await response.json();
+
+            const mappedData = data.map(item => ({
+                _id: item.id,
+                name: item.title,
+                projectImage: item.image,
+                description: item.description,
+                status: item.status,
+                client: item.client,
+                publishingDate: item.date,
+                progress: item.progress,
+                manager: item.author
+            }));
+
+            setProjects(mappedData);
+            setFilteredProjects(mappedData); 
+        }
+        catch (err) {
             setError('Failed to fetch projects. Please try again.');
             console.error(err);
         } finally {
@@ -212,19 +100,21 @@ const ProjectsPage = () => {
         }
     };
 
+    // Initial Fetch
     useEffect(() => {
         fetchProjects();
     }, []);
 
     // Filter Projects
     useEffect(() => {
-        let result = projects;
+        const currentProjectsList = Array.isArray(projects) ? projects : [];
+        let result = currentProjectsList;
 
         if (searchQuery) {
             result = result.filter(project =>
-                project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                project.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                project.manager?.toLowerCase().includes(searchQuery.toLowerCase())
+                (project.name && project.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.description && project.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.manager && project.manager.toLowerCase().includes(searchQuery.toLowerCase()))
             );
         }
 
@@ -235,11 +125,39 @@ const ProjectsPage = () => {
         setFilteredProjects(result);
     }, [searchQuery, statusFilter, projects]);
 
-    // Handlers
+    // ============================================
+    // PAGINATION LOGIC
+    // ============================================
+    const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+
+    const paginatedProjects = useMemo(() => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return filteredProjects.slice(startIndex, endIndex);
+    }, [filteredProjects, currentPage]);
+
+    useEffect(() => {
+        if (currentPage > totalPages && totalPages > 0) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+    };
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, statusFilter, projects.length]);
+
+    // ============================================
+    // HANDLERS
+    // ============================================
     const handleAddProject = () => {
         setSelectedProject(null);
         setIsModalOpen(true);
-        // window.scrollTo(0, 0);
     };
 
     const handleEditProject = (project) => {
@@ -255,21 +173,19 @@ const ProjectsPage = () => {
     const handleSubmitProject = async (formData) => {
         try {
             setIsSubmitting(true);
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             
             if (selectedProject) {
-                // Update existing project
                 setProjects(prev => prev.map(p => 
                     p._id === selectedProject._id ? { ...p, ...formData } : p
                 ));
             } else {
-                // Create new project
                 const newProject = {
                     _id: Date.now().toString(),
                     ...formData,
                 };
                 setProjects(prev => [newProject, ...prev]);
+                setCurrentPage(1); // Go to first page to see new project
             }
             setIsModalOpen(false);
         } catch (err) {
@@ -283,7 +199,6 @@ const ProjectsPage = () => {
     const handleConfirmDelete = async () => {
         try {
             setIsSubmitting(true);
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             setProjects(prev => prev.filter(p => p._id !== selectedProject._id));
             setIsDeleteModalOpen(false);
@@ -295,12 +210,18 @@ const ProjectsPage = () => {
         }
     };
 
-    // Stats Calculation
+    const handleViewDetails = (project) => {
+        setSelectedProject(project);
+        setIsViewModalOpen(true);
+    };
+
+    // Safe stats calculation
+    const safeProjects = Array.isArray(projects) ? projects : [];
     const stats = {
-        total: projects.length,
-        pending: projects.filter(p => p.status === 'pending').length,
-        inProgress: projects.filter(p => p.status === 'in-progress').length,
-        completed: projects.filter(p => p.status === 'completed').length,
+        total: safeProjects.length,
+        pending: safeProjects.filter(p => p.status === 'draft').length,
+        inProgress: safeProjects.filter(p => p.status === 'in-progress').length,
+        completed: safeProjects.filter(p => p.status === 'published-to-showcase').length,
     };
 
     return (
@@ -310,17 +231,16 @@ const ProjectsPage = () => {
                 <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-800">
-                                <VscProject className="text-primary" />
-                                Projects <span className="text-primary">Management</span>
+                            <h1 className=" text-xl md:text-3xl font-bold flex gap-2 items-center text-gray-800">
+                                <VscProject className="text-emerald-600" />
+                                Projects <span className="text-emerald-600">Management</span>
                             </h1>
-                            <p className='z'> Found Total <span className='font-bold'>{stats.total}</span> Projects</p>
-
+                            <p className='text-gray-500 mt-1'> Found Total <span className='font-bold text-gray-800'>{stats.total}</span> Projects</p>
                         </div>
                         
                         <button
                             onClick={handleAddProject}
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl  transition-all font-semibold shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl transition-all font-semibold shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5"
                         >
                             <FiPlus size={20} />
                             Add Project
@@ -332,13 +252,13 @@ const ProjectsPage = () => {
             <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Search and Filter Bar */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
                         {/* Search */}
                         <div className="flex-1 relative">
                             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input
                                 type="text"
-                                placeholder="Search projects by name, description, or manager..."
+                                placeholder="Search projects..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none"
@@ -346,7 +266,7 @@ const ProjectsPage = () => {
                         </div>
 
                         {/* Status Filter */}
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                             <div className="flex items-center gap-2 text-gray-500">
                                 <FiFilter size={18} />
                                 <span className="hidden sm:inline text-sm font-medium">Status:</span>
@@ -356,30 +276,19 @@ const ProjectsPage = () => {
                                 onChange={(e) => setStatusFilter(e.target.value)}
                                 className="px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none bg-white font-medium"
                             >
-                                <option value="all">All</option>
-                                <option value="published-to-showcase">Published To Showcase</option>
+                                <option value="all">All Projects</option>
+                                <option value="published-to-showcase">Published</option>
                             </select>
-
-                            {/* Refresh Button */}
-                            <button
-                                onClick={fetchProjects}
-                                disabled={isLoading}
-                                className="p-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all disabled:opacity-50"
-                                title="Refresh"
-                            >
-                                <FiRefreshCw className={isLoading ? 'animate-spin text-emerald-500' : 'text-gray-600'} size={20} />
-                            </button>
                         </div>
                     </div>
                 </div>
 
-                {/* Results Count */}
+                {/* Results Info */}
                 {(searchQuery || statusFilter !== 'all') && !isLoading && (
                     <div className="mb-4 text-sm text-gray-500">
                         Showing <span className="font-semibold text-gray-700">{filteredProjects.length}</span> 
                         {filteredProjects.length === 1 ? ' project' : ' projects'}
-                        {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&ldquo;</span>}
-                        {statusFilter !== 'all' && <span> with status &ldquo;<span className="font-semibold text-gray-700">{statusFilter.replace('-', ' ')}</span>&ldquo;</span>}
+                        {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&rdquo;</span>}
                     </div>
                 )}
 
@@ -416,8 +325,8 @@ const ProjectsPage = () => {
                         </h3>
                         <p className="text-gray-500 mb-6 max-w-md mx-auto">
                             {searchQuery || statusFilter !== 'all'
-                                ? "Try adjusting your search query or filter to find what you're looking for"
-                                : 'Get started by creating your first project to track and manage your work'}
+                                ? "Try adjusting your search query or filter"
+                                : 'Get started by creating your first project'}
                         </p>
                         {!searchQuery && statusFilter === 'all' && (
                             <button
@@ -425,7 +334,7 @@ const ProjectsPage = () => {
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors font-semibold shadow-lg shadow-emerald-600/25"
                             >
                                 <FiPlus size={20} />
-                                Create Your First Project
+                                Create Project
                             </button>
                         )}
                         {(searchQuery || statusFilter !== 'all') && (
@@ -442,16 +351,28 @@ const ProjectsPage = () => {
                     </div>
                 ) : (
                     /* Projects Grid */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredProjects.map((project) => (
-                            <ProjectCard
-                                key={project._id}
-                                project={project}
-                                onEdit={handleEditProject}
-                                onDelete={handleDeleteClick}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {paginatedProjects.map((project) => (
+                                <ProjectCard
+                                    key={project._id}
+                                    project={project}
+                                    onEdit={handleEditProject}
+                                    onDelete={handleDeleteClick}
+                                    onViewDetails={handleViewDetails}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Pagination */}
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            totalItems={filteredProjects.length}
+                            itemsPerPage={ITEMS_PER_PAGE}
+                        />
+                    </>
                 )}
             </div>
 
@@ -462,6 +383,12 @@ const ProjectsPage = () => {
                 onSubmit={handleSubmitProject}
                 project={selectedProject}
                 isLoading={isSubmitting}
+            />
+
+            <ProjectDetailsModal
+                isOpen={isViewModalOpen}
+                onClose={() => setIsViewModalOpen(false)}
+                project={selectedProject}
             />
 
             <DeleteConfirmModal
@@ -475,4 +402,4 @@ const ProjectsPage = () => {
     );
 };
 
-export default ProjectsPage; 
+export default ProjectsPage;
