@@ -169,7 +169,7 @@ export default function PostJobPage() {
 
       // Merge final form data
       const finalData = { ...formData, ...data };
-      console.log("FINAL JOB DATA", finalData);
+   
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       alert("Job Posted Successfully!");

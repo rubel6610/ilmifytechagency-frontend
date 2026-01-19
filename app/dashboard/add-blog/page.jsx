@@ -100,8 +100,7 @@ const AddBlog = () => {
           date: new Date().toLocaleDateString("en-GB"),
         };
 
-        console.log("Blog Post Data ", finalBlogData);
-
+       
         alert("Blog post created successfully!");
         reset();
         removeImage();

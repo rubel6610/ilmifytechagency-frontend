@@ -45,12 +45,12 @@ const fadeInRight = {
 
 export default function WeDo() {
   return (
-    <section className="w-full py-20">
+    <section className="w-full py-10 md:py-20 mb-10 lg:mb-30">
       <div className="container px-4 mx-auto">
         {/* ---------------- Heading ---------------- */}
         <div className="mb-14 text-center">
           <motion.h2
-            className="text-3xl font-semibold md:text-5xl"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold "
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}

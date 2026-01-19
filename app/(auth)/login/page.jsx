@@ -23,9 +23,7 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
-  };
+  const onSubmit = (data) => {};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

@@ -3,29 +3,18 @@
 import servicesData from "./servicesData";
 
 export default function ServiceBanner({ slug }) {
-  
-
   const service = servicesData.find((s) => s.slug === slug);
 
   if (!service) return null;
 
   return (
     <>
-      {/* Title */}
-      <section className="w-full bg-linear-to-r from-[#00D9A6] to-[#2EE59D] py-14">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">
-            {service.title}
-          </h1>
-        </div>
-      </section>
-
       {/* Details */}
-      <section className="w-full py-20 bg-white">
+      <section className="w-full pt-60 pb-20 bg-white">
         <div className="container mx-auto px-8 flex flex-col lg:flex-row items-center gap-10">
           <div className="lg:w-1/2 space-y-6 text-gray-700">
-            <h2 className="text-3xl md:text-4xl font-semibold">
-              Empowering Your Business with {" "}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+              Empowering Your Business with{" "}
               <span className="text-[#00D9A6]">{service.title}</span>
             </h2>
 
