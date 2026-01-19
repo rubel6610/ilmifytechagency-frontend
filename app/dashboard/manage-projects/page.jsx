@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { VscProject } from "react-icons/vsc";
-import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiEdit2, FiTrash2, FiCalendar, FiUser, FiX, FiAlertTriangle } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiFilter, FiRefreshCw, FiX, FiAlertTriangle } from 'react-icons/fi';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
 
 // ============================================
-// MOCK DATA - Replace with API calls later
+// MOCK DATA
 // ============================================
 const mockProjects = [
     {
@@ -80,13 +80,10 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, projectName, isLoading
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
             <div 
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                 onClick={onClose}
             />
-            
-            {/* Modal */}
             <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
                 <button 
                     onClick={onClose}
@@ -105,7 +102,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, projectName, isLoading
                     </h3>
                     
                     <p className="text-gray-600 mb-6">
-                        Are you sure you want to delete <span className="font-semibold text-gray-800">&ldquo;{projectName}&ldquo;</span>? This action cannot be undone.
+                        Are you sure you want to delete <span className="font-semibold text-gray-800">&ldquo;{projectName}&rdquo;</span>? This action cannot be undone.
                     </p>
 
                     <div className="flex gap-3">
@@ -165,23 +162,6 @@ const SkeletonCard = () => (
 );
 
 // ============================================
-// STAT CARD COMPONENT
-// ============================================
-const StatCard = ({ title, value, color, icon }) => (
-    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-        <div className="flex items-center justify-between">
-            <div>
-                <p className="text-sm text-gray-500 font-medium">{title}</p>
-                <p className={`text-3xl font-bold mt-1 ${color}`}>{value}</p>
-            </div>
-            <div className={`p-3 rounded-xl ${color.replace('text-', 'bg-').replace('600', '100').replace('800', '100')}`}>
-                {icon}
-            </div>
-        </div>
-    </div>
-);
-
-// ============================================
 // MAIN PAGE COMPONENT
 // ============================================
 const ProjectsPage = () => {
@@ -206,7 +186,6 @@ const ProjectsPage = () => {
         try {
             setIsLoading(true);
             setError(null);
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             setProjects(mockProjects);
             setFilteredProjects(mockProjects);
@@ -245,7 +224,6 @@ const ProjectsPage = () => {
     const handleAddProject = () => {
         setSelectedProject(null);
         setIsModalOpen(true);
-        // window.scrollTo(0, 0);
     };
 
     const handleEditProject = (project) => {
@@ -261,16 +239,13 @@ const ProjectsPage = () => {
     const handleSubmitProject = async (formData) => {
         try {
             setIsSubmitting(true);
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             
             if (selectedProject) {
-                // Update existing project
                 setProjects(prev => prev.map(p => 
                     p._id === selectedProject._id ? { ...p, ...formData } : p
                 ));
             } else {
-                // Create new project
                 const newProject = {
                     _id: Date.now().toString(),
                     ...formData,
@@ -289,7 +264,6 @@ const ProjectsPage = () => {
     const handleConfirmDelete = async () => {
         try {
             setIsSubmitting(true);
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             setProjects(prev => prev.filter(p => p._id !== selectedProject._id));
             setIsDeleteModalOpen(false);
@@ -301,7 +275,6 @@ const ProjectsPage = () => {
         }
     };
 
-    // Stats Calculation
     const stats = {
         total: projects.length,
         pending: projects.filter(p => p.status === 'pending').length,
@@ -310,23 +283,23 @@ const ProjectsPage = () => {
     };
 
     return (
-        <div className="min-h-screen mx-auto bg-linear-to-br from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Header Section */}
             <div className="bg-white shadow-sm border-b border-gray-200">
-                <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                {/* FIXED: Changed max-w-400 to max-w-7xl to ensure proper responsive width */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-800">
-                                <VscProject className="text-primary" />
-                                Projects <span className="text-primary">Management</span>
+                                <VscProject className="text-emerald-600" />
+                                Projects <span className="text-emerald-600">Management</span>
                             </h1>
-                            <p className='text-gray-500'> Found Total <span className='font-bold'>{stats.total}</span> Projects</p>
-
+                            <p className='text-gray-500 mt-1'> Found Total <span className='font-bold text-gray-800'>{stats.total}</span> Projects</p>
                         </div>
                         
                         <button
                             onClick={handleAddProject}
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl  transition-all font-semibold shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl transition-all font-semibold shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5"
                         >
                             <FiPlus size={20} />
                             Add Project
@@ -335,16 +308,18 @@ const ProjectsPage = () => {
                 </div>
             </div>
 
+            {/* Content Section */}
+            {/* FIXED: Changed max-w-400 to max-w-7xl for consistent layout */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Search and Filter Bar */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
                         {/* Search */}
                         <div className="flex-1 relative">
                             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input
                                 type="text"
-                                placeholder="Search projects by name, description, or manager..."
+                                placeholder="Search projects..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none"
@@ -352,7 +327,7 @@ const ProjectsPage = () => {
                         </div>
 
                         {/* Status Filter */}
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                             <div className="flex items-center gap-2 text-gray-500">
                                 <FiFilter size={18} />
                                 <span className="hidden sm:inline text-sm font-medium">Status:</span>
@@ -362,15 +337,16 @@ const ProjectsPage = () => {
                                 onChange={(e) => setStatusFilter(e.target.value)}
                                 className="px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none bg-white font-medium"
                             >
-                                <option value="all">All</option>
-                                <option value="published-to-showcase">Published To Showcase</option>
+                                <option value="all">All Statuses</option>
+                                <option value="published-to-showcase">Published</option>
+                                <option value="draft">Draft</option>
                             </select>
 
                             {/* Refresh Button */}
                             <button
                                 onClick={fetchProjects}
                                 disabled={isLoading}
-                                className="p-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all disabled:opacity-50"
+                                className="p-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all disabled:opacity-50 flex justify-center items-center"
                                 title="Refresh"
                             >
                                 <FiRefreshCw className={isLoading ? 'animate-spin text-emerald-500' : 'text-gray-600'} size={20} />
@@ -379,13 +355,12 @@ const ProjectsPage = () => {
                     </div>
                 </div>
 
-                {/* Results Count */}
+                {/* Results Info */}
                 {(searchQuery || statusFilter !== 'all') && !isLoading && (
                     <div className="mb-4 text-sm text-gray-500">
                         Showing <span className="font-semibold text-gray-700">{filteredProjects.length}</span> 
                         {filteredProjects.length === 1 ? ' project' : ' projects'}
-                        {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&ldquo;</span>}
-                        {statusFilter !== 'all' && <span> with status &ldquo;<span className="font-semibold text-gray-700">{statusFilter.replace('-', ' ')}</span>&ldquo;</span>}
+                        {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&rdquo;</span>}
                     </div>
                 )}
 
@@ -422,8 +397,8 @@ const ProjectsPage = () => {
                         </h3>
                         <p className="text-gray-500 mb-6 max-w-md mx-auto">
                             {searchQuery || statusFilter !== 'all'
-                                ? "Try adjusting your search query or filter to find what you're looking for"
-                                : 'Get started by creating your first project to track and manage your work'}
+                                ? "Try adjusting your search query or filter"
+                                : 'Get started by creating your first project'}
                         </p>
                         {!searchQuery && statusFilter === 'all' && (
                             <button
@@ -431,7 +406,7 @@ const ProjectsPage = () => {
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors font-semibold shadow-lg shadow-emerald-600/25"
                             >
                                 <FiPlus size={20} />
-                                Create Your First Project
+                                Create Project
                             </button>
                         )}
                         {(searchQuery || statusFilter !== 'all') && (
@@ -481,4 +456,4 @@ const ProjectsPage = () => {
     );
 };
 
-export default ProjectsPage; 
+export default ProjectsPage;
