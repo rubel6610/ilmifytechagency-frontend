@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { role } from "../../page";
 
 export const useBlogLogic = () => {
+  const [blogToDelete, setBlogToDelete] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,10 +35,16 @@ export const useBlogLogic = () => {
   // React Hook Form
   const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm();
 
-  // Handlers
-  const handleDelete = (id) => {
-    if (confirm("Are you sure you want to delete this blog?")) {
-      setBlogs(blogs.filter((blog) => blog.id !== id));
+  const openDeleteModal = (id) => {
+    setBlogToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (blogToDelete) {
+      setBlogs(blogs.filter((blog) => blog.id !== blogToDelete));
+      setIsDeleteModalOpen(false);
+      setBlogToDelete(null);
     }
   };
 
@@ -88,6 +96,6 @@ export const useBlogLogic = () => {
     blogs, setBlogs, loading, searchQuery, setSearchQuery, currentPage, setCurrentPage,
     selectedBlog, setSelectedBlog, editBlog, setEditBlog, isAddModalOpen, setIsAddModalOpen,
     isSubmitting, preview, setPreview, itemsPerPage, currentBlogs, totalPages, filteredBlogs,
-    register, handleSubmit, setValue, setError, clearErrors, reset, errors, onAddSubmit, handleDelete
+    register, handleSubmit, setValue, setError, clearErrors, reset, errors, onAddSubmit, isAddModalOpen, isDeleteModalOpen, setIsDeleteModalOpen, openDeleteModal, confirmDelete
   };
 };
