@@ -42,5 +42,10 @@ export const adminLinks = [
     href: "/dashboard/manage-blog",
     icon: HiOutlineNewspaper,
   },
+  {
+    name: "Manage Users",
+    href: "/dashboard/manage-users",
+    icon: VscProject,
+  }
   
 ];
