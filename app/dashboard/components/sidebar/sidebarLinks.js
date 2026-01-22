@@ -19,11 +19,6 @@ export const userLinks = [
     href: "/dashboard/applied-jobs",
     icon: Dock,
   },
-  {
-    name: "All Jobs",
-    href: "/careers",
-    icon: Briefcase,
-  },
 
 ];
 

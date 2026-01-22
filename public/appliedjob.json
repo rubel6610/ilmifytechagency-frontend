@@ -1,0 +1,729 @@
+[
+  {
+    "id": "1",
+    "slug": "frontend-developer-ilmifytech-agency",
+    "title": "Frontend Developer (React.js)",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 2,
+    "company": {
+      "name": "IlmifyTech Agency.",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://ilmifytech.com",
+      "email": "career@ilmifytech.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2021",
+      "industry": "IT Services & Software Development",
+      "companySize": "15–30 Employees",
+      "headOffice": {
+        "address": "Uttara, Dhaka, Bangladesh",
+        "branchCount": 1
+      },
+      "businessFocus": [
+        "Web Application Development",
+        "Custom Software Solutions",
+        "UI/UX Design",
+        "Digital Transformation"
+      ],
+      "workCulture": [
+        "Agile methodology",
+        "Collaborative team environment",
+        "Continuous learning"
+      ],
+      "mission": "To deliver scalable and high-quality digital solutions."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Hybrid",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "9:00 AM – 6:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Uttara",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": true
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "10,000 – 20,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual performance-based increment"
+      },
+      "bonuses": ["Festival bonus", "Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per company policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "As per Bangladesh Government"
+      },
+      "additionalBenefits": [
+        "Friendly work environment",
+        "Career growth opportunities"
+      ]
+    },
+    "jobSummary": {
+      "publishedDate": "2025-12-30",
+      "applicationDeadline": "2026-02-15",
+      "jobStatus": "active",
+      "experienceRequired": "2–4 Years",
+      "ageLimit": "23–35 Years",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Looking for a skilled React developer to build modern web applications.",
+      "responsibilities": [
+        "Build reusable React components",
+        "Collaborate with designers",
+        "Optimize performance"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–4 years",
+        "mandatorySkills": ["React.js", "JavaScript", "HTML", "CSS"],
+        "additionalSkills": ["Redux", "REST API", "Git"],
+        "niceToHave": ["Next.js", "Tailwind CSS"]
+      }
+    },
+    "skillsAndExpertise": ["React", "JavaScript", "HTML", "CSS"],
+    "applicationProcess": {
+      "howToApply": "Apply online",
+      "requiredDocuments": ["CV", "Portfolio"],
+      "selectionProcess": [
+        "CV Screening",
+        "Technical Interview",
+        "HR Interview"
+      ]
+    },
+    "seo": {
+      "metaTitle": "Frontend Developer Job in Dhaka",
+      "metaDescription": "React Developer job in Dhaka",
+      "keywords": ["Frontend Developer", "React Job"]
+    },
+    "adminControl": {
+      "featured": true,
+      "priority": "High",
+      "createdBy": "Admin",
+      "createdAt": "2025-12-30T10:00:00Z",
+      "updatedAt": "2026-01-05T08:30:00Z"
+    }
+  },
+
+  {
+    "id": "2",
+    "slug": "Full Stack Developer (MERN)-IlmifyTech Agency",
+    "title": "Full Stack Developer (MERN)",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "inactive",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  },
+  {
+    "id": "3",
+    "slug": "Junior Frontend Developer - Ilmify Tech Agency",
+    "title": "Junior Frontend Developer",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "closed",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  },
+  {
+    "id": "4",
+    "slug": " UI/UX Designer - Ilmify Tech Agency",
+    "title": " UI/UX Designer",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "active",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  },
+  {
+    "id": "5",
+    "slug": "backend-developer-nodejs-techverseee",
+    "title": "Backend Developer (Node.js)",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "active",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  },
+  {
+    "id": "6",
+    "slug": "backend-developer-nodejs-techverse",
+    "title": "Backend Developer (Node.js)",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+     "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "active",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  },
+  {
+    "id": "7",
+    "slug": "backend-developer-nodejs-techverses",
+    "title": "Backend Developer (Node.js)",
+    "jobCategory": "IT / Software",
+    "jobType": "Full Time",
+    "jobLevel": "Mid Level",
+    "applicationStatus":"applied",
+    "vacancy": 1,
+    "company": {
+      "name": "Ilmify Tech Agency",
+      "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQEgIDZF3Kcfog/company-logo_200_200/B4DZkQ0RJnG8AU-/0/1756923762981/ilmifytechagency_logo?e=2147483647&v=beta&t=CThrjPX27s_wCwPKv-cb9lycqcn6AoZls0VZfdmlRjU",
+      "website": "https://techverse.com",
+      "email": "jobs@techverse.com",
+      "phone": "+880-1XXXXXXXXX",
+      "founded": "2019",
+      "industry": "Software Development",
+      "companySize": "30–50 Employees",
+      "headOffice": {
+        "address": "Banani, Dhaka, Bangladesh",
+        "branchCount": 2
+      },
+      "businessFocus": [
+        "API Development",
+        "Cloud Solutions",
+        "Enterprise Software"
+      ],
+      "workCulture": ["Remote-friendly", "Agile team"],
+      "mission": "Building reliable and scalable backend systems."
+    },
+    "employmentInfo": {
+      "employmentStatus": "Full Time",
+      "workplaceType": "Onsite",
+      "officeDays": "Sunday to Thursday",
+      "workingHours": "10:00 AM – 7:00 PM",
+      "weeklyHoliday": ["Friday", "Saturday"],
+      "jobLocation": {
+        "city": "Banani",
+        "district": "Dhaka",
+        "country": "Bangladesh"
+      },
+      "remoteAllowed": false
+    },
+    "salaryAndBenefits": {
+      "salary": {
+        "range": "25,000 – 40,000",
+        "type": "Monthly",
+        "negotiable": true,
+        "reviewPolicy": "Annual increment"
+      },
+      "bonuses": ["Performance bonus"],
+      "leavePolicy": {
+        "annualLeave": "As per policy",
+        "sickLeave": true,
+        "casualLeave": true,
+        "publicHolidays": "Govt. holidays"
+      },
+      "additionalBenefits": ["Health support", "Learning budget"]
+    },
+    "jobSummary": {
+      "publishedDate": "2026-01-02",
+      "applicationDeadline": "2026-02-20",
+      "jobStatus": "active",
+      "experienceRequired": "2–5 Years",
+      "ageLimit": "Any",
+      "gender": "Any",
+      "freshersAllowed": false
+    },
+    "jobDescription": {
+      "overview": "Seeking a Node.js backend developer for scalable APIs.",
+      "responsibilities": [
+        "Develop REST APIs",
+        "Database design",
+        "Maintain server-side logic"
+      ],
+      "requirements": {
+        "education": "BSc in CSE or equivalent",
+        "experience": "2–5 years",
+        "mandatorySkills": ["Node.js", "Express.js", "MongoDB"],
+        "additionalSkills": ["Docker", "AWS"],
+        "niceToHave": ["Microservices"]
+      }
+    },
+    "skillsAndExpertise": ["Node.js", "MongoDB", "Express"],
+    "applicationProcess": {
+      "howToApply": "Apply through career page",
+      "requiredDocuments": ["CV", "GitHub"],
+      "selectionProcess": ["CV Screening", "Technical Test", "Interview"]
+    },
+    "seo": {
+      "metaTitle": "Backend Developer Job in Dhaka",
+      "metaDescription": "Node.js Developer job at TechVerse",
+      "keywords": ["Backend Developer", "Node.js Job"]
+    },
+    "adminControl": {
+      "featured": false,
+      "priority": "Medium",
+      "createdBy": "Admin",
+      "createdAt": "2026-01-02T09:00:00Z",
+      "updatedAt": "2026-01-06T09:00:00Z"
+    }
+  }
+]

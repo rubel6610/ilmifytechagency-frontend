@@ -1,13 +1,11 @@
 "use client";
-
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/app/about/components/ui/card";
-import { Button } from "@/app/about/components/ui/button";
 import servicesData from "./servicesData";
 import CustomBorder from "../../component/customBorder/CustomBorder";
-import SecondaryButton from "@/app/component/button/SecondaryButton";
+import { useRouter } from "next/navigation";
+
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {
@@ -44,6 +42,7 @@ const fadeInRight = {
 };
 
 export default function WeDo() {
+  const Router = useRouter();
   return (
     <section className="w-full py-10 md:py-20 mb-10 lg:mb-30">
       <div className="container px-4 mx-auto">
@@ -114,10 +113,32 @@ export default function WeDo() {
                     </p>
 
                     <div className="w-40 flex mx-4">
-                      <SecondaryButton
-                        address={`/services/${service.slug}`}
-                        label="Read More"
-                      />
+                    <button
+      onClick={(e) => {  e.preventDefault();
+        Router.push(`/services/${service.slug}`)}}
+      className="
+        relative
+        overflow-hidden
+        rounded-full
+        px-8
+        py-4
+        text-sm
+        tracking-wide
+        text-white
+        shadow-xl
+        bg-linear-to-r
+        from-[#0ddaa0]
+        to-[#8ce064]
+        transition-all
+        duration-300
+        hover:from-black
+        hover:to-black
+      "
+    >
+      Read More
+    </button>
+                     
+                     
                     </div>
                   </CardContent>
                 </Card>

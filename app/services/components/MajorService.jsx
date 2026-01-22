@@ -5,9 +5,10 @@ import Image from "next/image";
 import SecondaryButton from "@/app/component/button/SecondaryButton";
 import majorServiceData from "./majorServiceData";
 import CustomBorder from "@/app/component/customBorder/CustomBorder";
+import Link from "next/link";
 
-export default function MajorService({ slug }) {
- 
+export default function MajorService({slug} ) {
+
   const services = majorServiceData.filter((service) => service.slug === slug);
 
   if (!services.length) return null;
@@ -64,11 +65,18 @@ export default function MajorService({ slug }) {
                     !isEven ? "lg:flex lg:justify-start" : ""
                   }`}
                 >
-                  <SecondaryButton
+                  {/* <SecondaryButton
                     className="bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
                     address={`/services/${service.slug}/${service.serviceSlug}/pricing`}
                     label="Get Started"
-                  />
+                  /> */}
+
+                  <Link
+                    href={`/services/${service.slug}/${service.serviceSlug}/pricing`}
+                    className="inline-block bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
+                  >
+                    Get Started
+                  </Link>
                 </div>
               </div>
 
