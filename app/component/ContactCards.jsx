@@ -52,7 +52,7 @@ const fadeInRight = {
     whileInView="visible"
     viewport={{ once: true }}
         className="bg-linear-to-r from-[#00D9A5] to-[#8FE481] mt-15 lg:mt-16 xl:mt-0 shadow-[10px_10px_20px_rgba(16,185,129,0.4)] text-white rounded-xl pt-15 pb-10 flex flex-col items-center text-center justify-center relative overflow-hidden xl:h-87.25">
-          <p className="text-white/50 text-[17px] font-medium mb-1.25">
+          <p className="text-white text-[17px] font-medium mb-1.25">
         What Are You Waiting for?
           </p>
           <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
