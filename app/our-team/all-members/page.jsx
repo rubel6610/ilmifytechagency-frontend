@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import TeamGridCard from './components/allmembercard';
+import TeamGridCard from './components/TeamGridCard';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -86,7 +86,7 @@ export default function AllTeamMembersPage() {
         </motion.div>
 
         {/* Team Grid */}
-        <div className="px-4 py-20 max-w-7xl mx-auto">
+        <div className="px-4 py-20 max-w-400 mx-auto">
           {loading ? (
             <div className="flex items-center justify-center min-h-96">
               <motion.div
@@ -104,7 +104,7 @@ export default function AllTeamMembersPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 "
             >
               {teamData.map((member, index) => (
                 <TeamGridCard key={member.id} member={member} index={index} />

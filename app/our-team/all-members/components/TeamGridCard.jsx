@@ -50,7 +50,7 @@ export default function TeamGridCard({ member, index }) {
       viewport={{ once: true, margin: '-100px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group h-full"
+      className="group h-full "
     >
       <motion.div
         animate={{

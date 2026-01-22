@@ -106,7 +106,7 @@ export default function TeamMemberCard({ member, index, isVisible }) {
 
           {/* Card Content */}
           <motion.div
-            className="relative backdrop-blur-md p-8 rounded-xl border-2 transition-all duration-300 h-full flex flex-col"
+            className="relative backdrop-blur-md p-8 rounded-xl border-2 transition-all duration-300 "
             animate={{
               backgroundColor: isHovered
                 ? "rgba(255,255,255,0.95)"
@@ -160,21 +160,7 @@ export default function TeamMemberCard({ member, index, isVisible }) {
 
       {/* Center Line and Avatar */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center relative md:px-4 py-8">
-        {/* Vertical Line */}
-        <motion.div
-          className="absolute inset-1 rounded-full bg-white overflow-hidden"
-          initial={{ height: 0 }}
-          animate={isVisible ? { height: "100%" } : { height: 0 }}
-          exit={{ height: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-            type: "spring",
-            stiffness: 100,
-          }}
-          style={{ minHeight: "280px" }}
-        />
-
+   
         {/* Avatar with Circle Pulse */}
         <motion.div
           variants={avatarVariants}
@@ -184,23 +170,23 @@ export default function TeamMemberCard({ member, index, isVisible }) {
         >
           {/* Outer Pulse Circle */}
           <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0ddaa0] to-[#8ce064]"
-            initial={{ scale: 0.8, opacity: 0.5 }}
+            className="absolute  inset-5 rounded-full bg-gradient-to-r from-[#0ddaa0] to-[#8ce064]"
+            initial={{ scale: 0, opacity: 0 }}
             animate={
               isHovered
-                ? { scale: 1.5, opacity: 0 }
-                : { scale: 1.3, opacity: 0.2 }
+                ? { scale: 1.5, opacity: 0.5 }
+                : { scale: 1.5, opacity: 0.1 }
             }
             transition={{
-              duration: 1.2,
+              duration: 3,
               repeat: isHovered ? 0 : Infinity,
               repeatType: "loop",
             }}
-            style={{ width: "160px", height: "160px" }}
+            style={{ width: "200px", height: "200px" }}
           />
 
           {/* Avatar Circle */}
-          <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-[#0ddaa0] to-[#8ce064] p-1 overflow-hidden shadow-2xl">
+          <div className="relative w-60 h-60 rounded-full bg-gradient-to-br from-[#0ddaa0] to-[#8ce064] p-1 overflow-hidden shadow-2xl">
             {/* Logo Background */}
             <div className="absolute inset-1 rounded-full bg-slate-900 overflow-hidden">
               <motion.img
