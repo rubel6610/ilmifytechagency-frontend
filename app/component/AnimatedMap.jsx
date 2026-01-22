@@ -158,10 +158,10 @@ const AnimatedMap = () => {
   return (
     <section className="w-full bg-[#020617] pb-8 py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="max-w-400 mx-auto text-center mb-6 sm:mb-8 md:mb-12 px-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white mb-4 sm:mb-6">
-          Our <span className="text-green-500">Global</span> Reach
-        </h2>
-        <p className="text-[16px] text-gray-400">Delivering digital solutions to clients in the world’s most impactful economies.</p>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white mb-4 sm:mb-6">
+        Our <span className="text-green-500">Global</span> Reach
+    </h2>
+    <p className="text-[16px] text-gray-400">Delivering digital solutions to clients in the world’s most impactful economies.</p>
       </div>
 
       <div className="relative h-87.5 sm:h-100 md:h-125 lg:h-150 xl:h-187.5 max-w-400 px-2 sm:px-4 md:px-8 mx-auto">
@@ -210,6 +210,7 @@ const AnimatedMap = () => {
           </MapContainer>
         </div>
       </div>
+    
 
       <style jsx global>{`
         .leaflet-container {
