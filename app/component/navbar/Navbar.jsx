@@ -254,16 +254,16 @@ const Header = () => {
                     variants={fadeInRight}
                     className="flex gap-3 text-gray-500"
                   >
-                    <Link href="https://www.facebook.com/ilmifyTech">
+                    <Link target="_blank" href="https://www.facebook.com/ilmifyTech">
                       <FaFacebookF />
                     </Link>
-                    <Link href="https://www.instagram.com/ilmifytech.agency">
+                    <Link target="_blank" href="https://www.instagram.com/ilmifytech.agency">
                       <FaInstagram />
                     </Link>
-                    <Link href="https://bd.linkedin.com/company/ilmifytechagency">
+                    <Link target="_blank" href="https://bd.linkedin.com/company/ilmifytechagency">
                       <FaLinkedinIn />
                     </Link>
-                    <Link href="https://linkedin.com">
+                    <Link target="_blank" href="https://bd.linkedin.com/company/ilmifytechagency">
                       <FaTwitter />
                     </Link>
                   </motion.div>

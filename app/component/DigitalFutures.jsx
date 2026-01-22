@@ -42,13 +42,10 @@ const DigitalFutures = () => {
           >
             Innovating <TypingText text="Digital Futures" colors={["#fff"]} />
           </motion.h2>
-          <motion.p
-            variants={fadeInUpVariants}
-            className="text-[24px] font-medium opacity-95 max-w-2xl mx-auto"
-          >
-            At iLMIFY, we don’t just create websites and apps we build digital
-            experiences that inspire growth and success. From web development
-            and mobile apps to branding and marketing.
+          <motion.p variants={fadeInUpVariants} className="text-[18px] xl:text-[24px] font-medium opacity-95 max-w-2xl mx-auto">
+            At iLMIFY, we don’t just create websites and apps we build digital experiences 
+            that inspire growth and success. From web development and mobile apps to 
+            branding and marketing.
           </motion.p>
         </motion.div>
       </div>
