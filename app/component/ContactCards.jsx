@@ -35,8 +35,8 @@ const fadeInRight = {
           <p className="text-white/50 text-[17px] font-medium mb-1.25">
             <TypingText text="Are You Ready?" /> 
           </p>
-          <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
-            <div className="mr-2">Start a New</div> <div>Project</div>
+          <div className="text-[30px] md:text-4xl font-bold mb-6">
+            <div className="mr-2">Start a New Project</div> 
           </div>
           <p className="text-gray-300 text-[16px] md:text-base leading-relaxed px-6 w-93.5 font-ubuntu">
             We&rsquo;d love to hear from you! Whether you&rsquo;re ready to start a project,
@@ -55,8 +55,8 @@ const fadeInRight = {
           <p className="text-white text-[17px] font-medium mb-1.25">
         What Are You Waiting for?
           </p>
-          <div className="text-[39px] md:text-4xl font-bold mb-6 md:flex">
-            <div className="mr-2">Lets Talk About</div> <div>Work</div>
+          <div className="text-[30px] md:text-4xl font-bold mb-6 ">
+            <div className="mr-2">Lets Talk About Work</div>
           </div>
 
          <Button address="/contact" label="Start Now"></Button>
