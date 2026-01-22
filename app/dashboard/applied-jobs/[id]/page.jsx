@@ -1,80 +1,154 @@
 "use client";
-import { motion } from "motion/react";
-import {appliedJobsData as jobs} from "../components/AppliedJobData";
-import { MdLocationOn } from "react-icons/md"; // Location icon
-import { FaCheckCircle } from "react-icons/fa"; // Applied check icon
-import Image from "next/image"; // For the company image
+
+import {
+  MapPin,
+  DollarSign,
+  Briefcase,
+  Clock,
+  Calendar,
+  FileText,
+  User,
+} from "lucide-react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const AppliedJobs = () => {
+const JobDetailsPage = () => {
   const params = useParams();
-  const job  = jobs.find(job=>job.id == params.id); // For demonstration, using the first job
+  const [appliedJobsData, setAppliedJobsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/appliedjob.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setAppliedJobsData(data);
+        setLoading(false);
+      })
+      .catch((err) => console.error("Failed to load jobs.json", err));
+  }, []);
+
+  const jobId = params.id;
+  const job = appliedJobsData.find((j) => j.id === jobId);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg font-semibold text-gray-500">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!job) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg font-semibold text-gray-500">Job not found</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-7xl mx-auto p-6 lg:px-12">
-      {/* Grid Layout for Job Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-       
-          <motion.div
-           
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="bg-white rounded-lg shadow-lg p-6 flex flex-col"
-          >
-            {/* Company Image and Info */}
-            <div className="flex items-center mb-4">
-              <Image
-                height={150}
-                width={150}
-                src={job.companyImage}
-                alt={job.companyName}
-                className="w-16 h-16 rounded-full object-cover mr-4"
-              />
-              <div>
-                <h4 className="text-lg font-bold text-gray-800">{job.companyName}</h4>
-                <p className="text-sm text-gray-600">{job.title}</p>
-              </div>
-            </div>
+    <div data-lenis-prevent className="min-h-screen bg-gray-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-400 mx-auto overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-6">
+          <h1 className="text-2xl font-bold text-white">{job.title}</h1>
+          <p className="text-emerald-100">{job.company.name}</p>
+        </div>
 
-            {/* Job Details */}
-            <div className="flex flex-col space-y-3 mb-4">
-              <div className="flex items-center gap-2">
-                <MdLocationOn className="text-[#0ddaa0]" />
-                <span className="text-sm text-gray-700">{job.location}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-gray-700">Salary:</span>
-                <span className="text-sm text-gray-600">{job.salary}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-gray-700">Deadline:</span>
-                <span className="text-sm text-gray-600">{job.deadline}</span>
-              </div>
-            </div>
+        {/* Body */}
+        <div className="p-6 space-y-2">
+          {/* Info Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <Info
+              icon={MapPin}
+              label="Location"
+              value={`${job.employmentInfo.jobLocation.city}, ${job.employmentInfo.jobLocation.district}, ${job.employmentInfo.jobLocation.country}`}
+            />
+            <Info
+              icon={DollarSign}
+              label="Salary"
+              value={`${job.salaryAndBenefits.salary.range} ${job.salaryAndBenefits.salary.type}`}
+            />
+            <Info icon={Briefcase} label="Job Type" value={job.jobType} />
+            <Info icon={Clock} label="Experience" value={job.jobSummary.experienceRequired} />
+            <Info
+              icon={Calendar}
+              label="Published On"
+              value={new Date(job.jobSummary.publishedDate).toLocaleDateString()}
+            />
+            <Info
+              icon={Calendar}
+              label="Deadline"
+              value={new Date(job.jobSummary.applicationDeadline).toLocaleDateString()}
+            />
+          </div>
 
-            {/* Status and Apply Button */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="flex items-center justify-between mt-auto"
-            >
-              {job.status === "Applied" ? (
-                <div className="flex items-center text-[#8ce064] gap-2">
-                  <FaCheckCircle className="text-xl" />
-                  <span className="text-sm">Applied</span>
-                </div>
-              ) : (
-                <button className="bg-[#0ddaa0] text-white px-4 py-2 rounded-lg">
-                  Apply Now
-                </button>
-              )}
-            </motion.div>
-          </motion.div>
-       
+          {/* Description */}
+          <Section icon={FileText} title="About the Position">
+            {job.jobDescription.overview}
+          </Section>
+
+          {/* Responsibilities */}
+          <Section icon={Briefcase} title="Responsibilities">
+            <ul className="list-disc ml-5">
+              {job.jobDescription.responsibilities.map((r, i) => (
+                <li key={i}>{r}</li>
+              ))}
+            </ul>
+          </Section>
+
+          {/* Requirements */}
+          <Section icon={User} title="Requirements">
+            <ul className="list-disc  ml-5">
+              <li>Education: {job.jobDescription.requirements.education}</li>
+              <li>Experience: {job.jobDescription.requirements.experience}</li>
+              <li>
+                Mandatory Skills:{" "}
+                {job.jobDescription.requirements.mandatorySkills.join(", ")}
+              </li>
+              <li>
+                Additional Skills:{" "}
+                {job.jobDescription.requirements.additionalSkills.join(", ")}
+              </li>
+              <li>
+                Nice to Have: {job.jobDescription.requirements.niceToHave.join(", ")}
+              </li>
+            </ul>
+          </Section>
+
+          {/* Application Status */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+            <p className="text-sm font-semibold text-gray-600">Application Status</p>
+            <span className="inline-block mt-3 px-4 py-2 bg-emerald-100 text-emerald-700 font-semibold rounded-lg">
+              {job.applicationStatus}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AppliedJobs;
+export default JobDetailsPage;
+
+/* ---------------- HELPERS ---------------- */
+
+const Info = ({ icon: Icon, label, value }) => (
+  <div className="bg-emerald-50 rounded-lg p-4 border">
+    <div className="flex items-center gap-2 mb-1">
+      <Icon size={18} className="text-emerald-600" />
+      <span className="text-sm font-semibold text-gray-600">{label}</span>
+    </div>
+    <p className="font-medium">{value}</p>
+  </div>
+);
+
+const Section = ({ icon: Icon, title, children }) => (
+  <div>
+    <h3 className="flex items-center gap-2 text-lg font-bold mb-2">
+      <Icon size={20} className="text-emerald-600" />
+      {title}
+    </h3>
+    <div className="text-gray-700">{children}</div>
+  </div>
+);

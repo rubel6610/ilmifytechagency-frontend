@@ -31,7 +31,7 @@ export default function EditJobModal({ job, onClose, onSave }) {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="w-full border-2 rounded-xl px-4 py-3 outline-none focus:border-[#0ddaa0] transition-colors font-medium"
+              className="w-full border rounded-xl px-4 py-3 outline-none focus:border-[#0ddaa0] transition-colors font-medium"
             />
           </div>
 
@@ -51,7 +51,7 @@ export default function EditJobModal({ job, onClose, onSave }) {
                     },
                   })
                 }
-                className="w-full border-2 rounded-xl px-4 py-3 outline-none"
+                className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -74,7 +74,7 @@ export default function EditJobModal({ job, onClose, onSave }) {
                     },
                   })
                 }
-                className="w-full border-2 rounded-xl px-4 py-3 outline-none"
+                className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
               />
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function EditJobModal({ job, onClose, onSave }) {
                     },
                   })
                 }
-                className="w-full border-2 rounded-xl px-4 py-3 outline-none"
+                className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
               />
             </div>
             <div>
@@ -113,7 +113,7 @@ export default function EditJobModal({ job, onClose, onSave }) {
                    vacancy:Number(e.target.value)
                   })
                 }
-                className="w-full border-2 rounded-xl px-4 py-3 outline-none"
+                className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
               />
             </div>
           </div>

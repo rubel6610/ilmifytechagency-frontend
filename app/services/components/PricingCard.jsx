@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import PaymentModal from "./PaymentModal";
-import SecondaryButton from "@/app/component/button/SecondaryButton";
+
 
 export default function PricingCard({ plan, highlighted = false }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

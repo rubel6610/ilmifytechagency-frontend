@@ -1,12 +1,18 @@
-
 "use client";
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 
 // Stripe public key
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+);
 
 export default function PaymentModal({ isOpen, onClose, plan }) {
   if (!isOpen) return null;
@@ -50,7 +56,7 @@ function CheckoutForm({ plan, onClose }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: parseInt(plan.price.replace("$", "")) * 100, // convert $ to cents
+          amount: parseInt((plan?.price || "0").replace("$", "")) * 100, // convert $ to cents
         }),
       });
       const data = await res.json();
@@ -59,9 +65,12 @@ function CheckoutForm({ plan, onClose }) {
 
       const cardElement = elements.getElement(CardElement);
 
-      const { error: stripeError } = await stripe.confirmCardPayment(data.client_secret, {
-        payment_method: { card: cardElement },
-      });
+      const { error: stripeError } = await stripe.confirmCardPayment(
+        data.client_secret,
+        {
+          payment_method: { card: cardElement },
+        },
+      );
 
       if (stripeError) {
         setError(stripeError.message);
