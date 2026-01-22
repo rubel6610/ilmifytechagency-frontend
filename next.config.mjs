@@ -28,6 +28,7 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/**', // Matches any pathname under this hostname
       },
+    
     ],
   },
 };

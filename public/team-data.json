@@ -1,0 +1,37 @@
+
+ [
+    {
+      "id": 1,
+      "name": "Saruar Jahan",
+      "position": "Founder & CEO",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Visionary leader with 10+ years in tech startup development and digital transformation.",
+      "experience": "10+ years Leadership"
+    },
+    {
+      "id": 2,
+      "name": "Farhana Yesmin",
+      "position": "HR & Operations Manager",
+      "avatar": "/assets/team/HR.png",
+      "description": "Building great teams and streamlining operations to drive company growth.",
+      "experience": "8+ years Operations"
+    },
+    {
+      "id": 3,
+      "name": "Karim Rahman",
+      "position": "Lead Developer",
+      "avatar": "/assets/team/lead-developer.png",
+      "description": "Full-stack developer specializing in React, Node.js, and cloud architecture.",
+      "experience": "9+ years Development"
+   
+    },
+    {
+      "id": 4,
+      "name": "Amira Khan",
+      "position": "UI/UX Designer",
+      "avatar": "/assets/team/Ui-Ux.png",
+      "description": "Creative designer focused on user-centered design and beautiful interfaces.",
+      "experience": "7+ years Design"
+    
+    }
+  ]

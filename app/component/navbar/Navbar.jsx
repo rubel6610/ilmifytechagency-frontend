@@ -13,11 +13,8 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import Image from "next/image";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { role } from "@/app/dashboard/page";
-
-
-
 
 const MotionLink = motion(Link);
 const Header = () => {
@@ -31,6 +28,7 @@ const Header = () => {
     { name: "Services", path: "/services" },
     { name: "Showcase", path: "/showcase" },
     { name: "Blog", path: "/blog" },
+    { name: "Our Team", path: "/our-team" },
     { name: "Contact", path: "/contact" },
     { name: "Careers", path: "/careers" },
   ];
@@ -104,26 +102,24 @@ const Header = () => {
         </div>
       )}
 
-      
-
       {/* Main Navigation */}
       <nav className="md:py-2.5 lg:py-6 pt-5 pb-5 md:pt-6  px-5 md:px-8.75 flex flex-col xl:flex-row justify-between items-center max-w-400 mx-auto relative">
         <div className="flex justify-between items-center w-full xl:w-auto max-w-150">
-         <div>
-           <Link
-            href="/"
-            className={`${nav ? "invisible" : "visible"}  xl:mx-0`}
-          >
-            <Image
-              className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43"
-              height={50}
-              width={150}
-              src="/logo.png"
-              alt="website logo"
-              priority
-            />
-          </Link>
-         </div>
+          <div>
+            <Link
+              href="/"
+              className={`${nav ? "invisible" : "visible"}  xl:mx-0`}
+            >
+              <Image
+                className="logo w-28 h-auto md:w-35 xl:w-37 2xl:w-43"
+                height={50}
+                width={150}
+                src="/logo.png"
+                alt="website logo"
+                priority
+              />
+            </Link>
+          </div>
 
           <div className="xl:hidden flex gap-3 items-center">
             {role === "admin" ? (
@@ -131,14 +127,14 @@ const Header = () => {
                 href="/dashboard"
                 className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
               >
-               Dashboard
+                Dashboard
               </Link>
             ) : role === "user" ? (
               <Link
                 href="/dashboard"
                 className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
               >
-              Dashboard
+                Dashboard
               </Link>
             ) : (
               <Link href="/login">
@@ -181,14 +177,14 @@ const Header = () => {
               href="/dashboard"
               className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
             >
-    Dashboard
+              Dashboard
             </Link>
           ) : role === "user" ? (
             <Link
               href="/dashboard"
               className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
             >
-   Dashboard
+              Dashboard
             </Link>
           ) : (
             <Link href="/login">

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { TbTargetArrow } from "react-icons/tb";
 import { GiStairsGoal } from "react-icons/gi";
 import { FaHandsHelping } from "react-icons/fa";

@@ -429,13 +429,8 @@ export default function JobManagementPage() {
         {postJob && (
           <div className="fixed inset-0 z-50  ">
             <div className=" relative bg-black/40">
-              {/* Close button */}
-              <button
-                onClick={() => setPostJob(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
-              >
-                ✕
-              </button>
+             
+            
 
               {/* Modal Content */}
               <PostJob onClose={setPostJob} />

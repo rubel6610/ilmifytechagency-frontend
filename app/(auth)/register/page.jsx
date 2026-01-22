@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import registerAnimation from "../../../public/assets/lotties/register";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const [preview, setPreview] = useState(null);
@@ -95,9 +95,7 @@ const Register = () => {
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         {/* LEFT */}
         <div className="p-8 md:p-12">
-          <h2 className="text-3xl font-semibold mb-6">
-            Register your account
-          </h2>
+          <h2 className="text-3xl font-semibold mb-6">Register your account</h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Name */}
@@ -115,9 +113,7 @@ const Register = () => {
                 className="w-full mt-1 px-4 py-2 border rounded-md focus:border-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               {errors.name && (
-                <p className="text-red-500 text-sm">
-                  {errors.name.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
               )}
             </div>
 
@@ -137,9 +133,7 @@ const Register = () => {
                 className="w-full mt-1 px-4 py-2  border rounded-md focus:border-none focus:outline-none  focus:ring-2 focus:ring-emerald-500"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">
-                  {errors.email.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
               )}
             </div>
 
@@ -176,9 +170,7 @@ const Register = () => {
               </label>
 
               {errors.photo && (
-                <p className="text-red-500 text-sm">
-                  {errors.photo.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.photo.message}</p>
               )}
             </div>
 
