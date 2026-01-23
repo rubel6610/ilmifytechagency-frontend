@@ -53,15 +53,13 @@ export default function JobManagementPage() {
   }, []);
 
   const handleUpdateJob = (updatedJob) => {
-  setJobs((prevJobs) =>
-    prevJobs.map((job) =>
-      job.id === updatedJob.id ? updatedJob : job
-    )
-  );
+    setJobs((prevJobs) =>
+      prevJobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)),
+    );
 
-  setIsEditOpen(false);
-  setEditJob(null);
-};
+    setIsEditOpen(false);
+    setEditJob(null);
+  };
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch = job.title
@@ -429,21 +427,18 @@ export default function JobManagementPage() {
         {postJob && (
           <div className="fixed inset-0 z-50  ">
             <div className=" relative bg-black/60 ">
-             
-            
-
               {/* Modal Content */}
               <PostJob onClose={setPostJob} />
             </div>
           </div>
         )}
-{isEditOpen && editJob && (
-  <EditJobModal
-    job={editJob}
-    onClose={() => setIsEditOpen(false)}
-    onSave={handleUpdateJob}
-  />
-)}
+        {isEditOpen && editJob && (
+          <EditJobModal
+            job={editJob}
+            onClose={() => setIsEditOpen(false)}
+            onSave={handleUpdateJob}
+          />
+        )}
 
         {isViewOpen && viewJob && (
           <JobDetailsModal job={viewJob} onClose={() => setIsViewOpen(false)} />

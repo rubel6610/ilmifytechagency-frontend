@@ -7,6 +7,21 @@ import ViewMemberModal from "./Components/ViewMemberModal";
 import EditMemberModal from "./Components/EditMemberModal";
 import DeleteConfirmModal from "./Components/DeleteConfirmModal";
 
+const DEPARTMENTS = [
+  "Management",
+  "Human Resources",
+  "Custom Development",
+  "CMS",
+  "Shopify",
+  "Finance",
+  "Operations",
+  "Marketing",
+  "Graphics Design",
+  "App Development",
+];
+
+
+
 export default function TeamManagement() {
   const [teamData, setTeamData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -213,6 +228,30 @@ export default function TeamManagement() {
             Add Member
           </motion.button>
         </motion.div>
+        <div className="flex justify-between sm:flex-row gap-4 mb-6">
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Search by name, position, experience..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full sm:w-1/2 px-4 py-3 rounded-lg border-2 border-slate-200
+      focus:outline-none focus:border-[#0ddaa0] transition"
+          />
+
+          {/* Department Filter */}
+          <select
+            value={departmentFilter}
+            onChange={(e) => setDepartmentFilter(e.target.value)}
+            className="w-full sm:w-1/4 px-4 py-3 rounded-lg border-2 border-slate-200
+      focus:outline-none focus:border-[#0ddaa0] transition bg-white"
+          >
+            <option value="All" >All Departments</option>
+            {DEPARTMENTS.map((dept,idx)=>(
+              <option key={idx} value={dept}>{dept}</option>
+            ))}
+          </select>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -252,212 +291,189 @@ export default function TeamManagement() {
           ) : (
             <div>
               <div className="overflow-x-auto">
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                {/* Search */}
-                <input
-                  type="text"
-                  placeholder="Search by name, position, experience..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full sm:w-1/2 px-4 py-3 rounded-lg border-2 border-slate-200
-      focus:outline-none focus:border-[#0ddaa0] transition"
-                />
-
-                {/* Department Filter */}
-                <select
-                  value={departmentFilter}
-                  onChange={(e) => setDepartmentFilter(e.target.value)}
-                  className="w-full sm:w-1/4 px-4 py-3 rounded-lg border-2 border-slate-200
-      focus:outline-none focus:border-[#0ddaa0] transition bg-white"
-                >
-                  <option value="All">All Departments</option>
-                  <option value="Shopify">Shopify</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 border-b-2 border-slate-200">
-                    <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 w-12">
-                      #
-                    </th>
-                    <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[150px]">
-                      Name
-                    </th>
-                    <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">
-                      Position
-                    </th>
-                    <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">
-                      Department
-                    </th>
-                    <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[120px]">
-                      Experience
-                    </th>
-                    <th className="px-4 py-4 text-center text-sm font-bold text-slate-900 min-w-[150px]">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedData.map((member, index) => (
-                    <motion.tr
-                      key={member.id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="border-b border-slate-200 hover:bg-slate-50 transition-colors"
-                    >
-                      <td className="px-4 py-4 text-sm text-slate-600 font-semibold">
-                        {index + 1}
-                      </td>
-                      <td className="px-4 py-4 text-sm font-semibold text-slate-900">
-                        {member.name}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-slate-700">
-                        {member.position}
-                      </td>
-                      <td className="px-4 py-4 text-sm">
-                        <span className="px-3 py-1 bg-[#0ddaa0]/10 text-[#0ddaa0] rounded-full text-xs font-semibold whitespace-nowrap">
-                          {member.department}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-slate-700">
-                        {member.experience}
-                      </td>
-                      <td className="px-4 py-4 text-center">
-                        <div className="flex gap-2 justify-center flex-wrap">
-                          <motion.button
-                            onClick={() => {
-                              setSelectedMember(member);
-                              setIsViewModalOpen(true);
-                            }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
-                            title="View"
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 border-b-2 border-slate-200">
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 w-12">
+                        #
+                      </th>
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[150px]">
+                        Name
+                      </th>
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">
+                        Position
+                      </th>
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">
+                        Department
+                      </th>
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[120px]">
+                        Experience
+                      </th>
+                      <th className="px-4 py-4 text-center text-sm font-bold text-slate-900 min-w-[150px]">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedData.map((member, index) => (
+                      <motion.tr
+                        key={member.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="border-b border-slate-200 hover:bg-slate-50 transition-colors"
+                      >
+                        <td className="px-4 py-4 text-sm text-slate-600 font-semibold">
+                          {index + 1}
+                        </td>
+                        <td className="px-4 py-4 text-sm font-semibold text-slate-900">
+                          {member.name}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-slate-700">
+                          {member.position}
+                        </td>
+                        <td className="px-4 py-4 text-sm">
+                          <span className="px-3 py-1 bg-[#0ddaa0]/10 text-[#0ddaa0] rounded-full text-xs font-semibold whitespace-nowrap">
+                            {member.department}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-slate-700">
+                          {member.experience}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <div className="flex gap-2 justify-center flex-wrap">
+                            <motion.button
+                              onClick={() => {
+                                setSelectedMember(member);
+                                setIsViewModalOpen(true);
+                              }}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+                              title="View"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                              />
-                            </svg>
-                          </motion.button>
-                          <motion.button
-                            onClick={() => {
-                              setSelectedMember(member);
-                              setEditFormData(member);
-                              setIsEditModalOpen(true);
-                            }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors"
-                            title="Edit"
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                />
+                              </svg>
+                            </motion.button>
+                            <motion.button
+                              onClick={() => {
+                                setSelectedMember(member);
+                                setEditFormData(member);
+                                setIsEditModalOpen(true);
+                              }}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors"
+                              title="Edit"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                              />
-                            </svg>
-                          </motion.button>
-                          <motion.button
-                            onClick={() => {
-                              setSelectedMember(member);
-                              setIsDeleteModalOpen(true);
-                            }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
-                            title="Delete"
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                />
+                              </svg>
+                            </motion.button>
+                            <motion.button
+                              onClick={() => {
+                                setSelectedMember(member);
+                                setIsDeleteModalOpen(true);
+                              }}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+                              title="Delete"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                              />
-                            </svg>
-                          </motion.button>
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="flex justify-between items-center px-6 py-4 border-t bg-slate-50">
-                <p className="text-sm text-slate-600">
-                  Page <span className="font-semibold">{currentPage}</span> of{" "}
-                  <span className="font-semibold">{totalPages}</span>
-                </p>
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                />
+                              </svg>
+                            </motion.button>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                  
+                </table>
+                <div className="flex justify-between items-center px-6 py-4 border-t bg-slate-50">
+                  <p className="text-sm text-slate-600">
+                    Page <span className="font-semibold">{currentPage}</span> of{" "}
+                    <span className="font-semibold">{totalPages}</span>
+                  </p>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 text-sm font-semibold rounded-lg border 
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="px-4 py-2 text-sm font-semibold rounded-lg border 
         disabled:opacity-50 disabled:cursor-not-allowed
         hover:bg-slate-100 transition"
-                  >
-                    Prev
-                  </button>
+                    >
+                      Prev
+                    </button>
 
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i + 1)}
-                      className={`px-4 py-2 text-sm font-semibold rounded-lg border transition
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`px-4 py-2 text-sm font-semibold rounded-lg border transition
           ${
             currentPage === i + 1
               ? "bg-[#0ddaa0] text-white border-[#0ddaa0]"
               : "hover:bg-slate-100"
           }`}
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
 
-                  <button
-                    onClick={() =>
-                      setCurrentPage((p) => Math.min(p + 1, totalPages))
-                    }
-                    disabled={currentPage === totalPages}
-                    className="px-4 py-2 text-sm font-semibold rounded-lg border 
+                    <button
+                      onClick={() =>
+                        setCurrentPage((p) => Math.min(p + 1, totalPages))
+                      }
+                      disabled={currentPage === totalPages}
+                      className="px-4 py-2 text-sm font-semibold rounded-lg border 
         disabled:opacity-50 disabled:cursor-not-allowed
         hover:bg-slate-100 transition"
-                  >
-                    Next
-                  </button>
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           )}
         </motion.div>
