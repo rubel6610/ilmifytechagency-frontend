@@ -48,7 +48,7 @@ export default function EditMemberModal({ isOpen, onClose, member, onSubmit }) {
   return (
     <AnimatePresence>
       {isOpen && member && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <motion.div data-lenis-prevent initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
           <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} onClick={(e) => e.stopPropagation()} className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 flex justify-between items-center p-6 border-b-2 border-slate-200 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10">
               <h2 className="text-2xl font-bold text-slate-900">Edit Member</h2>
@@ -58,7 +58,7 @@ export default function EditMemberModal({ isOpen, onClose, member, onSubmit }) {
                 </svg>
               </motion.button>
             </div>
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-3">
               {errorMessage && <div className="p-4 bg-red-100 border-2 border-red-400 rounded-lg text-red-700 text-sm font-semibold">{errorMessage}</div>}
               
               <div>

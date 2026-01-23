@@ -109,10 +109,11 @@ export default function AddMemberModal({ isOpen, onClose, onSubmit }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+        data-lenis-prevent
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 "
           onClick={onClose}
         >
           <motion.div
@@ -135,7 +136,7 @@ export default function AddMemberModal({ isOpen, onClose, onSubmit }) {
               </motion.button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-3">
               {errorMessage && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-4 bg-red-100 border-2 border-red-400 rounded-lg text-red-700 text-sm font-semibold">
                   {errorMessage}

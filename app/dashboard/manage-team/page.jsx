@@ -151,7 +151,7 @@ export default function TeamManagement() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 py-5 px-4 sm:px-6 lg:px-8">
       <div className="fixed top-0 left-0 w-full h-full -z-10 opacity-30">
         <motion.div
           animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
@@ -193,13 +193,13 @@ export default function TeamManagement() {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex justify-between items-center mb-8"
+          className="flex flex-col md:flex-row gap-4 justify-between items-center mb-2"
         >
           <div>
-            <h1 className="text-md md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0ddaa0] to-[#8ce064]">
+            <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0ddaa0] to-[#8ce064]">
               Team Management
             </h1>
-            <p className="text-slate-600 mt-2">
+            <p className="text-slate-600 mt-2 text-center md:text-left">
               Total Members:{" "}
               <span className="font-bold text-[#0ddaa0]">
                 {teamData.length}
@@ -228,7 +228,7 @@ export default function TeamManagement() {
             Add Member
           </motion.button>
         </motion.div>
-        <div className="flex justify-between sm:flex-row gap-4 mb-6">
+        <div className="flex justify-between sm:flex-row gap-4 mb-2">
           {/* Search */}
           <input
             type="text"
@@ -428,7 +428,7 @@ export default function TeamManagement() {
                   </tbody>
                   
                 </table>
-                <div className="flex justify-between items-center px-6 py-4 border-t bg-slate-50">
+                <div className="flex justify-between items-center px-6 py-3 border-t bg-slate-50">
                   <p className="text-sm text-slate-600">
                     Page <span className="font-semibold">{currentPage}</span> of{" "}
                     <span className="font-semibold">{totalPages}</span>
@@ -480,6 +480,7 @@ export default function TeamManagement() {
       </div>
 
       <AddMemberModal
+      
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSubmit={handleAddMember}
