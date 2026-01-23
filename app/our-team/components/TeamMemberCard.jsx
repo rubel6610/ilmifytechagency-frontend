@@ -188,7 +188,7 @@ export default function TeamMemberCard({ member, index, isVisible }) {
           {/* Avatar Circle */}
           <div className="relative w-60 h-60 rounded-full bg-gradient-to-br from-[#0ddaa0] to-[#8ce064] p-1 overflow-hidden shadow-2xl">
             {/* Logo Background */}
-            <div className="absolute inset-1 rounded-full bg-slate-900 overflow-hidden">
+            <div className="absolute inset-1 rounded-full bg-slate-900/80 overflow-hidden">
               <motion.img
                 src="/assets/ilmify_logo.jpg"
                 alt="Logo Background"

@@ -15,7 +15,7 @@ export default function TeamGridCard({ member, index }) {
       y: 0,
       scale: 1,
       transition: {
-        delay: (index % 6) * 0.08,
+        delay: (index % 4) * 0.08,
         duration: 0.6,
         type: 'spring',
         stiffness: 100,
@@ -50,7 +50,7 @@ export default function TeamGridCard({ member, index }) {
       viewport={{ once: true, margin: '-100px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group h-full "
+      className="group h-full"
     >
       <motion.div
         animate={{
@@ -92,9 +92,9 @@ export default function TeamGridCard({ member, index }) {
             animate={isHovered ? 'hover' : 'rest'}
             className="mb-4 relative"
           >
-            <div className="relative w-25 h-25 rounded-full overflow-hidden border-3 border-gradient-to-r from-[#0ddaa0] to-[#8ce064] shadow-lg">
+            <div className="relative w-24 h-24 rounded-full overflow-hidden border-3 border-gradient-to-r from-[#0ddaa0] to-[#8ce064] shadow-lg">
               {/* Logo Background Layer */}
-              <div className="absolute inset-0 rounded-full overflow-hidden bg-slate-900">
+              <div className="absolute inset-0 rounded-full overflow-hidden bg-slate-900/80">
                 <motion.img
                   src="/assets/ilmify_logo.jpg"
                   alt="Logo Background"
@@ -115,8 +115,8 @@ export default function TeamGridCard({ member, index }) {
                     alt={member.name}
                     fill
                     className="object-cover w-full h-full rounded-full"
-                    sizes="80px"
-                    priority={index < 6}
+                    sizes="96px"
+                    priority={index < 4}
                   />
                 </div>
               ) : (
@@ -136,7 +136,7 @@ export default function TeamGridCard({ member, index }) {
           <motion.h3
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: (index % 6) * 0.08 + 0.2 }}
+            transition={{ delay: (index % 4) * 0.08 + 0.2 }}
             viewport={{ once: true }}
             className="text-center font-bold text-slate-900 text-sm leading-tight mb-1"
           >
@@ -147,15 +147,30 @@ export default function TeamGridCard({ member, index }) {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: (index % 6) * 0.08 + 0.25 }}
+            transition={{ delay: (index % 4) * 0.08 + 0.25 }}
             viewport={{ once: true }}
             animate={{
               color: isHovered ? '#0ddaa0' : '#0284c7',
             }}
-            className="text-center text-xs font-semibold mb-3"
+            className="text-center text-xs font-semibold mb-2"
           >
             {member.position}
           </motion.p>
+
+          {/* Department Badge */}
+          {member.department && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: (index % 4) * 0.08 + 0.3 }}
+              viewport={{ once: true }}
+              className="mb-2"
+            >
+              <span className="text-xs font-semibold px-3 py-1 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 border border-[#0ddaa0]/30 text-[#0ddaa0] rounded-full">
+                {member.department}
+              </span>
+            </motion.div>
+          )}
 
           {/* Description - Shows on Hover */}
           <motion.div
@@ -169,13 +184,11 @@ export default function TeamGridCard({ member, index }) {
             </p>
           </motion.div>
 
-        
-
           {/* Experience */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: (index % 6) * 0.08 + 0.35 }}
+            transition={{ delay: (index % 4) * 0.08 + 0.35 }}
             viewport={{ once: true }}
             className="w-full pt-3 border-t border-slate-200 text-center"
           >

@@ -11,8 +11,6 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@radix-ui/react-slot": "^1.2.4",
-    "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^8.18.0",
     "@stripe/react-stripe-js": "^5.4.1",
     "@stripe/stripe-js": "^8.6.1",
     "@studio-freight/lenis": "^1.0.42",

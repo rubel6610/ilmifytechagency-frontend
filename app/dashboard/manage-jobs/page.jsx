@@ -428,7 +428,7 @@ export default function JobManagementPage() {
         {/* Modals */}
         {postJob && (
           <div className="fixed inset-0 z-50  ">
-            <div className=" relative bg-black/40">
+            <div className=" relative bg-black/60 ">
              
             
 
