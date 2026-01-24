@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CustomBorder from "./customBorder/CustomBorder";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import TypingText from "./TypingText";
 
 function Counter({ end, duration = 1500, suffix = "" }) {
@@ -35,7 +35,6 @@ function Counter({ end, duration = 1500, suffix = "" }) {
   );
 }
 
-
 export default function WeLoveWhatWeDo() {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -47,7 +46,11 @@ export default function WeLoveWhatWeDo() {
 
   const fadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   const titleWords = "We Love What We Do".split(" ");
@@ -55,10 +58,8 @@ export default function WeLoveWhatWeDo() {
     <section className="w-full bg-[#F9F9F9] py-10 md:py-20 xl:pt-30 xl:pb-50">
       <div className="max-w-400 mx-auto px-5 md:px-8.75">
         <div className="flex flex-col lg:flex-row relative gap-10 items-stretch">
-
           {/* LEFT CARD */}
           <div className="relative rounded-2xl overflow-hidden shadow-xl min-h-105 flex items-center justify-center w-full lg:w-[60%] z-10">
-            
             {/* Background Image */}
             <Image
               src="/WeLove.jpg"
@@ -77,9 +78,7 @@ export default function WeLoveWhatWeDo() {
                 <Counter end={500} suffix="+" />
               </h2>
 
-              <p className="uppercase tracking-widest mt-2 text-sm">
-                Projects
-              </p>
+              <p className="uppercase tracking-widest mt-2 text-sm">Projects</p>
 
               <div className="mt-10 grid grid-cols-2 gap-6 text-left">
                 <div>
@@ -95,9 +94,7 @@ export default function WeLoveWhatWeDo() {
                   <h3 className="text-3xl font-semibold">
                     <Counter end={100} suffix="%" />
                   </h3>
-                  <p className="text-sm opacity-90 mt-1">
-                    Happy Clients
-                  </p>
+                  <p className="text-sm opacity-90 mt-1">Happy Clients</p>
                 </div>
               </div>
             </div>
@@ -105,27 +102,36 @@ export default function WeLoveWhatWeDo() {
 
           {/* RIGHT CARD */}
           <motion.div
-          initial="hidden"
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-          className="bg-white rounded-2xl shadow-xl p-8 md:p-12 h-full relative z-20 w-full lg:w-[50%] lg:ml-[-10%] mt-12.5 lg:mt-0 top-17.5">
-            <motion.h2 variants={fadeInUpVariants} className="text-4xl md:text-5xl mb-4 font-bold text-gray-900">
-
-              We <span className="text-green-500"><TypingText text="Love" /></span> What <br />
-
+            className="bg-white rounded-2xl shadow-xl p-8 md:p-12 h-full relative z-20 w-full lg:w-[50%] lg:ml-[-10%] mt-12.5 lg:mt-0 top-17.5"
+          >
+            <motion.h2
+              variants={fadeInUpVariants}
+              className="text-4xl md:text-5xl mb-4 font-bold text-gray-900"
+            >
+              We{" "}
+              <span className="text-green-500">
+                <TypingText text="Love" />
+              </span>{" "}
+              What <br />
               We Do
-
             </motion.h2>
 
             <motion.div variants={fadeInUpVariants}>
-               <CustomBorder/>
+              <CustomBorder />
             </motion.div>
 
-            <motion.p variants={fadeInUpVariants} className="text-gray-600 mt-6 leading-relaxed font-ubuntu">
+            <motion.p
+              variants={fadeInUpVariants}
+              className="text-gray-600 mt-6 leading-relaxed font-ubuntu"
+            >
               At LIMIFY, passion drives everything we do. We&rsquo;re not just
-              about building websites or developing digital solutions—we&rsquo;re
-              about creating meaningful experiences that make a real impact.
+              about building websites or developing digital
+              solutions—we&rsquo;re about creating meaningful experiences that
+              make a real impact.
             </motion.p>
 
             <ul className="mt-8 space-y-3 font-ubuntu">
@@ -148,7 +154,6 @@ export default function WeLoveWhatWeDo() {
               ))}
             </ul>
           </motion.div>
-
         </div>
       </div>
     </section>

@@ -69,7 +69,7 @@ const ProjectsPage = () => {
         try {
             setIsLoading(true);
             setError(null);
-            const response = await fetch('/projectsData.json');
+            const response = await fetch('/json/projectsData.json');
             
             if (!response.ok) {
                 throw new Error('Failed to load projects');

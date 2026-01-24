@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import loginAnimation from "../../../public/assets/lotties/login";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {

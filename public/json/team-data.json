@@ -1,0 +1,155 @@
+
+ [
+    {
+      "id": 1,
+      "name": "Saruar Jahan",
+      "position": "Founder & CEO",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Visionary leader with 10+ years in tech startup development and digital transformation.",
+      "experience": "10+ years Leadership",
+      "department":"Management"
+    },
+    {
+      "id": 2,
+      "name": "Farhana Yesmin",
+      "position": "HR & Operations Manager",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Building great teams and streamlining operations to drive company growth.",
+      "experience": "8+ years Operations",
+      "department":"Human Resources"
+    },
+    {
+      "id": 3,
+      "name": "Karim Rahman",
+      "position": "Lead Developer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Full-stack developer specializing in React, Node.js, and cloud architecture.",
+      "experience": "9+ years Development",
+   "department":"Human Resources"
+    },
+    {
+      "id": 4,
+      "name": "Amira Khan",
+      "position": "UI/UX Designer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Creative designer focused on user-centered design and beautiful interfaces.",
+      "experience": "7+ years Design",
+      "department":"Management"
+    
+    },
+    {
+      "id": 5,
+      "name": "Saruar Jahan",
+      "position": "Founder & CEO",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Visionary leader with 10+ years in tech startup development and digital transformation.",
+      "experience": "10+ years Leadership",
+      "department":"Management"
+    },
+    {
+      "id": 6,
+      "name": "Farhana Yesmin",
+      "position": "HR & Operations Manager",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Building great teams and streamlining operations to drive company growth.",
+      "experience": "8+ years Operations",
+      "department":"Management"
+    },
+    {
+      "id": 7,
+      "name": "Karim Rahman",
+      "position": "Lead Developer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Full-stack developer specializing in React, Node.js, and cloud architecture.",
+      "experience": "9+ years Development",
+      "department":"Human Resources"
+   
+    },
+    {
+      "id": 8,
+      "name": "Amira Khan",
+      "position": "UI/UX Designer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Creative designer focused on user-centered design and beautiful interfaces.",
+      "experience": "7+ years Design",
+      "department":"CMS"
+      
+    
+    },
+    {
+      "id": 9,
+      "name": "Saruar Jahan",
+      "position": "Founder & CEO",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Visionary leader with 10+ years in tech startup development and digital transformation.",
+      "experience": "10+ years Leadership",
+      "department":"Management"
+    },
+    {
+      "id": 10,
+      "name": "Farhana Yesmin",
+      "position": "HR & Operations Manager",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Building great teams and streamlining operations to drive company growth.",
+      "experience": "8+ years Operations",
+      "department":"Human Resources"
+    },
+    {
+      "id": 11,
+      "name": "Karim Rahman",
+      "position": "Lead Developer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Full-stack developer specializing in React, Node.js, and cloud architecture.",
+      "experience": "9+ years Development",
+      "department":"CMS"
+   
+    },
+    {
+      "id": 12,
+      "name": "Amira Khan",
+      "position": "UI/UX Designer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Creative designer focused on user-centered design and beautiful interfaces.",
+      "experience": "7+ years Design",
+      "department":"CMS"
+    
+    },
+    {
+      "id": 13,
+      "name": "Saruar Jahan",
+      "position": "Founder & CEO",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Visionary leader with 10+ years in tech startup development and digital transformation.",
+      "experience": "10+ years Leadership",
+      "department":"Shopify"
+    },
+    {
+      "id": 14,
+      "name": "Farhana Yesmin",
+      "position": "HR & Operations Manager",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Building great teams and streamlining operations to drive company growth.",
+      "experience": "8+ years Operations",
+      "department":"Shopify"
+    },
+    {
+      "id": 15,
+      "name": "Karim Rahman",
+      "position": "Lead Developer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Full-stack developer specializing in React, Node.js, and cloud architecture.",
+      "experience": "9+ years Development",
+      "department":"Custom Development"
+   
+    },
+    {
+      "id": 16,
+      "name": "Amira Khan",
+      "position": "UI/UX Designer",
+      "avatar": "/assets/team/Founder.png",
+      "description": "Creative designer focused on user-centered design and beautiful interfaces.",
+      "experience": "7+ years Design",
+      "department":"CMS"
+    
+    }
+  ]

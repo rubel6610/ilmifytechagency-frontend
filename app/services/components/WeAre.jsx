@@ -1,8 +1,7 @@
-
 "use client";
 import React from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import CustomBorder from "../../component/customBorder/CustomBorder";
 
 export default function WeAre() {
@@ -55,14 +54,14 @@ export default function WeAre() {
         </h1>
 
         <motion.div
-        className="flex justify-center lg:justify-start mt-4"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-      >
-        <CustomBorder />
-      </motion.div>
+          className="flex justify-center lg:justify-start mt-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
+          variants={fadeInRight}
+        >
+          <CustomBorder />
+        </motion.div>
 
         <div className="text-justify">
           <motion.p

@@ -1,7 +1,7 @@
-"use client"
-import React from 'react';
-import { motion } from "motion/react";
-import TypingText from './TypingText';
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
+import TypingText from "./TypingText";
 
 const DigitalFutures = () => {
   const containerVariants = {
@@ -14,26 +14,33 @@ const DigitalFutures = () => {
 
   const fadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
   return (
-    <section 
+    <section
       className="relative w-full max-h-150 flex items-center justify-center bg-fixed bg-cover bg-center bg-no-repeat overflow-hidden "
       style={{
         backgroundImage: `linear-gradient(to right, rgba(5, 150, 105, 0.8), rgba(16, 185, 129, 0.7), rgba(52, 211, 153, 0.8)), url('https://i.ibb.co.com/JwcDnrt1/46830.jpg')`,
       }}
     >
-      
       {/* 2. Scrolling Text Container */}
       <div className="relative z-0 w-full h-1/3 flex items-center justify-center p-6 py-20 xl:py-40">
         <motion.div
-        initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-        className="max-w-4xl text-center text-white">
-          <motion.h2 variants={fadeInUpVariants} className="text-3xl md:text-5xl font-bold mb-4 leading-tight drop-shadow-lg">
-          Innovating   <TypingText text="Digital Futures" colors={["#fff"]} /> 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={containerVariants}
+          className="max-w-4xl text-center text-white"
+        >
+          <motion.h2
+            variants={fadeInUpVariants}
+            className="text-3xl md:text-5xl font-bold mb-4 leading-tight drop-shadow-lg"
+          >
+            Innovating <TypingText text="Digital Futures" colors={["#fff"]} />
           </motion.h2>
           <motion.p variants={fadeInUpVariants} className="text-[18px] xl:text-[24px] font-medium opacity-95 max-w-2xl mx-auto">
             At iLMIFY, we don’t just create websites and apps we build digital experiences 

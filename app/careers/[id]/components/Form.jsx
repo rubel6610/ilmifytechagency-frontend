@@ -1,7 +1,7 @@
 // "use client";
 
 // import { useState } from "react";
-// import { motion } from "motion/react";
+// import { motion } from "framer-motion";
 // import { FiUser, FiMail, FiPhone, FiFileText, FiSend } from "react-icons/fi";
 
 // export default function ApplyJobForm({ job, onClose, isInline = false }) {
@@ -18,8 +18,8 @@
 //     }, 1200);
 //   };
 
-//   const containerStyle = isInline 
-//     ? "relative w-full" 
+//   const containerStyle = isInline
+//     ? "relative w-full"
 //     : "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4";
 
 //   return (
@@ -31,7 +31,7 @@
 //       >
 //         {/* Decorative Background Glow */}
 //         <div className="absolute -inset-1 bg-linear-to-r from-[#86e062] to-[#00c389] rounded-2xl blur-md opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-        
+
 //         <form
 //           onSubmit={handleSubmit}
 //           className="relative bg-white/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-8"

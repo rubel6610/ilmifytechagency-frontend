@@ -1,6 +1,6 @@
 "use client"; // required for Framer Motion
 
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 const MotionLink = motion(Link);
 
@@ -24,8 +24,6 @@ export default function Question() {
 
         {/* Content (above overlay) */}
         <div className="relative z-10">
-        
-
           <motion.h2
             className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white text-center px-4"
             initial="hidden"

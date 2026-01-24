@@ -20,7 +20,7 @@ export const useBlogLogic = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/blogs.json");
+        const response = await fetch("/json/blogs.json");
         const data = await response.json();
         setBlogs(data);
       } catch (error) {

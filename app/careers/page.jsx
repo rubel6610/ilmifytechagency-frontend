@@ -41,7 +41,7 @@ const Careers = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch("/jobs.json");
+        const response = await fetch("/json/jobs.json");
         if (!response.ok) {
           throw new Error(`Failed to fetch jobs: ${response.status}`);
         }

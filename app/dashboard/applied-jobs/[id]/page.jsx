@@ -18,7 +18,7 @@ const JobDetailsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/appliedjob.json")
+    fetch("/json/appliedjob.json")
       .then((res) => res.json())
       .then((data) => {
         setAppliedJobsData(data);

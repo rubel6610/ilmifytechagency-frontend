@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import CustomBorder from "../../component/customBorder/CustomBorder";
 import Button from "../../component/button/Button";
 import TypingText from "@/app/component/TypingText";

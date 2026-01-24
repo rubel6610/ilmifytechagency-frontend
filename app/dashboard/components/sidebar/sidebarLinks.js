@@ -1,11 +1,11 @@
 import {
   Briefcase,
   LayoutDashboard,
-  Plus,
+  Users,
+  User,
   Dock,
-  Columns3Cog
+  Columns3Cog,
 } from "lucide-react";
-import { VscProject } from "react-icons/vsc";
 import { HiOutlineNewspaper } from "react-icons/hi";
 
 export const userLinks = [
@@ -19,7 +19,6 @@ export const userLinks = [
     href: "/dashboard/applied-jobs",
     icon: Dock,
   },
-
 ];
 
 export const adminLinks = [
@@ -29,7 +28,18 @@ export const adminLinks = [
     icon: LayoutDashboard,
   },
   {
-     name: "Manage Jobs",
+    name: "Manage Users",
+    href: "/dashboard/manage-users",
+    icon: User,
+  },
+  {
+    name: "Manage Team",
+    href: "/dashboard/manage-team",
+    icon: Users,
+  },
+
+  {
+    name: "Manage Jobs",
     href: "/dashboard/manage-jobs",
     icon: Briefcase,
   },
@@ -38,14 +48,9 @@ export const adminLinks = [
     href: "/dashboard/manage-projects",
     icon: Columns3Cog,
   },
-  {  name: "Manage Blog",
+  {
+    name: "Manage Blog",
     href: "/dashboard/manage-blog",
     icon: HiOutlineNewspaper,
   },
-  {
-    name: "Manage Users",
-    href: "/dashboard/manage-users",
-    icon: VscProject,
-  }
-  
 ];
