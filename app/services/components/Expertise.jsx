@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { Card, CardContent } from "@/app/about/components/ui/card";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -57,12 +57,13 @@ export default function Expertise() {
             their best
           </h2>
 
-          <motion.div 
-          initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-          className="flex space-x-2 py-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={fadeInRight}
+            className="flex space-x-2 py-10"
+          >
             <div className="border-3 rounded-2xl border-gray-300 w-3"></div>
             <div className="border-3 rounded-2xl border-gray-300 w-10"></div>
           </motion.div>

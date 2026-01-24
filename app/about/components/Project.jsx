@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Button from "../../component/button/Button";
 
 export default function Project() {
@@ -26,9 +26,9 @@ export default function Project() {
         <h1 className="text-white text-center text-2xl md:text-4xl font-semibold px-4 mt-2">
           Start a New Project
         </h1>
-     <div className="flex justify-center mt-6">
-         <Button address="/contact" label="Get Started" />
-     </div>
+        <div className="flex justify-center mt-6">
+          <Button address="/contact" label="Get Started" />
+        </div>
       </motion.div>
     </div>
   );

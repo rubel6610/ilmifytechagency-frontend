@@ -18,6 +18,17 @@ const nextConfig = {
         hostname: 'media.licdn.com',
         pathname: '/**', // Matches any pathname under this hostname
       },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        pathname: '/**', // Matches any pathname under this hostname
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**', // Matches any pathname under this hostname
+      },
+    
     ],
   },
 };

@@ -1,8 +1,7 @@
-
 "use client";
 import React from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import CustomBorder from "../../component/customBorder/CustomBorder";
 
 export default function WeAre() {
@@ -26,10 +25,10 @@ export default function WeAre() {
   };
 
   return (
-    <div className="grid items-center grid-cols-1 gap-12 px-4 py-16 mx-auto max-w-400 my-28 md:px-12 lg:grid-cols-2">
+    <div className="grid items-center grid-cols-1 gap-12 px-4 py-8 mx-auto max-w-400 my-12 lg:my-28 md:px-12 lg:grid-cols-2">
       {/* Left Content */}
       <div>
-        <h1 className="text-2xl font-semibold leading-tight text-center md:text-4xl lg:text-5xl lg:text-left">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center  lg:text-left">
           {/* Line 1 */}
           <motion.span
             className="block overflow-hidden text-gray-800 whitespace-nowrap"
@@ -55,14 +54,14 @@ export default function WeAre() {
         </h1>
 
         <motion.div
-        className="flex justify-center lg:justify-start mt-4"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
-      >
-        <CustomBorder />
-      </motion.div>
+          className="flex justify-center lg:justify-start mt-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
+          variants={fadeInRight}
+        >
+          <CustomBorder />
+        </motion.div>
 
         <div className="text-justify">
           <motion.p
@@ -113,7 +112,7 @@ export default function WeAre() {
           }}
         >
           <Image
-            src="/outside.jpg"
+            src="/Service-banner.jpeg"
             alt="Team discussion"
             fill
             className="object-cover px-8 md:px-0 "

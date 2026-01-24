@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import loginAnimation from "../../../public/assets/lotties/login";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
@@ -23,9 +23,7 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
-  };
+  const onSubmit = (data) => {};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

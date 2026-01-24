@@ -1,10 +1,12 @@
 import {
   Briefcase,
   LayoutDashboard,
-  Plus,
+  Users,
+  User,
   Dock,
-  Columns3Cog
+  Columns3Cog,
 } from "lucide-react";
+import { HiOutlineNewspaper } from "react-icons/hi";
 
 export const userLinks = [
   {
@@ -17,12 +19,6 @@ export const userLinks = [
     href: "/dashboard/applied-jobs",
     icon: Dock,
   },
-  {
-    name: "All Jobs",
-    href: "/careers",
-    icon: Briefcase,
-  },
-
 ];
 
 export const adminLinks = [
@@ -32,8 +28,29 @@ export const adminLinks = [
     icon: LayoutDashboard,
   },
   {
-    name: "Post Job",
-    href: "/dashboard/post-job",
-    icon: Plus,
+    name: "Manage Users",
+    href: "/dashboard/manage-users",
+    icon: User,
+  },
+  {
+    name: "Manage Team",
+    href: "/dashboard/manage-team",
+    icon: Users,
+  },
+
+  {
+    name: "Manage Jobs",
+    href: "/dashboard/manage-jobs",
+    icon: Briefcase,
+  },
+  {
+    name: "Manage Projects",
+    href: "/dashboard/manage-projects",
+    icon: Columns3Cog,
+  },
+  {
+    name: "Manage Blog",
+    href: "/dashboard/manage-blog",
+    icon: HiOutlineNewspaper,
   },
 ];

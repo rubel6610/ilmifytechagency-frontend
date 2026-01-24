@@ -3,18 +3,16 @@
 import Sidebar from "./components/sidebar/SideBar";
 import { role } from "./page";
 
-export default function DashboardLayout({children}) {
+export default function DashboardLayout({ children }) {
   return (
-
-      <div className="flex  bg-slate-100 min-h-screen ">
-      {/* Sidebar */}
+    <div className="relative min-h-screen bg-slate-100">
+      {/* Sidebar - Fixed position */}
       <Sidebar role={role} />
 
-      <div className="flex-1  p-6 "> 
-        {/* Nested routes */}
-                 {children}
-      </div>
+      {/* Main content - with margin for mini sidebar on mobile */}
+      <main className="min-h-screen ml-16 lg:ml-64">
+        {children}
+      </main>
     </div>
-    
   );
 }

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -85,18 +85,19 @@ export default function HeroSection() {
 
   return (
     <motion.section
-     initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, margin: "-100px" }}
-  variants={{
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  }}
-    className="relative w-full min-h-[80vh] bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden">
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={{
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.15,
+          },
+        },
+      }}
+      className="relative w-full min-h-[80vh] bg-[#FAFAFA] flex items-center py-10 lg:py-0 overflow-hidden"
+    >
       <Swiper
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         modules={[Navigation, Autoplay]}
@@ -136,7 +137,7 @@ export default function HeroSection() {
                     <br></br>
                     <span className="text-black">{slide.highlight}</span>
                     <span className="text-emerald-400 ml-5">
-                     <TypingText text={slide.subHighlight} />
+                      <TypingText text={slide.subHighlight} />
                     </span>
                   </motion.h1>
 

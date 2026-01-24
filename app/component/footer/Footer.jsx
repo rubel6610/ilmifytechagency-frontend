@@ -63,7 +63,7 @@ const Footer = () => {
               Quick Links
             </h3>
             <CustomBorder />
-            <ul className="space-y-2 text-[16px] font-ubuntu">
+            <ul className="space-y-1.5 text-[16px] font-ubuntu">
               {[
                 "Home",
                 "About",
@@ -147,7 +147,7 @@ const Footer = () => {
         <div className="max-w-400 mx-auto flex justify-center items-center gap-6 py-8.75 pt-8.5 pb-10 px-5 md:px-8.75">
           {/* Left Side: Copyright Text */}
           <p className="text-gray-400 text-[16px] tracking-wide order-1 font-ubuntu text-center md:text-left">
-            © 2025 ilmifyTech LLC . ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} ilmifyTech LLC . ALL RIGHTS RESERVED.
           </p>
 
         </div>

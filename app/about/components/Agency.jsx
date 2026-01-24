@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import CustomBorder from "../../component/customBorder/CustomBorder";
 import Button from "../../component/button/Button";
+import TypingText from "@/app/component/TypingText";
 
 export default function Agency() {
   const typingVariant = {
@@ -27,7 +28,7 @@ export default function Agency() {
   };
   return (
     <div className="bg-[#F9F9F9]">
-      <div className="max-w-400 mx-auto px-8 md:px-12 py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
+      <div className="max-w-400 mx-auto px-8 md:px-12 py-12 lg:py-24 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
         {/* Left Content */}
         <div className="order-2 md:order-1">
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left mb-6">
@@ -51,7 +52,7 @@ export default function Agency() {
               custom={2}
             >
               <span className="text-gray-800">web </span>
-              <span className="text-green-500">design agency</span>
+              <TypingText text="design agency" />
             </motion.span>
           </h1>
 

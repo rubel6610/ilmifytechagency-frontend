@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import TypingText from "./TypingText";
 
@@ -68,8 +68,8 @@ const ServicesSection = () => {
   return (
     <section className="py-10 md:py-20 xl:py-30 bg-[#FFFFFF] relative overflow-hidden w-full">
       {/* Vertical Text Side Decoration */}
-      <div className="hidden 2xl:block absolute -right-10 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
-        <p className="text-[#00D9A5] font-extrabold text-sm whitespace-nowrap">
+      <div className="hidden 2xl:block absolute -right-26 top-1/2 -translate-y-1/2 -rotate-90 origin-center">
+        <p className="text-[#00D9A5] font-extrabold text-sm whitespace-nowrap tracking-[0.2em]">
           5 years of experience helping people for best solutions
         </p>
       </div>
@@ -89,9 +89,12 @@ const ServicesSection = () => {
               className="text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-tight"
             >
               We Are Here To <br />
-              Make Your <span className="text-[#00D9A5]"><TypingText text="Website" /></span> <br />
-              Look More <span className="">Elegant</span> And
-              Stylish!
+              Make Your{" "}
+              <span className="text-[#00D9A5]">
+                <TypingText text="Website" />
+              </span>{" "}
+              <br />
+              Look More <span className="">Elegant</span> And Stylish!
             </motion.h2>
           </div>
 

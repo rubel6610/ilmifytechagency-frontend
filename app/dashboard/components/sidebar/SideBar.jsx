@@ -1,146 +1,216 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, LogOut, Home, ArrowLeftToLine } from "lucide-react";
+import { Menu, X, LogOut, ArrowLeftToLine, User } from "lucide-react";
 import { userLinks, adminLinks } from "./sidebarLinks";
-import Image from "next/image";
 
 export default function Sidebar({ role = "user" }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+
   const links = role === "admin" ? adminLinks : userLinks;
+
+
+
+  // Prevent body scroll when sidebar is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
+
+ 
 
   return (
     <>
-      {/* ---------- Mobile Top Bar ---------- */}
-      <div className="lg:hidden px-4 py-3 bg-[#00c389] text-white z-50">
-        <button onClick={() => setOpen(true)}>
-          <Menu size={26} />
-        </button>
+      {/* Mini Sidebar for Mobile - Fixed and Always Visible */}
+      <div 
+        className="lg:hidden fixed left-0 top-0 bottom-0 w-14 bg-gradient-to-b from-[#00c389] to-[#86e062] text-white z-30"
+        style={{ height: '100vh', }}
+      >
+        <div className="h-full flex flex-col">
+          <button
+            onClick={() => setOpen(true)}
+            className="p-3 mt-3 mx-auto hover:bg-white/20 rounded-lg transition-colors flex-shrink-0"
+            aria-label="Open menu"
+          >
+            <Menu size={26} />
+          </button>
+
+          <nav className="flex-1 flex flex-col items-center py-4 space-y-3 overflow-y-auto">
+            {links.map((link) => {
+              const Icon = link.icon;
+              const active = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`
+                    p-2.5 rounded-lg transition-all duration-300 flex-shrink-0
+                    ${
+                      active
+                        ? "bg-white text-[#00c389] shadow-lg"
+                        : "hover:bg-white/20"
+                    }
+                  `}
+                  title={link.name}
+                >
+                  <Icon size={20} />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Mini Bottom Section */}
+          <div className="border-t border-white/30 py-3 flex flex-col items-center space-y-2 flex-shrink-0">
+            <Link
+              href="/dashboard/profile"
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Profile"
+            >
+              <div className="w-7 h-7 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">
+                <User/>
+              </div>
+            </Link>
+            <Link
+              href="/"
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Profile"
+            >
+              <div className="w-7 h-7 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">
+                <ArrowLeftToLine size={18} />
+              </div>
+            </Link>
+
+            <button
+              onClick={() => alert("Logout logic here")}
+              className="p-2 text-red-100 hover:bg-red-500/20 rounded-lg transition-colors"
+              title="Logout"
+            >
+              <LogOut size={18} />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* ---------- Mobile Overlay ---------- */}
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)} 
-              className="fixed inset-0  bg-black z-40 "
-            />
+      {/* Mobile Overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-            <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 25 }}
-              className="fixed z-50  left-0 w-64 min-h-screen
-                bg-linear-to-b from-[#00c389] to-[#86e062]
-                text-white p-5 flex flex-col"
-            >
-              <SidebarContent
-                links={links}
-                pathname={pathname}
-                close={() => setOpen(false)}
-              />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* ---------- Desktop Sidebar ---------- */}
+      {/* Full Sidebar - Slide-in on Mobile, Always Visible on Desktop */}
       <aside
-        className="hidden  lg:flex w-64 
-          bg-linear-to-b from-[#00c389] to-[#86e062]
-          text-white p-5 flex-col z-40"
+        className={`
+          fixed left-0 top-0 bottom-0 z-50
+          w-64 bg-gradient-to-b from-[#00c389] to-[#86e062]
+          text-white
+          transition-transform duration-300 ease-in-out
+          lg:translate-x-0
+          ${open ? 'translate-x-0' : '-translate-x-full'}
+        `}
+        style={{ height: '100vh' }}
       >
-        <SidebarContent links={links} pathname={pathname} />
+        <SidebarContent
+          links={links}
+          pathname={pathname}
+          close={() => setOpen(false)}
+        />
       </aside>
     </>
   );
 }
 
-/* ---------- Sidebar Content ---------- */
+/* Sidebar Content Component */
 function SidebarContent({ links, pathname, close }) {
+  const handleClose = () => {
+    if (typeof close === "function") close();
+  };
+
   return (
-    <>
+    <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8 relative">
+      <div className="flex items-center justify-between p-5 border-b border-white/20 flex-shrink-0">
         <h2 className="text-2xl font-bold">Dashboard</h2>
         {close && (
-          <button onClick={close} className="lg:hidden">
+          <button
+            onClick={handleClose}
+            className="lg:hidden p-1 hover:bg-white/20 rounded-lg transition-colors"
+          >
             <X size={24} />
           </button>
         )}
       </div>
 
-      {/* Navigation */}
-      <nav className="space-y-3 flex-1">
-        {links.map((link, idx) => {
+      {/* Navigation - Scrollable if needed */}
+      <nav className="flex-1 overflow-y-auto p-5 space-y-2">
+        {links.map((link) => {
           const Icon = link.icon;
           const active = pathname === link.href;
 
           return (
-            <motion.div
+            <Link
               key={link.href}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.08 }}
+              href={link.href}
+              onClick={handleClose}
+              className={`
+                flex items-center gap-3 px-4 py-3 rounded-lg
+                transition-all duration-300 text-[16px]
+                ${
+                  active
+                    ? "bg-white text-[#00c389] shadow-lg font-semibold"
+                    : "hover:bg-white/20"
+                }
+              `}
             >
-              <Link
-                href={link.href}
-                onClick={close}
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg
-                  transition-all duration-300 text-[16px]
-                  ${
-                    active
-                      ? "bg-white text-[#00c389] shadow-lg font-semibold"
-                      : "hover:bg-white/20"
-                  }
-                `}
-              >
-                <Icon size={18} />
-                {link.name}
-              </Link>
-            </motion.div>
+              <Icon size={18} />
+              {link.name}
+            </Link>
           );
         })}
       </nav>
 
       {/* Bottom Section */}
-      <div className="border-t border-white/30 absolute bottom-5 w-50 flex flex-col align-center">
+      <div className="border-t border-white/30 p-5 space-y-2 flex-shrink-0">
         <Link
           href="/dashboard/profile"
-          onClick={close}
-          className="flex items-center gap-3 mb-3 px-4 py-2 rounded-lg hover:bg-white/20"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors"
         >
-          <Image src="/hero.png" height={150} width={150} alt="profile" className="w-8 h-8 rounded-full bg-white/30" />
+          <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-sm font-bold">
+            AD
+          </div>
           Profile
         </Link>
+
         <Link
           href="/"
-          onClick={close}
-          className="flex items-center gap-3 mb-3 px-4 py-2 rounded-lg hover:bg-white/20"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors"
         >
-         <ArrowLeftToLine />
+          <ArrowLeftToLine size={18} />
           Go to Website
         </Link>
 
         <button
           onClick={() => alert("Logout logic here")}
-          className="flex items-center gap-3 px-4 py-2 text-red-100 hover:bg-red-500/20 rounded-lg w-full"
+          className="flex items-center gap-3 px-4 py-2 text-red-100 hover:bg-red-500/20 rounded-lg w-full transition-colors"
         >
           <LogOut size={18} />
           Logout
         </button>
       </div>
-    </>
+    </div>
   );
 }
