@@ -39,7 +39,7 @@ export default function JobManagementPage() {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const res = await fetch("/jobs.json");
+        const res = await fetch("/json/jobs.json");
         const data = await res.json();
         setJobs(data);
       } catch (error) {

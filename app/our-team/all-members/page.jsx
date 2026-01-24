@@ -15,7 +15,7 @@ export default function AllTeamMembersPage() {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    fetch('/team-data.json')
+    fetch('/json/team-data.json')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch team data');
         return res.json();

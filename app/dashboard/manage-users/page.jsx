@@ -17,7 +17,7 @@ const ManageUser = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/users.json");
+        const response = await fetch("/json/users.json");
         const data = await response.json();
         setTimeout(() => {
           setUsers(data);

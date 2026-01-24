@@ -46,7 +46,7 @@ export default function TeamManagement() {
   const fetchTeamData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/team-data.json");
+      const response = await fetch("/json/team-data.json");
       const data = await response.json();
       setTeamData(data.team || data);
       setLoading(false);
