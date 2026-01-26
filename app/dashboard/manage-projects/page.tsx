@@ -15,18 +15,27 @@ import Pagination from './Components/Pagination';
 // TYPES
 // ==========================================
 
-// interface Project {
-//   _id: string | number;
-//   name: string;
-//   projectImage?: string;
-//   description?: string;
-//   status: 'draft' | 'published-to-showcase' | 'archived';
-//   client?: string;
-//   publishingDate?: string;
-//   progress?: number;
-//   manager?: string;
-// }
-
+export interface Project {
+  _id: string | number;
+  name: string;
+  description: string;
+  client: string;
+  status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress';
+  publishingDate: string;
+  progress: number;
+  image: string;
+  projectImage?: string; // alias for image
+  phases: {
+    name: string;
+    description: string;
+    deadline?: string;
+    status?: 'draft' | 'in-progress' | 'completed';
+  }[];
+  conclusion: string;
+  finalNotes?: string;
+  lessonsLearned?: string;
+  manager?: string;
+}
 
 // types/project.ts
 
@@ -35,7 +44,7 @@ export interface ProjectFormData {
   name: string;
   description: string; // required for form validation
   client: string;
-  status: 'draft' | 'published-to-showcase' | 'archived';
+  status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress';
   progress: number;
   image: string;
   publishingDate: string;
@@ -136,17 +145,21 @@ const ProjectsPage = () => {
 
             const data: RawProjectData[] = await response.json();
 
-            const mappedData: Project[] = data.map(item => ({
-                _id: item.id,
-                name: item.title,
-                projectImage: item.image,
-                description: item.description,
-                status: item.status as Project['status'],
-                client: item.client,
-                publishingDate: item.date,
-                progress: item.progress,
-                manager: item.author
-            }));
+   const mappedData: Project[] = data.map(item => ({
+  _id: item.id,
+  name: item.title,
+  projectImage: item.image,
+  image: item.image, // 👈 Add this (required by Project)
+  description: item.description || '', // 👈 Ensure never undefined
+  status: item.status as Project['status'],
+  client: item.client || '', // 👈 Ensure never undefined
+  publishingDate: item.date,
+  progress: item.progress || 0, // 👈 Ensure never undefined
+  manager: item.author,
+  // 👇 Add required fields with defaults
+  phases: [], // or item.phases if available
+  conclusion: item.description || '' // or empty string
+}));
 
             setProjects(mappedData);
             setFilteredProjects(mappedData); 

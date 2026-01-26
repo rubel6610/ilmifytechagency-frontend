@@ -13,21 +13,22 @@ import {
     FiCircle,
     FiExternalLink
 } from 'react-icons/fi';
+import { Project } from '../page';
 
 // ==========================================
 // TYPES
 // ==========================================
 
-interface Project {
-  id?: number;
-  name: string;
-  description: string;
-  client?: string;
-  status: 'draft' | 'published-to-showcase' | 'archived';
-  publishingDate?: string;
-  projectImage?: string;
-  manager?: string;
-}
+// interface Project {
+//   id?: number;
+//   name: string;
+//   description: string;
+//   client?: string;
+//  status: 'draft' | 'in-progress' | 'published-to-showcase' | 'archived'; // ✅
+//   publishingDate?: string;
+//   projectImage?: string;
+//   manager?: string;
+// }
 
 interface ProjectDetailsModalProps {
   isOpen: boolean;

@@ -12,23 +12,15 @@ import {
     FiEyeOff,
 } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
+import { Project } from '../page';
 
 // ==========================================
 // TYPES
 // ==========================================
 
-interface Project {
-  id?: number;
-  name: string;
-  description?: string;
-  client?: string;
-  status: 'draft' | 'published-to-showcase' | 'archived';
-  publishingDate?: string;
-  projectImage?: string;
-}
 
 interface ProjectCardProps {
-  project: Project;
+  project: Project; // ← Now uses full type
   onEdit: (project: Project) => void;
   onDelete: (project: Project) => void;
   onViewDetails?: (project: Project) => void;

@@ -31,7 +31,7 @@ interface ProjectData {
   name: string;
   description: string;
   client: string;
-  status: 'draft' | 'published' | 'archived';
+status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress'; // ✅ Add "in-progress"
   progress: number;
   image: string;
   publishingDate: string;
