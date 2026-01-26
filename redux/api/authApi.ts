@@ -42,7 +42,8 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    // adfaEDFAsdf
+    // adfaEDFAsdf gasdfgsadfasf
+    // asdfasdfasfas
     
     getme: builder.query({
       query: ( ) => ({
