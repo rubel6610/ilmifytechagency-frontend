@@ -4,97 +4,100 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Lottie from "lottie-react";
 import registerAnimation from "../../../public/assets/lotties/register.json";
-import Image from "next/image";
+// import Image from "next/image"; // Commented out: no longer needed
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRegisterMutation } from "redux/api/authApi";
+import Swal from 'sweetalert2'
+import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   name: string;
   email: string;
   password: string;
-  photo: FileList;
+  // photo: FileList; // COMMENTED OUT: Profile upload disabled per requirements
 }
 
 const Register = () => {
-  const [preview, setPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
+  // const [preview, setPreview] = useState<string | null>(null); // COMMENTED OUT
+  // const [loading, setLoading] = useState<boolean>(false); // Replaced with RTK Query state
+  const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
+  const role = "ADMIN"; // Hardcoded per backend requirements
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
+    // setError, // COMMENTED OUT: no longer needed for photo validation
   } = useForm<FormData>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
-      photo: undefined as unknown as FileList, // Workaround for FileList
+      // photo: undefined as unknown as FileList, // COMMENTED OUT
     },
   });
 
-  // Image validation + preview
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // // COMMENTED OUT: Image validation + preview handler
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+  //   if (!file.type.startsWith("image/")) {
+  //     setError("photo", { message: "Only image files allowed" });
+  //     return;
+  //   }
+  //   if (file.size > 2 * 1024 * 1024) {
+  //     setError("photo", { message: "Image must be under 2MB" });
+  //     return;
+  //   }
+  //   setPreview(URL.createObjectURL(file));
+  // };
 
-    if (!file.type.startsWith("image/")) {
-      setError("photo", { message: "Only image files allowed" });
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      setError("photo", { message: "Image must be under 2MB" });
-      return;
-    }
-
-    setPreview(URL.createObjectURL(file));
-  };
-
-  // Submit handler
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setLoading(true);
-
     try {
-      const imageFile = data.photo[0];
-
-      // 1️⃣ Upload image
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-      const uploadRes = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-
-      const uploadData = await uploadRes.json();
-      if (!uploadRes.ok) throw new Error("Image upload failed");
-
-      // 2️⃣ Save user to DB
+      // PAYLOAD ADJUSTED PER BACKEND REQUIREMENTS:
+      // - Includes "role" field
+      // - EXCLUDES photo/upload logic
       const userPayload = {
         name: data.name,
         email: data.email,
         password: data.password,
-        photo: uploadData.url,
+        // role, 
       };
 
-      const userRes = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userPayload),
+     const res = await registerUser(userPayload).unwrap();
+
+     if(res.status == true ){
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful',
+        text: res.message || 'You have registered successfully!',
+        position: 'center',
       });
+        reset();
+        router.push('/login');
+  
+     }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: res.message || 'Registration failed. Please check console for details.',
+        position: 'center',
+      });
+     }
+    
 
-      if (!userRes.ok) throw new Error("User creation failed");
-
-      reset();
-      setPreview(null);
-      alert("Registration successful 🎉");
     } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    } finally {
-      setLoading(false);
+      console.error("Registration error:", err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: 'An unexpected error occurred. Please try again later.',
+        position: 'center',
+      });
     }
   };
 
@@ -145,10 +148,13 @@ const Register = () => {
               )}
             </div>
 
-            {/* Photo Upload */}
+            {/* 
+              PROFILE PHOTO SECTION COMMENTED OUT PER REQUIREMENTS
+              Backend payload no longer includes photo field
+            */}
+            {/* 
             <div>
               <label className="text-sm text-gray-600">Profile Photo</label>
-
               <label className="mt-2 flex items-center gap-4 cursor-pointer border border-dashed border-gray-300 p-4 rounded-md hover:border-emerald-500 transition">
                 <div className="w-12 h-12 rounded-full border flex items-center justify-center overflow-hidden bg-gray-100">
                   {preview ? (
@@ -163,11 +169,9 @@ const Register = () => {
                     <span className="text-gray-400 text-sm">Upload</span>
                   )}
                 </div>
-
                 <span className="text-sm text-gray-500">
                   Click to select image
                 </span>
-
                 <input
                   type="file"
                   accept="image/*"
@@ -176,52 +180,67 @@ const Register = () => {
                   onChange={handleImageChange}
                 />
               </label>
-
               {errors.photo && (
                 <p className="text-red-500 text-sm">{errors.photo.message}</p>
               )}
             </div>
+            */}
 
             {/* Password */}
+ {/* Password Field with Toggle */}
             <div>
-              <label className="text-sm text-gray-600">Password</label>
-              <input
-                type="password"
-                placeholder="At least 6 characters"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Minimum 6 characters",
-                  },
-                  pattern: {
-                    value: /^(?=.*\d).+$/,
-                    message: "Must include at least one number",
-                  },
-                })}
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:border-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
+              <label htmlFor="password" className="text-sm text-gray-600 block mb-1">Password</label>
+              <div className="relative mt-1">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="At least 6 characters"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Minimum 6 characters",
+                    },
+                    pattern: {
+                      value: /^(?=.*\d).+$/,
+                      message: "Must include at least one number",
+                    },
+                  })}
+                  className="w-full px-4 py-2 border rounded-md focus:border-none focus:outline-none focus:ring-2 focus:ring-emerald-500 pr-12"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  title={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOff size={20} className="text-emerald-600" />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
+              </div>
               {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
               )}
             </div>
 
             {/* Submit */}
             <motion.button
               type="submit"
-              disabled={loading}
+              disabled={isRegistering} // Uses RTK Query loading state
               whileHover={{ scale: 1.02 }}
-              className="w-full mt-4 bg-linear-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg shadow-lg"
+              className="w-full mt-4 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg shadow-lg disabled:opacity-70"
             >
-              {loading ? "Creating Account..." : "Register"}
+              {isRegistering ? "Creating Account..." : "Register"}
             </motion.button>
           </form>
 
           <p className="text-center text-sm mt-4">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary font-medium">
+            <Link href="/login" className="text-emerald-600 font-medium hover:underline">
               Login
             </Link>
           </p>

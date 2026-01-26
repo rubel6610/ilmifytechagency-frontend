@@ -1,36 +1,58 @@
+// redux/slices/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  isEmailVerified: boolean;
+}
+
 interface AuthState {
   token: string | null;
-  refresh_token: string | null;
+  refreshToken: string | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
   token: null,
-  refresh_token: null,
+  refreshToken: null,
+  user: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ token: string }>) => {
-      state.token = action.payload.token;
-    },
-    setRefreshToken: (
+    setCredentials: (
       state,
-      action: PayloadAction<{ refresh_token: string }>
+      action: PayloadAction<{
+        token: string;
+        refreshToken: string;
+        user: User;
+      }>
     ) => {
-      state.refresh_token = action.payload.refresh_token;
+      const { token, refreshToken, user } = action.payload;
+
+      state.token = token;
+      state.refreshToken = refreshToken;
+      state.user = user;
+
+      // Save access token to cookie (for SSR or page reloads)
+      Cookies.set("accessToken", token, { expires: 7 }); // 7 days
     },
     logout: (state) => {
       state.token = null;
-      state.refresh_token = null;
-      Cookies.remove("token");
+      state.refreshToken = null;
+      state.user = null;
+
+      Cookies.remove("accessToken");
+      // Optional: clear other auth cookies if used
     },
   },
 });
 
-export const { setUser, setRefreshToken, logout } = authSlice.actions;
-
+export const { setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;

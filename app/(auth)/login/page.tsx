@@ -8,9 +8,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
+import { useLoginMutation } from "redux/api/authApi";
+import { useDispatch } from "react-redux";
+
+import Swal from "sweetalert2";
+import { setCredentials } from "redux/features/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [login] = useLoginMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const {
     register,
@@ -23,7 +32,53 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data : any) => {};
+  const onSubmit = async (data: any) => {
+    try {
+      const res = await login(data).unwrap();
+
+      if (res?.status === true && res?.data) {
+        const { token, refreshToken, ...user } = res.data;
+
+        // Save to Redux + cookies
+        dispatch(
+          setCredentials({
+            token,
+            refreshToken,
+            user: {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+              isEmailVerified: user.isEmailVerified,
+            },
+          }),
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Welcome back!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        if (user.role === "ADMIN") {
+          router.push("/dashboard");
+        } else {
+          router.push("/");
+        }
+      }
+    } catch (error: any) {
+      console.error("Login failed:", error);
+      const message =
+        error?.data?.message || "Login failed. Please check your credentials.";
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: message,
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -69,13 +124,14 @@ export default function Login() {
                       message: "Minimum 6 characters required",
                     },
                   })}
-                  className="w-full  border rounded-md focus:border-none focus:outline-none px-4 py-2  focus:ring-2 focus:ring-emerald-500"
+                  className="w-full border rounded-md focus:border-none focus:outline-none px-4 py-2 focus:ring-2 focus:ring-emerald-500 pr-10"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-2.5 text-gray-400"
+                  className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -88,7 +144,7 @@ export default function Login() {
               )}
             </div>
 
-            <div className="text-sm text-primary cursor-pointer">
+            <div className="text-sm text-emerald-600 cursor-pointer hover:underline">
               Forgot password?
             </div>
 
@@ -106,7 +162,10 @@ export default function Login() {
           {/* Register */}
           <p className="text-sm text-center mt-4">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-primary font-medium">
+            <Link
+              href="/register"
+              className="text-emerald-600 font-medium hover:underline"
+            >
               Register
             </Link>
           </p>

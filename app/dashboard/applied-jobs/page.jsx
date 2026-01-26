@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { HiSearch, HiOutlineBriefcase } from "react-icons/hi";
-import Link from "next/link";
+
 
 import AppliedJobCard from "./components/AppliedJobCard";
 
