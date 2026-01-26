@@ -155,7 +155,7 @@ const {
   remove: removeResp,
 } = useFieldArray<FormData>({
   control,
-  name: "jobDescription.responsibilities" as any, // ✅ Temporary fix
+  name: "jobDescription.responsibilities" as never, // ✅ Temporary fix
 });
 
 
@@ -165,7 +165,7 @@ const {
   remove: removeSkills,
 } = useFieldArray<FormData>({
   control,
-  name: skillsPath,
+  name: skillsPath as never, // ✅ Temporary fix
 });
 
   const salaryNegotiable = useWatch({

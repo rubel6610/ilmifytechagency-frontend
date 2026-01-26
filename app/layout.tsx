@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./component/navbar/Navbar";
 import Footer from "./component/footer/Footer";
 import LenisProvider from "./component/LenisProvider";
+import ReduxProvider from "redux/provider/ReduxProvider";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -33,11 +34,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         suppressHydrationWarning
       >
         <LenisProvider>
-          <Navbar />
-          <main>
-            {children}
-            <Footer />
-          </main>
+          <ReduxProvider>
+            <Navbar />
+            <main>
+              {children}
+              <Footer />
+            </main>
+          </ReduxProvider>
         </LenisProvider>
       </body>
     </html>
