@@ -15,20 +15,25 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { logout } from "@/redux/features/authSlice";
+import { FaUserCircle, FaSignOutAlt, FaTachometerAlt, FaCaretDown } from "react-icons/fa";
 
 const MotionLink = motion(Link);
 
 const Header = () => {
   const [nav, setNav] = useState(false);
-
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
+  const dispatch = useDispatch();
 
-const [role, setRole] = useState<string | null>(() => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("role");
-  }
-  return null;
-});
+  const { token, user } = useSelector((state: RootState) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setDropdownOpen(false);
+  };
 
   const toggleNav = () => setNav(!nav);
 
@@ -119,13 +124,15 @@ const [role, setRole] = useState<string | null>(() => {
           </div>
 
           <div className="xl:hidden flex gap-3 items-center">
-            {role === "admin" || role === "user" ? (
-              <Link
-                href="/dashboard"
-                className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs"
-              >
-                Dashboard
-              </Link>
+            {token ? (
+              <div className="flex items-center gap-3">
+                 <Link
+                  href="/dashboard"
+                  className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-3 py-1.5 rounded-full font-semibold text-xs flex items-center gap-1"
+                >
+                  <FaTachometerAlt /> Dashboard
+                </Link>
+              </div>
             ) : (
               <Link href="/login">
                 <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-4 py-2 rounded-full font-semibold text-xs">
@@ -162,13 +169,60 @@ const [role, setRole] = useState<string | null>(() => {
 
         {/* Right Side (Only XL) */}
         <div className="hidden xl:flex items-center gap-6">
-          {role === "admin" || role === "user" ? (
-            <Link
-              href="/dashboard"
-              className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition"
-            >
-              Dashboard
-            </Link>
+          {token ? (
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-full transition-all duration-300"
+              >
+                <div className="w-8 h-8 rounded-full bg-linear-to-r from-[#00c389] to-[#86e062] flex items-center justify-center text-white">
+                  <FaUserCircle size={18} />
+                </div>
+                <span className="font-semibold text-gray-700 text-sm">
+                  {user?.name?.split(" ")[0] || "Account"}
+                </span>
+                <FaCaretDown 
+                  className={`text-gray-400 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`} 
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              <AnimatePresence>
+                {dropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden py-1 z-50"
+                  >
+                    <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
+                      <p className="text-xs text-gray-500 font-medium">Signed in as</p>
+                      <p className="text-sm font-bold text-gray-800 truncate">{user?.email || "User"}</p>
+                    </div>
+                    
+                    <div className="p-1">
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg transition-colors"
+                      >
+                        <FaTachometerAlt className="text-gray-400 group-hover:text-emerald-500" />
+                        Dashboard
+                      </Link>
+                      
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-1"
+                      >
+                        <FaSignOutAlt />
+                        Sign Out
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           ) : (
             <Link href="/login">
               <button className="bg-linear-to-r from-[#86e062] to-[#00c389] text-white px-6 py-2 rounded-full font-semibold shadow-[5px_5px_15px_rgba(16,185,129,0.4)] hover:opacity-90 transition">

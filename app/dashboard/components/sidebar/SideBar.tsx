@@ -5,6 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, LogOut, ArrowLeftToLine, User } from "lucide-react";
 import { userLinks, adminLinks, NavItem } from "./sidebarLinks";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { logout } from "@/redux/features/authSlice";
 
 interface SidebarProps { 
   role?: "user" | "admin";
@@ -13,6 +16,13 @@ interface SidebarProps {
 export default function Sidebar({ role = "user" }: SidebarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/login"); // Redirect to login page
+  };
 
   const links: NavItem[] = role === "admin" ? adminLinks : userLinks;
 
@@ -91,7 +101,7 @@ export default function Sidebar({ role = "user" }: SidebarProps) {
             </Link>
 
             <button
-              onClick={() => alert("Logout logic here")}
+              onClick={handleLogout}
               className="p-2 text-red-100 hover:bg-red-500/20 rounded-lg transition-colors"
               title="Logout"
             >
@@ -136,9 +146,18 @@ interface SidebarContentProps {
   links: NavItem[];
   pathname: string;
   close?: () => void;
+  handleLogout?: () => void;
 }
 
 function SidebarContent({ links, pathname, close }: SidebarContentProps) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/login");
+  };
+
   const handleClose = () => {
     if (typeof close === "function") close();
   };
@@ -147,7 +166,7 @@ function SidebarContent({ links, pathname, close }: SidebarContentProps) {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-5 border-b border-white/20 flex-shrink-0">
-        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <Link href="/" className="text-2xl font-bold">Dashboard</Link>
         {close && (
           <button
             onClick={handleClose}
@@ -209,7 +228,7 @@ function SidebarContent({ links, pathname, close }: SidebarContentProps) {
         </Link>
 
         <button
-          onClick={() => alert("Logout logic here")}
+          onClick={handleLogout}
           className="flex items-center gap-3 px-4 py-2 text-red-100 hover:bg-red-500/20 rounded-lg w-full transition-colors"
         >
           <LogOut size={18} />
@@ -218,4 +237,4 @@ function SidebarContent({ links, pathname, close }: SidebarContentProps) {
       </div>
     </div>
   );
-}
+} 

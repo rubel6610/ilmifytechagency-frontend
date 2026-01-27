@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "@/lib/leafletIcon";
+// import "@/lib/leafletIcon";
 import CtrlScrollZoom from "./CtrlScrollZoom";
 
 const MapWithTooltip = () => {

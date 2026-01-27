@@ -21,13 +21,13 @@ export const baseApi = createApi({
       const token = state?.auth?.token;
 
       if (token) {
-        headers.set("Authorization", `${token}`);
+        headers.set("token", `${token}`);
       }
 
       return headers;
     },
   }),
-  tagTypes: ["User","Products","Coupon"],
+  tagTypes: ["User","Products","Coupon","job"],
   endpoints: (builder) => ({}),
 });
 

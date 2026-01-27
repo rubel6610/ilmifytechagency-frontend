@@ -9,7 +9,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRegisterMutation } from "redux/api/authApi";
 import Swal from 'sweetalert2'
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface FormData {
@@ -232,9 +232,16 @@ const Register = () => {
               type="submit"
               disabled={isRegistering} // Uses RTK Query loading state
               whileHover={{ scale: 1.02 }}
-              className="w-full mt-4 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg shadow-lg disabled:opacity-70"
+              className="w-full mt-4 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isRegistering ? "Creating Account..." : "Register"}
+              {isRegistering ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  Creating Account...
+                </>
+              ) : (
+                "Register"
+              )}
             </motion.button>
           </form>
 

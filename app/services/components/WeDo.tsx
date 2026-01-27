@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import servicesData, { Service } from "./servicesData";
 import CustomBorder from "../../component/customBorder/CustomBorder";
 import { useRouter } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/src/components/ui/card";
+
 
 /* ------------------ Animation Variants ------------------ */
 const containerVariants = {

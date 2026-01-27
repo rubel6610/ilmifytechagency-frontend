@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Field } from "./components/Field";
 import { useState, useRef } from "react";
 import type { Control, Path } from "react-hook-form";
+import { useCreateJobMutation } from "redux/service/jobApi";
+import Swal from "sweetalert2";
 
 // ==========================================
 // TYPES
@@ -60,7 +62,9 @@ interface AdminControl {
 export interface FormData {
   title: string;
   jobCategory: string;
-  jobType: "Full Time" | "Part Time";
+  vacancy: string; // Number of positions
+  jobType: "Full Time" | "Part Time" | "Internship"; // EmploymentType from schema
+  contractType: "Permanent" | "Probation" | "Contract"; // JobType from schema
   jobLevel: "Mid Level" | "Senior Level" | "Entry Level";
   photo: File | null;
   jobSummary: JobSummary;
@@ -68,6 +72,7 @@ export interface FormData {
   salaryAndBenefits: SalaryAndBenefits;
   jobDescription: JobDescription;
   skillsAndExpertise: string[];
+  benefits: string[]; // Benefits array from schema
   adminControl: AdminControl;
 }
 
@@ -82,7 +87,9 @@ interface PostJobProps {
 const defaultValues: FormData = {
   title: "",
   jobCategory: "",
+  vacancy: "1",
   jobType: "Full Time",
+  contractType: "Permanent",
   jobLevel: "Mid Level",
   photo: null,
   jobSummary: {
@@ -116,6 +123,7 @@ const defaultValues: FormData = {
     responsibilities: [""],
   },
   skillsAndExpertise: [""],
+  benefits: [""],
   adminControl: {
     featured: false,
     priority: "Medium",
@@ -135,6 +143,7 @@ const skillsPath = createFieldArrayPath<FormData>("skillsAndExpertise");
 
 export default function PostJob({ onClose }: PostJobProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [createJob, { isLoading: isCreating }] = useCreateJobMutation();
 
   const {
     register,
@@ -144,6 +153,7 @@ export default function PostJob({ onClose }: PostJobProps) {
     trigger,
     setValue,
     getValues,
+    reset,
   } = useForm<FormData>({
     mode: "onChange",
     defaultValues,
@@ -168,6 +178,15 @@ const {
   name: skillsPath as never, // ✅ Temporary fix
 });
 
+const {
+  fields: benefitsFields,
+  append: appendBenefits,
+  remove: removeBenefits,
+} = useFieldArray<FormData>({
+  control,
+  name: "benefits" as never,
+});
+
   const salaryNegotiable = useWatch({
     control,
     name: "salaryAndBenefits.salary.negotiable",
@@ -180,13 +199,14 @@ const {
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<Partial<FormData>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
 const stepFields = {
   1: [
     "title",
     "jobCategory",
+    "vacancy",
     "jobType",
+    "contractType",
     "jobLevel",
     "photo",
     "jobSummary.applicationDeadline",
@@ -210,6 +230,7 @@ const stepFields = {
   4: [
     "jobDescription.responsibilities",
     "skillsAndExpertise",
+    "benefits",
     "jobDescription.overview",
     "adminControl.featured",
     "adminControl.priority",
@@ -240,35 +261,109 @@ const handleNext = async () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true);
     try {
       // Final validation
-         for (const stepKey of [1, 2, 3, 4] as const) {
-            const fields = stepFields[stepKey];
-      const isValid = await trigger(fields); // ✅ No 'as any' needed
-    if (!isValid) {
-        alert(`Complete step ${stepKey}`);
-        setStep(stepKey);
-        setIsSubmitting(false);
-        return;
-      }
+      for (const stepKey of [1, 2, 3, 4] as const) {
+        const fields = stepFields[stepKey];
+        const isValid = await trigger(fields);
+        if (!isValid) {
+          alert(`Please complete step ${stepKey}`);
+          setStep(stepKey);
+          return;
+        }
       }
 
       // Merge final form data
       const finalData = { ...formData, ...data };
       console.log("Final Job Data:", finalData);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert("Job Posted Successfully!");
+      // Transform form data to API format
+      const apiFormData = new FormData();
 
+      // Location (combine city, district, country)
+      const location = `${finalData.employmentInfo?.jobLocation?.city || ""}, ${finalData.employmentInfo?.jobLocation?.district || ""}, ${finalData.employmentInfo?.jobLocation?.country || ""}`;
+      
+      // Employment type mapping (FULL_TIME, PART_TIME, INTERNSHIP)
+      const employmentTypeMap: Record<string, string> = {
+        "Full Time": "FULL_TIME",
+        "Part Time": "PART_TIME",
+        "Internship": "INTERNSHIP",
+      };
+      
+      // Job type mapping (PERMANENT, PROBATION, CONTRACT)
+      const jobTypeMap: Record<string, string> = {
+        "Permanent": "PERMANENT",
+        "Probation": "PROBATION",
+        "Contract": "CONTRACT",
+      };
+      
+      // Work mode mapping
+      const workModeMap: Record<string, string> = {
+        "Hybrid": "HYBRID",
+        "Onsite": "ONSITE",
+      };
+      const workMode = finalData.employmentInfo?.remoteAllowed ? "REMOTE" : (workModeMap[finalData.employmentInfo?.workplaceType || "Hybrid"] || "HYBRID");
+      
+      // Build the data object matching backend expectations
+      const jobData = {
+        title: finalData.title || "",
+        overview: finalData.jobDescription?.overview || "",
+        applicationDeadline: finalData.jobSummary?.applicationDeadline || "",
+        vacancy: parseInt(finalData.vacancy || "1"),
+        location: location,
+        employmentType: employmentTypeMap[finalData.jobType || "Full Time"] || "FULL_TIME",
+        jobType: jobTypeMap[finalData.contractType || "Permanent"] || "PERMANENT",
+        workMode: workMode,
+        responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r.trim()) || [],
+        mandatorySkills: finalData.skillsAndExpertise?.filter(s => s.trim()) || [],
+        niceToHave: [],
+        benefits: finalData.benefits?.filter(b => b.trim()) || [],
+        workingHours: "9AM-5PM",
+        officeDays: "Mon-Fri",
+        salary: finalData.salaryAndBenefits?.salary?.range || "Negotiable",
+        experience: finalData.jobSummary?.experienceRequired || "",
+        education: finalData.jobDescription?.requirements?.education || "",
+        isPublished: true,
+      };
+
+      // Append JSON data as string
+      apiFormData.append("data", JSON.stringify(jobData));
+      
+      // Append thumbnail if exists
+      if (finalData.photo) {
+        apiFormData.append("thumbnail", finalData.photo);
+      }
+
+      // Call the API
+      const result = await createJob(apiFormData).unwrap();
+      
+      if(result.status == true){
+        Swal.fire({
+          icon: "success",
+          title: "Job Posted Successfully!",
+          text: result?.message || "Job has been posted successfully!",
+          position: "center",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Job Posting Failed!",
+          text: result?.message || "Failed to post job. Please try again.",
+          position: "center",
+        });
+      }
+
+      // Reset form and close modal
+      reset();
       setStep(1);
       setFormData({});
       if (fileInputRef.current) fileInputRef.current.value = "";
-    } catch (error) {
-      console.error(error);
-      alert("Error posting job.");
-    } finally {
-      setIsSubmitting(false);
+      onClose(false);
+      
+    } catch (error: any) {
+      console.error("Error posting job:", error);
+      const errorMessage = error?.data?.message || error?.message || "Failed to post job. Please try again.";
+      alert(`Error: ${errorMessage}`);
     }
   };
 
@@ -357,6 +452,28 @@ const handleNext = async () => {
               </Field>
 
               <div className="grid md:grid-cols-2 gap-6 w-full">
+                <Field label="Number of Vacancies *" error={errors.vacancy?.message as string}>
+                  <input
+                    type="number"
+                    min="1"
+                    className="input"
+                    {...register("vacancy", { required: "Required", min: { value: 1, message: "At least 1" } })}
+                    placeholder="1"
+                  />
+                </Field>
+                <Field label="Contract Type *" error={errors.contractType?.message as string}>
+                  <select
+                    className="input"
+                    {...register("contractType", { required: "Required" })}
+                  >
+                    <option>Permanent</option>
+                    <option>Probation</option>
+                    <option>Contract</option>
+                  </select>
+                </Field>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 w-full">
                 <Field label="Job Type *" error={errors.jobType?.message as string}>
                   <select
                     className="input"
@@ -364,6 +481,7 @@ const handleNext = async () => {
                   >
                     <option>Full Time</option>
                     <option>Part Time</option>
+                    <option>Internship</option>
                   </select>
                 </Field>
                 <Field label="Job Level *" error={errors.jobLevel?.message as string}>
@@ -729,6 +847,38 @@ const handleNext = async () => {
                 </button>
               </div>
 
+              {/* Benefits */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-3 block">
+                  Benefits
+                </label>
+                {benefitsFields.map((field, idx) => (
+                  <div key={field.id} className="flex gap-2 items-start mb-3">
+                    <input
+                      className="input flex-1"
+                      {...register(`benefits.${idx}` as const)}
+                      placeholder="Health insurance, flexible hours, etc."
+                    />
+                    {benefitsFields.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeBenefits(idx)}
+                        className="px-3 py-2 text-red-500 hover:bg-red-50 rounded"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => appendBenefits("")}
+                  className="w-full border-2 border-dashed border-gray-300 hover:border-[#00c389] p-4 rounded-lg text-gray-600 hover:text-[#00c389] transition-all"
+                >
+                  + Add Benefit
+                </button>
+              </div>
+
               <div className="flex justify-between pt-5">
                 <button
                   type="button"
@@ -739,10 +889,10 @@ const handleNext = async () => {
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="bg-[#00c389] hover:bg-[#00b37d] text-white px-2 lg:px-8 py-3 rounded-lg font-medium transition-colors"
+                  disabled={isCreating}
+                  className="bg-[#00c389] hover:bg-[#00b37d] text-white px-2 lg:px-8 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "Submitting..." : "Post Job"}
+                  {isCreating ? "Posting Job..." : "Post Job"}
                 </button>
               </div>
             </div>

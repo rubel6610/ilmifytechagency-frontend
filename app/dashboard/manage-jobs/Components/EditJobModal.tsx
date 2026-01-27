@@ -1,21 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Save } from "lucide-react";
+import { Job, useGetJobByIdQuery } from "@/redux/service/jobApi";
 
-export default function EditJobModal({ job, onClose, onSave }) {
-  const [formData, setFormData] = useState({ ...job });
-  const handleSubmit = (e) => {
+interface EditJobModalProps {
+  jobId: string;
+  onClose: () => void;
+  onSave: (updatedJob: Job) => void;
+}
+
+export default function EditJobModal({ jobId, onClose, onSave }: EditJobModalProps) {
+  const { data: job, isLoading } = useGetJobByIdQuery(jobId);
+  const [formData, setFormData] = useState<Job | null>(null);
+
+  useEffect(() => {
+    if (job) {
+      setFormData({ ...job });
+    }
+  }, [job]);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    if (formData) {
+      onSave(formData);
+    }
   };
 
+  if (isLoading || !formData) {
+    return (
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 shadow-2xl">
+          <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden"
       >
         <div className="px-8 py-6 border-b flex justify-between items-center bg-gray-50">
-          <h2 className="font-black text-gray-800">EDIT CORE DATA</h2>
+          <h2 className="font-black text-gray-800 uppercase">Edit Core Data</h2>
           <button type="button" onClick={onClose}>
             <X />
           </button>
@@ -41,21 +68,17 @@ export default function EditJobModal({ job, onClose, onSave }) {
                 Status
               </label>
               <select
-                value={formData.jobSummary.jobStatus}
+                value={formData.applicationStatus}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    jobSummary: {
-                      ...formData.jobSummary,
-                      jobStatus: e.target.value,
-                    },
+                    applicationStatus: e.target.value as any,
                   })
                 }
                 className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
               >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="closed">Closed</option>
+                <option value="OPEN">Open</option>
+                <option value="CLOSED">Closed</option>
               </select>
             </div>
             <div>
@@ -64,14 +87,11 @@ export default function EditJobModal({ job, onClose, onSave }) {
               </label>
               <input
                 type="date"
-                value={formData.jobSummary.applicationDeadline}
+                value={formData.applicationDeadline ? formData.applicationDeadline.split("T")[0] : ""}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    jobSummary: {
-                      ...formData.jobSummary,
-                      applicationDeadline: e.target.value,
-                    },
+                    applicationDeadline: e.target.value,
                   })
                 }
                 className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
@@ -85,17 +105,11 @@ export default function EditJobModal({ job, onClose, onSave }) {
                 Salary Range
               </label>
               <input
-                value={formData.salaryAndBenefits.salary.range}
+                value={formData.salary || ""}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    salaryAndBenefits: {
-                      ...formData.salaryAndBenefits,
-                      salary: {
-                        ...formData.salaryAndBenefits.salary,
-                        range: e.target.value,
-                      },
-                    },
+                    salary: e.target.value,
                   })
                 }
                 className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"
@@ -106,11 +120,12 @@ export default function EditJobModal({ job, onClose, onSave }) {
                 Vacancy
               </label>
               <input
-                value={formData.vacancy}
+                type="number"
+                value={formData.vacancy || ""}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                   vacancy:Number(e.target.value)
+                    vacancy: Number(e.target.value),
                   })
                 }
                 className="w-full border focus:border-[#0ddaa0] rounded-xl px-4 py-3 outline-none"

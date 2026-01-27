@@ -7,7 +7,7 @@ import loginAnimation from "../../../public/assets/lotties/login.json";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useLoginMutation } from "redux/api/authApi";
 import { useDispatch } from "react-redux";
 
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -151,11 +151,19 @@ export default function Login() {
             {/* Submit Button */}
             <motion.button
               type="submit"
+              disabled={isLoading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full mt-4 bg-linear-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg text-sm tracking-wide shadow-lg"
+              className="w-full mt-4 bg-linear-to-r from-[#0ddaa0] to-[#8ce064] text-white py-3 rounded-lg text-sm tracking-wide shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Login
+              {isLoading ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
             </motion.button>
           </form>
 
@@ -166,7 +174,7 @@ export default function Login() {
               href="/register"
               className="text-emerald-600 font-medium hover:underline"
             >
-              Register
+       {isLoading ? "Loading..." : "Register"}
             </Link>
           </p>
 

@@ -18,6 +18,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import TypingText from "../component/TypingText";
+import { useGetJobsQuery, JobListItem } from "@/redux/service/jobApi";
 
 interface Job {
   id: string;
@@ -68,28 +69,57 @@ const Careers = () => {
   const filterButtonRef = useRef<HTMLButtonElement>(null);
   const jobListingsRef = useRef<HTMLDivElement>(null);
 
-  // Fetch jobs from JSON file
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch("/json/jobs.json");
-        if (!response.ok) {
-          throw new Error(`Failed to fetch jobs: ${response.status}`);
-        }
-        const data: Job[] = await response.json();
-        setJobs(data);
-      } catch (err) {
-        console.error("Error fetching jobs:", err);
-        setError(err instanceof Error ? err.message : "Unknown error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch jobs from API
+  const { data: apiData, isLoading, isError, error: apiError } = useGetJobsQuery({ page: 1, limit: 100 });
 
-    fetchJobs();
-  }, []);
+  useEffect(() => {
+    if (apiData?.data) {
+      const mappedJobs: Job[] = apiData.data.map((item: JobListItem) => ({
+        id: item.id,
+        title: item.title,
+        jobType: item.employmentType === "FULL_TIME" ? "Full Time" : 
+                 item.employmentType === "PART_TIME" ? "Part Time" : 
+                 item.employmentType === "INTERNSHIP" ? "Internship" : "Contract",
+        vacancy: 1, // Default as API list might not have it
+        company: {
+          name: "Ilmify Tech", // Default company name
+          logo: item.thumbnail || undefined
+        },
+        jobSummary: {
+          jobStatus: item.applicationStatus === "OPEN" ? "Active" : "Closed",
+          experienceRequired: "1-3 Years", // Dummy data for list view
+          applicationDeadline: item.applicationDeadline || "Open",
+          publishedDate: item.createdAt,
+          ageLimit: "N/A"
+        },
+        employmentInfo: {
+          workplaceType: item.workMode === "ONSITE" ? "On-site" : 
+                         item.workMode === "REMOTE" ? "Remote" : "Hybrid",
+          remoteAllowed: item.workMode === "REMOTE" || item.workMode === "HYBRID",
+          jobLocation: {
+            city: item.location ? item.location.split(',')[0] : "Dhaka",
+            district: item.location ? item.location.split(',').pop()?.trim() || "Dhaka" : "Dhaka"
+          }
+        },
+        salaryAndBenefits: {
+          salary: {
+            range: "Negotiable", // Default
+            negotiable: true
+          }
+        },
+        skillsAndExpertise: [] // Empty for list view
+      }));
+      setJobs(mappedJobs);
+    }
+  }, [apiData]);
+
+  // Update loading/error state based on API
+  useEffect(() => {
+    setLoading(isLoading);
+    if (isError) {
+      setError("Failed to load jobs from server");
+    }
+  }, [isLoading, isError]);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {

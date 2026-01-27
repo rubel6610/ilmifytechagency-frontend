@@ -1,32 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiSearch, HiOutlineBriefcase } from "react-icons/hi";
-
-
+import { useGetJobsQuery, JobListItem } from "@/redux/service/jobApi";
 import AppliedJobCard from "./components/AppliedJobCard";
 
 const AppliedJobs = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [appliedJobsData, setAppliedJobsData] = useState([]);
-
-  useEffect(() => {
-    fetch("/json/appliedjob.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setAppliedJobsData(data);
-        setLoading(false);
-      })
-      .catch((err) => console.error("Failed to load jobs.json", err));
-  }, []);
+  
+  // Fetch jobs from API
+  const { data, isLoading, isError } = useGetJobsQuery({ 
+    page: 1, 
+    limit: 100 // Get all jobs for now, can implement server-side pagination later
+  });
 
   const ITEMS_PER_PAGE = 8;
+  const appliedJobsData: JobListItem[] = data?.data || [];
 
   // 🔍 Filter jobs
   const filteredJobs = appliedJobsData.filter((job) =>
-    `${job.title} ${job.companyName} ${job.location}`
+    `${job.title ?? ''} ${job.location ?? ''}`
       .toLowerCase()
       .includes(searchQuery.toLowerCase()),
   );
@@ -37,6 +31,22 @@ const AppliedJobs = () => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500">Loading jobs...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500">Failed to load jobs. Please try again.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen font-sans">

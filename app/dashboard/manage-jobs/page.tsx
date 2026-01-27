@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Search,
   MoreVertical,
@@ -19,44 +19,36 @@ import {
 import PostJob from "./Components/post-job/PostJob";
 import EditJobModal from "./Components/EditJobModal";
 import JobDetailsModal from "./Components/JobDetailsModal";
+import { useGetJobsQuery, useDeleteJobMutation, JobListItem, Job } from "@/redux/service/jobApi";
+import Swal from "sweetalert2";
 
 const ITEMS_PER_PAGE = 10;
 
+type FilterStatus = "all" | "active" | "inactive" | "closed";
+
 export default function JobManagementPage() {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postJob, setPostJob] = useState(false);
-  const [editJob, setEditJob] = useState(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [viewJob, setViewJob] = useState(null);
-  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postJob, setPostJob] = useState<boolean>(false);
+  const [editJob, setEditJob] = useState<Job | JobListItem | null>(null);
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
+  const [viewJob, setViewJob] = useState<Job | JobListItem | null>(null);
+  const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/json/jobs.json");
-        const data = await res.json();
-        setJobs(data);
-      } catch (error) {
-        console.error("Failed to fetch jobs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch jobs from API
+  const { data, isLoading, isError, refetch } = useGetJobsQuery({ 
+    page: 1, 
+    limit: 100 
+  });
+  const [deleteJob] = useDeleteJobMutation();
 
-    fetchJobs();
-  }, []);
+  const jobs: JobListItem[] = data?.data || [];
 
-  const handleUpdateJob = (updatedJob) => {
-    setJobs((prevJobs) =>
-      prevJobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)),
-    );
-
+  const handleUpdateJob = (updatedJob: Job) => {
+    // Refetch jobs after update
+    refetch();
     setIsEditOpen(false);
     setEditJob(null);
   };
@@ -67,7 +59,7 @@ export default function JobManagementPage() {
       .includes(searchTerm.toLowerCase());
     const matchesFilter =
       filterStatus === "all" ||
-      job.jobSummary?.jobStatus?.toLowerCase() === filterStatus.toLowerCase();
+      job.applicationStatus?.toLowerCase() === filterStatus.toLowerCase();
     return matchesSearch && matchesFilter;
   });
 
@@ -79,19 +71,31 @@ export default function JobManagementPage() {
 
   // Stats
   const activeJobs = jobs.filter(
-    (j) => j.jobSummary?.jobStatus === "active",
+    (j) => j.applicationStatus?.toLowerCase() === "open",
   ).length;
   const closedJobs = jobs.filter(
-    (j) => j.jobSummary?.jobStatus === "closed",
+    (j) => j.applicationStatus?.toLowerCase() === "closed",
   ).length;
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg font-semibold text-gray-700">
             Loading Dashboard...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-red-600">
+            Failed to load jobs. Please try again.
           </p>
         </div>
       </div>
@@ -206,7 +210,7 @@ export default function JobManagementPage() {
                 className="border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 font-medium text-gray-700 outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                 value={filterStatus}
                 onChange={(e) => {
-                  setFilterStatus(e.target.value);
+                  setFilterStatus(e.target.value as FilterStatus);
                   setCurrentPage(1);
                 }}
               >
@@ -276,8 +280,7 @@ export default function JobManagementPage() {
                         </div>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1 sm:mt-0">
                           <MapPin size={12} className="text-emerald-500" />
-                          {job.employmentInfo?.jobLocation.city},{" "}
-                          {job.employmentInfo?.jobLocation.country}
+                          {job.location || "N/A"}
                         </div>
                       </div>
                     </td>
@@ -288,7 +291,7 @@ export default function JobManagementPage() {
                         Posted
                       </span>
                       <span className="text-sm text-gray-700">
-                        {job.jobSummary?.publishedDate}
+                        {new Date(job.createdAt).toLocaleDateString()}
                       </span>
                     </td>
 
@@ -298,7 +301,7 @@ export default function JobManagementPage() {
                         Deadline
                       </span>
                       <span className="font-semibold text-orange-600 text-sm bg-orange-50 px-3 py-1 rounded-lg inline-block">
-                        {job.jobSummary?.applicationDeadline}
+                        {job.applicationDeadline || "Not set"}
                       </span>
                     </td>
 
@@ -320,12 +323,12 @@ export default function JobManagementPage() {
                       </span>
                       <span
                         className={`px-3 py-1.5 text-xs font-bold uppercase rounded-full inline-block ${
-                          job.jobSummary?.jobStatus === "active"
+                          job.applicationStatus?.toLowerCase() === "open"
                             ? "bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 border border-emerald-200"
                             : "bg-linear-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
                         }`}
                       >
-                        {job.jobSummary?.jobStatus}
+                        {job.applicationStatus}
                       </span>
                     </td>
 
@@ -368,7 +371,34 @@ export default function JobManagementPage() {
 
                           <button
                             onClick={() => {
-                              setJobs(jobs.filter((j) => j.id !== job.id));
+                              Swal.fire({
+                                title: "Are you sure?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
+                              }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                  try {
+                                    const res = await deleteJob(job.id).unwrap();
+                                    if (res.status) {
+                                      Swal.fire({
+                                        title: "Deleted!",
+                                        text: res.message,
+                                        icon: "success"
+                                      });
+                                    }
+                                  } catch (error) {
+                                    Swal.fire({
+                                      title: "Error!",
+                                      text: "Failed to delete job",
+                                      icon: "error"
+                                    });
+                                  }
+                                }
+                              });
                               setActiveMenu(null);
                             }}
                             className="w-full px-4 py-2 text-sm flex items-center gap-3 hover:bg-red-50 text-gray-700 hover:text-red-600 transition-colors border-t border-gray-100"
@@ -434,7 +464,7 @@ export default function JobManagementPage() {
         )}
         {isEditOpen && editJob && (
           <EditJobModal
-            job={editJob}
+            jobId={editJob.id}
             onClose={() => setIsEditOpen(false)}
             onSave={handleUpdateJob}
           />

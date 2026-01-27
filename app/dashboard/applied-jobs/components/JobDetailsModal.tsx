@@ -1,6 +1,13 @@
-const { MapPin, DollarSign, Briefcase, Clock, Calendar, FileText, User, X } = require("lucide-react");
+import React from "react";
+import { MapPin, DollarSign, Briefcase, Clock, Calendar, FileText, User, X } from "lucide-react";
 
-const JobDetailsModal = ({ job, isOpen, onClose }) => {
+interface JobDetailsModalProps {
+  job: any; // Using any for now as this component seems to expect a different structure than the main AppliedJob interface
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, isOpen, onClose }) => {
   if (!isOpen || !job) return null;
 
   return (
@@ -89,7 +96,7 @@ const JobDetailsModal = ({ job, isOpen, onClose }) => {
               Key Responsibilities
             </h3>
             <ul className="space-y-2">
-              {job.responsibilities.map((resp, idx) => (
+              {job.responsibilities?.map((resp: string, idx: number) => (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 text-sm font-bold">
                     {idx + 1}
@@ -107,7 +114,7 @@ const JobDetailsModal = ({ job, isOpen, onClose }) => {
               Requirements
             </h3>
             <ul className="space-y-2">
-              {job.requirements.map((req, idx) => (
+              {job.requirements?.map((req: string, idx: number) => (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="w-6 h-6 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center flex-shrink-0 text-sm font-bold">
                     ✓
