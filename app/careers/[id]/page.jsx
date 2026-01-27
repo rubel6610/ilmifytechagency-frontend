@@ -23,7 +23,7 @@ const JobDetails = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch("/jobs.json");
+        const res = await fetch("/json/jobs.json");
         const data = await res.json();
         // Matching by slug or id
         const singleJob = data.find((j) => j.slug === params?.id || String(j.id) === String(params?.id));
