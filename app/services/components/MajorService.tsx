@@ -1,0 +1,99 @@
+
+"use client";
+
+import Image from "next/image";
+// import SecondaryButton from "@/app/component/button/SecondaryButton";
+import majorServiceData from "./majorServiceData";
+// import CustomBorder from "@/app/component/customBorder/CustomBorder";
+import Link from "next/link";
+import CustomBorder from "app/component/customBorder/CustomBorder";
+
+export default function MajorService({slug } : { slug: string }) {
+
+  const services = majorServiceData.filter((service) => service.slug === slug);
+
+  if (!services.length) return null;
+
+  return (
+    <section className="w-full py-20 bg-white">
+      <div className="container mx-auto px-8 space-y-28">
+        {/* ================= Page Heading ================= */}
+        <div className="text-center space-y-6">
+          <h2 className="text-3xl md:text-5xl font-bold">
+            {slug.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+          </h2>
+
+          <div className="flex justify-center">
+            <CustomBorder />
+          </div>
+        </div>
+
+        {/* ================= Services ================= */}
+        {services.map((service, index) => {
+          const isEven = index % 2 === 0;
+
+          return (
+            <div
+              key={service.id}
+              className={`flex flex-col lg:flex-row items-center gap-10 ${
+                !isEven ? "lg:flex-row-reverse" : ""
+              }`}
+            >
+              {/* TEXT */}
+              <div
+                className={`lg:w-1/2 text-gray-700 ${
+                  !isEven ? "lg:text-left" : ""
+                }`}
+              >
+                <h3 className="text-4xl font-semibold mb-8">{service.title}</h3>
+
+                <p className="mb-4 text-justify lg:text-inherit">
+                  {service.description}
+                </p>
+
+                <ul
+                  className={`grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc list-inside text-gray-600 ${
+                    !isEven ? "lg:list-inside" : ""
+                  }`}
+                >
+                  {service.features.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+
+                <div
+                  className={`mt-8 ${
+                    !isEven ? "lg:flex lg:justify-start" : ""
+                  }`}
+                >
+                  {/* <SecondaryButton
+                    className="bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
+                    address={`/services/${service.slug}/${service.serviceSlug}/pricing`}
+                    label="Get Started"
+                  /> */}
+
+                  <Link
+                    href={`/services/${service.slug}/${service.serviceSlug}/pricing`}
+                    className="inline-block bg-[#00D9A6] text-white px-6 py-3 rounded-full hover:bg-[#00C950]"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              </div>
+
+              {/* IMAGE */}
+              <div className="lg:w-1/2 relative h-72 md:h-96 w-full">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-contain rounded-xl shadow-lg"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
