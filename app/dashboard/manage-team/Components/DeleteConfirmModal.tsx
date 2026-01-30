@@ -2,14 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
-
-interface TeamMember {
-  id: string;
-  name: string;
-  // Add other properties if needed
-  [key: string]: any;
-}
+import { TeamMember } from '@/redux/service/teamApi';
 
 interface DeleteConfirmModalProps {
   isOpen: boolean;

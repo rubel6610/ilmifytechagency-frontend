@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  createApi,fetchBaseQuery,
- 
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
 //const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const baseUrl = "https://job-management-5wx5.onrender.com/api/v1";
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  "https://job-management-5wx5.onrender.com/api/v1";
 
 if (!baseUrl) {
   throw new Error("Environment variable NEXT_PUBLIC_BASE_URL is not set");
@@ -27,8 +26,6 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User","Products","Coupon","job"],
+  tagTypes: ["User", "Products", "Coupon", "job", "team"],
   endpoints: (builder) => ({}),
 });
-
-

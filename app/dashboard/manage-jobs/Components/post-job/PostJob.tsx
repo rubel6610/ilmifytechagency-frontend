@@ -141,7 +141,7 @@ const skillsPath = createFieldArrayPath<FormData>("skillsAndExpertise");
 // MAIN COMPONENT
 // ==========================================
 
-export default function PostJob({ onClose }: PostJobProps) {
+export default function PostJob({ onClose,onSuccess }: PostJobProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [createJob, { isLoading: isCreating }] = useCreateJobMutation();
 

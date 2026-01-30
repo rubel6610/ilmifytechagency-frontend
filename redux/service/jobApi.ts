@@ -13,7 +13,7 @@ export interface JobListItem {
   isPublished: boolean;
   createdAt: string;
   thumbnail: string | null;
-  applicationDeadline?: string;
+  applicationDeadline?: string | null;
 }
 
 // Full job details (for single job view)

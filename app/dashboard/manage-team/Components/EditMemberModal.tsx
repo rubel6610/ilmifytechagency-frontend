@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { AddMemberFormData, TeamMember } from '../page';
+import { TeamMember } from '@/redux/service/teamApi';
 
 const DEPARTMENTS = [
   'Management',
@@ -18,24 +18,26 @@ const DEPARTMENTS = [
   'App Development',
 ];
 
-
-
-interface FormData {
-  id: string;
+interface FormDataState {
   name: string;
+  fullName: string;
   position: string;
-  avatar?: string;
+  avatar?: string | File;
+  avatarPreview?: string;
   description: string;
   experience: string;
   department: string;
-  [key: string]: any;
+  email: string;
+  phone: string;
+  linkedin: string;
+  skills: string;
 }
 
 interface EditMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   member: TeamMember | null;
-  onSubmit: (formData: AddMemberFormData) => Promise<void>;
+  onSubmit: (formData: FormData) => Promise<void>;
 }
 
 export default function EditMemberModal({ 
@@ -44,7 +46,20 @@ export default function EditMemberModal({
   member, 
   onSubmit 
 }: EditMemberModalProps) {
-  const [formData, setFormData] = useState<FormData>(member || {} as FormData);
+  const [formData, setFormData] = useState<FormDataState>({
+    name: '',
+    fullName: '',
+    position: '',
+    avatar: '',
+    avatarPreview: '',
+    description: '',
+    experience: '',
+    department: '',
+    email: '',
+    phone: '',
+    linkedin: '',
+    skills: '',
+  });
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -52,7 +67,20 @@ export default function EditMemberModal({
 
   useEffect(() => {
     if (member) {
-      setFormData(member);
+      setFormData({
+        name: member.name || '',
+        fullName: member.fullName || '',
+        position: member.position || '',
+        avatar: member.profilePhoto || '',
+        avatarPreview: member.profilePhoto || '',
+        description: member.description || '',
+        experience: String(member.experience || ''),
+        department: member.department || '',
+        email: member.email || '',
+        phone: String(member.phone || ''),
+        linkedin: member.linkedin || '',
+        skills: member.skills?.join(', ') || '',
+      });
     }
   }, [member]);
 
@@ -68,7 +96,8 @@ export default function EditMemberModal({
       reader.onloadend = () => {
         setFormData((prev) => ({
           ...prev,
-          avatar: reader.result as string,
+          avatar: file,
+          avatarPreview: reader.result as string,
         }));
       };
       reader.readAsDataURL(file);
@@ -77,10 +106,36 @@ export default function EditMemberModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!member) return;
+    
     setIsSubmitting(true);
     try {
-      await onSubmit(formData as AddMemberFormData);
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('fullName', formData.fullName || formData.name);
+      submitData.append('position', formData.position);
+      submitData.append('department', formData.department);
+      submitData.append('experience', formData.experience);
+      submitData.append('description', formData.description);
+      submitData.append('email', formData.email);
+      submitData.append('phone', formData.phone);
+      submitData.append('linkedin', formData.linkedin);
+      submitData.append('skills', formData.skills);
+      submitData.append('status', member.status || 'ACTIVE');
+      
+      if (formData.avatar instanceof File) {
+        submitData.append('profilePhoto', formData.avatar);
+      }
+
+      console.log("Edit form data prepared, calling onSubmit...");
+      // Log FormData contents
+      for (let pair of submitData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
+      await onSubmit(submitData);
     } catch (error) {
+      console.error("Error in EditMemberModal:", error);
       setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
@@ -103,12 +158,13 @@ export default function EditMemberModal({
             animate={{ scale: 1, opacity: 1 }} 
             exit={{ scale: 0.95, opacity: 0 }} 
             onClick={(e) => e.stopPropagation()} 
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col"
           >
             <div className="sticky top-0 flex justify-between items-center p-6 border-b-2 border-slate-200 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10">
               <h2 className="text-2xl font-bold text-slate-900">Edit Member</h2>
               <motion.button 
                 onClick={onClose} 
+                type="button"
                 className="p-2 hover:bg-slate-200 rounded-lg"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,6 +172,7 @@ export default function EditMemberModal({
                 </svg>
               </motion.button>
             </div>
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
             <div className="p-6 space-y-3">
               {errorMessage && (
                 <div className="p-4 bg-red-100 border-2 border-red-400 rounded-lg text-red-700 text-sm font-semibold">
@@ -128,11 +185,11 @@ export default function EditMemberModal({
                 <div className="flex items-center gap-4">
                   <div onClick={() => fileInputRef.current?.click()} className="cursor-pointer">
                     <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-[#0ddaa0]/20 to-[#8ce064]/20 border-2 border-dashed border-[#0ddaa0] flex items-center justify-center overflow-hidden">
-                      {formData.avatar ? (
+                      {formData.avatarPreview ? (
                         <Image 
                           height={80} 
                           width={80} 
-                          src={formData.avatar} 
+                          src={formData.avatarPreview} 
                           alt="Preview" 
                           className="w-full h-full object-cover" 
                         />
@@ -179,6 +236,29 @@ export default function EditMemberModal({
                     type="text" 
                     name="position" 
                     value={formData.position || ''} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Email</label>
+                  <input 
+                    type="email" 
+                    name="email" 
+                    value={formData.email || ''} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Phone</label>
+                  <input 
+                    type="tel" 
+                    name="phone" 
+                    value={formData.phone || ''} 
                     onChange={handleInputChange} 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
@@ -239,6 +319,28 @@ export default function EditMemberModal({
               </div>
 
               <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">LinkedIn Profile</label>
+                <input 
+                  type="url" 
+                  name="linkedin" 
+                  value={formData.linkedin || ''} 
+                  onChange={handleInputChange} 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Skills (comma-separated)</label>
+                <input 
+                  type="text" 
+                  name="skills" 
+                  value={formData.skills || ''} 
+                  onChange={handleInputChange} 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
+              </div>
+
+              <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-2">Description</label>
                 <textarea 
                   name="description" 
@@ -251,13 +353,14 @@ export default function EditMemberModal({
 
               <div className="flex gap-4 pt-4 border-t-2 border-slate-200">
                 <button 
-                  onClick={handleSubmit} 
+                  type="submit"
                   disabled={isSubmitting} 
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white rounded-lg font-semibold disabled:opacity-50"
                 >
                   {isSubmitting ? 'Updating...' : 'Update Member'}
                 </button>
                 <button 
+                  type="button"
                   onClick={onClose} 
                   className="px-6 py-3 bg-slate-200 text-slate-900 rounded-lg font-semibold"
                 >
@@ -265,6 +368,7 @@ export default function EditMemberModal({
                 </button>
               </div>
             </div>
+            </form>
           </motion.div>
         </motion.div>
       )}
