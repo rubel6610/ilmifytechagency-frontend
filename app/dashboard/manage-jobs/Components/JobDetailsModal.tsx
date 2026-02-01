@@ -15,7 +15,7 @@ export default function JobDetailsModal({ jobId, onClose }: JobDetailsModalProps
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div  className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-3xl shadow-xl flex flex-col items-center">
           <div className="w-12 h-12 border-4 border-[#0ddaa0] border-t-transparent rounded-full animate-spin mb-4"></div>
           <p className="font-bold text-gray-600">Loading details...</p>
@@ -27,7 +27,7 @@ export default function JobDetailsModal({ jobId, onClose }: JobDetailsModalProps
   if (!job) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div data-lenis-prevent className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="sticky top-0 bg-white px-8 py-6 border-b flex justify-between items-center z-10">
           <div>

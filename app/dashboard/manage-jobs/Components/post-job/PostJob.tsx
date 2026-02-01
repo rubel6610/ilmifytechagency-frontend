@@ -260,8 +260,12 @@ export default function PostJob({ onClose, onSuccess, jobId }: PostJobProps) {
       };
 
       reset(mappedData);
+      // Set the salary negotiable state
+      if (job.sallaryNegotiable) {
+        setValue("salaryAndBenefits.salary.negotiable", true);
+      }
     }
-  }, [jobResponse, jobId, reset]);
+  }, [jobResponse, jobId, reset, setValue]);
 
 const {
   fields: respFields,
@@ -303,11 +307,13 @@ const {
   const salaryNegotiable = useWatch({
     control,
     name: "salaryAndBenefits.salary.negotiable",
+    defaultValue: false,
   });
 
   const remoteAllowed = useWatch({
     control,
     name: "employmentInfo.remoteAllowed",
+    defaultValue: false,
   });
 
   const [step, setStep] = useState(1);
@@ -377,17 +383,26 @@ const handleNext = async () => {
   const handleNegotiableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setValue("salaryAndBenefits.salary.negotiable", checked);
-    if (checked) setValue("salaryAndBenefits.salary.range", "Negotiable");
+    if (checked) {
+      setValue("salaryAndBenefits.salary.range", "Negotiable");
+    } else {
+      setValue("salaryAndBenefits.salary.range", "");
+    }
   };
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Final validation
+      // Validate all steps before submission
       for (const stepKey of [1, 2, 3, 4] as const) {
         const fields = stepFields[stepKey];
         const isValid = await trigger(fields);
         if (!isValid) {
-          alert(`Please complete step ${stepKey}`);
+          Swal.fire({
+            icon: "warning",
+            title: "Validation Error",
+            text: `Please complete all required fields in step ${stepKey}`,
+            position: "center",
+          });
           setStep(stepKey);
           return;
         }
@@ -396,11 +411,28 @@ const handleNext = async () => {
       // Merge final form data
       const finalData = { ...formData, ...data };
 
+      // Validate required fields
+      if (!finalData.title?.trim()) {
+        throw new Error("Job title is required");
+      }
+      if (!finalData.jobCategory?.trim()) {
+        throw new Error("Job category is required");
+      }
+      if (!finalData.companyName?.trim()) {
+        throw new Error("Company name is required");
+      }
+      if (!finalData.jobSummary?.applicationDeadline) {
+        throw new Error("Application deadline is required");
+      }
+
       // Transform form data to API format
       const apiFormData = new FormData();
 
       // Location (combine city, district, country)
-      const location = `${finalData.employmentInfo?.jobLocation?.city || ""}, ${finalData.employmentInfo?.jobLocation?.district || ""}, ${finalData.employmentInfo?.jobLocation?.country || ""}`;
+      const city = finalData.employmentInfo?.jobLocation?.city?.trim() || "";
+      const district = finalData.employmentInfo?.jobLocation?.district?.trim() || "";
+      const country = finalData.employmentInfo?.jobLocation?.country?.trim() || "";
+      const location = `${city}, ${district}, ${country}`;
       
       // Employment type mapping (FULL_TIME, PART_TIME, INTERNSHIP)
       const employmentTypeMap: Record<string, string> = {
@@ -424,46 +456,46 @@ const handleNext = async () => {
       const workMode = finalData.employmentInfo?.remoteAllowed ? "REMOTE" : (workModeMap[finalData.employmentInfo?.workplaceType || "Hybrid"] || "HYBRID");
       
       const jobData = {
-        title: finalData.title || "",
-        overview: finalData.jobDescription?.overview || "",
+        title: finalData.title?.trim() || "",
+        overview: finalData.jobDescription?.overview?.trim() || "",
         applicationDeadline: finalData.jobSummary?.applicationDeadline || "",
-        companyName: finalData.companyName || "",
-        companyWebsite: finalData.companyWebsite || "",
-        companyEmail: finalData.companyEmail || "",
-        companyPhone: finalData.companyPhone || "",
+        companyName: finalData.companyName?.trim() || "",
+        companyWebsite: finalData.companyWebsite?.trim() || "",
+        companyEmail: finalData.companyEmail?.trim() || "",
+        companyPhone: finalData.companyPhone?.trim() || "",
         vacancy: parseInt(finalData.vacancy || "1"),
         location: location,
         employmentType: employmentTypeMap[finalData.jobType || "Full Time"] || "FULL_TIME",
         jobType: jobTypeMap[finalData.contractType || "Permanent"] || "PERMANENT",
-        jobCategory: finalData.jobCategory || "",
+        jobCategory: finalData.jobCategory?.trim() || "",
         jobLevel: finalData.jobLevel === "Senior Level" ? "SENIOR_LEVEL" : (finalData.jobLevel === "Mid Level" ? "MID_LEVEL" : "ENTRY_LEVEL"),
         workMode: workMode,
-        ageLimit: finalData.jobSummary?.ageLimit || null,
-        salary: finalData.salaryAndBenefits?.salary?.range || "Negotiable",
-        city: finalData.employmentInfo?.jobLocation?.city || "",
-        district: finalData.employmentInfo?.jobLocation?.district || null,
-        country: finalData.employmentInfo?.jobLocation?.country || "",
+        ageLimit: finalData.jobSummary?.ageLimit?.trim() || null,
+        salary: finalData.salaryAndBenefits?.salary?.range?.trim() || "Negotiable",
+        city: city,
+        district: district || null,
+        country: country,
         workplace: finalData.employmentInfo?.workplaceType?.toUpperCase() || "ONSITE",
-        experience: finalData.jobSummary?.experienceRequired || "",
-        education: finalData.jobDescription?.requirements?.education || "",
+        experience: finalData.jobSummary?.experienceRequired?.trim() || "",
+        education: finalData.jobDescription?.requirements?.education?.trim() || "",
         sallaryNegotiable: finalData.salaryAndBenefits?.salary?.negotiable || false,
         sallaryRange: "", 
-        responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r.trim()) || [],
-        mandatorySkills: finalData.skillsAndExpertise?.filter(s => s.trim()) || [],
+        responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r?.trim()).map(r => r.trim()) || [],
+        mandatorySkills: finalData.skillsAndExpertise?.filter(s => s?.trim()).map(s => s.trim()) || [],
         fresherAllowed: finalData.jobSummary?.freshersAllowed || false,
-        niceToHave: finalData.niceToHave?.filter(n => n.trim()) || [],
-        benefits: finalData.benefits?.filter(b => b.trim()) || [],
-        workingHours: finalData.workingHours || "8 hour",
-        officeDays: finalData.officeDays || "sun - mon",
+        niceToHave: finalData.niceToHave?.filter(n => n?.trim()).map(n => n.trim()) || [],
+        benefits: finalData.benefits?.filter(b => b?.trim()).map(b => b.trim()) || [],
+        workingHours: finalData.workingHours?.trim() || "8 hour",
+        officeDays: finalData.officeDays?.trim() || "sun - mon",
         isPublished: true,
-        gender: finalData.jobSummary?.gender === "Any" ? "Others" : finalData.jobSummary?.gender,
+        gender: finalData.jobSummary?.gender === "Any" ? "Others" : (finalData.jobSummary?.gender || "Others"),
       };
 
       // Append JSON data as string
       apiFormData.append("data", JSON.stringify(jobData));
       
-      // Append thumbnail if exists
-      if (finalData.photo) {
+      // Append thumbnail if exists and is a valid File
+      if (finalData.photo && finalData.photo instanceof File) {
         apiFormData.append("thumbnail", finalData.photo);
       }
 
@@ -475,7 +507,7 @@ const handleNext = async () => {
         result = await createJob(apiFormData).unwrap();
       }
       
-      if(result.status == true){
+      if(result.status === true){
         Swal.fire({
           icon: "success",
           title: jobId ? "Job Updated Successfully!" : "Job Posted Successfully!",
@@ -493,7 +525,7 @@ const handleNext = async () => {
       }
 
       // Reset form and close modal
-      reset();
+      reset(defaultValues);
       setStep(1);
       setFormData({});
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -501,15 +533,20 @@ const handleNext = async () => {
       
     } catch (error: any) {
       console.error("Error posting job:", error);
-      const errorMessage = error?.data?.message || error?.message || "Failed to post job. Please try again.";
-      alert(`Error: ${errorMessage}`);
+      const errorMessage = error?.data?.message || error?.message || `Failed to ${jobId ? "update" : "post"} job. Please try again.`;
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: errorMessage,
+        position: "center",
+      });
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm overflow-y-auto" onClick={() => onClose(false)}>
+    <div data-lenis-prevent className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm overflow-y-auto" >
       <div className="flex justify-center items-center min-h-screen p-4 sm:p-6 lg:p-8">
-        <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
+        <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative">
           {/* Close Button */}
           <button 
             type="button"
@@ -686,9 +723,29 @@ const handleNext = async () => {
                   className="input"
                   min={new Date().toISOString().split("T")[0]}
                   {...register("jobSummary.applicationDeadline", {
-                    required: "Required",
-                    validate: (v) => new Date(v) >= new Date() || "Future date",
+                    required: "Application deadline is required",
+                    validate: (v) => {
+                      const selectedDate = new Date(v);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      return selectedDate >= today || "Deadline must be today or a future date";
+                    },
                   })}
+                />
+              </Field>
+
+              <Field label="Job Photo" error={errors.photo?.message as string}>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="input"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setValue("photo", file);
+                    }
+                  }}
                 />
               </Field>
 
@@ -881,7 +938,7 @@ const handleNext = async () => {
                     placeholder="10,000 – 20,000"
                     disabled={salaryNegotiable}
                     {...register("salaryAndBenefits.salary.range", {
-                      required: !salaryNegotiable && "Required",
+                      required: !salaryNegotiable ? "Salary range is required" : false,
                     })}
                   />
                 </Field>
@@ -891,6 +948,7 @@ const handleNext = async () => {
                     <input
                       type="checkbox"
                       className="mr-2 w-4 h-4"
+                      checked={salaryNegotiable}
                       onChange={handleNegotiableChange}
                     />
                     Salary Negotiable
@@ -911,8 +969,9 @@ const handleNext = async () => {
                   <div key={field.id} className="flex gap-2 items-start mb-3">
                     <input
                       className="input flex-1"
+                      placeholder="e.g., React, TypeScript, Node.js"
                       {...register(`skillsAndExpertise.${idx}` as const, {
-                        required: "Cannot be empty",
+                        required: "Skill cannot be empty",
                       })}
                     />
                     {skillsFields.length > 1 && (
@@ -926,6 +985,11 @@ const handleNext = async () => {
                     )}
                   </div>
                 ))}
+                {errors.skillsAndExpertise && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.skillsAndExpertise.message || "At least one skill is required"}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => appendSkills("")}
@@ -1051,8 +1115,9 @@ const handleNext = async () => {
                   <div key={field.id} className="flex gap-2 items-start mb-3">
                     <input
                       className="input flex-1"
+                      placeholder="e.g., Develop and maintain web applications"
                       {...register(`jobDescription.responsibilities.${idx}` as const, {
-                        required: "Cannot be empty",
+                        required: "Responsibility cannot be empty",
                       })}
                     />
                     {respFields.length > 1 && (
@@ -1066,6 +1131,11 @@ const handleNext = async () => {
                     )}
                   </div>
                 ))}
+                {errors.jobDescription?.responsibilities && (
+                  <p className="text-red-500 text-sm mt-1">
+                    At least one responsibility is required
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => appendResp("")}

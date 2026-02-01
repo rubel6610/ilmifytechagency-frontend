@@ -304,7 +304,7 @@ export default function JobManagementPage() {
                         Deadline
                       </span>
                       <span className="font-semibold text-orange-600 text-sm bg-orange-50 px-3 py-1 rounded-lg inline-block">
-                        {job.applicationDeadline || "Not set"}
+                        {job.applicationDeadline?.split("T")[0] || "Not set"}
                       </span>
                     </td>
 

@@ -181,7 +181,7 @@ const ProjectsPage = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Header Section */}
             <div className="">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1 className="text-xl md:text-3xl font-bold flex gap-2 items-center text-gray-800">
@@ -202,7 +202,7 @@ const ProjectsPage = () => {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Search and Filter Bar */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
                     <div className="flex flex-col md:flex-row gap-4">

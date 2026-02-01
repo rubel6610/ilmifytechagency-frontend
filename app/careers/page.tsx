@@ -97,7 +97,7 @@ const Careers = () => {
                          item.workMode === "REMOTE" ? "Remote" : "Hybrid",
           remoteAllowed: item.workMode === "REMOTE" || item.workMode === "HYBRID",
           jobLocation: {
-            city: item.location ? item.location.split(',')[0] : "Dhaka",
+            city: item.location ? item.location.split(',')[1] : "Dhaka",
             district: item.location ? item.location.split(',').pop()?.trim() || "Dhaka" : "Dhaka"
           }
         },
