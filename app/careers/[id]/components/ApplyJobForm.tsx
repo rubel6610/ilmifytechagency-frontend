@@ -13,6 +13,8 @@ import {
   FiMail,
   FiPhone,
 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 interface Job {
   id: string;
@@ -71,6 +73,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     phone: "",
   });
   const [quizScore, setQuizScore] = useState<{ score: number; correct: number; total: number } | null>(null);
+  const { token } = useSelector((state: RootState) => state.auth);
 
   // Timer effect
   useEffect(() => {
@@ -100,6 +103,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           jobTitle: job.title,
@@ -280,6 +284,9 @@ export default function ApplyJobForm({ job }: { job: Job }) {
       
       const response = await fetch("/api/submit-quiz", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
       
