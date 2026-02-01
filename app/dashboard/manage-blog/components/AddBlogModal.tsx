@@ -2,7 +2,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiX, HiCamera } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, ChangeEvent } from "react";
+import { UseFormRegister, UseFormHandleSubmit, FieldErrors, UseFormSetValue } from "react-hook-form";
+import { BlogFormData } from "../types";
+
+interface AddBlogModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  handleSubmit: UseFormHandleSubmit<BlogFormData>;
+  onAddSubmit: (data: BlogFormData) => Promise<void>;
+  register: UseFormRegister<BlogFormData>;
+  errors: FieldErrors<BlogFormData>;
+  preview: string | null;
+  setPreview: (preview: string | null) => void;
+  setValue: UseFormSetValue<BlogFormData>;
+  isSubmitting: boolean;
+}
 
 const AddBlogModal = ({
   isOpen,
@@ -15,15 +30,16 @@ const AddBlogModal = ({
   setPreview,
   setValue,
   isSubmitting,
-}) => {
-  const fileInputRef = useRef(null);
+}: AddBlogModalProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setValue("photo", file);
+    // @ts-ignore - Handle FileList vs File discrepancy if any, though react-hook-form usually handles this
+    setValue("photo", e.target.files); 
     const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result);
+    reader.onloadend = () => setPreview(reader.result as string);
     reader.readAsDataURL(file);
   };
 
@@ -71,13 +87,14 @@ const AddBlogModal = ({
                   placeholder="Enter a catchy title..."
                   className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
                 />
+                {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
               </div>
 
               {/* Image Upload Field */}
               <div className="space-y-1">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Thumbnail</label>
                 <div
-                  onClick={() => fileInputRef.current.click()}
+                  onClick={() => fileInputRef.current?.click()}
                   className={`relative group border-2 border-dashed rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 flex flex-col items-center justify-center
                     ${preview ? 'border-emerald-500 h-48' : 'border-gray-200 hover:border-emerald-400 h-32 bg-gray-50 hover:bg-emerald-50/30'}`}
                 >
@@ -108,8 +125,21 @@ const AddBlogModal = ({
                     ref={fileInputRef}
                     hidden
                     onChange={handleImageChange}
+                    accept="image/*"
                   />
                 </div>
+                {errors.photo && <p className="text-red-500 text-xs mt-1">{errors.photo.message}</p>}
+              </div>
+
+               {/* Category Field */}
+               <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Category</label>
+                <input
+                  {...register("category", { required: "Category required" })}
+                  placeholder="e.g. Technology, Lifestyle..."
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                />
+                {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>}
               </div>
 
               {/* Content Field */}
@@ -118,9 +148,10 @@ const AddBlogModal = ({
                 <textarea
                   {...register("content", { required: "Content required" })}
                   className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400 resize-none"
-                  rows="5"
+                  rows={5}
                   placeholder="Write your blog content here..."
                 />
+                {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content.message}</p>}
               </div>
 
               {/* Submit Button */}

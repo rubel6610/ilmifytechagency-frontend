@@ -1,8 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { HiX } from "react-icons/hi";
 import Image from "next/image";
+import { Blog } from "../types";
 
-const BlogDetailsModal = ({ blog, onClose }) => {
+interface BlogDetailsModalProps {
+  blog: Blog | null;
+  onClose: () => void;
+}
+
+const BlogDetailsModal = ({ blog, onClose }: BlogDetailsModalProps) => {
   if (!blog) return null;
 
   return (

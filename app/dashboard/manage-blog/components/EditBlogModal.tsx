@@ -1,15 +1,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { HiX, HiCamera } from "react-icons/hi";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, ChangeEvent, FormEvent } from "react";
+import { Blog } from "../types";
 
-const EditBlogModal = ({ editBlog, setEditBlog, handleEditSubmit }) => {
-  const editFileInputRef = useRef(null);
+interface EditBlogModalProps {
+  editBlog: Blog | null;
+  setEditBlog: (blog: Blog | null) => void;
+  handleEditSubmit: (e: FormEvent) => void;
+}
+
+const EditBlogModal = ({ editBlog, setEditBlog, handleEditSubmit }: EditBlogModalProps) => {
+  const editFileInputRef = useRef<HTMLInputElement>(null);
 
   if (!editBlog) return null;
 
-  const handleEditImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleEditImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setEditBlog({ ...editBlog, image: imageUrl });
@@ -37,7 +44,7 @@ const EditBlogModal = ({ editBlog, setEditBlog, handleEditSubmit }) => {
             {/* Image Section */}
             <div
               className="relative w-full h-40 rounded-2xl overflow-hidden border border-gray-200 group cursor-pointer"
-              onClick={() => editFileInputRef.current.click()}
+              onClick={() => editFileInputRef.current?.click()}
             >
               <Image src={editBlog.image} alt="Edit" fill className="object-cover" />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
@@ -68,7 +75,7 @@ const EditBlogModal = ({ editBlog, setEditBlog, handleEditSubmit }) => {
             <div>
               <label className="block text-sm font-semibold text-gray-600 mb-1">Description</label>
               <textarea
-                rows="4"
+                rows={4}
                 value={editBlog.description}
                 onChange={(e) => setEditBlog({ ...editBlog, description: e.target.value })}
                 className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none resize-none"

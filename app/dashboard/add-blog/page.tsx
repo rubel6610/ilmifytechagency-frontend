@@ -3,13 +3,23 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { role } from "../page";
+
 import { HiX } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+
+interface BlogFormData {
+  title: string;
+  category: string;
+  photo: File | null;
+  content: string;
+}
 
 const AddBlog = () => {
-  const fileInputRef = useRef(null);
-  const [preview, setPreview] = useState(null);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -20,7 +30,7 @@ const AddBlog = () => {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<BlogFormData>({
     defaultValues: {
       title: "",
       category: "",
@@ -30,7 +40,7 @@ const AddBlog = () => {
   });
 
   /** img handling and preview */
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -55,7 +65,7 @@ const AddBlog = () => {
     setValue("photo", file);
 
     const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result);
+    reader.onloadend = () => setPreview(reader.result as string);
     reader.readAsDataURL(file);
   };
 
@@ -66,7 +76,7 @@ const AddBlog = () => {
   };
 
   /** img upload and data submit handler */
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: BlogFormData) => {
     if (!data.photo) {
       setError("photo", { type: "manual", message: "Please upload an image" });
       return;
@@ -96,7 +106,7 @@ const AddBlog = () => {
           category: data.category,
           content: data.content,
           photo: imgData.data.url,
-          author: role,
+          author: user?.role || "USER",
           date: new Date().toLocaleDateString("en-GB"),
         };
 
@@ -165,7 +175,7 @@ const AddBlog = () => {
               Blog Thumbnail
             </label>
             <div
-              onClick={() => fileInputRef.current.click()}
+              onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl p-6 transition-all cursor-pointer bg-gray-50 text-center ${
                 errors.photo
                   ? "border-red-500"
@@ -182,7 +192,7 @@ const AddBlog = () => {
                   />
                   <button
                     type="button"
-                    onClick={(e) => {
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       e.stopPropagation();
                       removeImage();
                     }}
@@ -224,7 +234,7 @@ const AddBlog = () => {
             </label>
             <textarea
               {...register("content", { required: "Content is required" })}
-              rows="5"
+              rows={5}
               className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
               placeholder="Write blog description..."
             ></textarea>

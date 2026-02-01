@@ -1,8 +1,16 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineEye } from "react-icons/hi";
+import { Blog } from "../types";
 
-const BlogCard = ({ blog, onEdit, onDelete, onView }) => (
+interface BlogCardProps {
+  blog: Blog;
+  onEdit: () => void;
+  onDelete: () => void;
+  onView: () => void;
+}
+
+const BlogCard = ({ blog, onEdit, onDelete, onView }: BlogCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 15 }}
     animate={{ opacity: 1, y: 0 }}

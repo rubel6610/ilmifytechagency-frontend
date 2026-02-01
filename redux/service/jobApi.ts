@@ -14,24 +14,41 @@ export interface JobListItem {
   createdAt: string;
   thumbnail: string | null;
   applicationDeadline?: string | null;
+  applicationsCount: number;
 }
 
-// Full job details (for single job view)
 export interface Job extends JobListItem {
   overview: string;
   vacancy: number;
-  salary: string; 
+  companyName: string;
+  companyWebsite: string;
+  companyEmail: string;
+  companyPhone: string;
+  jobCategory: string;
+  jobLevel: string;
+  ageLimit: string | null;
+  salary: string;
+  city: string;
+  district: string | null;
+  country: string;
+  workplace: string;
   experience: string;
   education: string;
+  sallaryNegotiable: boolean;
+  applicationDeadline: string;
+  sallaryRange: string;
   responsibilities: string[];
   mandatorySkills: string[];
+  fresherAllowed: boolean;
   niceToHave: string[];
   benefits: string[];
   workingHours: string;
   officeDays: string;
   createdBy: string;
   updatedAt: string;
+  gender: string | null;
   applicationsCount: number;
+  
 }
 
 // Pagination meta
@@ -51,6 +68,13 @@ export interface JobListResponse {
 
 // Job create response
 export interface JobCreateResponse {
+  status: boolean;
+  message: string;
+  data: Job;
+}
+
+// Single job response
+export interface SingleJobResponse {
   status: boolean;
   message: string;
   data: Job;
@@ -80,7 +104,7 @@ export const jobApi = baseApi.injectEndpoints({
       providesTags: ["job"],
     }),
 
-    getJobById: builder.query<Job, string>({
+    getJobById: builder.query<SingleJobResponse, string>({
       query: (id) => ({
         url: `/job/${id}`,
         method: "GET",
@@ -101,7 +125,7 @@ export const jobApi = baseApi.injectEndpoints({
     updateJob: builder.mutation<JobCreateResponse, { id: string; formData: FormData }>({
       query: ({ id, formData }) => ({
         url: `/job/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: formData,
       }),
       invalidatesTags: ["job"],

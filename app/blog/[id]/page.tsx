@@ -4,15 +4,18 @@ import React, { useState,  } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { FaRegHeart, FaHeart,  } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 import BlogNotFound from "../components/BlogNotFound";
 import { blogsData } from "../components/blogsData";
-import { role } from "app/dashboard/page";
 
 
 
 const BlogPage = () => {
   const { id } = useParams();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const role = user?.role;
   const blogs = blogsData.find((blog) => blog.id == Number(id));
 
   // Like functionality states

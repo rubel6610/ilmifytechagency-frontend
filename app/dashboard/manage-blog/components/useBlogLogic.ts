@@ -1,28 +1,31 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { role } from "../../page";
+import { Blog, BlogFormData } from "../types";
+import { fakeBlogs } from "../fakeData";
 
 export const useBlogLogic = () => {
-  const [blogToDelete, setBlogToDelete] = useState(null);
+  const [blogToDelete, setBlogToDelete] = useState<number | string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedBlog, setSelectedBlog] = useState(null);
-  const [editBlog, setEditBlog] = useState(null);
+  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+  const [editBlog, setEditBlog] = useState<Blog | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const itemsPerPage = 8;
 
-  // Fetch Data
+  const role = "Admin"; // Hardcoded for now based on previous code context
+
+  // Fetch Data (Now uses fake data)
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/json/blogs.json");
-        const data = await response.json();
-        setBlogs(data);
+        // Simulating API fetch with fake data
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setBlogs(fakeBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -33,9 +36,9 @@ export const useBlogLogic = () => {
   }, []);
 
   // React Hook Form
-  const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<BlogFormData>();
 
-  const openDeleteModal = (id) => {
+  const openDeleteModal = (id: number | string) => {
     setBlogToDelete(id);
     setIsDeleteModalOpen(true);
   };
@@ -48,22 +51,22 @@ export const useBlogLogic = () => {
     }
   };
 
-  const onAddSubmit = async (data) => {
-    if (!data.photo) {
+  const onAddSubmit = async (data: BlogFormData) => {
+    if (!data.photo || data.photo.length === 0) {
       setError("photo", { type: "manual", message: "Please upload an image" });
       return;
     }
     setIsSubmitting(true);
     try {
       const formData = new FormData();
-      formData.append("image", data.photo);
+      formData.append("image", data.photo[0]);
       const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, { 
         method: "POST", body: formData 
       });
       const imgData = await response.json();
 
       if (imgData.success) {
-        const newBlog = {
+        const newBlog: Blog = {
           id: Date.now(),
           title: data.title,
           bussiness: data.category,
@@ -85,6 +88,12 @@ export const useBlogLogic = () => {
     }
   };
 
+  const handleEditSubmit = (data: any) => {
+    // This was missing from original useBlogLogic return but used in page.jsx
+    console.log("Edit submit:", data);
+    setEditBlog(null);
+  };
+
   // Filter & Pagination Logic
   const filteredBlogs = blogs.filter((blog) =>
     blog.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -96,6 +105,6 @@ export const useBlogLogic = () => {
     blogs, setBlogs, loading, searchQuery, setSearchQuery, currentPage, setCurrentPage,
     selectedBlog, setSelectedBlog, editBlog, setEditBlog, isAddModalOpen, setIsAddModalOpen,
     isSubmitting, preview, setPreview, itemsPerPage, currentBlogs, totalPages, filteredBlogs,
-    register, handleSubmit, setValue, setError, clearErrors, reset, errors, onAddSubmit, isAddModalOpen, isDeleteModalOpen, setIsDeleteModalOpen, openDeleteModal, confirmDelete
+    register, handleSubmit, setValue, setError, clearErrors, reset, errors, onAddSubmit, handleEditSubmit, isDeleteModalOpen, setIsDeleteModalOpen, openDeleteModal, confirmDelete
   };
 };

@@ -8,8 +8,8 @@ interface TeamMember {
   name: string;
   position: string; 
   description: string;
-  experience: string;
-  avatar?: string;
+  experience: number | string;
+  profilePhoto?: string;
 }
 
 interface TeamMemberCardProps {
@@ -219,12 +219,12 @@ export default function TeamMemberCard({
             </div>
 
             {/* Avatar Image */}
-            {member.avatar ? (
+            {member.profilePhoto ? (
               <div className="absolute inset-1 rounded-full overflow-hidden">
                 <Image
                   height={100}
                   width={100}
-                  src={member.avatar}
+                  src={member.profilePhoto}
                   alt={member.name}
                   className="w-full h-full object-cover rounded-full"
                 />

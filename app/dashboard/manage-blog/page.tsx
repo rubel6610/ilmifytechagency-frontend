@@ -9,8 +9,9 @@ import BlogCard from "./components/BlogCard";
 import EditBlogModal from "./components/EditBlogModal";
 import BlogDetailsModal from "./components/BlogDetailsModal";
 import { useBlogLogic } from "./components/useBlogLogic";
+import { Blog } from "./types";
 
-const ManageBlog = () => {
+const ManageBlog: React.FC = () => {
   const {
     loading,
     filteredBlogs,
@@ -106,7 +107,7 @@ const ManageBlog = () => {
       <div className="max-w-400 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <AnimatePresence mode="wait">
           {currentBlogs.length > 0 ? (
-            currentBlogs.map((blog) => (
+            currentBlogs.map((blog: Blog) => (
               <BlogCard
                 key={blog.id}
                 blog={blog}
@@ -123,10 +124,9 @@ const ManageBlog = () => {
         </AnimatePresence>
       </div>
 
-      {/* Pagination (Optional - if you want to keep it in main file) */}
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="max-w-7xl mx-auto mt-8 flex justify-center gap-2">
-          {/* Pagination Buttons logic stays here for now */}
           {[...Array(totalPages)].map((_, i) => (
             <button
               key={i}

@@ -24,9 +24,9 @@ export default function TeamGridCard({ member, index }: Props) {
       className="rounded-xl border p-4 text-center bg-white hover:shadow-xl transition"
     >
       <div className="relative w-24 h-24 mx-auto mb-4">
-        {member.avatar ? (
+        {member.profilePhoto ? (
           <Image
-            src={member.avatar}
+            src={member.profilePhoto}
             alt={member.name}
             fill
             className="rounded-full object-cover"
