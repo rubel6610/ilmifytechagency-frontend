@@ -3,18 +3,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-
-interface TeamMember {
-  id: string;
-  name: string;
-  position: string;
-  avatar?: string;
-  description: string;
-  experience: string;
-  department: string;
-  // Add other properties if needed
-  [key: string]: any;
-}
+import { TeamMember } from '@/redux/service/teamApi';
 
 interface ViewMemberModalProps {
   isOpen: boolean;
@@ -60,23 +49,37 @@ export default function ViewMemberModal({
               <div className="flex gap-6">
                 <div className="flex-shrink-0">
                   <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-[#0ddaa0]">
-                    {member.avatar && (
+                    {member.profilePhoto && (
                       <Image 
                         height={96} 
                         width={96} 
-                        src={member.avatar} 
+                        src={member.profilePhoto} 
                         alt={member.name} 
                         className="w-full h-full object-cover" 
                       />
                     )}
                   </div>
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-2xl font-bold text-slate-900">{member.name}</h3>
+                  {member.fullName && member.fullName !== member.name && (
+                    <p className="text-sm text-slate-500 font-medium">{member.fullName}</p>
+                  )}
                   <p className="text-[#0ddaa0] font-semibold">{member.position}</p>
-                  <div className="mt-4 space-y-2">
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
                     <p><span className="font-semibold text-slate-700">Department:</span> {member.department}</p>
-                    <p><span className="font-semibold text-slate-700">Experience:</span> {member.experience}</p>
+                    <p><span className="font-semibold text-slate-700">Experience:</span> {member.experience} years</p>
+                    {member.email && <p><span className="font-semibold text-slate-700">Email:</span> {member.email}</p>}
+                    {member.phone && <p><span className="font-semibold text-slate-700">Phone:</span> {member.phone}</p>}
+                    {member.linkedin && (
+                      <p>
+                        <span className="font-semibold text-slate-700">LinkedIn:</span>{' '}
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0ddaa0] hover:underline">
+                          Profile
+                        </a>
+                      </p>
+                    )}
+                    <p><span className="font-semibold text-slate-700">Status:</span> {member.status}</p>
                   </div>
                 </div>
               </div>
@@ -84,6 +87,21 @@ export default function ViewMemberModal({
                 <h4 className="font-semibold text-slate-900 mb-2">Description</h4>
                 <p className="text-slate-600">{member.description}</p>
               </div>
+              {member.skills && member.skills.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-2">Skills</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {member.skills.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="px-3 py-1 bg-[#0ddaa0]/10 text-[#0ddaa0] rounded-full text-xs font-semibold"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>

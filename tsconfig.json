@@ -36,7 +36,7 @@
     "app/contact/components/MapWithTooltip.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "app/our-team/all-members/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]

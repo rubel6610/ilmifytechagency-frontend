@@ -4,44 +4,26 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import TeamMemberCard from "./components/TeamMemberCard";
 import Link from "next/link";
-
-// 🔑 Define the team member structure
-interface TeamMember {
-  id: string | number;
-  name: string;
-  position: string;
-  description: string;
-  experience: string;
-  avatar?: string;
-}
+import { useGetTeamMembersQuery } from "@/redux/service/teamApi";
 
 export default function TeamPage() {
-  // ✅ Type the state properly
-  const [teamData, setTeamData] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [visibleIndices, setVisibleIndices] = useState<Set<number>>(new Set());
 
-  useEffect(() => {
-    // Fetch team data from public/team-data.json
-    fetch("/json/team-data.json")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch team data");
-        return res.json();
-      })
-      .then((data: TeamMember[]) => { // ✅ Type the response
-        setTeamData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  const {
+    data: teamData,
+    isLoading,
+    isError,
+    error: apiError,
+  } = useGetTeamMembersQuery({ page: 1, limit: 100 });
+  console.log(teamData);
+
+  // ✅ Safe fallback
+  const members = teamData?.data ?? [];
 
   // Scroll detection for showing cards one by one
   useEffect(() => {
+    if (!members.length) return;
+
     const handleScroll = () => {
       const cards = document.querySelectorAll("[data-card-index]");
       const newVisibleIndices = new Set<number>();
@@ -60,16 +42,20 @@ export default function TeamPage() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Call on mount
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [teamData.length]);
+    handleScroll();
 
-  if (error) {
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [members.length]);
+
+  // ❌ Error state
+  if (isError) {
     return (
       <div className="w-full min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-400 mb-2">Error loading team data</p>
-          <p className="text-slate-400 text-sm">{error}</p>
+          <p className="text-slate-400 text-sm">
+            {(apiError as any)?.data?.message || "Something went wrong"}
+          </p>
         </div>
       </div>
     );
@@ -97,7 +83,7 @@ export default function TeamPage() {
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, type: "spring" as const }}
+          transition={{ duration: 0.8, type: "spring" }}
           className="text-center pt-20 px-4"
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-4 text-transparent bg-clip-text bg-linear-to-r from-[#0ddaa0] via-[#8ce064] to-emerald-600">
@@ -110,7 +96,7 @@ export default function TeamPage() {
 
         {/* Team Timeline */}
         <div className="px-4 py-20 max-w-6xl mx-auto">
-          {loading ? (
+          {isLoading ? (
             <div className="flex items-center justify-center min-h-96">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -118,13 +104,13 @@ export default function TeamPage() {
                 className="w-12 h-12 border-4 border-slate-600 border-t-[#0ddaa0] rounded-full"
               />
             </div>
-          ) : teamData.length === 0 ? (
+          ) : members.length === 0 ? (
             <div className="text-center text-slate-400">
               <p>No team members found</p>
             </div>
           ) : (
             <div className="relative">
-              {teamData.slice(0, 4).map((member, index) => (
+              {members.slice(0, 4).map((member, index) => (
                 <div key={member.id} data-card-index={index}>
                   <TeamMemberCard
                     member={member}

@@ -19,8 +19,9 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    // Check if role exists and is ADMIN
-    if (decoded.role !== "ADMIN") {
+    // Check if role exists - allow both ADMIN and USER roles
+    // Backend returns role in uppercase (ADMIN, USER)
+    if (!decoded.role || (decoded.role !== "ADMIN" && decoded.role !== "USER")) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 

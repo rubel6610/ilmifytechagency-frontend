@@ -30,7 +30,7 @@ export const authApi = baseApi.injectEndpoints({
       query: ({ password, resetToken }) => ({
         url: `/auth/reset-password/${resetToken}`,
         method: "POST",
-        body: { password }, // ✅ must be an object
+        body: { password }, 
       }),
       invalidatesTags: ["User"],
     }),

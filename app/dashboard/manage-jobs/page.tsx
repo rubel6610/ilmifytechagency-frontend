@@ -19,7 +19,12 @@ import {
 import PostJob from "./Components/post-job/PostJob";
 import EditJobModal from "./Components/EditJobModal";
 import JobDetailsModal from "./Components/JobDetailsModal";
-import { useGetJobsQuery, useDeleteJobMutation, JobListItem, Job } from "@/redux/service/jobApi";
+import {
+  useGetJobsQuery,
+  useDeleteJobMutation,
+  JobListItem,
+  Job,
+} from "@/redux/service/jobApi";
 import Swal from "sweetalert2";
 
 const ITEMS_PER_PAGE = 10;
@@ -377,23 +382,25 @@ export default function JobManagementPage() {
                                 showCancelButton: true,
                                 confirmButtonColor: "#3085d6",
                                 cancelButtonColor: "#d33",
-                                confirmButtonText: "Yes, delete it!"
+                                confirmButtonText: "Yes, delete it!",
                               }).then(async (result) => {
                                 if (result.isConfirmed) {
                                   try {
-                                    const res = await deleteJob(job.id).unwrap();
+                                    const res = await deleteJob(
+                                      job.id,
+                                    ).unwrap();
                                     if (res.status) {
                                       Swal.fire({
                                         title: "Deleted!",
                                         text: res.message,
-                                        icon: "success"
+                                        icon: "success",
                                       });
                                     }
                                   } catch (error) {
                                     Swal.fire({
                                       title: "Error!",
                                       text: "Failed to delete job",
-                                      icon: "error"
+                                      icon: "error",
                                     });
                                   }
                                 }
@@ -465,7 +472,7 @@ export default function JobManagementPage() {
           <EditJobModal
             jobId={editJob.id}
             onClose={() => setIsEditOpen(false)}
-            onSave={handleUpdateJob}
+            onSuccess={() => refetch()}
           />
         )}
 

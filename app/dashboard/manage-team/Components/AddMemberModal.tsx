@@ -1,15 +1,13 @@
 "use client";
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { AddMemberFormData } from '../page';
 
 const DEPARTMENTS = [
   'Management',
   'Human Resources',
   'CMS',
-  'Custom Development',
+  'CUSTOM_DEVELOPMENT',
   'Shopify',
   'Finance',
   'Operations',
@@ -18,20 +16,25 @@ const DEPARTMENTS = [
   'App Development',
 ];
 
-interface FormData {
+interface FormDataState {
   name: string;
+  fullName: string;
   position: string;
   avatar: File | null;
   avatarPreview: string | null;
   description: string;
   experience: string;
   department: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  skills: string;
 }
 
 interface AddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (formData: AddMemberFormData) => Promise<void>;
+  onSubmit: (formData: FormData) => Promise<void>;
 }
 
 export default function AddMemberModal({ 
@@ -39,14 +42,19 @@ export default function AddMemberModal({
   onClose, 
   onSubmit 
 }: AddMemberModalProps) {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormDataState>({
     name: '',
+    fullName: '',
     position: '',
     avatar: null,
     avatarPreview: null,
     description: '',
     experience: '',
     department: '',
+    email: '',
+    phone: '',
+    linkedin: '',
+    skills: '',
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -109,18 +117,55 @@ export default function AddMemberModal({
 
     setIsSubmitting(true);
     try {
-      await onSubmit(formData as AddMemberFormData);
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('fullName', formData.fullName || formData.name);
+      submitData.append('position', formData.position);
+      submitData.append('department', formData.department);
+      submitData.append('experience', String(Number(formData.experience) || 0));
+      submitData.append('description', formData.description);
+      submitData.append('email', formData.email);
+      submitData.append('phone', String(Number(formData.phone) || 0));
+      submitData.append('linkedin', formData.linkedin);
+      
+      // Handle skills as an array for FormData
+      const skillsArray = formData.skills.split(',').map(s => s.trim()).filter(s => s !== '');
+      skillsArray.forEach(skill => {
+        submitData.append('skills', skill);
+      });
+      
+      submitData.append('status', 'ACTIVE');
+      
+      if (formData.avatar) {
+        submitData.append('profilePhoto', formData.avatar);
+      }
+
+      console.log("Form data prepared, calling onSubmit...");
+      // Log FormData contents
+      for (let pair of submitData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
+      await onSubmit(submitData);
+      
+      // Reset form
       setFormData({
         name: '',
+        fullName: '',
         position: '',
         avatar: null,
         avatarPreview: null,
         description: '',
         experience: '',
         department: '',
+        email: '',
+        phone: '',
+        linkedin: '',
+        skills: '',
       });
-      onClose(); // Close modal after successful submission
+      onClose();
     } catch (error) {
+      console.error("Error in AddMemberModal:", error);
       setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
@@ -143,12 +188,13 @@ export default function AddMemberModal({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col"
           >
-            <div className="sticky top-0 flex justify-between items-center p-6 border-b-2 border-slate-200 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 z-10">
+            <div className="sticky top-0 flex justify-between items-center p-3 border-b-2 border-slate-200 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 z-10">
               <h2 className="text-2xl font-bold text-slate-900">Add Team Member</h2>
               <motion.button
                 onClick={onClose}
+                type="button"
                 whileHover={{ scale: 1.1 }}
                 className="p-2 hover:bg-slate-200 rounded-lg transition-colors"
               >
@@ -158,7 +204,8 @@ export default function AddMemberModal({
               </motion.button>
             </div>
 
-            <div className="p-6 space-y-3">
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
+              <div className="p-6 space-y-3">
               {errorMessage && (
                 <motion.div 
                   initial={{ opacity: 0 }} 
@@ -170,7 +217,7 @@ export default function AddMemberModal({
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-3">Profile Photo</label>
+                <label className="block text-sm font-semibold text-slate-900 mb-1">Profile Photo</label>
                 <div className="flex items-center gap-4">
                   <div onClick={() => fileInputRef.current?.click()} className="cursor-pointer">
                     <motion.div 
@@ -215,24 +262,61 @@ export default function AddMemberModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Display Name</label>
                   <input 
                     type="text" 
                     name="name" 
                     value={formData.name} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Saruar Jahan" 
+                    placeholder="e.g., Saruar" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
                   <input 
                     type="text" 
-                    name="position" 
-                    value={formData.position} 
+                    name="fullName" 
+                    value={formData.fullName} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Founder & CEO" 
+                    placeholder="e.g., Saruar Jahan" 
+                    className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                <input 
+                  type="text" 
+                  name="position" 
+                  value={formData.position} 
+                  onChange={handleInputChange} 
+                  placeholder="e.g., Founder & CEO" 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Email</label>
+                  <input 
+                    type="email" 
+                    name="email" 
+                    value={formData.email} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., john@example.com" 
+                    className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Phone</label>
+                  <input 
+                    type="tel" 
+                    name="phone" 
+                    value={formData.phone} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., +1234567890" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
@@ -285,10 +369,34 @@ export default function AddMemberModal({
                     name="experience" 
                     value={formData.experience} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., 10+ years" 
+                    placeholder="e.g., 10+ years or 10" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">LinkedIn Profile</label>
+                <input 
+                  type="url" 
+                  name="linkedin" 
+                  value={formData.linkedin} 
+                  onChange={handleInputChange} 
+                  placeholder="e.g., https://linkedin.com/in/username" 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Skills (comma-separated)</label>
+                <input 
+                  type="text" 
+                  name="skills" 
+                  value={formData.skills} 
+                  onChange={handleInputChange} 
+                  placeholder="e.g., React, Node.js, TypeScript" 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
               </div>
 
               <div>
@@ -305,7 +413,7 @@ export default function AddMemberModal({
 
               <div className="flex gap-4 pt-4 border-t-2 border-slate-200">
                 <motion.button 
-                  onClick={handleSubmit} 
+                  type="submit"
                   disabled={isSubmitting} 
                   whileHover={{ scale: 1.05 }} 
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white rounded-lg font-semibold disabled:opacity-50 flex items-center justify-center gap-2"
@@ -324,6 +432,7 @@ export default function AddMemberModal({
                   )}
                 </motion.button>
                 <motion.button 
+                  type="button"
                   onClick={onClose} 
                   className="px-6 py-3 bg-slate-200 text-slate-900 rounded-lg font-semibold"
                 >
@@ -331,6 +440,7 @@ export default function AddMemberModal({
                 </motion.button>
               </div>
             </div>
+            </form>
           </motion.div>
         </motion.div>
       )}

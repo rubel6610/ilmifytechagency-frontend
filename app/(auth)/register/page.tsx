@@ -23,7 +23,6 @@ const Register = () => {
   // const [preview, setPreview] = useState<string | null>(null); // COMMENTED OUT
   // const [loading, setLoading] = useState<boolean>(false); // Replaced with RTK Query state
   const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
-  const role = "ADMIN"; // Hardcoded per backend requirements
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const {
@@ -65,7 +64,7 @@ const Register = () => {
         name: data.name,
         email: data.email,
         password: data.password,
-        // role, 
+        role : "USER",
       };
 
      const res = await registerUser(userPayload).unwrap();
@@ -78,7 +77,7 @@ const Register = () => {
         position: 'center',
       });
         reset();
-        router.push('/login');
+        router.push('/dashboard');
   
      }else{
       Swal.fire({

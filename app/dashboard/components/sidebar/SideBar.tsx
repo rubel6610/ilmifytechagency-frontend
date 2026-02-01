@@ -9,11 +9,11 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { logout } from "@/redux/features/authSlice";
 
-interface SidebarProps { 
-  role?: "user" | "admin";
+interface SidebarProps {
+  role?: "ADMIN" | "USER";
 }
 
-export default function Sidebar({ role = "user" }: SidebarProps) {
+export default function Sidebar({ role = "USER" }: SidebarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -21,29 +21,30 @@ export default function Sidebar({ role = "user" }: SidebarProps) {
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/login"); // Redirect to login page
+    router.push("/login");
   };
 
-  const links: NavItem[] = role === "admin" ? adminLinks : userLinks;
+  // Show admin links for admin role, user links for user role
+  const links: NavItem[] = role === "ADMIN" ? adminLinks : userLinks;
 
   // Prevent body scroll when sidebar is open
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [open]);
 
   return (
     <>
       {/* Mini Sidebar for Mobile - Fixed and Always Visible */}
-      <div 
+      <div
         className="lg:hidden fixed left-0 top-0 bottom-0 w-14 bg-gradient-to-b from-[#00c389] to-[#86e062] text-white z-30"
-        style={{ height: '100vh' }}
+        style={{ height: "100vh" }}
       >
         <div className="h-full flex flex-col">
           <button
@@ -87,7 +88,7 @@ export default function Sidebar({ role = "user" }: SidebarProps) {
               title="Profile"
             >
               <div className="w-7 h-7 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">
-                <User/>
+                <User />
               </div>
             </Link>
             <Link
@@ -127,9 +128,9 @@ export default function Sidebar({ role = "user" }: SidebarProps) {
           text-white
           transition-transform duration-300 ease-in-out
           lg:translate-x-0
-          ${open ? 'translate-x-0' : '-translate-x-full'}
+          ${open ? "translate-x-0" : "-translate-x-full"}
         `}
-        style={{ height: '100vh' }}
+        style={{ height: "100vh" }}
       >
         <SidebarContent
           links={links}
@@ -166,7 +167,9 @@ function SidebarContent({ links, pathname, close }: SidebarContentProps) {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-5 border-b border-white/20 flex-shrink-0">
-        <Link href="/" className="text-2xl font-bold">Dashboard</Link>
+        <Link href="/" className="text-2xl font-bold">
+          Dashboard
+        </Link>
         {close && (
           <button
             onClick={handleClose}
@@ -237,4 +240,4 @@ function SidebarContent({ links, pathname, close }: SidebarContentProps) {
       </div>
     </div>
   );
-} 
+}

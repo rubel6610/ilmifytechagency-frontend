@@ -2,16 +2,25 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import AddMemberModal from "./Components/AddMemberModal";
 import ViewMemberModal from "./Components/ViewMemberModal";
 import EditMemberModal from "./Components/EditMemberModal";
 import DeleteConfirmModal from "./Components/DeleteConfirmModal";
-
+import {
+  useGetTeamMembersQuery,
+  useCreateTeamMemberMutation,
+  useUpdateTeamMemberMutation,
+  useDeleteTeamMemberMutation,
+  TeamMember as APITeamMember,
+} from "@/redux/service/teamApi";
 
 export const DEPARTMENTS = [
   "Management",
   "Human Resources",
-  "Custom Development",
+  "CUSTOM_DEVELOPMENT",
   "CMS",
   "Shopify",
   "Finance",
@@ -21,34 +30,46 @@ export const DEPARTMENTS = [
   "App Development",
 ] as const;
 
-export type Department = typeof DEPARTMENTS[number];
+export type Department = (typeof DEPARTMENTS)[number];
 
-export interface TeamMember {
-  id: string; // 👈 enforce string only (use uuid or stringified ID)
-  name: string;
-  position: string;
-  department: Department;
-  experience: string;
-  description: string; // 👈 add this if modals require it
-}
+export type TeamMember = APITeamMember;
 
 export interface AddMemberFormData {
   name: string;
+  fullName?: string;
   position: string;
-  department: Department; // or string if you want flexibility during input
-  experience: string;
+  department: string;
+  experience: number | string;
   description: string;
+  profilePhoto?: File | string;
+  email?: string;
+  phone?: number;
+  linkedin?: string;
+  skills?: string[];
+  startDate?: string | null;
+  endDate?: string | null;
+  reportingTo?: string | null;
+  status?: "ACTIVE" | "INACTIVE";
 }
 
 export default function TeamManagement() {
-  const [teamData, setTeamData] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const { user, token } = useSelector((state: RootState) => state.auth);
+
+  // Redirect non-admin users
+  useEffect(() => {
+    if (!token || !user) {
+      router.push("/login");
+    } else if (user.role !== "ADMIN") {
+      router.push("/dashboard");
+    }
+  }, [token, user, router]);
+
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
-  const [editFormData, setEditFormData] = useState<TeamMember | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -57,69 +78,97 @@ export default function TeamManagement() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 10;
 
+  // Redux hooks
+  const { data: teamResponse, isLoading: loading, error: queryError } = useGetTeamMembersQuery({
+    page: 1,
+    limit: 100,
+  });
+  const [createTeamMember] = useCreateTeamMemberMutation();
+  const [updateTeamMember] = useUpdateTeamMemberMutation();
+  const [deleteTeamMember] = useDeleteTeamMemberMutation();
+
+  const teamData = teamResponse?.data || [];
+
+  // Debug logging
   useEffect(() => {
-    fetchTeamData();
-  }, []);
+    console.log("Team data loaded:", teamData.length, "members");
+    console.log("Loading:", loading);
+    console.log("Query error:", queryError);
+    console.log("User role:", user?.role);
+    console.log("Token present:", !!token);
+  }, [teamData, loading, queryError, user, token]);
 
-  const fetchTeamData = async () => {
+  // Show loading while checking authentication
+  if (!user || !token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0ddaa0]"></div>
+          <p className="mt-4 text-slate-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show access denied for non-admin users
+  if (user.role !== "ADMIN") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-50 px-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-red-200 p-8 text-center">
+          <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+            <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Access Denied</h2>
+          <p className="text-gray-600 mb-6">
+            Only administrators can manage team members.
+          </p>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="px-6 py-3 bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] text-white rounded-lg font-semibold hover:shadow-lg transition-all"
+          >
+            Return to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleAddMember = async (formData: FormData) => {
     try {
-      setLoading(true);
-      const response = await fetch("/json/team-data.json");
-      if (!response.ok) throw new Error("Failed to fetch data");
-      const data: { team?: TeamMember[]; } | TeamMember[] = await response.json();
-     const members = (Array.isArray(data) ? data : data.team || []).map(member => ({
-  ...member,
-  id: String(member.id), // ensure string
-}));
-      setTeamData(members);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching team data:", error);
-      setErrorMessage("Failed to load team data");
-      setLoading(false);
-    }
-  };
-
-  const handleAddMember = async (formData: AddMemberFormData) => {
-    try {
-      const newMember: TeamMember = {
-        ...formData,
-        id: crypto.randomUUID(),
-      };
-
-      // Simulate API call (you'll replace this with real backend later)
-      setTeamData([...teamData, newMember]);
-      setSuccessMessage("✓ Team member added successfully!");
+      console.log("Creating team member...");
+      const result = await createTeamMember(formData).unwrap();
+      console.log("Team member created successfully:", result);
+      setSuccessMessage("Team member added successfully!");
       setIsAddModalOpen(false);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+    } catch (error: any) {
+      console.error("Error creating team member:", error);
+      const message = error?.data?.message || error?.message || "Failed to add team member";
       setErrorMessage(`✕ ${message}`);
       setTimeout(() => setErrorMessage(""), 3000);
     }
   };
 
-  const handleEditMember = async (updatedData: AddMemberFormData) => {
+  const handleEditMember = async (formData: FormData) => {
     if (!selectedMember) return;
 
     try {
-      const updatedMember: TeamMember = {
-        ...selectedMember,
-        ...updatedData,
-      };
-
-      setTeamData(
-        teamData.map((member) =>
-          member.id === selectedMember.id ? updatedMember : member
-        )
-      );
-      setSuccessMessage("✓ Team member updated successfully!");
+      console.log("Updating team member with ID:", selectedMember.id);
+      const result = await updateTeamMember({
+        id: Number(selectedMember.id),
+        formData,
+      }).unwrap();
+      console.log("Team member updated successfully:", result);
+      setSuccessMessage("Team member updated successfully!");
       setIsEditModalOpen(false);
       setSelectedMember(null);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      setErrorMessage(`✕ ${message}`);
+    } catch (error: any) {
+      console.error("Error updating team member:", error);
+      const message = error?.data?.message || error?.message || "Failed to update team member";
+      setErrorMessage(` ${message}`);
       setTimeout(() => setErrorMessage(""), 3000);
     }
   };
@@ -128,13 +177,16 @@ export default function TeamManagement() {
     if (!selectedMember) return;
 
     try {
-      setTeamData(teamData.filter((member) => member.id !== selectedMember.id));
+      console.log("Deleting team member with ID:", selectedMember.id);
+      const result = await deleteTeamMember(Number(selectedMember.id)).unwrap();
+      console.log("Team member deleted successfully:", result);
       setSuccessMessage("✓ Team member deleted successfully!");
       setIsDeleteModalOpen(false);
       setSelectedMember(null);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+    } catch (error: any) {
+      console.error("Error deleting team member:", error);
+      const message = error?.data?.message || error?.message || "Failed to delete team member";
       setErrorMessage(`✕ ${message}`);
       setTimeout(() => setErrorMessage(""), 3000);
     }
@@ -148,7 +200,7 @@ export default function TeamManagement() {
     const matchesSearch =
       member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       member.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.experience.toLowerCase().includes(searchTerm.toLowerCase());
+      String(member.experience).toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesDepartment =
       departmentFilter === "All" || member.department === departmentFilter;
@@ -332,7 +384,6 @@ export default function TeamManagement() {
                             <motion.button
                               onClick={() => {
                                 setSelectedMember(member);
-                                setEditFormData(member);
                                 setIsEditModalOpen(true);
                               }}
                               whileHover={{ scale: 1.1 }}
@@ -426,9 +477,8 @@ export default function TeamManagement() {
         onClose={() => {
           setIsEditModalOpen(false);
           setSelectedMember(null);
-          setEditFormData(null);
         }}
-        member={editFormData }
+        member={selectedMember}
         onSubmit={handleEditMember}
       />
       <DeleteConfirmModal
