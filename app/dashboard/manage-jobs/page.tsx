@@ -40,12 +40,11 @@ export default function JobManagementPage() {
   // Fetch jobs from API
   const { data, isLoading, isError, refetch } = useGetJobsQuery({ 
     page: 1, 
-    limit: 100 
+    limit: 10 
   });
+  
   const [deleteJob] = useDeleteJobMutation();
-
-  const jobs: JobListItem[] = data?.data || [];
-
+  const jobs: JobListItem[] = data?.data || []; 
   const handleUpdateJob = (updatedJob: Job) => {
     // Refetch jobs after update
     refetch();

@@ -20,7 +20,7 @@ export interface JobListItem {
 export interface Job extends JobListItem {
   overview: string;
   vacancy: number;
-  salary: string;
+  salary: string; 
   experience: string;
   education: string;
   responsibilities: string[];

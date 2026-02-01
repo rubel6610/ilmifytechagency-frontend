@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -21,6 +21,8 @@ import { logout } from "@/redux/features/authSlice";
 import { FaUserCircle, FaSignOutAlt, FaTachometerAlt, FaCaretDown } from "react-icons/fa";
 
 const MotionLink = motion(Link);
+
+
 
 const Header = () => {
   const [nav, setNav] = useState(false);
@@ -229,6 +231,8 @@ const Header = () => {
                 Login
               </button>
             </Link>
+
+
           )}
         </div>
       </nav>
