@@ -285,7 +285,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
       const response = await fetch("/api/submit-quiz", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          token: `${token}`,
         },
         body: formData,
       });
