@@ -62,6 +62,9 @@ export default function ViewMemberModal({
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-slate-900">{member.name}</h3>
+                  {member.fullName && member.fullName !== member.name && (
+                    <p className="text-sm text-slate-500 font-medium">{member.fullName}</p>
+                  )}
                   <p className="text-[#0ddaa0] font-semibold">{member.position}</p>
                   <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
                     <p><span className="font-semibold text-slate-700">Department:</span> {member.department}</p>

@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/redux/features/authSlice";
 
 interface SidebarProps {
-  role?: "user" | "admin";
+  role?: "ADMIN" | "USER";
 }
 
-export default function Sidebar({ role = "user" }: SidebarProps) {
+export default function Sidebar({ role = "USER" }: SidebarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -24,7 +24,8 @@ export default function Sidebar({ role = "user" }: SidebarProps) {
     router.push("/login");
   };
 
-  const links: NavItem[] = role === "admin" ? adminLinks : userLinks;
+  // Show admin links for admin role, user links for user role
+  const links: NavItem[] = role === "ADMIN" ? adminLinks : userLinks;
 
   // Prevent body scroll when sidebar is open
   useEffect(() => {

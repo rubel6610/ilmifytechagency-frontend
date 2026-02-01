@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -8,7 +7,7 @@ const DEPARTMENTS = [
   'Management',
   'Human Resources',
   'CMS',
-  'Custom Development',
+  'CUSTOM_DEVELOPMENT',
   'Shopify',
   'Finance',
   'Operations',
@@ -123,12 +122,18 @@ export default function AddMemberModal({
       submitData.append('fullName', formData.fullName || formData.name);
       submitData.append('position', formData.position);
       submitData.append('department', formData.department);
-      submitData.append('experience', formData.experience);
+      submitData.append('experience', String(Number(formData.experience) || 0));
       submitData.append('description', formData.description);
       submitData.append('email', formData.email);
-      submitData.append('phone', formData.phone);
+      submitData.append('phone', String(Number(formData.phone) || 0));
       submitData.append('linkedin', formData.linkedin);
-      submitData.append('skills', formData.skills);
+      
+      // Handle skills as an array for FormData
+      const skillsArray = formData.skills.split(',').map(s => s.trim()).filter(s => s !== '');
+      skillsArray.forEach(skill => {
+        submitData.append('skills', skill);
+      });
+      
       submitData.append('status', 'ACTIVE');
       
       if (formData.avatar) {
@@ -257,27 +262,39 @@ export default function AddMemberModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Display Name</label>
                   <input 
                     type="text" 
                     name="name" 
                     value={formData.name} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Saruar Jahan" 
+                    placeholder="e.g., Saruar" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
                   <input 
                     type="text" 
-                    name="position" 
-                    value={formData.position} 
+                    name="fullName" 
+                    value={formData.fullName} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Founder & CEO" 
+                    placeholder="e.g., Saruar Jahan" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                <input 
+                  type="text" 
+                  name="position" 
+                  value={formData.position} 
+                  onChange={handleInputChange} 
+                  placeholder="e.g., Founder & CEO" 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

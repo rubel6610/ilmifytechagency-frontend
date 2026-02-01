@@ -115,12 +115,18 @@ export default function EditMemberModal({
       submitData.append('fullName', formData.fullName || formData.name);
       submitData.append('position', formData.position);
       submitData.append('department', formData.department);
-      submitData.append('experience', formData.experience);
+      submitData.append('experience', String(Number(formData.experience) || 0));
       submitData.append('description', formData.description);
       submitData.append('email', formData.email);
-      submitData.append('phone', formData.phone);
+      submitData.append('phone', String(Number(formData.phone) || 0));
       submitData.append('linkedin', formData.linkedin);
-      submitData.append('skills', formData.skills);
+      
+      // Handle skills as an array for FormData
+      const skillsArray = formData.skills.split(',').map(s => s.trim()).filter(s => s !== '');
+      skillsArray.forEach(skill => {
+        submitData.append('skills', skill);
+      });
+      
       submitData.append('status', member.status || 'ACTIVE');
       
       if (formData.avatar instanceof File) {
@@ -221,7 +227,7 @@ export default function EditMemberModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Display Name</label>
                   <input 
                     type="text" 
                     name="name" 
@@ -231,15 +237,26 @@ export default function EditMemberModal({
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
                   <input 
                     type="text" 
-                    name="position" 
-                    value={formData.position || ''} 
+                    name="fullName" 
+                    value={formData.fullName || ''} 
                     onChange={handleInputChange} 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Position</label>
+                <input 
+                  type="text" 
+                  name="position" 
+                  value={formData.position || ''} 
+                  onChange={handleInputChange} 
+                  className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

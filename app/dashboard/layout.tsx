@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-type UserRole = "admin" | "user";
+type UserRole = "ADMIN" | "USER";
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { user, token } = useSelector((state: RootState) => state.auth);
@@ -24,9 +24,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, [token, user, router]);
 
   // Determine user role with proper type checking
+  // Backend returns role in uppercase (ADMIN, USER), convert to lowercase for internal use
   const role: UserRole | undefined = 
-    user?.role === "admin" || user?.role === "user" 
-      ? (user.role as UserRole) 
+    user?.role === "ADMIN" || user?.role === "USER" 
+      ? (user.role === "ADMIN" ? "ADMIN" : "USER") 
       : undefined;
 
   // Show loading or redirect if no valid role

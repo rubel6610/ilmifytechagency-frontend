@@ -20,7 +20,7 @@ import {
 export const DEPARTMENTS = [
   "Management",
   "Human Resources",
-  "Custom Development",
+  "CUSTOM_DEVELOPMENT",
   "CMS",
   "Shopify",
   "Finance",
@@ -60,7 +60,7 @@ export default function TeamManagement() {
   useEffect(() => {
     if (!token || !user) {
       router.push("/login");
-    } else if (user.role !== "admin") {
+    } else if (user.role !== "ADMIN") {
       router.push("/dashboard");
     }
   }, [token, user, router]);
@@ -111,7 +111,7 @@ export default function TeamManagement() {
   }
 
   // Show access denied for non-admin users
-  if (user.role !== "admin") {
+  if (user.role !== "ADMIN") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-50 px-4">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-red-200 p-8 text-center">
@@ -140,7 +140,7 @@ export default function TeamManagement() {
       console.log("Creating team member...");
       const result = await createTeamMember(formData).unwrap();
       console.log("Team member created successfully:", result);
-      setSuccessMessage("✓ Team member added successfully!");
+      setSuccessMessage("Team member added successfully!");
       setIsAddModalOpen(false);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error: any) {
@@ -161,14 +161,14 @@ export default function TeamManagement() {
         formData,
       }).unwrap();
       console.log("Team member updated successfully:", result);
-      setSuccessMessage("✓ Team member updated successfully!");
+      setSuccessMessage("Team member updated successfully!");
       setIsEditModalOpen(false);
       setSelectedMember(null);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error: any) {
       console.error("Error updating team member:", error);
       const message = error?.data?.message || error?.message || "Failed to update team member";
-      setErrorMessage(`✕ ${message}`);
+      setErrorMessage(` ${message}`);
       setTimeout(() => setErrorMessage(""), 3000);
     }
   };

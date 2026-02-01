@@ -8,7 +8,8 @@ const Page = () => {
   const { user } = useSelector((state: RootState) => state.auth);
 
   // Admin sees AdminDashboard, User sees UserDashboard
-  return user?.role === "admin" ? <AdminDashboard /> : <UserDashboard />;
+  // Backend returns role in uppercase (ADMIN, USER)
+  return user?.role === "ADMIN" ? <AdminDashboard /> : <UserDashboard />;
 };
 
 export default Page;
