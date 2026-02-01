@@ -4,16 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 const DEPARTMENTS = [
-  'Management',
-  'Human Resources',
+  'MANAGEMENT',
+  'HUMAN_RESOURCE',
   'CMS',
   'CUSTOM_DEVELOPMENT',
-  'Shopify',
-  'Finance',
-  'Operations',
-  'Marketing',
-  'Graphics Design',
-  'App Development',
+  'SHOPIFY',
+  'MARKETING',
+  'SALES',
+  'SUPPORT',
 ];
 
 interface FormDataState {
@@ -118,23 +116,22 @@ export default function AddMemberModal({
     setIsSubmitting(true);
     try {
       const submitData = new FormData();
-      submitData.append('name', formData.name);
-      submitData.append('fullName', formData.fullName || formData.name);
-      submitData.append('position', formData.position);
-      submitData.append('department', formData.department);
-      submitData.append('experience', String(Number(formData.experience) || 0));
-      submitData.append('description', formData.description);
-      submitData.append('email', formData.email);
-      submitData.append('phone', String(Number(formData.phone) || 0));
-      submitData.append('linkedin', formData.linkedin);
       
-      // Handle skills as an array for FormData
-      const skillsArray = formData.skills.split(',').map(s => s.trim()).filter(s => s !== '');
-      skillsArray.forEach(skill => {
-        submitData.append('skills', skill);
-      });
-      
-      submitData.append('status', 'ACTIVE');
+      const memberData = {
+        name: formData.name,
+        fullName: formData.fullName || formData.name,
+        position: formData.position,
+        department: formData.department,
+        experience: Number(formData.experience) || 0,
+        description: formData.description,
+        email: formData.email || undefined,
+        phone: formData.phone || undefined,
+        linkedin: formData.linkedin || undefined,
+        skills: formData.skills.split(',').map(s => s.trim()).filter(s => s !== ''),
+        status: 'ACTIVE'
+      };
+
+      submitData.append('data', JSON.stringify(memberData));
       
       if (formData.avatar) {
         submitData.append('profilePhoto', formData.avatar);

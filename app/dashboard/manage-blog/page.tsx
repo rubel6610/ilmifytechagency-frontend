@@ -13,9 +13,8 @@ import { Blog } from "./types";
 
 const ManageBlog: React.FC = () => {
   const {
+    blogs,
     loading,
-    filteredBlogs,
-    currentBlogs,
     searchQuery,
     setSearchQuery,
     setCurrentPage,
@@ -25,7 +24,7 @@ const ManageBlog: React.FC = () => {
     setEditBlog,
     selectedBlog,
     setSelectedBlog,
-    handleEditSubmit,
+    onEditSubmit,
     isSubmitting,
     preview,
     setPreview,
@@ -34,6 +33,7 @@ const ManageBlog: React.FC = () => {
     onAddSubmit,
     errors,
     setValue,
+    reset,
     totalPages,
     currentPage,
     isDeleteModalOpen,
@@ -68,7 +68,7 @@ const ManageBlog: React.FC = () => {
             <p className="text-gray-500 text-sm font-medium">
               Total{" "}
               <span className="text-emerald-600 font-bold">
-                {filteredBlogs.length}
+                {blogs.length}
               </span>{" "}
               blogs found
             </p>
@@ -106,8 +106,8 @@ const ManageBlog: React.FC = () => {
       {/* Blogs Grid */}
       <div className="max-w-400 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <AnimatePresence mode="wait">
-          {currentBlogs.length > 0 ? (
-            currentBlogs.map((blog: Blog) => (
+          {blogs.length > 0 ? (
+            blogs.map((blog: Blog) => (
               <BlogCard
                 key={blog.id}
                 blog={blog}
@@ -159,8 +159,16 @@ const ManageBlog: React.FC = () => {
 
       <EditBlogModal
         editBlog={editBlog}
-        setEditBlog={setEditBlog}
-        handleEditSubmit={handleEditSubmit}
+        onClose={() => setEditBlog(null)}
+        handleSubmit={handleSubmit}
+        onEditSubmit={onEditSubmit}
+        register={register}
+        errors={errors}
+        preview={preview}
+        setPreview={setPreview}
+        setValue={setValue}
+        reset={reset}
+        isSubmitting={isSubmitting}
       />
 
       <BlogDetailsModal

@@ -1,102 +1,208 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { HiX, HiCamera } from "react-icons/hi";
+import { CgSpinner } from "react-icons/cg";
 import Image from "next/image";
-import { useRef, ChangeEvent, FormEvent } from "react";
-import { Blog } from "../types";
+import { useRef, ChangeEvent, useEffect } from "react";
+import { UseFormRegister, UseFormHandleSubmit, FieldErrors, UseFormSetValue, UseFormReset } from "react-hook-form";
+import { Blog, BlogFormData } from "../types";
 
 interface EditBlogModalProps {
   editBlog: Blog | null;
-  setEditBlog: (blog: Blog | null) => void;
-  handleEditSubmit: (e: FormEvent) => void;
+  onClose: () => void;
+  handleSubmit: UseFormHandleSubmit<BlogFormData>;
+  onEditSubmit: (data: BlogFormData) => Promise<void>;
+  register: UseFormRegister<BlogFormData>;
+  errors: FieldErrors<BlogFormData>;
+  preview: string | null;
+  setPreview: (preview: string | null) => void;
+  setValue: UseFormSetValue<BlogFormData>;
+  reset: UseFormReset<BlogFormData>;
+  isSubmitting: boolean;
 }
 
-const EditBlogModal = ({ editBlog, setEditBlog, handleEditSubmit }: EditBlogModalProps) => {
-  const editFileInputRef = useRef<HTMLInputElement>(null);
+const EditBlogModal = ({
+  editBlog,
+  onClose,
+  handleSubmit,
+  onEditSubmit,
+  register,
+  errors,
+  preview,
+  setPreview,
+  setValue,
+  reset,
+  isSubmitting,
+}: EditBlogModalProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editBlog) {
+      reset({
+        title: editBlog.title,
+        subTitle: editBlog.subTitle,
+        des: editBlog.des,
+        active: editBlog.active,
+      });
+      setPreview(editBlog.images?.[0] || null);
+    }
+  }, [editBlog, reset, setPreview]);
 
   if (!editBlog) return null;
 
-  const handleEditImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setEditBlog({ ...editBlog, image: imageUrl });
-    }
+    if (!file) return;
+    setValue("images", e.target.files!);
+    const reader = new FileReader();
+    reader.onloadend = () => setPreview(reader.result as string);
+    reader.readAsDataURL(file);
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+        {/* Overlay */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={() => setEditBlog(null)}
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={onClose}
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-[2px]"
         />
+        
+        {/* Modal Content */}
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="relative bg-white w-full max-w-lg rounded-3xl p-8 shadow-2xl z-10"
+          initial={{ scale: 0.95, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: 20 }}
+          className="relative bg-white w-full max-w-2xl rounded-4xl p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] z-10 border border-gray-100 my-8"
         >
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Blog Post</h2>
-          <form onSubmit={handleEditSubmit} className="space-y-4">
-            {/* Image Section */}
-            <div
-              className="relative w-full h-40 rounded-2xl overflow-hidden border border-gray-200 group cursor-pointer"
-              onClick={() => editFileInputRef.current?.click()}
-            >
-              <Image src={editBlog.image} alt="Edit" fill className="object-cover" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                <HiCamera className="text-white text-3xl" />
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 p-2 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all duration-200"
+          >
+            <HiX className="text-2xl" />
+          </button>
+
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-extrabold text-gray-800">
+              Edit <span className="text-emerald-500">Blog Post</span>
+            </h2>
+          </div>
+
+          <form onSubmit={handleSubmit(onEditSubmit)} className="space-y-6">
+            {/* Title Field */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Title</label>
+                <input
+                  {...register("title", { required: "Title required" })}
+                  placeholder="Main title..."
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                />
+                {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
               </div>
-              <input
-                type="file"
-                ref={editFileInputRef}
-                hidden
-                accept="image/*"
-                onChange={handleEditImageChange}
-              />
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Sub Title</label>
+                <input
+                  {...register("subTitle", { required: "Sub title required" })}
+                  placeholder="Short summary..."
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                />
+                {errors.subTitle && <p className="text-red-500 text-xs mt-1">{errors.subTitle.message}</p>}
+              </div>
             </div>
 
-            {/* Title Input */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">Title</label>
-              <input
-                type="text"
-                value={editBlog.title}
-                onChange={(e) => setEditBlog({ ...editBlog, title: e.target.value })}
-                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none"
-                required
-              />
+            {/* Image Upload Field */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Banner Image</label>
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className={`relative group border-2 border-dashed rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 flex flex-col items-center justify-center
+                  ${preview ? 'border-emerald-500 h-56' : 'border-gray-200 hover:border-emerald-400 h-32 bg-gray-50 hover:bg-emerald-50/30'}`}
+              >
+                {preview ? (
+                  <>
+                    <Image
+                      src={preview}
+                      alt="preview"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <p className="text-white font-medium flex items-center gap-2">
+                        <HiCamera /> Change Photo
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <div className="bg-emerald-100 p-3 rounded-full inline-block mb-2 group-hover:scale-110 transition-transform duration-300">
+                      <HiCamera className="text-emerald-600 text-2xl" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-500">Click to upload banner</p>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  hidden
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+              </div>
             </div>
 
-            {/* Description Input */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">Description</label>
+            {/* Description Field */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Description (Content)</label>
               <textarea
-                rows={4}
-                value={editBlog.description}
-                onChange={(e) => setEditBlog({ ...editBlog, description: e.target.value })}
-                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
-                required
+                {...register("des", { required: "Description required" })}
+                className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400 resize-none font-sans"
+                rows={6}
+                placeholder="Tell your story..."
               />
+              {errors.des && <p className="text-red-500 text-xs mt-1">{errors.des.message}</p>}
             </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3">
+            {/* Status Field */}
+            <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+              <input
+                type="checkbox"
+                id="active"
+                {...register("active")}
+                className="w-5 h-5 accent-emerald-500 rounded-lg cursor-pointer"
+              />
+              <label htmlFor="active" className="text-sm font-bold text-gray-700 cursor-pointer">
+                Active / Published
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex gap-4">
               <button
                 type="button"
-                onClick={() => setEditBlog(null)}
-                className="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl"
+                onClick={onClose}
+                className="flex-1 py-4 bg-gray-100 text-gray-600 font-bold rounded-2xl hover:bg-gray-200 transition-all active:scale-[0.98]"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 bg-emerald-500 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-600 transition-all"
+                disabled={isSubmitting}
+                className="flex-[2] py-4 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(16,185,129,0.2)] hover:shadow-[0_10px_25px_rgba(16,185,129,0.3)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2"
               >
-                Update
+                {isSubmitting ? (
+                  <>
+                    <CgSpinner className="animate-spin text-xl" />
+                    <span>Updating...</span>
+                  </>
+                ) : (
+                  "Save Changes"
+                )}
               </button>
             </div>
           </form>

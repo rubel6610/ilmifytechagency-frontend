@@ -18,16 +18,14 @@ import {
 } from "@/redux/service/teamApi";
 
 export const DEPARTMENTS = [
-  "Management",
-  "Human Resources",
-  "CUSTOM_DEVELOPMENT",
+  "MANAGEMENT",
+  "HUMAN_RESOURCE",
   "CMS",
-  "Shopify",
-  "Finance",
-  "Operations",
-  "Marketing",
-  "Graphics Design",
-  "App Development",
+  "CUSTOM_DEVELOPMENT",
+  "SHOPIFY",
+  "MARKETING",
+  "SALES",
+  "SUPPORT",
 ] as const;
 
 export type Department = (typeof DEPARTMENTS)[number];
@@ -157,7 +155,7 @@ export default function TeamManagement() {
     try {
       console.log("Updating team member with ID:", selectedMember.id);
       const result = await updateTeamMember({
-        id: Number(selectedMember.id),
+        id: selectedMember.id,
         formData,
       }).unwrap();
       console.log("Team member updated successfully:", result);
@@ -178,7 +176,7 @@ export default function TeamManagement() {
 
     try {
       console.log("Deleting team member with ID:", selectedMember.id);
-      const result = await deleteTeamMember(Number(selectedMember.id)).unwrap();
+      const result = await deleteTeamMember(selectedMember.id).unwrap();
       console.log("Team member deleted successfully:", result);
       setSuccessMessage("✓ Team member deleted successfully!");
       setIsDeleteModalOpen(false);

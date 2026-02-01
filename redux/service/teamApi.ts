@@ -1,23 +1,36 @@
 import { baseApi } from "../api/baseApi";
 
+// Enums based on backend
+export type Department =
+  | "MANAGEMENT"
+  | "HUMAN_RESOURCE"
+  | "CMS"
+  | "CUSTOM_DEVELOPMENT"
+  | "SHOPIFY"
+  | "MARKETING"
+  | "SALES"
+  | "SUPPORT";
+
+export type TeamMemberStatus = "ACTIVE" | "INACTIVE" | "ON_LEAVE";
+
 // Team member interface
 export interface TeamMember {
   id: string;
   name: string;
   fullName: string;
   position: string;
-  department: string;
+  department: Department;
   experience: number;
-  description: string;
-  profilePhoto: string;
-  email: string;
-  phone: number;
-  linkedin: string;
+  description: string | null;
+  profilePhoto: string | null;
+  email: string | null;
+  phone: string | null;
+  linkedin: string | null;
   skills: string[];
   startDate: string | null;
   endDate: string | null;
   reportingTo: string | null;
-  status: "ACTIVE" | "INACTIVE";
+  status: TeamMemberStatus;
   active: boolean;
   createdAt: string;
   updatedAt: string;
@@ -38,10 +51,20 @@ export interface TeamListResponse {
   data: TeamMember[];
 }
 
+// Response for single team member
+export interface SingleTeamMemberResponse {
+  status: boolean;
+  message: string;
+  data: TeamMember;
+}
+
 // Query params
 export interface GetTeamParams {
-  page?: number;
-  limit?: number;
+  page?: number | string;
+  limit?: number | string;
+  search?: string;
+  department?: Department;
+  status?: TeamMemberStatus;
 }
 
 export const teamApi = baseApi.injectEndpoints({
@@ -53,7 +76,6 @@ export const teamApi = baseApi.injectEndpoints({
         method: "GET",
         params: params ?? { page: 1, limit: 10 },
       }),
-
       providesTags: (result) =>
         result
           ? [
@@ -67,13 +89,13 @@ export const teamApi = baseApi.injectEndpoints({
     }),
 
     // Get single team member
-    getTeamMemberById: builder.query<TeamMember, number>({
+    getTeamMemberById: builder.query<SingleTeamMemberResponse, string>({
       query: (id) => `/team/${id}`,
       providesTags: (_result, _error, id) => [{ type: "team", id }],
     }),
 
     // Create
-    createTeamMember: builder.mutation<TeamMember, FormData>({
+    createTeamMember: builder.mutation<SingleTeamMemberResponse, FormData>({
       query: (formData) => ({
         url: "/team/create",
         method: "POST",
@@ -84,21 +106,24 @@ export const teamApi = baseApi.injectEndpoints({
 
     // Update
     updateTeamMember: builder.mutation<
-      TeamMember,
-      { id: number; formData: FormData }
+      SingleTeamMemberResponse,
+      { id: string; formData: FormData }
     >({
       query: ({ id, formData }) => ({
         url: `/team/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: formData,
       }),
-      invalidatesTags: (_r, _e, { id }) => [{ type: "team", id }],
+      invalidatesTags: (_r, _e, { id }) => [
+        { type: "team", id },
+        { type: "team", id: "LIST" },
+      ],
     }),
 
     // Delete
     deleteTeamMember: builder.mutation<
       { status: boolean; message: string },
-      number
+      string
     >({
       query: (id) => ({
         url: `/team/${id}`,

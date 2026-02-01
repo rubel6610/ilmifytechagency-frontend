@@ -3,14 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-interface TeamMember {
-  name: string;
-  position: string; 
-  description: string;
-  experience: number | string;
-  profilePhoto?: string;
-}
+import { TeamMember } from "@/redux/service/teamApi";
 
 interface TeamMemberCardProps {
   member: TeamMember;

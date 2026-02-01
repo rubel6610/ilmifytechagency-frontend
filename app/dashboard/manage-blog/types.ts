@@ -1,16 +1,25 @@
 export interface Blog {
-  id: number | string;
+  id: string;
   title: string;
-  bussiness: string; // The UI uses 'category' but the data uses 'bussiness'
-  description: string;
-  image: string;
-  author: string;
-  date: string;
+  subTitle: string;
+  des: string;
+  images: string[];
+  active: boolean;
+  views: number;
+  adminId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  admin?: {
+    id: string;
+    name: string;
+    photo: string | null;
+  };
 }
 
 export interface BlogFormData {
   title: string;
-  category: string;
-  content: string;
-  photo?: FileList;
+  subTitle: string;
+  des: string;
+  active: boolean;
+  images?: FileList;
 }

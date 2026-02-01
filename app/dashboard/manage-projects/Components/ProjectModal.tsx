@@ -1,7 +1,3 @@
-// components/projects/ProjectModal.tsx
-
-"use client";
-
 import Image from 'next/image';
 import React, { useEffect, useState, useCallback } from 'react';
 import { 
@@ -12,40 +8,44 @@ import {
     FiChevronLeft,
     FiTrash2,
     FiImage,
-    FiZoomIn
+    FiZoomIn,
+    FiGlobe,
+    FiLayers,
+    FiCpu,
+    FiCalendar
 } from 'react-icons/fi';
+import { 
+    Project, 
+    ProjectPhase 
+} from '@/redux/service/projectApi';
 
 // ==========================================
 // TYPES
 // ==========================================
 
-interface ProjectPhase {
+interface ProjectFormData {
   name: string;
-  description: string;
-  deadline?: string;
-  status?: 'draft' | 'in-progress' | 'completed';
-}
-
-interface ProjectData {
-  id?: number;
-  name: string;
-  description: string;
   client: string;
-status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress'; // ✅ Add "in-progress"
-  progress: number;
-  image: string;
+  description: string;
+  website: string;
+  summary: string;
   publishingDate: string;
-  phases: ProjectPhase[];
-  conclusion: string;
-  finalNotes?: string;
-  lessonsLearned?: string;
+  platforms: string[]; // comma separated in UI, array in payload
+  technologies: string[]; // comma separated in UI, array in payload
+  phases: Array<{
+    name: string;
+    description: string;
+    startDate: string;
+    endDate: string;
+  }>;
+  coverImage: File | string | null;
 }
 
 interface ProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: ProjectData) => void;
-  project?: ProjectData | null;
+  onSubmit: (formData: FormData) => void;
+  project?: Project | null;
   isLoading?: boolean;
 }
 
@@ -53,20 +53,20 @@ interface ProjectModalProps {
 // CONSTANTS
 // ==========================================
 
-const INITIAL_FORM: ProjectData = {
+const INITIAL_FORM: ProjectFormData = {
     name: '',
-    description: '',
     client: '',
-    status: 'draft',
-    progress: 0,
-    image: '',
+    description: '',
+    website: '',
+    summary: '',
     publishingDate: new Date().toISOString().split('T')[0],
-    phases: Array(6).fill(null).map(() => ({
-        name: '',
-        description: '',
-        status: 'draft'
-    })),
-    conclusion: '',
+    platforms: [],
+    technologies: [],
+    phases: [
+        { name: 'Planning', description: '', startDate: new Date().toISOString().split('T')[0], endDate: new Date().toISOString().split('T')[0] },
+        { name: 'Design', description: '', startDate: new Date().toISOString().split('T')[0], endDate: new Date().toISOString().split('T')[0] },
+    ],
+    coverImage: null,
 };
 
 const STEPS = [
@@ -74,8 +74,6 @@ const STEPS = [
     { number: 2, title: 'Project Phases' },
     { number: 3, title: 'Conclusion' },
 ];
-
-const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY || '';
 
 // ==========================================
 // MAIN COMPONENT
@@ -89,9 +87,8 @@ const ProjectModal = ({
   isLoading = false,
 }: ProjectModalProps) => {
     const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState<ProjectData>(INITIAL_FORM);
+    const [formData, setFormData] = useState<ProjectFormData>(INITIAL_FORM);
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [imageUploading, setImageUploading] = useState(false);
     const [imagePreview, setImagePreview] = useState('');
     const [showImagePreview, setShowImagePreview] = useState(false);
 
@@ -106,18 +103,27 @@ const ProjectModal = ({
 
         if (project) {
             setFormData({
-                ...project,
+                name: project.name,
+                client: project.client,
+                description: project.description,
+                website: project.website || '',
+                summary: project.summary || '',
                 publishingDate: project.publishingDate 
                     ? project.publishingDate.split('T')[0] 
                     : today,
+                platforms: project.platforms || [],
+                technologies: project.technologies || [],
                 phases: project.phases && project.phases.length > 0 
                     ? project.phases.map(phase => ({
-                        ...phase,
-                        status: phase.status || 'draft'
+                        name: phase.name,
+                        description: phase.description,
+                        startDate: phase.startDate ? phase.startDate.split('T')[0] : today,
+                        endDate: phase.endDate ? phase.endDate.split('T')[0] : today,
                     }))
                     : INITIAL_FORM.phases,
+                coverImage: project.coverImage || null,
             });
-            setImagePreview(project.image || '');
+            setImagePreview(project.coverImage || '');
         } else {
             setFormData({ ...INITIAL_FORM, publishingDate: today });
             setImagePreview('');
@@ -145,7 +151,7 @@ const ProjectModal = ({
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'progress' ? (value ? parseInt(value, 10) : 0) : value
+            [name]: value
         }));
         setErrors(prev => {
             if (prev[name]) {
@@ -157,7 +163,7 @@ const ProjectModal = ({
         });
     }, []);
 
-    const handlePhaseChange = useCallback((index: number, field: keyof ProjectPhase, value: string) => {
+    const handlePhaseChange = useCallback((index: number, field: string, value: string) => {
         setFormData(prev => {
             const updatedPhases = [...prev.phases];
             updatedPhases[index] = { ...updatedPhases[index], [field]: value };
@@ -166,54 +172,24 @@ const ProjectModal = ({
     }, []);
 
     // Image Upload with Preview
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // Validate
         if (!file.type.startsWith('image/')) {
             setErrors(prev => ({ ...prev, image: 'Please select an image file' }));
             return;
         }
 
-        if (file.size > 3 * 1024 * 1024) {
-            setErrors(prev => ({ ...prev, image: 'Image must be less than 3MB' }));
+        if (file.size > 5 * 1024 * 1024) {
+            setErrors(prev => ({ ...prev, image: 'Image must be less than 5MB' }));
             return;
         }
 
-        // Show local preview immediately
         const localPreview = URL.createObjectURL(file);
         setImagePreview(localPreview);
-
-        setImageUploading(true);
+        setFormData(prev => ({ ...prev, coverImage: file }));
         setErrors(prev => ({ ...prev, image: '' }));
-
-        try {
-            const formDataImg = new FormData();
-            formDataImg.append('image', file);
-
-            const response = await fetch(
-                `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-                { method: 'POST', body: formDataImg }
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-                URL.revokeObjectURL(localPreview);
-                setFormData(prev => ({ ...prev, image: data.data.url }));
-                setImagePreview(data.data.url);
-            }
-        } catch (error) {
-            console.error('Image upload error:', error);
-            setErrors(prev => ({ ...prev, image: 'Failed to upload. Using local preview.' }));
-            setFormData(prev => ({ ...prev, image: localPreview }));
-        } finally {
-            setImageUploading(false);
-        }
     };
 
     const removeImage = useCallback((e: React.MouseEvent) => {
@@ -223,7 +199,7 @@ const ProjectModal = ({
         if (imagePreview.startsWith('blob:')) {
             URL.revokeObjectURL(imagePreview);
         }
-        setFormData(prev => ({ ...prev, image: '' }));
+        setFormData(prev => ({ ...prev, coverImage: null }));
         setImagePreview('');
     }, [imagePreview]);
 
@@ -234,11 +210,11 @@ const ProjectModal = ({
     const validateStep1 = useCallback(() => {
         const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Project name is required';
-        if (!formData.description.trim()) newErrors.description = 'Description is required';
         if (!formData.client.trim()) newErrors.client = 'Client is required';
+        if (!formData.summary.trim()) newErrors.summary = 'Summary is required';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }, [formData.name, formData.description, formData.client]);
+    }, [formData.name, formData.client, formData.summary]);
 
     const validateStep2 = useCallback(() => {
         const newErrors: Record<string, string> = {};
@@ -253,12 +229,12 @@ const ProjectModal = ({
 
     const validateStep3 = useCallback(() => {
         const newErrors: Record<string, string> = {};
-        if (!formData.conclusion.trim()) {
-            newErrors.conclusion = 'Conclusion is required';
+        if (!formData.description.trim()) {
+            newErrors.description = 'Full description is required';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }, [formData.conclusion]);
+    }, [formData.description]);
 
     // ==========================================
     // NAVIGATION
@@ -291,7 +267,32 @@ const ProjectModal = ({
         e.stopPropagation();
         
         if (validateStep3()) {
-            onSubmit(formData);
+            const submitFormData = new FormData();
+            
+            const projectData = {
+                name: formData.name,
+                client: formData.client,
+                description: formData.description,
+                website: formData.website,
+                summary: formData.summary,
+                publishingDate: new Date(formData.publishingDate).toISOString(),
+                platforms: Array.isArray(formData.platforms) ? formData.platforms : [],
+                technologies: Array.isArray(formData.technologies) ? formData.technologies : [],
+                phases: formData.phases.map(p => ({
+                    name: p.name,
+                    description: p.description,
+                    startDate: new Date(p.startDate).toISOString(),
+                    endDate: new Date(p.endDate).toISOString(),
+                }))
+            };
+
+            submitFormData.append('data', JSON.stringify(projectData));
+            
+            if (formData.coverImage instanceof File) {
+                submitFormData.append('coverImage', formData.coverImage);
+            }
+
+            onSubmit(submitFormData);
         }
     }, [formData, onSubmit, validateStep3]);
 
@@ -366,10 +367,10 @@ const ProjectModal = ({
                                         errors={errors}
                                         handleChange={handleChange}
                                         imagePreview={imagePreview}
-                                        imageUploading={imageUploading}
                                         handleImageUpload={handleImageUpload}
                                         removeImage={removeImage}
                                         onPreviewClick={() => setShowImagePreview(true)}
+                                        setFormData={setFormData}
                                     />
                                 )}
 
@@ -552,26 +553,20 @@ const Step1ProjectDetails = React.memo(({
     errors,
     handleChange,
     imagePreview,
-    imageUploading,
     handleImageUpload,
     removeImage,
     onPreviewClick,
+    setFormData,
 }: {
-    formData: ProjectData;
+    formData: ProjectFormData;
     errors: Record<string, string>;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     imagePreview: string;
-    imageUploading: boolean;
     handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
     removeImage: (e: React.MouseEvent) => void;
     onPreviewClick: () => void;
+    setFormData: React.Dispatch<React.SetStateAction<ProjectFormData>>;
 }) => {
-    const handlePreviewClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onPreviewClick();
-    };
-
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
@@ -594,11 +589,10 @@ const Step1ProjectDetails = React.memo(({
                             className="object-cover"
                         />
                         
-                        {/* Overlay on Hover */}
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                             <button
                                 type="button"
-                                onClick={handlePreviewClick}
+                                onClick={onPreviewClick}
                                 className="flex items-center gap-2 px-4 py-2 bg-white text-gray-800 rounded-lg hover:bg-gray-100 transition-colors"
                             >
                                 <FiZoomIn size={16} />
@@ -613,14 +607,6 @@ const Step1ProjectDetails = React.memo(({
                                 <span className="text-sm font-medium">Remove</span>
                             </button>
                         </div>
-
-                        {/* Upload Progress Indicator */}
-                        {imageUploading && (
-                            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center">
-                                <LoadingSpinner />
-                                <span className="text-white text-sm mt-2">Uploading...</span>
-                            </div>
-                        )}
                     </div>
                 ) : (
                     <label className="flex flex-col items-center justify-center w-full h-48 md:h-70 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-emerald-400 hover:bg-blue-50/50 transition-all group">
@@ -629,35 +615,25 @@ const Step1ProjectDetails = React.memo(({
                             accept="image/*"
                             onChange={handleImageUpload}
                             className="hidden"
-                            disabled={imageUploading}
                         />
-                        
-                        {imageUploading ? (
-                            <div className="flex flex-col items-center gap-2">
-                                <LoadingSpinner />
-                                <span className="text-sm font-medium text-emerald-400">Uploading...</span>
+                        <div className="flex flex-col items-center gap-3 text-gray-500">
+                            <div className="p-4 bg-gray-100 rounded-full group-hover:bg-blue-100 group-hover:text-emerald-400 transition-colors">
+                                <FiImage size={28} />
                             </div>
-                        ) : (
-                            <div className="flex flex-col items-center gap-3 text-gray-500">
-                                <div className="p-4 bg-gray-100 rounded-full group-hover:bg-blue-100 group-hover:text-emerald-400 transition-colors">
-                                    <FiImage size={28} />
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm">
-                                        <span className="font-medium text-emerald-400">Click to upload</span>
-                                        <span className="hidden sm:inline"> or drag and drop</span>
-                                    </p>
-                                    <p className="text-xs text-gray-400 mt-1">PNG, JPG, GIF up to 3MB</p>
-                                </div>
+                            <div className="text-center">
+                                <p className="text-sm">
+                                    <span className="font-medium text-emerald-400">Click to upload</span>
+                                    <span className="hidden sm:inline"> or drag and drop</span>
+                                </p>
+                                <p className="text-xs text-gray-400 mt-1">PNG, JPG, GIF up to 5MB</p>
                             </div>
-                        )}
+                        </div>
                     </label>
                 )}
-                
                 {errors.image && <ErrorMessage message={errors.image} />}
             </div>
 
-            {/* Project Name & client */}
+            {/* Project Name & Client */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -669,9 +645,7 @@ const Step1ProjectDetails = React.memo(({
                         value={formData.name}
                         onChange={handleChange}
                         className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                            errors.name 
-                                ? 'border-red-400 bg-red-50' 
-                                : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
+                            errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
                         }`}
                         placeholder="e.g. Website Redesign"
                     />
@@ -688,34 +662,73 @@ const Step1ProjectDetails = React.memo(({
                         value={formData.client}
                         onChange={handleChange}
                         className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                            errors.client 
-                                ? 'border-red-400 bg-red-50' 
-                                : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
+                            errors.client ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
                         }`}
-                        placeholder="e.g. John Doe"
+                        placeholder="e.g. Acme Corp"
                     />
                     {errors.client && <ErrorMessage message={errors.client} />}
                 </div>
             </div>
 
-            {/* Description */}
+            {/* Website & Platforms */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <FiGlobe className="text-gray-400" /> Website URL
+                    </label>
+                    <input
+                        type="text"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-400 focus:bg-white transition-all"
+                        placeholder="https://example.com"
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <FiLayers className="text-gray-400" /> Platforms
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="web, mobile (comma separated)"
+                        value={formData.platforms.join(', ')}
+                        onChange={(e) => setFormData(prev => ({ ...prev, platforms: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))}
+                        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-400 focus:bg-white transition-all"
+                    />
+                </div>
+            </div>
+
+            {/* Technologies */}
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <FiCpu className="text-gray-400" /> Technologies
+                </label>
+                <input
+                    type="text"
+                    placeholder="React, Node.js, Prisma (comma separated)"
+                    value={formData.technologies.join(', ')}
+                    onChange={(e) => setFormData(prev => ({ ...prev, technologies: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))}
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-400 focus:bg-white transition-all"
+                />
+            </div>
+
+            {/* Short Summary */}
             <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Description <span className="text-red-500">*</span>
+                    Short Summary <span className="text-red-500">*</span>
                 </label>
                 <textarea
-                    name="description"
-                    value={formData.description}
+                    name="summary"
+                    value={formData.summary}
                     onChange={handleChange}
-                    rows={6}
+                    rows={2}
                     className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all resize-none ${
-                        errors.description 
-                            ? 'border-red-400 bg-red-50' 
-                            : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
+                        errors.summary ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
                     }`}
-                    placeholder="Describe the Short description of the project"
+                    placeholder="Briefly summarize the project..."
                 />
-                {errors.description && <ErrorMessage message={errors.description} />}
+                {errors.summary && <ErrorMessage message={errors.summary} />}
             </div>
         </div>
     );
@@ -728,16 +741,16 @@ Step1ProjectDetails.displayName = 'Step1ProjectDetails';
 // ==========================================
 
 const Step2Phases = React.memo(({ phases, errors, handlePhaseChange }: {
-    phases: ProjectPhase[];
+    phases: any[];
     errors: Record<string, string>;
-    handlePhaseChange: (index: number, field: keyof ProjectPhase, value: string) => void;
+    handlePhaseChange: (index: number, field: string, value: string) => void;
 }) => {
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
                 <div>
                     <h3 className="text-lg font-bold text-gray-800">Project Phases</h3>
-                    <p className="text-sm text-gray-500">Define the 6 core stages</p>
+                    <p className="text-sm text-gray-500">Define the core project stages</p>
                 </div>
                 <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Step 2</span>
             </div>
@@ -757,32 +770,57 @@ const Step2Phases = React.memo(({ phases, errors, handlePhaseChange }: {
                         </div>
 
                         {/* Phase Fields */}
-                        <div className="grid grid-cols-1">
-                            <div className="sm:col-span-2">
-                                <input
-                                    type="text"
-                                    value={phase.name}
-                                    onChange={(e) => handlePhaseChange(index, 'name', e.target.value)}
-                                    className={`w-full px-3 py-2.5 bg-white border-2 rounded-lg text-sm outline-none transition-all ${
-                                        errors[`phase_${index}_name`] 
-                                            ? 'border-red-400 bg-red-50' 
-                                            : 'border-gray-200 focus:border-emerald-400'
-                                    }`}
-                                    placeholder="Phase Name *"
-                                />
-                            </div>
-
+                        <div className="space-y-3">
                             <input
                                 type="text"
+                                value={phase.name}
+                                onChange={(e) => handlePhaseChange(index, 'name', e.target.value)}
+                                className={`w-full px-3 py-2.5 bg-white border-2 rounded-lg text-sm outline-none transition-all ${
+                                    errors[`phase_${index}_name`] ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-emerald-400'
+                                }`}
+                                placeholder="Phase Name *"
+                            />
+                            
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Start Date</label>
+                                    <input
+                                        type="date"
+                                        value={phase.startDate}
+                                        onChange={(e) => handlePhaseChange(index, 'startDate', e.target.value)}
+                                        className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm outline-none focus:border-emerald-400"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">End Date</label>
+                                    <input
+                                        type="date"
+                                        value={phase.endDate}
+                                        onChange={(e) => handlePhaseChange(index, 'endDate', e.target.value)}
+                                        className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm outline-none focus:border-emerald-400"
+                                    />
+                                </div>
+                            </div>
+
+                            <textarea
                                 value={phase.description}
                                 onChange={(e) => handlePhaseChange(index, 'description', e.target.value)}
-                                className="w-full px-3 mt-3 py-2.5 bg-white border-2 border-gray-200 rounded-lg text-sm outline-none focus:border-emerald-400"
-                                placeholder="Description (optional)"
+                                className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm outline-none focus:border-emerald-400 resize-none"
+                                rows={2}
+                                placeholder="Phase description (optional)"
                             />
                         </div>
                     </div>
                 ))}
             </div>
+            
+            <button 
+                type="button"
+                onClick={() => handlePhaseChange(phases.length, 'add', '')}
+                className="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-emerald-400 hover:text-emerald-400 transition-all font-medium flex items-center justify-center gap-2"
+            >
+                Add Another Phase
+            </button>
         </div>
     );
 });
@@ -794,30 +832,27 @@ Step2Phases.displayName = 'Step2Phases';
 // ==========================================
 
 const Step3Conclusion = React.memo(({ formData, errors, handleChange }: {
-    formData: ProjectData;
+    formData: ProjectFormData;
     errors: Record<string, string>;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }) => {
-    const completedPhases = formData.phases.filter(p => p.status === 'completed').length;
-
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-gray-800">Final Overview</h3>
+                <h3 className="text-lg font-bold text-gray-800">Project Conclusion</h3>
                 <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Step 3</span>
             </div>
 
             {/* Project Summary Card */}
             <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl">
                 <div className="flex gap-4">
-                    <div className="w-16 h-16 bg-white rounded-xl shadow-sm overflow-hidden shrink-0">
-                        {formData.image ? (
+                    <div className="w-16 h-16 bg-white rounded-xl shadow-sm overflow-hidden shrink-0 relative">
+                        {formData.coverImage ? (
                             <Image
-                                src={formData.image}
+                                src={typeof formData.coverImage === 'string' ? formData.coverImage : URL.createObjectURL(formData.coverImage)}
                                 alt="Project"
-                                width={64}
-                                height={64}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gray-100">
@@ -830,75 +865,49 @@ const Step3Conclusion = React.memo(({ formData, errors, handleChange }: {
                             {formData.name || 'Untitled Project'}
                         </h4>
                         <p className="text-sm text-gray-500 line-clamp-1">
-                            {formData.description || 'No description'}
+                            {formData.summary || 'No summary'}
                         </p>
                         <div className="flex flex-wrap items-center gap-2 mt-2">
                             <span className="text-xs font-medium text-gray-500 bg-white px-2 py-1 rounded-full">
                                 👤 {formData.client || 'No client'}
                             </span>
                             <span className="text-xs font-medium text-blue-600 bg-white px-2 py-1 rounded-full">
-                                {completedPhases}/6 Phases Done
+                                {formData.phases.length} Phases Defined
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Phases Overview */}
-            <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Phases Status</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {formData.phases.map((phase, index) => (
-                        <div 
-                            key={index}
-                            className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg"
-                        >
-                            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
-                                phase.status === 'completed' 
-                                    ? 'bg-emerald-500 text-white' 
-                                    : phase.status === 'in-progress'
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-gray-200 text-gray-500'
-                            }`}>
-                                {phase.status === 'completed' ? '✓' : index + 1}
-                            </span>
-                            <span className="text-xs font-medium text-gray-600 truncate">
-                                {phase.name || `Phase ${index + 1}`}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Conclusion */}
+            {/* Full Description */}
             <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Conclusion <span className="text-red-500">*</span>
+                    Full Project Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
-                    name="conclusion"
-                    value={formData.conclusion}
+                    name="description"
+                    value={formData.description}
                     onChange={handleChange}
-                    rows={4}
+                    rows={8}
                     className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all resize-none ${
-                        errors.conclusion 
-                            ? 'border-red-400 bg-red-50' 
-                            : 'border-gray-200 focus:border-emerald-500 focus:bg-white'
+                        errors.description ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-emerald-400 focus:bg-white'
                     }`}
-                    placeholder="Summarize the project outcome..."
+                    placeholder="Provide a detailed description of the final outcome and results..."
                 />
-                {errors.conclusion && <ErrorMessage message={errors.conclusion} />}
+                {errors.description && <ErrorMessage message={errors.description} />}
             </div>
 
             {/* Publishing Date */}
             <div className="mt-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Publishing Date</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <FiCalendar className="text-gray-400" /> Publishing Date
+                </label>
                 <input
                     type="date"
                     name="publishingDate"
                     value={formData.publishingDate}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-500 focus:bg-white"
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-emerald-400 focus:bg-white transition-all"
                 />
             </div>
         </div>

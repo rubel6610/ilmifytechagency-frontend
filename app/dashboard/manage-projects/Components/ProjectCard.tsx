@@ -10,17 +10,18 @@ import {
     FiExternalLink,
     FiEye,
     FiEyeOff,
+    FiImage,
 } from 'react-icons/fi';
+import { FaLaptopCode, FaTools } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
-import { Project } from '../page';
+import { Project } from '@/redux/service/projectApi';
 
 // ==========================================
 // TYPES
 // ==========================================
 
-
 interface ProjectCardProps {
-  project: Project; // ← Now uses full type
+  project: Project;
   onEdit: (project: Project) => void;
   onDelete: (project: Project) => void;
   onViewDetails?: (project: Project) => void;
@@ -71,29 +72,28 @@ const ProjectCard = ({ project, onEdit, onDelete, onViewDetails }: ProjectCardPr
             
             {/* Image Section */}
             <div className="relative w-full h-52 overflow-hidden shrink-0">
-                {project.projectImage ? (
+                {project.coverImage ? (
                     <Image
-                        src={project.projectImage}
+                        src={project.coverImage}
                         alt={project.name}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                        <div className="text-center text-gray-400">
-                            <FiExternalLink size={32} className="mx-auto mb-2" />
-                            <span className="text-sm">No Image</span>
-                        </div>
+                    <div className="w-full h-full bg-slate-800 flex items-center justify-center">
+                        <FiImage className="w-12 h-12 text-slate-600" />
                     </div>
                 )}
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 <div className="absolute top-3 left-3 z-10">
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${status.bg} ${status.text} shadow-lg backdrop-blur-sm`}>
-                        {status.icon}
-                        {status.label}
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold 
+                        ${project.status === 'published-to-showcase' ? 'bg-emerald-500 text-white' : 'bg-gray-500 text-white'} 
+                        shadow-lg backdrop-blur-sm`}>
+                        {project.status === 'published-to-showcase' ? <FiEye size={12} /> : <FiEyeOff size={12} />}
+                        {project.status === 'published-to-showcase' ? 'Published' : 'Not Published'}
                     </span>
                 </div>
 
@@ -132,8 +132,8 @@ const ProjectCard = ({ project, onEdit, onDelete, onViewDetails }: ProjectCardPr
                 <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-emerald-600 transition-colors">
                     {project.name}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 h-10">
-                    {project.description || 'No description provided for this project.'}
+                <p className="text-slate-400 text-xs line-clamp-2 mb-4">
+                    {project.summary || project.description}
                 </p>
                 <div className="flex items-center justify-between text-xs text-gray-400 pb-4 border-b border-gray-100 mt-auto">
                     <div className="flex items-center gap-1.5">
@@ -148,6 +148,29 @@ const ProjectCard = ({ project, onEdit, onDelete, onViewDetails }: ProjectCardPr
                     </div>
                 </div>
                 <div className="pt-4 mt-auto">
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className={`text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full uppercase
+                            ${project.status === 'published-to-showcase' 
+                                ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' 
+                                : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'}`}
+                        >
+                            {project.status === 'published-to-showcase' ? 'Published' : 'Draft'}
+                        </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {project.platforms && project.platforms.length > 0 && (
+                            <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <FaLaptopCode size={12} />
+                                {project.platforms.join(', ')}
+                            </div>
+                        )}
+                        {project.technologies && project.technologies.length > 0 && (
+                            <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <FaTools size={12} />
+                                {project.technologies.join(', ')}
+                            </div>
+                        )}
+                    </div>
                     {project.status !== 'published-to-showcase' ? (
                         <button 
                             onClick={handleAddToShowcase} 

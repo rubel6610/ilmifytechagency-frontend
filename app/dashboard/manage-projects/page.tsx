@@ -11,71 +11,16 @@ import DeleteConfirmModal from './Components/DeleteConfirmModal';
 import ProjectDetailsModal from './Components/ProjectDetailsModal';
 import Pagination from './Components/Pagination';
 
-// ==========================================
-// TYPES
-// ==========================================
-
-export interface Project {
-  _id: string | number;
-  name: string;
-  description: string;
-  client: string;
-  status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress';
-  publishingDate: string;
-  progress: number;
-  image: string;
-  projectImage?: string; // alias for image
-  phases: {
-    name: string;
-    description: string;
-    deadline?: string;
-    status?: 'draft' | 'in-progress' | 'completed';
-  }[];
-  conclusion: string;
-  finalNotes?: string;
-  lessonsLearned?: string;
-  manager?: string;
-}
-
-// types/project.ts
-
-// For form data (new projects don't have _id)
-export interface ProjectFormData {
-  name: string;
-  description: string; // required for form validation
-  client: string;
-  status: 'draft' | 'published-to-showcase' | 'archived' | 'in-progress';
-  progress: number;
-  image: string;
-  publishingDate: string;
-  phases: {
-    name: string;
-    description: string;
-    deadline?: string;
-    status?: 'draft' | 'in-progress' | 'completed';
-  }[];
-  conclusion: string;
-  finalNotes?: string;
-  lessonsLearned?: string;
-}
-
-// For stored/displayed projects (includes _id)
-export interface Project extends ProjectFormData {
-  _id: string | number;
-  manager?: string; // only used in list view
-}
-
-interface RawProjectData {
-  id: number;
-  title: string;
-  image: string;
-  description?: string;
-  status: string;
-  client?: string;
-  date: string;
-  progress?: number;
-  author: string;
-}
+import { 
+  useGetProjectsQuery, 
+  useCreateProjectMutation, 
+  useUpdateProjectMutation, 
+  useDeleteProjectMutation,
+  Project,
+  ProjectListResponse,
+  SingleProjectResponse
+} from "@/redux/service/projectApi";
+import Swal from 'sweetalert2';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -111,11 +56,6 @@ const SkeletonCard = () => (
 // ==========================================
 const ProjectsPage = () => {
     // State Management
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
     // Pagination State
@@ -130,90 +70,26 @@ const ProjectsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
 
-    // ==========================================
-    // FETCH PROJECTS
-    // ==========================================
-    const fetchProjects = async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            const response = await fetch('/json/projectsData.json');
-            
-            if (!response.ok) {
-                throw new Error('Failed to load projects');
-            }
+    // Redux Hooks
+    const { data: projectResponse, isLoading, error: queryError } = useGetProjectsQuery({
+        page: currentPage,
+        limit: ITEMS_PER_PAGE,
+        search: searchQuery || undefined
+    });
 
-            const data: RawProjectData[] = await response.json();
+    const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
+    const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
+    const [deleteProject, { isLoading: isDeleting }] = useDeleteProjectMutation();
 
-   const mappedData: Project[] = data.map(item => ({
-  _id: item.id,
-  name: item.title,
-  projectImage: item.image,
-  image: item.image, // 👈 Add this (required by Project)
-  description: item.description || '', // 👈 Ensure never undefined
-  status: item.status as Project['status'],
-  client: item.client || '', // 👈 Ensure never undefined
-  publishingDate: item.date,
-  progress: item.progress || 0, // 👈 Ensure never undefined
-  manager: item.author,
-  // 👇 Add required fields with defaults
-  phases: [], // or item.phases if available
-  conclusion: item.description || '' // or empty string
-}));
+    const projects = projectResponse?.data || [];
+    const meta = projectResponse?.meta;
+    const totalPages = meta?.total ? Math.ceil(meta.total / ITEMS_PER_PAGE) : 0;
 
-            setProjects(mappedData);
-            setFilteredProjects(mappedData); 
-        }
-        catch (err) {
-            setError('Failed to fetch projects. Please try again.');
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    // Initial Fetch
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    // Filter Projects
-    useEffect(() => {
-        const currentProjectsList = Array.isArray(projects) ? projects : [];
-        let result = currentProjectsList;
-
-        if (searchQuery) {
-            result = result.filter(project =>
-                (project.name && project.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (project.description && project.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (project.manager && project.manager.toLowerCase().includes(searchQuery.toLowerCase()))
-            );
-        }
-
-        if (statusFilter !== 'all') {
-            result = result.filter(project => project.status === statusFilter);
-        }
-
-        setFilteredProjects(result);
-    }, [searchQuery, statusFilter, projects]);
+    const isSubmitting = isCreating || isUpdating || isDeleting;
 
     // ==========================================
-    // PAGINATION LOGIC
+    // HANDLERS
     // ==========================================
-    const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
-
-    const paginatedProjects = useMemo(() => {
-        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        return filteredProjects.slice(startIndex, endIndex);
-    }, [filteredProjects, currentPage]);
-
-    useEffect(() => {
-        if (currentPage > totalPages && totalPages > 0) {
-            setCurrentPage(totalPages);
-        }
-    }, [currentPage, totalPages]);
-
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
         window.scrollTo({ top: 300, behavior: 'smooth' });
@@ -222,11 +98,8 @@ const ProjectsPage = () => {
     // Reset to page 1 when filters change
     useEffect(() => {
         setCurrentPage(1);
-    }, [searchQuery, statusFilter, projects.length]);
+    }, [searchQuery, statusFilter]);
 
-    // ==========================================
-    // HANDLERS
-    // ==========================================
     const handleAddProject = () => {
         setSelectedProject(null);
         setIsModalOpen(true);
@@ -242,52 +115,54 @@ const ProjectsPage = () => {
         setIsDeleteModalOpen(true);
     };
 
-   const handleSubmitProject = async (formData: ProjectFormData) => {
-  try {
-    setIsSubmitting(true);
-    
-    if (selectedProject) {
-      // Edit: merge with existing _id
-      const updatedProject: Project = {
-        ...formData,
-        _id: selectedProject._id,
-        manager: selectedProject.manager // preserve extra fields
-      };
-      setProjects(prev => 
-        prev.map(p => p._id === selectedProject._id ? updatedProject : p)
-      );
-    } else {
-      // Create: generate new _id
-      const newProject: Project = {
-        ...formData,
-        _id: Date.now().toString(),
-        manager: "Current User" // or however you track this
-      };
-      setProjects(prev => [newProject, ...prev]);
-      setCurrentPage(1);
-    }
-    
-    setIsModalOpen(false);
-  } catch (err) {
-    console.error(err);
-    alert('Failed to save project');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    const handleSubmitProject = async (formData: FormData) => {
+        try {
+            let res;
+            if (selectedProject) {
+                res = await updateProject({ id: selectedProject.id, formData }).unwrap();
+            } else {
+                res = await createProject(formData).unwrap();
+            }
+            
+            Swal.fire({
+                title: 'Success!',
+                text: res.message || 'Project saved successfully',
+                icon: 'success',
+                confirmButtonColor: '#10b981',
+            });
+            
+            setIsModalOpen(false);
+        } catch (err: any) {
+            console.error(err);
+            Swal.fire({
+                title: 'Error!',
+                text: err?.data?.message || err?.message || 'Failed to save project',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+            });
+        }
+    };
 
     const handleConfirmDelete = async () => {
+        if (!selectedProject) return;
         try {
-            setIsSubmitting(true);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            setProjects(prev => prev.filter(p => p._id !== selectedProject?._id));
+            const res = await deleteProject(selectedProject.id).unwrap();
+            Swal.fire({
+                title: 'Deleted!',
+                text: res.message || 'Project deleted successfully',
+                icon: 'success',
+                confirmButtonColor: '#10b981',
+            });
             setIsDeleteModalOpen(false);
             setSelectedProject(null);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            alert('Failed to delete project. Please try again.');
-        } finally {
-            setIsSubmitting(false);
+            Swal.fire({
+                title: 'Error!',
+                text: err?.data?.message || err?.message || 'Failed to delete project',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+            });
         }
     };
 
@@ -297,12 +172,9 @@ const ProjectsPage = () => {
     };
 
     // Safe stats calculation
-    const safeProjects = Array.isArray(projects) ? projects : [];
     const stats = {
-        total: safeProjects.length,
-        pending: safeProjects.filter(p => p.status === 'draft').length,
-        inProgress: safeProjects.filter(p => p.status === 'in-progress').length,
-        completed: safeProjects.filter(p => p.status === 'published-to-showcase').length,
+        total: meta?.total || 0,
+        // Since backend might not return stats, we estimate from current list or just show total
     };
 
     return (
@@ -367,33 +239,29 @@ const ProjectsPage = () => {
                 {/* Results Info */}
                 {(searchQuery || statusFilter !== 'all') && !isLoading && (
                     <div className="mb-4 text-sm text-gray-500">
-                        Showing <span className="font-semibold text-gray-700">{filteredProjects.length}</span> 
-                        {filteredProjects.length === 1 ? ' project' : ' projects'}
+                        Showing <span className="font-semibold text-gray-700">{projects.length}</span> 
+                        {projects.length === 1 ? ' project' : ' projects'}
                         {searchQuery && <span> for &ldquo;<span className="font-semibold text-gray-700">{searchQuery}</span>&rdquo;</span>}
                     </div>
                 )}
 
                 {/* Error State */}
-                {error && (
+                {queryError && (
                     <div className="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-xl mb-6 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <FiAlertTriangle size={20} />
-                            <span>{error}</span>
+                            <span>{(queryError as any)?.data?.message || 'Failed to fetch projects. Please try again.'}</span>
                         </div>
-                        <button onClick={fetchProjects} className="font-semibold hover:underline">
-                            Try again
-                        </button>
                     </div>
                 )}
 
-                {/* Loading State */}
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[1, 2, 3, 4, 5, 6].map((n) => (
                             <SkeletonCard key={n} />
                         ))}
                     </div>
-                ) : filteredProjects.length === 0 ? (
+                ) : projects.length === 0 ? (
                     /* Empty State */
                     <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-200">
                         <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
@@ -434,9 +302,9 @@ const ProjectsPage = () => {
                     /* Projects Grid */
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {paginatedProjects.map((project) => (
+                            {projects.map((project) => (
                                 <ProjectCard
-                                    key={project._id}
+                                    key={project.id}
                                     project={project}
                                     onEdit={handleEditProject}
                                     onDelete={handleDeleteClick}
@@ -450,7 +318,7 @@ const ProjectsPage = () => {
                             currentPage={currentPage}
                             totalPages={totalPages}
                             onPageChange={handlePageChange}
-                            totalItems={filteredProjects.length}
+                            totalItems={meta?.total || 0}
                             itemsPerPage={ITEMS_PER_PAGE}
                         />
                     </>

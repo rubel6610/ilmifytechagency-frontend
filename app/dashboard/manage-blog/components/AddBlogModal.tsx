@@ -36,8 +36,7 @@ const AddBlogModal = ({
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // @ts-ignore - Handle FileList vs File discrepancy if any, though react-hook-form usually handles this
-    setValue("photo", e.target.files); 
+    setValue("images", e.target.files!); 
     const reader = new FileReader();
     reader.onloadend = () => setPreview(reader.result as string);
     reader.readAsDataURL(file);
@@ -46,7 +45,7 @@ const AddBlogModal = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
           {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -61,7 +60,7 @@ const AddBlogModal = ({
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-            className="relative bg-white w-full max-w-xl rounded-4xl p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] z-10 border border-gray-100"
+            className="relative bg-white w-full max-w-2xl rounded-4xl p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] z-10 border border-gray-100 my-8"
           >
             {/* Close Button */}
             <button
@@ -80,23 +79,35 @@ const AddBlogModal = ({
 
             <form onSubmit={handleSubmit(onAddSubmit)} className="space-y-6">
               {/* Title Field */}
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Blog Title</label>
-                <input
-                  {...register("title", { required: "Title required" })}
-                  placeholder="Enter a catchy title..."
-                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
-                />
-                {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Title</label>
+                  <input
+                    {...register("title", { required: "Title required" })}
+                    placeholder="Main title..."
+                    className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                  />
+                  {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Sub Title</label>
+                  <input
+                    {...register("subTitle", { required: "Sub title required" })}
+                    placeholder="Short summary..."
+                    className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                  />
+                  {errors.subTitle && <p className="text-red-500 text-xs mt-1">{errors.subTitle.message}</p>}
+                </div>
               </div>
 
               {/* Image Upload Field */}
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Thumbnail</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Banner Image</label>
                 <div
                   onClick={() => fileInputRef.current?.click()}
                   className={`relative group border-2 border-dashed rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 flex flex-col items-center justify-center
-                    ${preview ? 'border-emerald-500 h-48' : 'border-gray-200 hover:border-emerald-400 h-32 bg-gray-50 hover:bg-emerald-50/30'}`}
+                    ${preview ? 'border-emerald-500 h-56' : 'border-gray-200 hover:border-emerald-400 h-32 bg-gray-50 hover:bg-emerald-50/30'}`}
                 >
                   {preview ? (
                     <>
@@ -117,7 +128,7 @@ const AddBlogModal = ({
                       <div className="bg-emerald-100 p-3 rounded-full inline-block mb-2 group-hover:scale-110 transition-transform duration-300">
                         <HiCamera className="text-emerald-600 text-2xl" />
                       </div>
-                      <p className="text-sm font-medium text-gray-500">Click to upload image</p>
+                      <p className="text-sm font-medium text-gray-500">Click to upload banner</p>
                     </div>
                   )}
                   <input
@@ -128,30 +139,32 @@ const AddBlogModal = ({
                     accept="image/*"
                   />
                 </div>
-                {errors.photo && <p className="text-red-500 text-xs mt-1">{errors.photo.message}</p>}
               </div>
 
-               {/* Category Field */}
-               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Category</label>
-                <input
-                  {...register("category", { required: "Category required" })}
-                  placeholder="e.g. Technology, Lifestyle..."
-                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400"
-                />
-                {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>}
-              </div>
-
-              {/* Content Field */}
+              {/* Description Field */}
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Content</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500 ml-1">Description (Content)</label>
                 <textarea
-                  {...register("content", { required: "Content required" })}
-                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400 resize-none"
-                  rows={5}
-                  placeholder="Write your blog content here..."
+                  {...register("des", { required: "Description required" })}
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300 placeholder:text-gray-400 resize-none font-sans"
+                  rows={6}
+                  placeholder="Tell your story..."
                 />
-                {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content.message}</p>}
+                {errors.des && <p className="text-red-500 text-xs mt-1">{errors.des.message}</p>}
+              </div>
+
+              {/* Status Field */}
+              <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                <input
+                  type="checkbox"
+                  id="active"
+                  {...register("active")}
+                  className="w-5 h-5 accent-emerald-500 rounded-lg cursor-pointer"
+                  defaultChecked
+                />
+                <label htmlFor="active" className="text-sm font-bold text-gray-700 cursor-pointer">
+                  Publish Immediately
+                </label>
               </div>
 
               {/* Submit Button */}
