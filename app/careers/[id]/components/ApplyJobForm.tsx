@@ -13,6 +13,8 @@ import {
   FiMail,
   FiPhone,
 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 interface Job {
   id: string;
@@ -71,10 +73,14 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     phone: "",
   });
   const [quizScore, setQuizScore] = useState<{ score: number; correct: number; total: number } | null>(null);
+  const { token } = useSelector((state: RootState) => state.auth);
 
-  // Timer effect
+  // Timer effect - Reset timer when question changes
   useEffect(() => {
     if (step !== "quiz") return;
+    
+    // Reset timer for new question
+    setTimeLeft(15);
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -100,6 +106,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           jobTitle: job.title,
@@ -212,7 +219,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
 
     if (currentIdx < questions.length - 1) {
       setCurrentIdx((prev) => prev + 1);
-      setTimeLeft(15);
+      // Timer will be reset by useEffect when currentIdx changes
     } else {
       calculateScore();
       setStep("form");
@@ -253,24 +260,36 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     try {
       const formData = new FormData();
       
-      // Add quiz data
-      formData.append("candidateId", `candidate_${Date.now()}`);
+      // Add job and candidate metadata
+      formData.append("jobId", job.id);
       formData.append("jobTitle", job.title);
+      formData.append("candidateId", `candidate_${Date.now()}`);
       formData.append("skills", JSON.stringify(job.mandatorySkills));
       formData.append("experienceLevel", job.experience);
-      formData.append("questions", JSON.stringify(
-        Object.values(quizAnswers).map(answer => ({
-          id: answer.id,
-          question: answer.question,
-          userAnswer: answer.userAnswer,
-          correctAnswer: answer.correctAnswer,
-          isCorrect: answer.isCorrect,
-          timeTaken: answer.timeTaken,
-          timedOut: answer.timedOut,
-        }))
-      ));
       
-      // Add candidate info
+      // Add complete quiz data with all questions, options, and answers
+      const completeQuizData = questions.map((q, idx) => {
+        const userAnswerData = quizAnswers[idx];
+        return {
+          questionId: q.id,
+          question: q.question,
+          options: q.options, // All 4 options
+          correctAnswer: q.correctAnswer,
+          correctOption: q.options[q.correctAnswer],
+          userAnswer: userAnswerData?.userAnswer ?? null,
+          userSelectedOption: userAnswerData?.selectedOption ?? null,
+          isCorrect: userAnswerData?.isCorrect ?? false,
+          timeTaken: userAnswerData?.timeTaken ?? 0,
+          timedOut: userAnswerData?.timedOut ?? false,
+        };
+      });
+      
+      formData.append("quizData", JSON.stringify(completeQuizData));
+      formData.append("totalQuestions", questions.length.toString());
+      formData.append("correctAnswers", quizScore?.correct.toString() || "0");
+      formData.append("quizScore", quizScore?.score.toString() || "0");
+      
+      // Add candidate personal info
       formData.append("name", candidateInfo.name);
       formData.append("email", candidateInfo.email);
       formData.append("phone", candidateInfo.phone || "");
@@ -280,6 +299,9 @@ export default function ApplyJobForm({ job }: { job: Job }) {
       
       const response = await fetch("/api/submit-quiz", {
         method: "POST",
+        headers: {
+          token: `${token}`,
+        },
         body: formData,
       });
       
@@ -492,7 +514,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
                     key={index}
                     onClick={() => {
                       setCurrentIdx(index);
-                      setTimeLeft(15);
+                      // Timer will be reset by useEffect
                     }}
                     className={`w-3 h-3 rounded-full transition-all ${
                       index === currentIdx

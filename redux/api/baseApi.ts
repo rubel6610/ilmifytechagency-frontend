@@ -14,19 +14,18 @@ if (!baseUrl) {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl,
+    baseUrl: baseUrl,
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state?.auth?.token;
 
       if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+        headers.set("token", `${token}`);
       }
 
       return headers;
     },
   }),
   tagTypes: ["User", "Products", "Coupon", "job", "team", "blog", "project"],
-  endpoints: () => ({}),
+  endpoints: (builder) => ({}),
 });
-

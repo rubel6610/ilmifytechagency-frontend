@@ -4,7 +4,7 @@ export const runtime = "nodejs";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+
 
 interface QuizQuestion {
   id: string;
@@ -67,6 +67,11 @@ Begin JSON output:`;
     // Try each model until one works
     for (const modelName of modelNames) {
       try {
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+           throw new Error("GEMINI_API_KEY is not set");
+        }
+        const genAI = new GoogleGenerativeAI(apiKey);
         console.log(`Trying model: ${modelName}`);
 
         const model = genAI.getGenerativeModel({
