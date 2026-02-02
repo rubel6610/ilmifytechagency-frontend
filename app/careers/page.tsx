@@ -63,63 +63,71 @@ const Careers = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
   const jobListingsRef = useRef<HTMLDivElement>(null);
 
   // Fetch jobs from API
-  const { data: apiData, isLoading, isError, error: apiError } = useGetJobsQuery({ page: 1, limit: 100 });
+  const { data: apiData, isLoading, isError, error: apiError } = useGetJobsQuery({ page: 1, limit: 10 });
 
+  // Map backend data to frontend structure
   useEffect(() => {
     if (apiData?.data) {
-      const mappedJobs: Job[] = apiData.data.map((item: JobListItem) => ({
-        id: item.id,
-        title: item.title,
-        jobType: item.employmentType === "FULL_TIME" ? "Full Time" : 
-                 item.employmentType === "PART_TIME" ? "Part Time" : 
-                 item.employmentType === "INTERNSHIP" ? "Internship" : "Contract",
-        vacancy: 1, // Default as API list might not have it
-        company: {
-          name: "Ilmify Tech", // Default company name
-          logo: item.thumbnail || undefined
-        },
-        jobSummary: {
-          jobStatus: item.applicationStatus === "OPEN" ? "Active" : "Closed",
-          experienceRequired: "1-3 Years", // Dummy data for list view
-          applicationDeadline: item.applicationDeadline || "Open",
-          publishedDate: item.createdAt,
-          ageLimit: "N/A"
-        },
-        employmentInfo: {
-          workplaceType: item.workMode === "ONSITE" ? "On-site" : 
-                         item.workMode === "REMOTE" ? "Remote" : "Hybrid",
-          remoteAllowed: item.workMode === "REMOTE" || item.workMode === "HYBRID",
-          jobLocation: {
-            city: item.location ? item.location.split(',')[1] : "Dhaka",
-            district: item.location ? item.location.split(',').pop()?.trim() || "Dhaka" : "Dhaka"
-          }
-        },
-        salaryAndBenefits: {
-          salary: {
-            range: "Negotiable", // Default
-            negotiable: true
-          }
-        },
-        skillsAndExpertise: [] // Empty for list view
-      }));
+      const mappedJobs: Job[] = apiData.data.map((item: JobListItem) => {
+        // Parse location (format: "Dhaka" or "City, District")
+        const locationParts = item.location ? item.location.split(',').map(s => s.trim()) : ['Dhaka'];
+        const city = locationParts[0] || 'Dhaka';
+        const district = locationParts[1] || locationParts[0] || 'Dhaka';
+
+        return {
+          id: item.id,
+          title: item.title,
+          jobType: item.employmentType === "FULL_TIME" ? "Full Time" : 
+                   item.employmentType === "PART_TIME" ? "Part Time" : 
+                   item.employmentType === "INTERNSHIP" ? "Internship" : "Contract",
+          vacancy: 1, // Default as API list doesn't have it
+          company: {
+            name: "Ilmify Tech Agency",
+            logo: item.thumbnail || undefined
+          },
+          jobSummary: {
+            jobStatus: item.applicationStatus === "OPEN" ? "Active" : "Closed",
+            experienceRequired: "1-3 Years", // Will be in detail view
+            applicationDeadline: item.applicationDeadline 
+              ? new Date(item.applicationDeadline).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'short', 
+                  day: 'numeric' 
+                })
+              : "Open",
+            publishedDate: new Date(item.createdAt).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            }),
+            ageLimit: "N/A"
+          },
+          employmentInfo: {
+            workplaceType: item.workMode === "ONSITE" ? "On-site" : 
+                           item.workMode === "REMOTE" ? "Remote" : "Hybrid",
+            remoteAllowed: item.workMode === "REMOTE" || item.workMode === "HYBRID",
+            jobLocation: {
+              city: city,
+              district: district
+            }
+          },
+          salaryAndBenefits: {
+            salary: {
+              range: "Negotiable",
+              negotiable: true
+            }
+          },
+          skillsAndExpertise: []
+        };
+      });
       setJobs(mappedJobs);
     }
   }, [apiData]);
-
-  // Update loading/error state based on API
-  useEffect(() => {
-    setLoading(isLoading);
-    if (isError) {
-      setError("Failed to load jobs from server");
-    }
-  }, [isLoading, isError]);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
@@ -162,63 +170,37 @@ const Careers = () => {
   // Get unique locations from jobs
   const locations: string[] =
     jobs.length > 0
-      ? ["All", ...new Set(jobs.map((job) => job.employmentInfo.jobLocation.district))]
+      ? ["All", ...new Set(jobs.map((job) => job.employmentInfo.jobLocation.city))]
       : ["All"];
 
-  // Salary parsing utility - fixed for your format
-  const getSalaryValue = (salaryRange: string): number | null => {
-    if (!salaryRange || typeof salaryRange !== "string") return null;
-    
-    try {
-      // Remove commas and get the highest value from range "10,000 – 20,000"
-      const cleanRange = salaryRange.replace(/,/g, '').replace(' ', '');
-      const parts = cleanRange.split('–');
-      
-      if (parts.length === 2) {
-        const highValue = parseInt(parts[1].trim(), 10);
-        return isNaN(highValue) ? null : highValue;
-      } else {
-        // Try to parse single value
-        const num = parseInt(cleanRange.replace(/[^\d]/g, ''), 10);
-        return isNaN(num) ? null : num;
-      }
-    } catch (err) {
-      return null;
-    }
-  };
-
-  // Filter logic - FIXED
+  // Filter logic
   const filteredJobs = jobs.filter((job) => {
     // Search across multiple fields
     const matchSearch =
       search === "" ||
       job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.company.name.toLowerCase().includes(search.toLowerCase()) ||
       job.employmentInfo.jobLocation.city.toLowerCase().includes(search.toLowerCase()) ||
-      job.employmentInfo.jobLocation.district.toLowerCase().includes(search.toLowerCase());
+      job.employmentInfo.jobLocation.district.toLowerCase().includes(search.toLowerCase()) ||
+      job.company.name.toLowerCase().includes(search.toLowerCase());
 
-    // Job type filter - FIXED
+    // Job type filter
     const matchJobType =
       filter === "All" ||
       (filter === "Remote" && job.employmentInfo.remoteAllowed === true) ||
       (filter === "Full Time" && job.jobType === "Full Time") ||
-      (filter === "Part Time" && job.jobType === "Part Time");
+      (filter === "Part Time" && job.jobType === "Part Time") ||
+      (filter === "Internship" && job.jobType === "Internship");
 
-    // Salary filter - FIXED
-    const salaryValue = getSalaryValue(job.salaryAndBenefits.salary.range);
-    const salaryNegotiable = job.salaryAndBenefits.salary.negotiable;
-
+    // Salary filter (always matches since all are negotiable)
     const matchSalary =
       salaryFilter === "All" ||
-      (salaryFilter === "High" && salaryValue && salaryValue >= 50000) ||
-      (salaryFilter === "Medium" && salaryValue && salaryValue >= 30000 && salaryValue < 50000) ||
-      (salaryFilter === "Low" && salaryValue && salaryValue < 30000) ||
-      (salaryFilter === "Negotiable" && salaryNegotiable === true);
+      salaryFilter === "Negotiable";
 
-    // Location filter - FIXED
+    // Location filter
     const matchLocation =
       locationFilter === "All" || 
-      job.employmentInfo.jobLocation.district === locationFilter;
+      job.employmentInfo.jobLocation.district === locationFilter ||
+      job.employmentInfo.jobLocation.city === locationFilter;
 
     return matchSearch && matchJobType && matchSalary && matchLocation;
   });
@@ -231,7 +213,7 @@ const Careers = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  // Stats - FIXED
+  // Stats
   const stats = {
     total: jobs.length,
     fullTime: jobs.filter(job => job.jobType === "Full Time").length,
@@ -318,7 +300,7 @@ const Careers = () => {
   };
 
   // Loading state
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 mt-20">
         <Loader2 className="h-12 w-12 text-emerald-500 animate-spin mb-4" />
@@ -328,14 +310,18 @@ const Careers = () => {
   }
 
   // Error state
-  if (error) {
+  if (isError) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 mt-20 px-4">
         <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           Error Loading Jobs
         </h2>
-        <p className="text-gray-600 mb-4 text-center">{error}</p>
+        <p className="text-gray-600 mb-4 text-center">
+          {apiError && 'data' in apiError 
+            ? String((apiError.data as any)?.message || 'Failed to load jobs') 
+            : 'Failed to load jobs from server'}
+        </p>
         <button
           onClick={() => window.location.reload()}
           className="bg-emerald-500 text-white px-6 py-3 rounded-lg hover:bg-emerald-600 transition-colors"
@@ -373,7 +359,7 @@ const Careers = () => {
       {/* HERO */}
       <div className="relative bg-[#0ddaa0] text-white py-12 md:py-20 px-4 mt-20 md:mt-30 lg:mt-34">
         <div className="absolute inset-0 bg-black/20" />
-        <div className="relative max-w-7xl mx-auto text-center">
+        <div className="relative max-w-400 mx-auto text-center">
           <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
             Find Your Dream{" "}
             <span className="text-yellow-300">
@@ -401,18 +387,21 @@ const Careers = () => {
       </div>
 
       {/* STATS */}
-      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-3 gap-4 md:gap-6">
+      <div className="max-w-400 mx-auto mt-6 md:mt-10 px-4 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {[
           { label: "Total Jobs", value: stats.total, icon: Briefcase },
           { label: "Full Time", value: stats.fullTime, icon: Users },
+          { label: "Part Time", value: stats.partTime, icon: MapPin },
           { label: "Remote", value: stats.remote, icon: MapPin },
         ].map(({ label, value, icon: Icon }) => (
-          <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg">
-            <div className="flex items-center">
-              <Icon className="mr-3 md:mr-4 text-emerald-600" size={20} />
+          <div key={label} className="bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-emerald-50 rounded-lg">
+                <Icon className="text-emerald-600" size={20} />
+              </div>
               <div>
-                <p className="text-xl md:text-2xl lg:text-3xl font-bold">
-                  <CountUp end={value} duration={2} />+
+                <p className="text-2xl md:text-3xl font-bold text-gray-800">
+                  <CountUp end={value} duration={2} />
                 </p>
                 <p className="text-gray-600 text-sm md:text-base">{label}</p>
               </div>
@@ -428,7 +417,7 @@ const Careers = () => {
           ref={sidebarRef}
           className={`${
             sidebarOpen
-              ? "fixed inset-y-0 left-0 w-65 z-50 bg-white px-3 py-2 flex items-center lg:items-start lg:flex-row shadow-2xl animate-slide-in"
+              ? "fixed inset-y-0 left-0 w-80 z-50 bg-white px-6 py-6 overflow-y-auto shadow-2xl animate-slide-in"
               : "hidden"
           } lg:block lg:w-1/4 lg:relative lg:z-auto lg:shadow-none lg:p-0 lg:bg-transparent lg:animate-none`}
         >
@@ -454,6 +443,15 @@ const Careers = () => {
                 {filteredJobs.length} Job{filteredJobs.length !== 1 ? "s" : ""}{" "}
                 Found
               </h2>
+              {(filter !== "All" || locationFilter !== "All" || salaryFilter !== "All" || search) && (
+                <button
+                  onClick={resetFilters}
+                  className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1"
+                >
+                  <X size={16} />
+                  Clear Filters
+                </button>
+              )}
             </div>
 
             {filteredJobs.length === 0 && (
@@ -493,7 +491,7 @@ const Careers = () => {
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                   >
                     <ChevronLeft size={20} />
                   </button>
@@ -531,7 +529,7 @@ const Careers = () => {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                   >
                     <ChevronRight size={20} />
                   </button>

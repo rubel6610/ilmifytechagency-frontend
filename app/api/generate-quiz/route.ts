@@ -4,19 +4,16 @@ export const runtime = "nodejs";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-
-
 interface QuizQuestion {
   id: string;
   question: string;
-  options: [string, string, string, string];
+  options: string[];
   correctAnswer: number;
-  userAnswer?: number;
-  isCorrect?: boolean;
 }
 
 export const POST = async (req: NextRequest) => {
   const { jobTitle, skills, experienceLevel } = await req.json();
+  
   try {
     if (!jobTitle || !skills?.length || !experienceLevel) {
       return NextResponse.json(
@@ -27,77 +24,96 @@ export const POST = async (req: NextRequest) => {
 
     // Enhanced prompt for better JSON response
     const prompt = `Generate exactly 20 multiple-choice technical interview questions for a ${experienceLevel} ${jobTitle} position.
-    
+
 Required Skills: ${skills.join(", ")}
 
-INSTRUCTIONS:
-1. Create exactly 20 questions
-2. Each question must have 4 options labeled A, B, C, D
-3. Mark the correct answer with an index (0 for A, 1 for B, 2 for C, 3 for D)
-4. Questions should range from basic to advanced based on ${experienceLevel} level
-5. Focus on practical, real-world scenarios
+CRITICAL INSTRUCTIONS:
+1. Create EXACTLY 20 questions
+2. Each question MUST have EXACTLY 4 options
+3. Options should be an array of 4 strings
+4. correctAnswer should be the index (0, 1, 2, or 3) of the correct option
+5. Questions should range from basic to advanced based on ${experienceLevel} level
+6. Focus on practical, real-world scenarios related to ${skills.join(", ")}
+7. Make questions clear and unambiguous
+8. Ensure all options are plausible but only one is clearly correct
 
-OUTPUT FORMAT (JSON ONLY):
+REQUIRED OUTPUT FORMAT (STRICT JSON):
 {
   "questions": [
     {
       "id": "q1",
-      "question": "Question text here?",
-      "options": ["Option A", "Option B", "Option C", "Option D"],
-      "correctAnswer": 0
+      "question": "What is the primary purpose of React Hooks?",
+      "options": [
+        "To replace class components entirely",
+        "To add state and lifecycle features to functional components",
+        "To improve CSS styling in React",
+        "To manage database connections"
+      ],
+      "correctAnswer": 1
     }
   ]
 }
 
-Begin JSON output:`;
+IMPORTANT: 
+- Return ONLY valid JSON, no markdown, no explanations
+- Ensure exactly 20 questions
+- Each question must have exactly 4 options as an array
+- correctAnswer must be 0, 1, 2, or 3
 
-    // Try different model names - one of these should work
+Begin JSON output now:`;
+
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not set in environment variables");
+    }
+
+    const genAI = new GoogleGenerativeAI(apiKey);
+
+    // Try different model names in order of preference
     const modelNames = [
-      "gemini-1.5-pro", // Most reliable
-      "gemini-1.0-pro", // Alternative
-      "gemini-pro", // Basic model
-      "gemini-1.5-flash-exp", // Experimental flash
-      "gemini-1.5-flash-latest", // Latest flash
-      "gemini-1.5-flash", // Original attempt
+      "gemini-1.5-pro-latest",
+      "gemini-1.5-pro",
+      "gemini-1.5-flash-latest", 
+      "gemini-1.5-flash",
+      "gemini-pro",
     ];
 
     let result;
     let lastError;
+    let modelUsed = "";
 
     // Try each model until one works
     for (const modelName of modelNames) {
       try {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) {
-           throw new Error("GEMINI_API_KEY is not set");
-        }
-        const genAI = new GoogleGenerativeAI(apiKey);
-        console.log(`Trying model: ${modelName}`);
+        console.log(`Attempting to use model: ${modelName}`);
 
         const model = genAI.getGenerativeModel({
           model: modelName,
           generationConfig: {
-            temperature: 0.7,
-            topP: 0.9,
+            temperature: 0.8,
+            topP: 0.95,
             topK: 40,
-            maxOutputTokens: 4096,
+            maxOutputTokens: 8192,
+            responseMimeType: "application/json", // Request JSON response
           },
         });
 
         const generationResult = await model.generateContent(prompt);
         result = generationResult;
-        console.log(`Success with model: ${modelName}`);
-        break; // Exit loop if successful
+        modelUsed = modelName;
+        console.log(`Successfully generated quiz with model: ${modelName}`);
+        break;
       } catch (modelError: any) {
         lastError = modelError;
         console.log(`Model ${modelName} failed: ${modelError.message}`);
-        continue; // Try next model
+        continue;
       }
     }
 
     // If all models failed
     if (!result) {
-      throw new Error(`All models failed. Last error: ${lastError?.message}`);
+      console.error("All models failed. Last error:", lastError);
+      throw new Error(`AI generation failed: ${lastError?.message || "Unknown error"}`);
     }
 
     const text = result.response.text();
@@ -112,73 +128,161 @@ Begin JSON output:`;
     // Remove markdown code blocks if present
     jsonString = jsonString.replace(/```json\n?/g, "").replace(/```\n?/g, "");
 
-    // Extract JSON object
-    const jsonMatch = jsonString.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      console.error("No JSON found in response:", text);
-      throw new Error("AI response is not valid JSON");
+    // Remove any text before the first {
+    const startIndex = jsonString.indexOf("{");
+    if (startIndex > 0) {
+      jsonString = jsonString.substring(startIndex);
     }
 
-    jsonString = jsonMatch[0];
+    // Remove any text after the last }
+    const endIndex = jsonString.lastIndexOf("}");
+    if (endIndex < jsonString.length - 1) {
+      jsonString = jsonString.substring(0, endIndex + 1);
+    }
 
     // Parse JSON
-    const parsed = JSON.parse(jsonString);
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonString);
+    } catch (parseError) {
+      console.error("JSON parse error. Response text:", text);
+      throw new Error("Failed to parse AI response as JSON");
+    }
 
     // Validate structure
     if (!parsed.questions || !Array.isArray(parsed.questions)) {
+      console.error("Invalid response structure:", parsed);
       throw new Error("Invalid response structure: missing questions array");
     }
 
-    // Ensure we have exactly 20 questions
-    let questions = parsed.questions.slice(0, 20);
+    // Process and validate questions
+    let questions: QuizQuestion[] = parsed.questions.map((q: any, i: number) => {
+      // Ensure options is an array with exactly 4 items
+      let options: string[] = [];
+      
+      if (Array.isArray(q.options)) {
+        options = q.options.slice(0, 4).map((opt: any) => String(opt));
+      }
+      
+      // Fill missing options
+      while (options.length < 4) {
+        options.push(`Option ${String.fromCharCode(65 + options.length)}`);
+      }
 
-    // Add missing properties
-    questions = questions.map((q: any, i: number) => ({
-      id: q.id || `q${i + 1}`,
-      question: q.question || `Question ${i + 1}`,
-      options: q.options || ["Option A", "Option B", "Option C", "Option D"],
-      correctAnswer: typeof q.correctAnswer === "number" ? q.correctAnswer : 0,
-    }));
+      // Validate and ensure correctAnswer is 0-3
+      let correctAnswer = 0;
+      if (typeof q.correctAnswer === 'number' && q.correctAnswer >= 0 && q.correctAnswer <= 3) {
+        correctAnswer = q.correctAnswer;
+      } else if (typeof q.correctAnswer === 'string') {
+        const parsed = parseInt(q.correctAnswer, 10);
+        if (!isNaN(parsed) && parsed >= 0 && parsed <= 3) {
+          correctAnswer = parsed;
+        }
+      }
 
-    // If we got less than 20 questions, fill with mock data
+      return {
+        id: q.id || `q${i + 1}`,
+        question: q.question || `Question ${i + 1}?`,
+        options,
+        correctAnswer,
+      };
+    });
+
+    // Ensure exactly 20 questions
     if (questions.length < 20) {
+      console.warn(`Only ${questions.length} questions generated, filling to 20`);
+      
+      const fillQuestions: QuizQuestion[] = [];
       const needed = 20 - questions.length;
+      
       for (let i = 0; i < needed; i++) {
-        questions.push({
-          id: `q${questions.length + 1}`,
-          question: `What is an important aspect of ${skills[0]} for a ${experienceLevel} position?`,
+        const skill = skills[i % skills.length];
+        const qNum = questions.length + i + 1;
+        
+        fillQuestions.push({
+          id: `q${qNum}`,
+          question: `What is an important consideration when working with ${skill} in a ${experienceLevel} ${jobTitle} role?`,
           options: [
-            "Understanding basic principles",
-            "Advanced optimization techniques",
-            "Team collaboration",
-            "All of the above",
+            `Understanding the fundamentals of ${skill}`,
+            `Advanced optimization techniques for ${skill}`,
+            `Integration of ${skill} with other technologies`,
+            `All of the above are important considerations`,
           ],
           correctAnswer: 3,
         });
       }
+      
+      questions = [...questions, ...fillQuestions];
+    } else if (questions.length > 20) {
+      questions = questions.slice(0, 20);
     }
+
+    console.log(`Returning ${questions.length} questions`);
 
     return NextResponse.json({
       success: true,
       questions,
       count: questions.length,
+      modelUsed,
+      fallback: false,
     });
+
   } catch (error: any) {
     console.error("Quiz generation error:", error);
 
-    // Comprehensive fallback with mock questions
+    // Comprehensive fallback with properly structured mock questions
     const mockQuestions: QuizQuestion[] = Array.from({ length: 20 }, (_, i) => {
       const skill = skills?.[i % skills.length] || "technical skills";
+      const questionTypes = [
+        {
+          question: `What is the best practice for implementing ${skill} in a ${experienceLevel} role?`,
+          options: [
+            `Follow industry standards and documentation`,
+            `Use only the latest experimental features`,
+            `Avoid testing to save time`,
+            `Copy code without understanding it`,
+          ],
+          correctAnswer: 0,
+        },
+        {
+          question: `When working with ${skill}, what should be prioritized?`,
+          options: [
+            `Code readability and maintainability`,
+            `Using as many features as possible`,
+            `Ignoring performance concerns`,
+            `Avoiding documentation`,
+          ],
+          correctAnswer: 0,
+        },
+        {
+          question: `How should errors be handled when using ${skill}?`,
+          options: [
+            `Ignore them and hope they don't occur`,
+            `Use proper error handling and logging`,
+            `Only log errors in production`,
+            `Never show errors to users`,
+          ],
+          correctAnswer: 1,
+        },
+        {
+          question: `What is essential for ${skill} project success?`,
+          options: [
+            `Working alone without collaboration`,
+            `Proper planning and team communication`,
+            `Rushing to complete tasks quickly`,
+            `Avoiding code reviews`,
+          ],
+          correctAnswer: 1,
+        },
+      ];
+
+      const template = questionTypes[i % questionTypes.length];
+      
       return {
         id: `q${i + 1}`,
-        question: `${i + 1}. What is an important consideration for ${skill} in a ${experienceLevel} ${jobTitle} role?`,
-        options: [
-          `Basic understanding of ${skill}`,
-          `Advanced implementation of ${skill}`,
-          `Integration with other technologies`,
-          `All of the above are important`,
-        ],
-        correctAnswer: Math.floor(Math.random() * 4),
+        question: template.question,
+        options: template.options,
+        correctAnswer: template.correctAnswer,
       };
     });
 
@@ -188,6 +292,7 @@ Begin JSON output:`;
       fallback: true,
       questions: mockQuestions,
       count: mockQuestions.length,
-    });
+      modelUsed: "fallback",
+    }, { status: 200 }); // Return 200 even for fallback so frontend can proceed
   }
 };
