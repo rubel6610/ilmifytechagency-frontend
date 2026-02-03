@@ -15,7 +15,7 @@ const DEPARTMENTS = [
 ];
 
 interface FormDataState {
-  name: string;
+  employeeId: string;
   fullName: string;
   position: string;
   avatar: File | null;
@@ -27,21 +27,24 @@ interface FormDataState {
   phone: string;
   linkedin: string;
   skills: string;
+  startDate: string;
 }
 
 interface AddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (formData: FormData) => Promise<void>;
+  onSubmit: (data: any, photo?: File) => Promise<void>;
+  existingEmployeeIds: string[];
 }
 
 export default function AddMemberModal({ 
   isOpen, 
   onClose, 
-  onSubmit 
+  onSubmit,
+  existingEmployeeIds
 }: AddMemberModalProps) {
   const [formData, setFormData] = useState<FormDataState>({
-    name: '',
+    employeeId: '',
     fullName: '',
     position: '',
     avatar: null,
@@ -53,6 +56,7 @@ export default function AddMemberModal({
     phone: '',
     linkedin: '',
     skills: '',
+    startDate: new Date().toISOString().split('T')[0],
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -62,7 +66,18 @@ export default function AddMemberModal({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrorMessage('');
+    
+    if (name === 'employeeId') {
+      if (value && existingEmployeeIds.includes(value)) {
+        setErrorMessage('This Employee ID already exists');
+      } else if (value && !/^iLM-C-\d+$/.test(value)) {
+        setErrorMessage('Format must be iLM-C-[number]');
+      } else {
+        setErrorMessage('');
+      }
+    } else {
+      setErrorMessage('');
+    }
   };
 
   const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,8 +101,21 @@ export default function AddMemberModal({
   };
 
   const validateForm = (): boolean => {
-    if (!formData.name.trim()) {
-      setErrorMessage('Name is required');
+    if (!formData.employeeId.trim()) {
+      setErrorMessage('Employee ID is required');
+      return false;
+    }
+    const employeeIdRegex = /^iLM-C-\d+$/;
+    if (!employeeIdRegex.test(formData.employeeId)) {
+      setErrorMessage('Employee ID must follow the format iLM-C-[number] (e.g., iLM-C-63)');
+      return false;
+    }
+    if (existingEmployeeIds.includes(formData.employeeId)) {
+      setErrorMessage('This Employee ID already exists');
+      return false;
+    }
+    if (!formData.fullName.trim()) {
+      setErrorMessage('Full Name is required');
       return false;
     }
     if (!formData.position.trim()) {
@@ -115,39 +143,27 @@ export default function AddMemberModal({
 
     setIsSubmitting(true);
     try {
-      const submitData = new FormData();
-      
       const memberData = {
-        name: formData.name,
-        fullName: formData.fullName || formData.name,
+        employeeId: formData.employeeId,
+        fullName: formData.fullName,
         position: formData.position,
         department: formData.department,
         experience: Number(formData.experience) || 0,
         description: formData.description,
-        email: formData.email || undefined,
-        phone: formData.phone || undefined,
-        linkedin: formData.linkedin || undefined,
+        email: formData.email,
+        phone: formData.phone,
+        linkedin: formData.linkedin,
         skills: formData.skills.split(',').map(s => s.trim()).filter(s => s !== ''),
-        status: 'ACTIVE'
+        startDate: formData.startDate,
+        status: 'ACTIVE',
+        active: true
       };
 
-      submitData.append('data', JSON.stringify(memberData));
-      
-      if (formData.avatar) {
-        submitData.append('profilePhoto', formData.avatar);
-      }
-
-      console.log("Form data prepared, calling onSubmit...");
-      // Log FormData contents
-      for (let pair of submitData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-      }
-
-      await onSubmit(submitData);
+      await onSubmit(memberData, formData.avatar || undefined);
       
       // Reset form
       setFormData({
-        name: '',
+        employeeId: '',
         fullName: '',
         position: '',
         avatar: null,
@@ -159,6 +175,7 @@ export default function AddMemberModal({
         phone: '',
         linkedin: '',
         skills: '',
+        startDate: new Date().toISOString().split('T')[0],
       });
       onClose();
     } catch (error) {
@@ -259,16 +276,46 @@ export default function AddMemberModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Display Name</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Employee ID</label>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      name="employeeId" 
+                      value={formData.employeeId} 
+                      onChange={handleInputChange} 
+                      placeholder="e.g., iLM-C-63" 
+                      className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none text-sm ${
+                        formData.employeeId && existingEmployeeIds.includes(formData.employeeId)
+                          ? 'border-red-300 focus:border-red-500 bg-red-50'
+                          : formData.employeeId && /^iLM-C-\d+$/.test(formData.employeeId)
+                            ? 'border-green-300 focus:border-green-500 bg-green-50'
+                            : 'border-slate-200 focus:border-[#0ddaa0]'
+                      }`} 
+                    />
+                    {formData.employeeId && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        {existingEmployeeIds.includes(formData.employeeId) ? (
+                          <span className="text-[10px] font-bold text-red-600 uppercase">Already Exists</span>
+                        ) : /^iLM-C-\d+$/.test(formData.employeeId) ? (
+                          <span className="text-[10px] font-bold text-green-600 uppercase">Available</span>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Start Date</label>
                   <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name} 
+                    type="date" 
+                    name="startDate" 
+                    value={formData.startDate} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Saruar" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
                   <input 
@@ -276,7 +323,7 @@ export default function AddMemberModal({
                     name="fullName" 
                     value={formData.fullName} 
                     onChange={handleInputChange} 
-                    placeholder="e.g., Saruar Jahan" 
+                    placeholder="e.g., Siam Hossen Rifat" 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>

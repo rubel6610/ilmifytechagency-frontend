@@ -136,7 +136,7 @@ export default function TeamMemberCard({
               custom={0}
             >
               <h3 className="text-2xl font-bold text-slate-900 mb-1">
-                {member.name}
+                {member.fullName}
               </h3>
               <motion.p
                 animate={{ color: isHovered ? "#0ddaa0" : "#0284c7" }}
@@ -218,13 +218,13 @@ export default function TeamMemberCard({
                   height={100}
                   width={100}
                   src={member.profilePhoto}
-                  alt={member.name}
+                  alt={member.fullName}
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
             ) : (
               <div className="absolute inset-1 rounded-full bg-linear-to-r from-[#0ddaa0] to-[#8ce064] flex items-center justify-center text-3xl font-bold text-white">
-                {member.name
+                {(member.fullName || "")
                   .split(" ")
                   .map((n: string) => n[0])
                   .join("")}

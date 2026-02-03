@@ -13,6 +13,7 @@ import {
   useGetTeamMembersQuery,
   useCreateTeamMemberMutation,
   useUpdateTeamMemberMutation,
+  useUpdateTeamMemberPhotoMutation,
   useDeleteTeamMemberMutation,
   TeamMember as APITeamMember,
 } from "@/redux/service/teamApi";
@@ -83,9 +84,11 @@ export default function TeamManagement() {
   });
   const [createTeamMember] = useCreateTeamMemberMutation();
   const [updateTeamMember] = useUpdateTeamMemberMutation();
+  const [updateTeamMemberPhoto] = useUpdateTeamMemberPhotoMutation();
   const [deleteTeamMember] = useDeleteTeamMemberMutation();
 
   const teamData = teamResponse?.data || [];
+  const existingEmployeeIds = teamData.map((m) => m.employeeId).filter(Boolean);
 
   // Debug logging
   useEffect(() => {
@@ -133,12 +136,19 @@ export default function TeamManagement() {
     );
   }
 
-  const handleAddMember = async (formData: FormData) => {
+  const handleAddMember = async (data: any, photo?: File) => {
     try {
       console.log("Creating team member...");
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      if (photo) {
+        formData.append("profilePhoto", photo);
+      }
+
       const result = await createTeamMember(formData).unwrap();
       console.log("Team member created successfully:", result);
-      setSuccessMessage("Team member added successfully!");
+      
+      setSuccessMessage("✓ Team member added successfully!");
       setIsAddModalOpen(false);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error: any) {
@@ -149,17 +159,24 @@ export default function TeamManagement() {
     }
   };
 
-  const handleEditMember = async (formData: FormData) => {
+  const handleEditMember = async (data: any, photo?: File) => {
     if (!selectedMember) return;
 
     try {
       console.log("Updating team member with ID:", selectedMember.id);
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      if (photo) {
+        formData.append("profilePhoto", photo);
+      }
+
       const result = await updateTeamMember({
         id: selectedMember.id,
-        formData,
+        formData
       }).unwrap();
+      
       console.log("Team member updated successfully:", result);
-      setSuccessMessage("Team member updated successfully!");
+      setSuccessMessage("✓ Team member updated successfully!");
       setIsEditModalOpen(false);
       setSelectedMember(null);
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -196,9 +213,9 @@ export default function TeamManagement() {
 
   const filteredData = teamData.filter((member) => {
     const matchesSearch =
-      member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(member.experience).toLowerCase().includes(searchTerm.toLowerCase());
+      (member.fullName?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+      (member.position?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+      String(member.experience || '').toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesDepartment =
       departmentFilter === "All" || member.department === departmentFilter;
@@ -337,6 +354,7 @@ export default function TeamManagement() {
                   <thead>
                     <tr className="bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10 border-b-2 border-slate-200">
                       <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 w-12">#</th>
+                      <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[120px]">Employee ID</th>
                       <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[150px]">Name</th>
                       <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">Position</th>
                       <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 min-w-[140px]">Department</th>
@@ -354,7 +372,8 @@ export default function TeamManagement() {
                         className="border-b border-slate-200 hover:bg-slate-50 transition-colors"
                       >
                         <td className="px-4 py-4 text-sm text-slate-600 font-semibold">{index + 1}</td>
-                        <td className="px-4 py-4 text-sm font-semibold text-slate-900">{member.name}</td>
+                        <td className="px-4 py-4 text-sm font-semibold text-slate-700">{member.employeeId}</td>
+                        <td className="px-4 py-4 text-sm font-semibold text-slate-900">{member.fullName}</td>
                         <td className="px-4 py-4 text-sm text-slate-700">{member.position}</td>
                         <td className="px-4 py-4 text-sm">
                           <span className="px-3 py-1 bg-[#0ddaa0]/10 text-[#0ddaa0] rounded-full text-xs font-semibold whitespace-nowrap">
@@ -461,6 +480,7 @@ export default function TeamManagement() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSubmit={handleAddMember}
+        existingEmployeeIds={existingEmployeeIds}
       />
       <ViewMemberModal
         isOpen={isViewModalOpen}
@@ -478,6 +498,7 @@ export default function TeamManagement() {
         }}
         member={selectedMember}
         onSubmit={handleEditMember}
+        existingEmployeeIds={existingEmployeeIds}
       />
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}

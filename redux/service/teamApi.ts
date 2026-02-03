@@ -16,7 +16,7 @@ export type TeamMemberStatus = "ACTIVE" | "INACTIVE" | "ON_LEAVE";
 // Team member interface
 export interface TeamMember {
   id: string;
-  name: string;
+  employeeId: string;
   fullName: string;
   position: string;
   department: Department;
@@ -120,6 +120,22 @@ export const teamApi = baseApi.injectEndpoints({
       ],
     }),
 
+    // Standalone Photo Update
+    updateTeamMemberPhoto: builder.mutation<
+      SingleTeamMemberResponse,
+      { id: string; formData: FormData }
+    >({
+      query: ({ id, formData }) => ({
+        url: `/team/${id}`,
+        method: "PATCH",
+        body: formData,
+      }),
+      invalidatesTags: (_r, _e, { id }) => [
+        { type: "team", id },
+        { type: "team", id: "LIST" },
+      ],
+    }),
+
     // Delete
     deleteTeamMember: builder.mutation<
       { status: boolean; message: string },
@@ -142,5 +158,6 @@ export const {
   useGetTeamMemberByIdQuery,
   useCreateTeamMemberMutation,
   useUpdateTeamMemberMutation,
+  useUpdateTeamMemberPhotoMutation,
   useDeleteTeamMemberMutation,
 } = teamApi;

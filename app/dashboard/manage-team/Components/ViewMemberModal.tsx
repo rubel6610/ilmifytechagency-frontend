@@ -4,6 +4,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { TeamMember } from '@/redux/service/teamApi';
+import QRCode from "react-qr-code";
+import { useRef } from 'react';
 
 interface ViewMemberModalProps {
   isOpen: boolean;
@@ -54,21 +56,20 @@ export default function ViewMemberModal({
                         height={96} 
                         width={96} 
                         src={member.profilePhoto} 
-                        alt={member.name} 
+                        alt={member.fullName} 
                         className="w-full h-full object-cover" 
                       />
                     )}
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-slate-900">{member.name}</h3>
-                  {member.fullName && member.fullName !== member.name && (
-                    <p className="text-sm text-slate-500 font-medium">{member.fullName}</p>
-                  )}
+                  <h3 className="text-2xl font-bold text-slate-900">{member.fullName}</h3>
                   <p className="text-[#0ddaa0] font-semibold">{member.position}</p>
                   <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <p><span className="font-semibold text-slate-700">Employee ID:</span> {member.employeeId}</p>
                     <p><span className="font-semibold text-slate-700">Department:</span> {member.department}</p>
                     <p><span className="font-semibold text-slate-700">Experience:</span> {member.experience} years</p>
+                    {member.startDate && <p><span className="font-semibold text-slate-700">Start Date:</span> {new Date(member.startDate).toLocaleDateString()}</p>}
                     {member.email && <p><span className="font-semibold text-slate-700">Email:</span> {member.email}</p>}
                     {member.phone && <p><span className="font-semibold text-slate-700">Phone:</span> {member.phone}</p>}
                     {member.linkedin && (
@@ -102,6 +103,64 @@ export default function ViewMemberModal({
                   </div>
                 </div>
               )}
+              
+              <div className="border-t-2 border-slate-100 pt-6 mt-6">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="bg-white p-4 rounded-xl shadow-lg border-2 border-slate-100">
+                    <QRCode
+                      value={`${typeof window !== 'undefined' ? window.location.origin : ''}/scan/${member.employeeId}`}
+                      size={128}
+                      style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                      viewBox={`0 0 256 256`}
+                    />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Employee ID Card</h4>
+                    <p className="text-slate-600 mb-4 text-sm">Scan this QR code to view the full digital profile of {member.fullName}.</p>
+                    <button
+                      onClick={() => window.print()}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-colors"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                      </svg>
+                      Print Card
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Printable Area - Hidden on Screen */}
+            <div className="hidden print:flex print:fixed print:inset-0 print:z-[100] print:bg-white print:items-center print:justify-center p-8 flex-col text-center">
+              <h1 className="text-4xl font-bold text-slate-900 mb-2">{member.fullName}</h1>
+              <p className="text-xl text-slate-600 mb-8 font-mono">{member.employeeId}</p>
+              <div className="w-[400px] h-[400px] mx-auto border-4 border-slate-900 p-4 rounded-xl">
+                <QRCode
+                  value={`${typeof window !== 'undefined' ? window.location.origin : ''}/scan/${member.employeeId}`}
+                  size={256}
+                  style={{ height: "100%", maxWidth: "100%", width: "100%" }}
+                  viewBox={`0 0 256 256`}
+                />
+              </div>
+              <p className="mt-8 text-xl text-slate-500">Scan to view profile</p>
+              <style jsx global>{`
+                @media print {
+                  body * {
+                    visibility: hidden;
+                  }
+                  .print\\:flex, .print\\:flex * {
+                    visibility: visible;
+                  }
+                  .print\\:fixed {
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 100vw;
+                    height: 100vh;
+                  }
+                }
+              `}</style>
             </div>
           </motion.div>
         </motion.div>

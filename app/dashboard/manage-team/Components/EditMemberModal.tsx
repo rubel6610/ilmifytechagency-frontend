@@ -17,7 +17,7 @@ const DEPARTMENTS = [
 ];
 
 interface FormDataState {
-  name: string;
+  employeeId: string;
   fullName: string;
   position: string;
   avatar?: string | File;
@@ -29,23 +29,26 @@ interface FormDataState {
   phone: string;
   linkedin: string;
   skills: string;
+  startDate: string;
 }
 
 interface EditMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   member: TeamMember | null;
-  onSubmit: (formData: FormData) => Promise<void>;
+  onSubmit: (data: any, photo?: File) => Promise<void>;
+  existingEmployeeIds: string[];
 }
 
 export default function EditMemberModal({ 
   isOpen, 
   onClose, 
   member, 
-  onSubmit 
+  onSubmit,
+  existingEmployeeIds
 }: EditMemberModalProps) {
   const [formData, setFormData] = useState<FormDataState>({
-    name: '',
+    employeeId: '',
     fullName: '',
     position: '',
     avatar: '',
@@ -57,6 +60,7 @@ export default function EditMemberModal({
     phone: '',
     linkedin: '',
     skills: '',
+    startDate: '',
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -66,7 +70,7 @@ export default function EditMemberModal({
   useEffect(() => {
     if (member) {
       setFormData({
-        name: member.name || '',
+        employeeId: member.employeeId || '',
         fullName: member.fullName || '',
         position: member.position || '',
         avatar: member.profilePhoto || '',
@@ -78,6 +82,7 @@ export default function EditMemberModal({
         phone: String(member.phone || ''),
         linkedin: member.linkedin || '',
         skills: member.skills?.join(', ') || '',
+        startDate: member.startDate ? member.startDate.split('T')[0] : '',
       });
     }
   }, [member]);
@@ -85,6 +90,18 @@ export default function EditMemberModal({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    if (name === 'employeeId') {
+      if (value && member && value !== member.employeeId && existingEmployeeIds.includes(value)) {
+        setErrorMessage('This Employee ID is already taken');
+      } else if (value && !/^iLM-C-\d+$/.test(value)) {
+        setErrorMessage('Format must be iLM-C-[number]');
+      } else {
+        setErrorMessage('');
+      }
+    } else {
+      setErrorMessage('');
+    }
   };
 
   const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,37 +123,37 @@ export default function EditMemberModal({
     e.preventDefault();
     if (!member) return;
     
+    const employeeIdRegex = /^iLM-C-\d+$/;
+    if (!employeeIdRegex.test(formData.employeeId)) {
+      setErrorMessage('Employee ID must follow the format iLM-C-[number] (e.g., iLM-C-63)');
+      setIsSubmitting(false);
+      return;
+    }
+    if (formData.employeeId !== member.employeeId && existingEmployeeIds.includes(formData.employeeId)) {
+      setErrorMessage('This Employee ID is already taken by another member');
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const submitData = new FormData();
-      
       const memberData = {
-        name: formData.name,
-        fullName: formData.fullName || formData.name,
+        employeeId: formData.employeeId,
+        fullName: formData.fullName,
         position: formData.position,
         department: formData.department,
         experience: Number(formData.experience) || 0,
         description: formData.description,
-        email: formData.email || undefined,
-        phone: formData.phone || undefined,
-        linkedin: formData.linkedin || undefined,
+        email: formData.email,
+        phone: formData.phone,
+        linkedin: formData.linkedin,
         skills: formData.skills.split(',').map(s => s.trim()).filter(s => s !== ''),
-        status: member.status || 'ACTIVE'
+        startDate: formData.startDate,
+        status: member.status || 'ACTIVE',
+        active: member.active
       };
 
-      submitData.append('data', JSON.stringify(memberData));
-      
-      if (formData.avatar instanceof File) {
-        submitData.append('profilePhoto', formData.avatar);
-      }
-
-      console.log("Edit form data prepared, calling onSubmit...");
-      // Log FormData contents
-      for (let pair of submitData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-      }
-
-      await onSubmit(submitData);
+      await onSubmit(memberData, formData.avatar instanceof File ? formData.avatar : undefined);
     } catch (error) {
       console.error("Error in EditMemberModal:", error);
       setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
@@ -224,15 +241,47 @@ export default function EditMemberModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 mb-2">Display Name</label>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Employee ID</label>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      name="employeeId" 
+                      value={formData.employeeId || ''} 
+                      onChange={handleInputChange} 
+                      className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none text-sm ${
+                        formData.employeeId && 
+                        formData.employeeId !== member.employeeId && 
+                        existingEmployeeIds.includes(formData.employeeId)
+                          ? 'border-red-300 focus:border-red-500 bg-red-50'
+                          : formData.employeeId && /^iLM-C-\d+$/.test(formData.employeeId)
+                            ? 'border-green-300 focus:border-green-500 bg-green-50'
+                            : 'border-slate-200 focus:border-[#0ddaa0]'
+                      }`} 
+                    />
+                    {formData.employeeId && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        {formData.employeeId !== member.employeeId && existingEmployeeIds.includes(formData.employeeId) ? (
+                          <span className="text-[10px] font-bold text-red-600 uppercase">Already Exists</span>
+                        ) : /^iLM-C-\d+$/.test(formData.employeeId) ? (
+                          <span className="text-[10px] font-bold text-green-600 uppercase">Available</span>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">Start Date</label>
                   <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name || ''} 
+                    type="date" 
+                    name="startDate" 
+                    value={formData.startDate || ''} 
                     onChange={handleInputChange} 
                     className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#0ddaa0] text-sm" 
                   />
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
                   <input 

@@ -27,13 +27,13 @@ export default function TeamGridCard({ member, index }: Props) {
         {member.profilePhoto ? (
           <Image
             src={member.profilePhoto}
-            alt={member.name}
+            alt={member.fullName}
             fill
             className="rounded-full object-cover"
           />
         ) : (
           <div className="w-full h-full rounded-full bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] flex items-center justify-center text-white font-bold">
-            {member.name
+            {(member.fullName || "")
               .split(" ")
               .map((n) => n[0])
               .join("")}
@@ -41,7 +41,7 @@ export default function TeamGridCard({ member, index }: Props) {
         )}
       </div>
 
-      <h3 className="font-bold text-sm">{member.name}</h3>
+      <h3 className="font-bold text-sm">{member.fullName}</h3>
       <p className="text-xs text-[#0284c7] font-semibold">
         {member.position}
       </p>

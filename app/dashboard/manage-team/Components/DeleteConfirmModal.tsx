@@ -64,7 +64,7 @@ export default function DeleteConfirmModal({
                   </svg>
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-900">Delete {member.name}?</p>
+                  <p className="font-semibold text-slate-900">Delete {member.fullName}?</p>
                   <p className="text-sm text-slate-600 mt-1">This action cannot be undone.</p>
                 </div>
               </div>
