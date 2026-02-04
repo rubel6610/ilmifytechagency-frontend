@@ -550,7 +550,7 @@ export default function TeamManagement() {
                       Showing <span className="font-semibold">
                         {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredData.length)}
                       </span> of <span className="font-semibold">{filteredData.length}</span> members
-                      {searchTerm && <span> for "<span className="font-semibold text-[#0ddaa0]">{searchTerm}</span>"</span>}
+                      {searchTerm && <span> for <span className="font-semibold text-[#0ddaa0]">{searchTerm}</span> </span>}
                       {departmentFilter !== "All" && (
                         <span> in <span className="font-semibold text-[#0ddaa0]">{departmentFilter.replace('_', ' ')}</span></span>
                       )}
