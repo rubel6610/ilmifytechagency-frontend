@@ -18,8 +18,8 @@ import {
   useDeleteTeamMemberMutation,
   TeamMember as APITeamMember,
 } from "@/redux/service/teamApi";
-import { exportMembersToExcel } from "./Components/ExportToExcel";
 
+import { exportMembersToExcel } from "./Components/ExportToExcel";
 
 export const DEPARTMENTS = [
   "MANAGEMENT",
