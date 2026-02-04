@@ -81,8 +81,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 ">
+      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 bg-white rounded-2xl shadow-xl p-8 mt-30 lg:mt-50 xl:mt-30">
         {/* LEFT: LOGIN FORM */}
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-bold mb-6">Login your account</h2>

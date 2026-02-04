@@ -117,15 +117,7 @@ export default function ViewMemberModal({
                   <div className="flex-1 text-center md:text-left">
                     <h4 className="text-lg font-bold text-slate-900 mb-2">Employee ID Card</h4>
                     <p className="text-slate-600 mb-4 text-sm">Scan this QR code to view the full digital profile of {member.fullName}.</p>
-                    <button
-                      onClick={() => window.print()}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-colors"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                      </svg>
-                      Print Card
-                    </button>
+                
                   </div>
                 </div>
               </div>
