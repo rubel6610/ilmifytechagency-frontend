@@ -24,16 +24,16 @@ export default function TeamGridCard({ member, index }: Props) {
       className="rounded-xl border p-4 text-center bg-white hover:shadow-xl transition"
     >
       <div className="relative w-24 h-24 mx-auto mb-4">
-        {member.avatar ? (
+        {member.profilePhoto ? (
           <Image
-            src={member.avatar}
-            alt={member.name}
+            src={member.profilePhoto}
+            alt={member.fullName}
             fill
             className="rounded-full object-cover"
           />
         ) : (
           <div className="w-full h-full rounded-full bg-gradient-to-r from-[#0ddaa0] to-[#8ce064] flex items-center justify-center text-white font-bold">
-            {member.name
+            {(member.fullName || "")
               .split(" ")
               .map((n) => n[0])
               .join("")}
@@ -41,7 +41,7 @@ export default function TeamGridCard({ member, index }: Props) {
         )}
       </div>
 
-      <h3 className="font-bold text-sm">{member.name}</h3>
+      <h3 className="font-bold text-sm">{member.fullName}</h3>
       <p className="text-xs text-[#0284c7] font-semibold">
         {member.position}
       </p>

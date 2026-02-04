@@ -60,7 +60,7 @@ const JobDetails = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center gap-6 mb-10 pb-8 border-b">
             <Image
-              src={job.thumbnail}
+              src={job.thumbnail || "/default-job-thumbnail.png"}
               alt={job.title}
               width={100}
               height={100}
@@ -98,7 +98,7 @@ const JobDetails = () => {
             <SummaryCard label="Vacancy" value={`${job.vacancy} Positions`} />
             <SummaryCard
               label="Deadline"
-              value={new Date(job.applicationDeadline).toLocaleDateString()}
+              value={job.applicationDeadline ? new Date(job.applicationDeadline).toLocaleDateString() : "Open"}
               highlight
             />
           </motion.div>

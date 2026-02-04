@@ -13,6 +13,8 @@ import {
   FiMail,
   FiPhone,
 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 interface Job {
   id: string;
@@ -24,19 +26,21 @@ interface Job {
 interface QuizQuestion {
   id: string;
   question: string;
-  options: [string, string, string, string];
+  options: string[]; // Changed from tuple to array for flexibility
   correctAnswer: number;
 }
 
 interface QuizAnswer {
-  id: string;
+  questionId: string;
   question: string;
+  options: string[];
   userAnswer: number | null;
   selectedOption: string | null;
   isCorrect: boolean;
-  timedOut?: boolean;
-  timeTaken?: number;
+  timedOut: boolean;
+  timeTaken: number;
   correctAnswer: number;
+  correctOption: string;
 }
 
 interface CandidateInfo {
@@ -60,21 +64,33 @@ export default function ApplyJobForm({ job }: { job: Job }) {
   >("initial");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, QuizAnswer>>({});
+  const [quizAnswers, setQuizAnswers] = useState<QuizAnswer[]>([]);
   const [loading, setLoading] = useState(false);
   const [fileError, setFileError] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(8);
+  const [startTime, setStartTime] = useState<number>(0);
   const [candidateInfo, setCandidateInfo] = useState<CandidateInfo>({
     name: "",
     email: "",
     phone: "",
   });
-  const [quizScore, setQuizScore] = useState<{ score: number; correct: number; total: number } | null>(null);
+  const [quizScore, setQuizScore] = useState<{ 
+    score: number; 
+    correct: number; 
+    total: number;
+    incorrect: number;
+    timedOut: number;
+  } | null>(null);
+  const { token } = useSelector((state: RootState) => state.auth);
 
-  // Timer effect
+  // Timer effect - Reset timer when question changes
   useEffect(() => {
-    if (step !== "quiz") return;
+    if (step !== "quiz" || !questions[currentIdx]) return;
+    
+    // Reset timer and start time for new question
+    setTimeLeft(8);
+    setStartTime(Date.now());
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -88,7 +104,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [step, currentIdx]);
+  }, [step, currentIdx, questions]);
 
   // Generate quiz
   const startAIGeneration = async () => {
@@ -100,6 +116,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           jobTitle: job.title,
@@ -113,8 +130,9 @@ export default function ApplyJobForm({ job }: { job: Job }) {
       if (data.questions && data.questions.length > 0) {
         setQuestions(data.questions);
         setCurrentIdx(0);
-        setTimeLeft(15);
-        setQuizAnswers({});
+        setTimeLeft(8);
+        setQuizAnswers([]);
+        setStartTime(Date.now());
         setStep("quiz");
       } else {
         throw new Error("No questions generated");
@@ -175,44 +193,67 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     if (timeLeft === 0 || !questions[currentIdx]) return;
     
     const currentQuestion = questions[currentIdx];
+    const timeTaken = Math.floor((Date.now() - startTime) / 1000);
     const isCorrect = currentQuestion.correctAnswer === optionIdx;
     
-    setQuizAnswers({
-      ...quizAnswers,
-      [currentIdx]: {
-        id: currentQuestion.id,
-        question: currentQuestion.question,
-        userAnswer: optionIdx,
-        selectedOption: currentQuestion.options[optionIdx],
-        isCorrect,
-        timeTaken: 15 - timeLeft,
-        correctAnswer: currentQuestion.correctAnswer,
-      },
+    const answerData: QuizAnswer = {
+      questionId: currentQuestion.id,
+      question: currentQuestion.question,
+      options: currentQuestion.options,
+      userAnswer: optionIdx,
+      selectedOption: currentQuestion.options[optionIdx],
+      isCorrect,
+      timeTaken,
+      timedOut: false,
+      correctAnswer: currentQuestion.correctAnswer,
+      correctOption: currentQuestion.options[currentQuestion.correctAnswer],
+    };
+    
+    // Update or add answer for current question
+    setQuizAnswers(prev => {
+      const newAnswers = [...prev];
+      const existingIndex = newAnswers.findIndex(a => a.questionId === currentQuestion.id);
+      
+      if (existingIndex >= 0) {
+        newAnswers[existingIndex] = answerData;
+      } else {
+        newAnswers.push(answerData);
+      }
+      
+      return newAnswers;
     });
   };
 
   // Move to next question
   const handleNextQuestion = (isTimeout = false) => {
-    if (isTimeout && !quizAnswers[currentIdx]) {
-      const currentQuestion = questions[currentIdx];
-      setQuizAnswers({
-        ...quizAnswers,
-        [currentIdx]: {
-          id: currentQuestion.id,
+    const currentQuestion = questions[currentIdx];
+    
+    // If timeout and no answer recorded, record a timeout
+    if (isTimeout) {
+      const existingAnswer = quizAnswers.find(a => a.questionId === currentQuestion.id);
+      
+      if (!existingAnswer) {
+        const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+        
+        const timeoutAnswer: QuizAnswer = {
+          questionId: currentQuestion.id,
           question: currentQuestion.question,
+          options: currentQuestion.options,
           userAnswer: null,
           selectedOption: null,
           isCorrect: false,
           timedOut: true,
-          timeTaken: 15,
+          timeTaken,
           correctAnswer: currentQuestion.correctAnswer,
-        },
-      });
+          correctOption: currentQuestion.options[currentQuestion.correctAnswer],
+        };
+        
+        setQuizAnswers(prev => [...prev, timeoutAnswer]);
+      }
     }
 
     if (currentIdx < questions.length - 1) {
-      setCurrentIdx((prev) => prev + 1);
-      setTimeLeft(15);
+      setCurrentIdx(prev => prev + 1);
     } else {
       calculateScore();
       setStep("form");
@@ -221,15 +262,18 @@ export default function ApplyJobForm({ job }: { job: Job }) {
 
   // Calculate quiz score
   const calculateScore = () => {
-    const answers = Object.values(quizAnswers);
-    const correct = answers.filter(a => a.isCorrect).length;
+    const correctAnswers = quizAnswers.filter(a => a.isCorrect).length;
+    const incorrectAnswers = quizAnswers.filter(a => !a.isCorrect && !a.timedOut).length;
+    const timedOutAnswers = quizAnswers.filter(a => a.timedOut).length;
     const total = questions.length;
-    const score = (correct / total) * 100;
+    const score = (correctAnswers / total) * 100;
     
     setQuizScore({
       score,
-      correct,
+      correct: correctAnswers,
       total,
+      incorrect: incorrectAnswers,
+      timedOut: timedOutAnswers,
     });
   };
 
@@ -253,33 +297,37 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     try {
       const formData = new FormData();
       
-      // Add quiz data
-      formData.append("candidateId", `candidate_${Date.now()}`);
+      // Add job and candidate metadata
+      formData.append("jobId", job.id);
       formData.append("jobTitle", job.title);
+      formData.append("candidateId", `candidate_${Date.now()}`);
       formData.append("skills", JSON.stringify(job.mandatorySkills));
       formData.append("experienceLevel", job.experience);
-      formData.append("questions", JSON.stringify(
-        Object.values(quizAnswers).map(answer => ({
-          id: answer.id,
-          question: answer.question,
-          userAnswer: answer.userAnswer,
-          correctAnswer: answer.correctAnswer,
-          isCorrect: answer.isCorrect,
-          timeTaken: answer.timeTaken,
-          timedOut: answer.timedOut,
-        }))
-      ));
       
-      // Add candidate info
+      // Add candidate personal info
       formData.append("name", candidateInfo.name);
       formData.append("email", candidateInfo.email);
       formData.append("phone", candidateInfo.phone || "");
       
+      // Add complete quiz data
+      formData.append("quizData", JSON.stringify(quizAnswers));
+      formData.append("totalQuestions", questions.length.toString());
+      formData.append("correctAnswers", (quizScore?.correct || 0).toString());
+      formData.append("incorrectAnswers", (quizScore?.incorrect || 0).toString());
+      formData.append("timedOutAnswers", (quizScore?.timedOut || 0).toString());
+      formData.append("quizScore", (quizScore?.score || 0).toFixed(2));
+      
       // Add resume file
       formData.append("resume", selectedFile);
       
+      // Add submission timestamp
+      formData.append("submittedAt", new Date().toISOString());
+      
       const response = await fetch("/api/submit-quiz", {
         method: "POST",
+        headers: {
+          token: `${token}`,
+        },
         body: formData,
       });
       
@@ -304,12 +352,13 @@ export default function ApplyJobForm({ job }: { job: Job }) {
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  // Get current question options
+  // Get current question and check if answered
   const currentQuestion = questions[currentIdx];
-  const currentOptions = currentQuestion?.options || [];
+  const currentAnswer = quizAnswers.find(a => a.questionId === currentQuestion?.id);
+  const isCurrentQuestionAnswered = currentAnswer !== undefined;
 
   return (
-    <div className="w-full bg-white rounded-3xl shadow-xl border border-gray-100 ">
+    <div className="w-full bg-white rounded-3xl shadow-xl border border-gray-100">
       <div className="p-6 md:p-8">
         <AnimatePresence mode="wait">
           {/* INITIAL BUTTON */}
@@ -346,10 +395,12 @@ export default function ApplyJobForm({ job }: { job: Job }) {
                   <p className="text-sm text-gray-700 mb-2">
                     <strong>Experience:</strong> {job.experience}
                   </p>
-                
+                  <p className="text-sm text-gray-700">
+                    <strong>Skills:</strong> {job.mandatorySkills.join(", ")}
+                  </p>
                 </div>
                 <p className="text-gray-600 text-sm">
-                  You will answer {questions.length || 20} technical questions. 
+                  You will answer 20 technical questions. 
                   Each question has a 15-second time limit.
                 </p>
                 <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
@@ -403,7 +454,7 @@ export default function ApplyJobForm({ job }: { job: Job }) {
           {/* QUIZ SCREEN */}
           {step === "quiz" && currentQuestion && (
             <motion.div
-              key="quiz"
+              key={`quiz-${currentIdx}`}
               initial={{ x: 20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -20, opacity: 0 }}
@@ -439,11 +490,11 @@ export default function ApplyJobForm({ job }: { job: Job }) {
 
               {/* Options */}
               <div className="space-y-3">
-                {currentOptions.map((option, index) => {
-                  const isSelected = quizAnswers[currentIdx]?.userAnswer === index;
+                {currentQuestion.options.map((option, index) => {
+                  const isSelected = currentAnswer?.userAnswer === index;
                   return (
                     <button
-                      key={index}
+                      key={`${currentQuestion.id}-option-${index}`}
                       onClick={() => handleAnswer(index)}
                       disabled={timeLeft === 0}
                       className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
@@ -473,9 +524,9 @@ export default function ApplyJobForm({ job }: { job: Job }) {
               <div className="pt-4">
                 <button
                   onClick={() => handleNextQuestion(false)}
-                  disabled={!quizAnswers[currentIdx] && timeLeft > 0}
+                  disabled={!isCurrentQuestionAnswered && timeLeft > 0}
                   className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 ${
-                    quizAnswers[currentIdx] || timeLeft === 0
+                    isCurrentQuestionAnswered || timeLeft === 0
                       ? "bg-gradient-to-r from-[#86e062] to-[#00c389] text-white shadow-lg hover:shadow-xl"
                       : "bg-gray-100 text-gray-400 cursor-not-allowed"
                   } transition-all`}
@@ -487,23 +538,22 @@ export default function ApplyJobForm({ job }: { job: Job }) {
 
               {/* Question navigation dots */}
               <div className="flex flex-wrap gap-2 justify-center pt-4">
-                {questions.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCurrentIdx(index);
-                      setTimeLeft(15);
-                    }}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      index === currentIdx
-                        ? "bg-[#00c389] scale-110"
-                        : quizAnswers[index]
-                        ? "bg-green-400"
-                        : "bg-gray-300"
-                    }`}
-                    title={`Question ${index + 1}`}
-                  />
-                ))}
+                {questions.map((q, index) => {
+                  const answered = quizAnswers.find(a => a.questionId === q.id);
+                  return (
+                    <div
+                      key={q.id}
+                      className={`w-3 h-3 rounded-full transition-all ${
+                        index === currentIdx
+                          ? "bg-[#00c389] scale-110 ring-2 ring-[#00c389]/30"
+                          : answered
+                          ? "bg-green-400"
+                          : "bg-gray-300"
+                      }`}
+                      title={`Question ${index + 1}${answered ? " (Answered)" : ""}`}
+                    />
+                  );
+                })}
               </div>
             </motion.div>
           )}
@@ -525,17 +575,21 @@ export default function ApplyJobForm({ job }: { job: Job }) {
                     <FiCheckCircle className="text-lg" />
                     <span>Quiz Completed!</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-800">{quizScore.correct}</div>
+                      <div className="text-2xl font-bold text-green-600">{quizScore.correct}</div>
                       <div className="text-xs text-gray-500">Correct</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-800">{quizScore.total}</div>
-                      <div className="text-xs text-gray-500">Total</div>
+                      <div className="text-2xl font-bold text-red-500">{quizScore.incorrect}</div>
+                      <div className="text-xs text-gray-500">Incorrect</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-800">{quizScore.score.toFixed(1)}%</div>
+                      <div className="text-2xl font-bold text-orange-500">{quizScore.timedOut}</div>
+                      <div className="text-xs text-gray-500">Timed Out</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#00c389]">{quizScore.score.toFixed(1)}%</div>
                       <div className="text-xs text-gray-500">Score</div>
                     </div>
                   </div>
@@ -716,9 +770,19 @@ export default function ApplyJobForm({ job }: { job: Job }) {
                   Thank you for applying to the {job.title} position.
                 </p>
                 {quizScore && (
-                  <p className="text-sm text-gray-500">
-                    Your quiz score: <span className="font-bold">{quizScore.score.toFixed(1)}%</span>
-                  </p>
+                  <div className="bg-gray-50 rounded-xl p-4 space-y-2">
+                    <p className="text-sm text-gray-600">Your Quiz Performance:</p>
+                    <div className="flex justify-center gap-6">
+                      <div>
+                        <p className="text-lg font-bold text-[#00c389]">{quizScore.score.toFixed(1)}%</p>
+                        <p className="text-xs text-gray-500">Score</p>
+                      </div>
+                      <div>
+                        <p className="text-lg font-bold text-green-600">{quizScore.correct}/{quizScore.total}</p>
+                        <p className="text-xs text-gray-500">Correct</p>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
               

@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import { Field } from "./components/Field";
 import { useState, useRef } from "react";
 import type { Control, Path } from "react-hook-form";
-import { useCreateJobMutation } from "redux/service/jobApi";
+import { useCreateJobMutation, useUpdateJobMutation, useGetJobByIdQuery } from "redux/service/jobApi";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 // ==========================================
 // TYPES
@@ -72,12 +73,23 @@ export interface FormData {
   salaryAndBenefits: SalaryAndBenefits;
   jobDescription: JobDescription;
   skillsAndExpertise: string[];
+  niceToHave: string[];
   benefits: string[]; // Benefits array from schema
   adminControl: AdminControl;
+  // Company Info
+  companyName: string;
+  companyWebsite: string;
+  companyEmail: string;
+  companyPhone: string;
+  // Other info
+  officeDays: string;
+  workingHours: string;
 }
 
 interface PostJobProps {
   onClose: (isOpen: boolean) => void;
+  onSuccess: () => void;
+  jobId?: string;
 }
 
 // ==========================================
@@ -123,11 +135,18 @@ const defaultValues: FormData = {
     responsibilities: [""],
   },
   skillsAndExpertise: [""],
+  niceToHave: [""],
   benefits: [""],
   adminControl: {
     featured: false,
     priority: "Medium",
   },
+  companyName: "",
+  companyWebsite: "",
+  companyEmail: "",
+  companyPhone: "",
+  officeDays: "Sun - Mon",
+  workingHours: "8 hour",
 };
 
 // Usage:
@@ -137,13 +156,18 @@ const createFieldArrayPath = <T,>(path: Path<T>) => path;
 // Usage:
 const responsibilitiesPath = createFieldArrayPath<FormData>("jobDescription.responsibilities");
 const skillsPath = createFieldArrayPath<FormData>("skillsAndExpertise");
+const niceToHavePath = createFieldArrayPath<FormData>("niceToHave");
 // ==========================================
 // MAIN COMPONENT
 // ==========================================
 
-export default function PostJob({ onClose,onSuccess }: PostJobProps) {
+export default function PostJob({ onClose, onSuccess, jobId }: PostJobProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [createJob, { isLoading: isCreating }] = useCreateJobMutation();
+  const [updateJob, { isLoading: isUpdating }] = useUpdateJobMutation();
+  const { data: jobResponse, isLoading: isFetching } = useGetJobByIdQuery(jobId || "", {
+    skip: !jobId,
+  });
 
   const {
     register,
@@ -158,6 +182,90 @@ export default function PostJob({ onClose,onSuccess }: PostJobProps) {
     mode: "onChange",
     defaultValues,
   });
+
+  useEffect(() => {
+    if (jobResponse?.data && jobId) {
+      const job = jobResponse.data;
+      
+      // Mapping mappings
+      const employmentTypeRevMap: Record<string, "Full Time" | "Part Time" | "Internship"> = {
+        "FULL_TIME": "Full Time",
+        "PART_TIME": "Part Time",
+        "INTERNSHIP": "Internship",
+      };
+      
+      const jobTypeRevMap: Record<string, "Permanent" | "Probation" | "Contract"> = {
+        "PERMANENT": "Permanent",
+        "PROBATION": "Probation",
+        "CONTRACT": "Contract",
+      };
+      
+      const jobLevelRevMap: Record<string, "Mid Level" | "Senior Level" | "Entry Level"> = {
+        "SENIOR_LEVEL": "Senior Level",
+        "MID_LEVEL": "Mid Level",
+        "ENTRY_LEVEL": "Entry Level",
+      };
+
+      const mappedData: FormData = {
+        title: job.title,
+        jobCategory: job.jobCategory,
+        vacancy: job.vacancy.toString(),
+        jobType: employmentTypeRevMap[job.employmentType] || "Full Time",
+        contractType: jobTypeRevMap[job.jobType] || "Permanent",
+        jobLevel: jobLevelRevMap[job.jobLevel] || "Mid Level",
+        photo: null, // Cannot pre-fill File input
+        jobSummary: {
+          applicationDeadline: job.applicationDeadline ? job.applicationDeadline.split('T')[0] : "",
+          ageLimit: job.ageLimit || "",
+          experienceRequired: job.experience,
+          gender: job.gender === "Others" ? "Any" : (job.gender as any || "Any"),
+          freshersAllowed: job.fresherAllowed,
+        },
+        employmentInfo: {
+          workplaceType: job.workMode === "REMOTE" ? "Hybrid" : (job.workplace === "HYBRID" ? "Hybrid" : "Onsite"),
+          remoteAllowed: job.workMode === "REMOTE",
+          jobLocation: {
+            city: job.city,
+            district: job.district || "",
+            country: job.country,
+          },
+        },
+        salaryAndBenefits: {
+          salary: {
+            range: job.salary,
+            negotiable: job.sallaryNegotiable,
+            type: "Monthly", // Default
+          },
+        },
+        jobDescription: {
+          overview: job.overview,
+          requirements: {
+            education: job.education,
+          },
+          responsibilities: job.responsibilities.length > 0 ? job.responsibilities : [""],
+        },
+        skillsAndExpertise: job.mandatorySkills.length > 0 ? job.mandatorySkills : [""],
+        niceToHave: job.niceToHave.length > 0 ? job.niceToHave : [""],
+        benefits: job.benefits.length > 0 ? job.benefits : [""],
+        adminControl: {
+          featured: false,
+          priority: "Medium",
+        },
+        companyName: job.companyName,
+        companyWebsite: job.companyWebsite,
+        companyEmail: job.companyEmail,
+        companyPhone: job.companyPhone,
+        officeDays: job.officeDays,
+        workingHours: job.workingHours,
+      };
+
+      reset(mappedData);
+      // Set the salary negotiable state
+      if (job.sallaryNegotiable) {
+        setValue("salaryAndBenefits.salary.negotiable", true);
+      }
+    }
+  }, [jobResponse, jobId, reset, setValue]);
 
 const {
   fields: respFields,
@@ -187,14 +295,25 @@ const {
   name: "benefits" as never,
 });
 
+const {
+  fields: niceToHaveFields,
+  append: appendNiceToHave,
+  remove: removeNiceToHave,
+} = useFieldArray<FormData>({
+  control,
+  name: "niceToHave" as never,
+});
+
   const salaryNegotiable = useWatch({
     control,
     name: "salaryAndBenefits.salary.negotiable",
+    defaultValue: false,
   });
 
   const remoteAllowed = useWatch({
     control,
     name: "employmentInfo.remoteAllowed",
+    defaultValue: false,
   });
 
   const [step, setStep] = useState(1);
@@ -210,6 +329,8 @@ const stepFields = {
     "jobLevel",
     "photo",
     "jobSummary.applicationDeadline",
+    "companyName",
+    "companyWebsite",
   ] as Path<FormData>[],
   2: [
     "jobSummary.ageLimit",
@@ -221,15 +342,20 @@ const stepFields = {
     "employmentInfo.remoteAllowed",
     "jobSummary.gender",
     "jobSummary.freshersAllowed",
+    "companyEmail",
+    "companyPhone",
   ] as Path<FormData>[],
   3: [
     "salaryAndBenefits.salary.range",
     "salaryAndBenefits.salary.negotiable",
     "jobDescription.requirements.education",
+    "officeDays",
+    "workingHours",
   ] as Path<FormData>[],
   4: [
     "jobDescription.responsibilities",
     "skillsAndExpertise",
+    "niceToHave",
     "benefits",
     "jobDescription.overview",
     "adminControl.featured",
@@ -257,17 +383,26 @@ const handleNext = async () => {
   const handleNegotiableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setValue("salaryAndBenefits.salary.negotiable", checked);
-    if (checked) setValue("salaryAndBenefits.salary.range", "Negotiable");
+    if (checked) {
+      setValue("salaryAndBenefits.salary.range", "Negotiable");
+    } else {
+      setValue("salaryAndBenefits.salary.range", "");
+    }
   };
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Final validation
+      // Validate all steps before submission
       for (const stepKey of [1, 2, 3, 4] as const) {
         const fields = stepFields[stepKey];
         const isValid = await trigger(fields);
         if (!isValid) {
-          alert(`Please complete step ${stepKey}`);
+          Swal.fire({
+            icon: "warning",
+            title: "Validation Error",
+            text: `Please complete all required fields in step ${stepKey}`,
+            position: "center",
+          });
           setStep(stepKey);
           return;
         }
@@ -275,13 +410,29 @@ const handleNext = async () => {
 
       // Merge final form data
       const finalData = { ...formData, ...data };
-      console.log("Final Job Data:", finalData);
+
+      // Validate required fields
+      if (!finalData.title?.trim()) {
+        throw new Error("Job title is required");
+      }
+      if (!finalData.jobCategory?.trim()) {
+        throw new Error("Job category is required");
+      }
+      if (!finalData.companyName?.trim()) {
+        throw new Error("Company name is required");
+      }
+      if (!finalData.jobSummary?.applicationDeadline) {
+        throw new Error("Application deadline is required");
+      }
 
       // Transform form data to API format
       const apiFormData = new FormData();
 
       // Location (combine city, district, country)
-      const location = `${finalData.employmentInfo?.jobLocation?.city || ""}, ${finalData.employmentInfo?.jobLocation?.district || ""}, ${finalData.employmentInfo?.jobLocation?.country || ""}`;
+      const city = finalData.employmentInfo?.jobLocation?.city?.trim() || "";
+      const district = finalData.employmentInfo?.jobLocation?.district?.trim() || "";
+      const country = finalData.employmentInfo?.jobLocation?.country?.trim() || "";
+      const location = `${city}, ${district}, ${country}`;
       
       // Employment type mapping (FULL_TIME, PART_TIME, INTERNSHIP)
       const employmentTypeMap: Record<string, string> = {
@@ -304,57 +455,77 @@ const handleNext = async () => {
       };
       const workMode = finalData.employmentInfo?.remoteAllowed ? "REMOTE" : (workModeMap[finalData.employmentInfo?.workplaceType || "Hybrid"] || "HYBRID");
       
-      // Build the data object matching backend expectations
       const jobData = {
-        title: finalData.title || "",
-        overview: finalData.jobDescription?.overview || "",
+        title: finalData.title?.trim() || "",
+        overview: finalData.jobDescription?.overview?.trim() || "",
         applicationDeadline: finalData.jobSummary?.applicationDeadline || "",
+        companyName: finalData.companyName?.trim() || "",
+        companyWebsite: finalData.companyWebsite?.trim() || "",
+        companyEmail: finalData.companyEmail?.trim() || "",
+        companyPhone: finalData.companyPhone?.trim() || "",
         vacancy: parseInt(finalData.vacancy || "1"),
         location: location,
         employmentType: employmentTypeMap[finalData.jobType || "Full Time"] || "FULL_TIME",
         jobType: jobTypeMap[finalData.contractType || "Permanent"] || "PERMANENT",
+        jobCategory: finalData.jobCategory?.trim() || "",
+        jobLevel: finalData.jobLevel === "Senior Level" ? "SENIOR_LEVEL" : (finalData.jobLevel === "Mid Level" ? "MID_LEVEL" : "ENTRY_LEVEL"),
         workMode: workMode,
-        responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r.trim()) || [],
-        mandatorySkills: finalData.skillsAndExpertise?.filter(s => s.trim()) || [],
-        niceToHave: [],
-        benefits: finalData.benefits?.filter(b => b.trim()) || [],
-        workingHours: "9AM-5PM",
-        officeDays: "Mon-Fri",
-        salary: finalData.salaryAndBenefits?.salary?.range || "Negotiable",
-        experience: finalData.jobSummary?.experienceRequired || "",
-        education: finalData.jobDescription?.requirements?.education || "",
+        ageLimit: finalData.jobSummary?.ageLimit?.trim() || null,
+        salary: finalData.salaryAndBenefits?.salary?.range?.trim() || "Negotiable",
+        city: city,
+        district: district || null,
+        country: country,
+        workplace: finalData.employmentInfo?.workplaceType?.toUpperCase() || "ONSITE",
+        experience: finalData.jobSummary?.experienceRequired?.trim() || "",
+        education: finalData.jobDescription?.requirements?.education?.trim() || "",
+        sallaryNegotiable: finalData.salaryAndBenefits?.salary?.negotiable || false,
+        sallaryRange: "", 
+        responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r?.trim()).map(r => r.trim()) || [],
+        mandatorySkills: finalData.skillsAndExpertise?.filter(s => s?.trim()).map(s => s.trim()) || [],
+        fresherAllowed: finalData.jobSummary?.freshersAllowed || false,
+        niceToHave: finalData.niceToHave?.filter(n => n?.trim()).map(n => n.trim()) || [],
+        benefits: finalData.benefits?.filter(b => b?.trim()).map(b => b.trim()) || [],
+        workingHours: finalData.workingHours?.trim() || "8 hour",
+        officeDays: finalData.officeDays?.trim() || "sun - mon",
         isPublished: true,
+        gender: finalData.jobSummary?.gender === "Any" ? "Others" : (finalData.jobSummary?.gender || "Others"),
       };
 
       // Append JSON data as string
       apiFormData.append("data", JSON.stringify(jobData));
       
-      // Append thumbnail if exists
-      if (finalData.photo) {
+      // Append thumbnail if exists and is a valid File
+      if (finalData.photo && finalData.photo instanceof File) {
         apiFormData.append("thumbnail", finalData.photo);
       }
 
-      // Call the API
-      const result = await createJob(apiFormData).unwrap();
+      // Call the API (Create or Update)
+      let result;
+      if (jobId) {
+        result = await updateJob({ id: jobId, formData: apiFormData }).unwrap();
+      } else {
+        result = await createJob(apiFormData).unwrap();
+      }
       
-      if(result.status == true){
+      if(result.status === true){
         Swal.fire({
           icon: "success",
-          title: "Job Posted Successfully!",
-          text: result?.message || "Job has been posted successfully!",
+          title: jobId ? "Job Updated Successfully!" : "Job Posted Successfully!",
+          text: result?.message || `Job has been ${jobId ? "updated" : "posted"} successfully!`,
           position: "center",
         });
+        onSuccess();
       } else {
         Swal.fire({
           icon: "error",
-          title: "Job Posting Failed!",
-          text: result?.message || "Failed to post job. Please try again.",
+          title: jobId ? "Job Update Failed!" : "Job Posting Failed!",
+          text: result?.message || `Failed to ${jobId ? "update" : "post"} job. Please try again.`,
           position: "center",
         });
       }
 
       // Reset form and close modal
-      reset();
+      reset(defaultValues);
       setStep(1);
       setFormData({});
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -362,23 +533,47 @@ const handleNext = async () => {
       
     } catch (error: any) {
       console.error("Error posting job:", error);
-      const errorMessage = error?.data?.message || error?.message || "Failed to post job. Please try again.";
-      alert(`Error: ${errorMessage}`);
+      const errorMessage = error?.data?.message || error?.message || `Failed to ${jobId ? "update" : "post"} job. Please try again.`;
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: errorMessage,
+        position: "center",
+      });
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 " onClick={() => onClose(false)}>
-      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 md:p-8" onClick={(e) => e.stopPropagation()}>
-        {/* Progress timeline */}
-        <div className="mb-8 relative">
-          <h2 className="text-2xl font-bold mb-2 text-center text-slate-800">
-            Post New Job
-          </h2>
+    <div data-lenis-prevent className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm overflow-y-auto" >
+      <div className="flex justify-center items-center min-h-screen p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative">
+          {/* Close Button */}
+          <button 
+            type="button"
+            onClick={() => onClose(false)}
+            className="absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-20 text-gray-500"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          
+          {isFetching && (
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-xs z-50 flex items-center justify-center rounded-2xl">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 border-4 border-[#00c389] border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p className="font-bold text-slate-600">Loading Job Data...</p>
+              </div>
+            </div>
+          )}
 
-          <div className="flex items-center justify-between mt-6 relative">
-            {/* Horizontal lines */}
-            <div className="absolute left-0 right-0 top-5 flex">
+          {/* Progress timeline */}
+          <div className="mb-8 relative">
+            <h2 className="text-2xl font-bold mb-2 text-center text-slate-800">
+              {jobId ? "Edit Job" : "Post New Job"}
+            </h2>
+ 
+            <div className="flex items-center justify-between mt-6 relative">
+              {/* Horizontal lines */}
+              <div className="absolute left-0 right-0 top-5 flex">
               {[1, 2, 3].map((lineIdx) => (
                 <motion.div
                   key={lineIdx}
@@ -452,6 +647,29 @@ const handleNext = async () => {
               </Field>
 
               <div className="grid md:grid-cols-2 gap-6 w-full">
+                <Field label="Company Name *" error={errors.companyName?.message as string}>
+                  <input
+                    className="input"
+                    {...register("companyName", { required: "Company name is required" })}
+                    placeholder="Tech Corp"
+                  />
+                </Field>
+                <Field label="Company Website *" error={errors.companyWebsite?.message as string}>
+                  <input
+                    className="input"
+                    {...register("companyWebsite", { 
+                      required: "Required",
+                      pattern: {
+                        value: /^https?:\/\/.+/,
+                        message: "Invalid URL (must start with http/https)"
+                      }
+                    })}
+                    placeholder="https://techcorp.com"
+                  />
+                </Field>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 w-full">
                 <Field label="Number of Vacancies *" error={errors.vacancy?.message as string}>
                   <input
                     type="number"
@@ -505,9 +723,29 @@ const handleNext = async () => {
                   className="input"
                   min={new Date().toISOString().split("T")[0]}
                   {...register("jobSummary.applicationDeadline", {
-                    required: "Required",
-                    validate: (v) => new Date(v) >= new Date() || "Future date",
+                    required: "Application deadline is required",
+                    validate: (v) => {
+                      const selectedDate = new Date(v);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      return selectedDate >= today || "Deadline must be today or a future date";
+                    },
                   })}
+                />
+              </Field>
+
+              <Field label="Job Photo" error={errors.photo?.message as string}>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="input"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setValue("photo", file);
+                    }
+                  }}
                 />
               </Field>
 
@@ -554,6 +792,30 @@ const handleNext = async () => {
                       required: "Required",
                     })}
                     placeholder="2–4 Years"
+                  />
+                </Field>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 w-full">
+                <Field label="Company Email *" error={errors.companyEmail?.message as string}>
+                  <input
+                    type="email"
+                    className="input"
+                    {...register("companyEmail", { 
+                      required: "Required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address"
+                      }
+                    })}
+                    placeholder="hr@techcorp.com"
+                  />
+                </Field>
+                <Field label="Company Phone *" error={errors.companyPhone?.message as string}>
+                  <input
+                    className="input"
+                    {...register("companyPhone", { required: "Required" })}
+                    placeholder="+880123456789"
                   />
                 </Field>
               </div>
@@ -676,7 +938,7 @@ const handleNext = async () => {
                     placeholder="10,000 – 20,000"
                     disabled={salaryNegotiable}
                     {...register("salaryAndBenefits.salary.range", {
-                      required: !salaryNegotiable && "Required",
+                      required: !salaryNegotiable ? "Salary range is required" : false,
                     })}
                   />
                 </Field>
@@ -686,6 +948,7 @@ const handleNext = async () => {
                     <input
                       type="checkbox"
                       className="mr-2 w-4 h-4"
+                      checked={salaryNegotiable}
                       onChange={handleNegotiableChange}
                     />
                     Salary Negotiable
@@ -706,8 +969,9 @@ const handleNext = async () => {
                   <div key={field.id} className="flex gap-2 items-start mb-3">
                     <input
                       className="input flex-1"
+                      placeholder="e.g., React, TypeScript, Node.js"
                       {...register(`skillsAndExpertise.${idx}` as const, {
-                        required: "Cannot be empty",
+                        required: "Skill cannot be empty",
                       })}
                     />
                     {skillsFields.length > 1 && (
@@ -721,6 +985,11 @@ const handleNext = async () => {
                     )}
                   </div>
                 ))}
+                {errors.skillsAndExpertise && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.skillsAndExpertise.message || "At least one skill is required"}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => appendSkills("")}
@@ -780,6 +1049,29 @@ const handleNext = async () => {
                 </div>
               </div>
 
+              <div className="grid md:grid-cols-2 gap-6 w-full">
+                <Field
+                  label="Office Days *"
+                  error={errors.officeDays?.message as string}
+                >
+                  <input
+                    className="input"
+                    {...register("officeDays", { required: "Required" })}
+                    placeholder="Sun - Thu"
+                  />
+                </Field>
+                <Field
+                  label="Working Hours *"
+                  error={errors.workingHours?.message as string}
+                >
+                  <input
+                    className="input"
+                    {...register("workingHours", { required: "Required" })}
+                    placeholder="9:00 AM - 6:00 PM"
+                  />
+                </Field>
+              </div>
+
               <div className="flex justify-between">
                 <button
                   type="button"
@@ -823,8 +1115,9 @@ const handleNext = async () => {
                   <div key={field.id} className="flex gap-2 items-start mb-3">
                     <input
                       className="input flex-1"
+                      placeholder="e.g., Develop and maintain web applications"
                       {...register(`jobDescription.responsibilities.${idx}` as const, {
-                        required: "Cannot be empty",
+                        required: "Responsibility cannot be empty",
                       })}
                     />
                     {respFields.length > 1 && (
@@ -838,12 +1131,49 @@ const handleNext = async () => {
                     )}
                   </div>
                 ))}
+                {errors.jobDescription?.responsibilities && (
+                  <p className="text-red-500 text-sm mt-1">
+                    At least one responsibility is required
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => appendResp("")}
                   className="w-full border-2 border-dashed border-gray-300 hover:border-[#00c389] p-4 rounded-lg text-gray-600 hover:text-[#00c389] transition-all"
                 >
                   + Add Responsibility
+                </button>
+              </div>
+
+              {/* Nice to Have */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-3 block">
+                  Nice to Have Skills
+                </label>
+                {niceToHaveFields.map((field, idx) => (
+                  <div key={field.id} className="flex gap-2 items-start mb-3">
+                    <input
+                      className="input flex-1"
+                      {...register(`niceToHave.${idx}` as const)}
+                      placeholder="e.g. Docker, AWS, etc."
+                    />
+                    {niceToHaveFields.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeNiceToHave(idx)}
+                        className="px-3 py-2 text-red-500 hover:bg-red-50 rounded"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => appendNiceToHave("")}
+                  className="w-full border-2 border-dashed border-gray-300 hover:border-[#00c389] p-4 rounded-lg text-gray-600 hover:text-[#00c389] transition-all"
+                >
+                  + Add Nice to Have Skill
                 </button>
               </div>
 
@@ -889,10 +1219,10 @@ const handleNext = async () => {
                 </button>
                 <button
                   type="submit"
-                  disabled={isCreating}
+                  disabled={isCreating || isUpdating}
                   className="bg-[#00c389] hover:bg-[#00b37d] text-white px-2 lg:px-8 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isCreating ? "Posting Job..." : "Post Job"}
+                  {isCreating || isUpdating ? (jobId ? "Updating..." : "Posting...") : (jobId ? "Update Job" : "Post Job")}
                 </button>
               </div>
             </div>
@@ -900,5 +1230,6 @@ const handleNext = async () => {
         </form>
       </div>
     </div>
+  </div>
   );
 }

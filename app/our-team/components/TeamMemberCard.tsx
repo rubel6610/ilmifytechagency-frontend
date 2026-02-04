@@ -3,14 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-interface TeamMember {
-  name: string;
-  position: string; 
-  description: string;
-  experience: string;
-  avatar?: string;
-}
+import { TeamMember } from "@/redux/service/teamApi";
 
 interface TeamMemberCardProps {
   member: TeamMember;
@@ -143,7 +136,7 @@ export default function TeamMemberCard({
               custom={0}
             >
               <h3 className="text-2xl font-bold text-slate-900 mb-1">
-                {member.name}
+                {member.fullName}
               </h3>
               <motion.p
                 animate={{ color: isHovered ? "#0ddaa0" : "#0284c7" }}
@@ -219,19 +212,19 @@ export default function TeamMemberCard({
             </div>
 
             {/* Avatar Image */}
-            {member.avatar ? (
+            {member.profilePhoto ? (
               <div className="absolute inset-1 rounded-full overflow-hidden">
                 <Image
                   height={100}
                   width={100}
-                  src={member.avatar}
-                  alt={member.name}
+                  src={member.profilePhoto}
+                  alt={member.fullName}
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
             ) : (
               <div className="absolute inset-1 rounded-full bg-linear-to-r from-[#0ddaa0] to-[#8ce064] flex items-center justify-center text-3xl font-bold text-white">
-                {member.name
+                {(member.fullName || "")
                   .split(" ")
                   .map((n: string) => n[0])
                   .join("")}

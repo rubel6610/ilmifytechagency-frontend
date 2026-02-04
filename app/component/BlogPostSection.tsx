@@ -5,13 +5,19 @@ import React from "react";
 import CustomBorder from "./customBorder/CustomBorder";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { blogsData, type BlogPost } from "../blog/components/blogsData";
-import TypingText from "./TypingText";
+import { useGetBlogsQuery } from "@/redux/service/blogApi";
+import { CgSpinner } from "react-icons/cg";
 
 const MotionLink = motion(Link);
 
 const BlogPostSection = () => {
-  const blogs: BlogPost[] = blogsData.slice(0, 3); // Get the first 3 blog posts
+  // Fetch latest 3 blogs from API
+  const { data: blogResponse, isLoading } = useGetBlogsQuery({
+    page: 1,
+    limit: 3,
+  });
+
+  const blogs = blogResponse?.data?.blogs || [];
 
   return (
     <div>
@@ -23,63 +29,80 @@ const BlogPostSection = () => {
           <div className="flex justify-center mt-7">
             <CustomBorder />
           </div>
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 my-6">
-            {blogs.map((blog, index) => (
-              <Link
-                href={`/blog/${blog.id}`}
-                key={index}
-                className="relative group rounded-2xl overflow-visible my-10"
-              >
-                {/* IMAGE */}
-                <div className="relative w-full aspect-4/3 rounded-lg overflow-hidden shadow-2xl">
-                  <Image
-                    src={blog.image}
-                    alt="Business woman"
-                    width={675}
-                    height={506}
-                    className="rounded-md shadow-2xl w-full mx-auto h-62.75 md:w-136.5 md:h-101.75 lg:w-full lg:h-auto
-                      transition-transform duration-700
-                      ease-[cubic-bezier(0.16,1,0.3,1)]
-                      scale-100
-                      group-hover:scale-102"
-                  />
-                </div>
 
-                {/* CARD */}
-                <div className="
-                  absolute left-4 right-4 sm:left-6 sm:right-6
-                  -bottom-10
-                  bg-white
-                  p-6 sm:p-8
-                  rounded-md
-                  shadow-xl
-                  transition-all duration-700 ease-out
-                  group-hover:translate-y-5
-                  group-hover:bg-linear-to-tr
-                  group-hover:from-[#0ddaa0]
-                  group-hover:to-[#8ce064]
-                ">
-                  <div className="ml-2 md:ml-0">
-                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white font-ubuntu">
-                      {blog.date} by
-                    </p>
-                    <p className="text-xs sm:text-sm ml-4 sm:ml-6 text-gray-500 transition-colors duration-300 group-hover:text-white font-ubuntu">
-                      {blog.author}
-                    </p>
-                  </div>
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-24 gap-4">
+              <CgSpinner className="animate-spin text-5xl text-emerald-500" />
+              <p className="text-gray-400 font-medium tracking-wide">Fetching latest insights...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 my-6">
+              {blogs.length > 0 ? (
+                blogs.map((blog, index) => (
+                  <Link
+                    href={`/blog/${blog.id}`}
+                    key={blog.id}
+                    className="relative group rounded-2xl overflow-visible my-10"
+                  >
+                    {/* IMAGE */}
+                    <div className="relative w-full aspect-4/3 rounded-xl overflow-hidden shadow-2xl border border-gray-100">
+                      <Image
+                        src={blog.images?.[0] || "/placeholder-blog.png"}
+                        alt={blog.title}
+                        fill
+                        className="
+                          object-cover
+                          transition-transform duration-700
+                          ease-[cubic-bezier(0.16,1,0.3,1)]
+                          scale-100
+                          group-hover:scale-105"
+                      />
+                    </div>
 
-                  <h2 className="flex items-center gap-3 text-lg sm:text-xl font-semibold mt-2 transition-colors duration-300 group-hover:text-white">
-                    <span className="
-                      w-3 h-3 rounded-full bg-[#00D9A6]
-                      transition-colors duration-700
-                      group-hover:bg-white
-                    " />
-                    {blog.title}
-                  </h2>
+                    {/* CARD */}
+                    <div className="
+                      absolute left-4 right-4 sm:left-6 sm:right-6
+                      -bottom-10
+                      bg-white
+                      p-6 sm:p-8
+                      rounded-xl
+                      shadow-[0_15px_35px_rgba(0,0,0,0.06)]
+                      border border-gray-50
+                      transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]
+                      group-hover:translate-y-5
+                      group-hover:bg-linear-to-tr
+                      group-hover:from-emerald-500
+                      group-hover:to-lime-400
+                      group-hover:shadow-[0_20px_40px_rgba(16,185,129,0.2)]
+                    ">
+                      <div className="flex flex-col mb-2">
+                        <p className="text-[10px] sm:text-xs text-gray-400 group-hover:text-white/80 font-bold uppercase tracking-widest transition-colors mb-1">
+                          {blog.createdAt ? new Date(blog.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Recent'}
+                        </p>
+                        <p className="text-[10px] sm:text-xs text-emerald-500 group-hover:text-white font-bold uppercase tracking-widest transition-colors">
+                          By {blog.admin?.name || 'Admin'}
+                        </p>
+                      </div>
+
+                      <h2 className="flex items-center gap-3 text-lg sm:text-xl font-bold mt-2 transition-colors duration-300 text-gray-800 group-hover:text-white line-clamp-2 leading-snug">
+                        <span className="
+                          w-2.5 h-2.5 shrink-0 rounded-full bg-[#00D9A6]
+                          transition-all duration-700
+                          group-hover:bg-white group-hover:scale-110
+                        " />
+                        {blog.title}
+                      </h2>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                  <p className="text-gray-400 text-lg font-medium">No blog posts available.</p>
                 </div>
-              </Link>
-            ))}
-          </div>
+              )}
+            </div>
+          )}
+
           {/* Romantic button */}
           <div className="flex justify-center">
             <MotionLink
@@ -93,13 +116,14 @@ const BlogPostSection = () => {
                 to-[#8ce064]
                 text-white
                 mt-12
-                px-8
+                px-10
                 py-4
                 rounded-full
                 text-sm
-                tracking-wide
-                shadow-[0px_0px_20px_5px_rgba(16,185,129,0.4)]
-                hover:shadow-[0_0_0_0_rgba(0,0,0,0)]
+                tracking-widest
+                shadow-[0px_10px_25px_rgba(16,185,129,0.3)]
+                transition-shadow duration-300
+                hover:shadow-none
                 inline-block
               "
               initial="rest"
@@ -112,7 +136,7 @@ const BlogPostSection = () => {
                   rest: { scale: 0 },
                   hover: { scale: 1 },
                 }}
-                transition={{ duration: 0.17, ease: "easeOut" as const }}
+                transition={{ duration: 0.25, ease: "easeOut" as const }}
                 className="
                   absolute
                   inset-0
@@ -126,7 +150,12 @@ const BlogPostSection = () => {
                 style={{ originX: 0.5, originY: 0.5 }}
               />
 
-              <span className="relative z-10">VIEW ALL POST</span>
+              <span className="relative z-10 flex items-center gap-2">
+                EXPLORE ALL INSIGHTS
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
             </MotionLink>
           </div>
         </div>

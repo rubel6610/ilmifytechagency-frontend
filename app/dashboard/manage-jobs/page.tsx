@@ -17,7 +17,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import PostJob from "./Components/post-job/PostJob";
-import EditJobModal from "./Components/EditJobModal";
 import JobDetailsModal from "./Components/JobDetailsModal";
 import {
   useGetJobsQuery,
@@ -43,14 +42,13 @@ export default function JobManagementPage() {
   const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
 
   // Fetch jobs from API
-  const { data, isLoading, isError, refetch } = useGetJobsQuery({
-    page: 1,
-    limit: 100,
+  const { data, isLoading, isError, refetch } = useGetJobsQuery({ 
+    page: 1, 
+    limit: 10 
   });
+  
   const [deleteJob] = useDeleteJobMutation();
-
-  const jobs: JobListItem[] = data?.data || [];
-
+  const jobs: JobListItem[] = data?.data || []; 
   const handleUpdateJob = (updatedJob: Job) => {
     // Refetch jobs after update
     refetch();
@@ -306,7 +304,7 @@ export default function JobManagementPage() {
                         Deadline
                       </span>
                       <span className="font-semibold text-orange-600 text-sm bg-orange-50 px-3 py-1 rounded-lg inline-block">
-                        {job.applicationDeadline || "Not set"}
+                        {job.applicationDeadline?.split("T")[0] || "Not set"}
                       </span>
                     </td>
 
@@ -317,7 +315,7 @@ export default function JobManagementPage() {
                       </span>
                       <div className="flex items-center gap-1">
                         <Users size={14} className="text-purple-500" />
-                        <span className="font-bold text-gray-800">12</span>
+                        <span className="font-bold text-gray-800">{job.applicationsCount || 0} </span>
                       </div>
                     </td>
 
@@ -462,15 +460,10 @@ export default function JobManagementPage() {
 
         {/* Modals */}
         {postJob && (
-          <div className="fixed inset-0 z-50  ">
-            <div className=" relative bg-black/60 ">
-              {/* Modal Content */}
-              <PostJob onClose={setPostJob} />
-            </div>
-          </div>
+          <PostJob onClose={setPostJob} onSuccess={() => refetch()} />
         )}
         {isEditOpen && editJob && (
-          <EditJobModal
+          <PostJob
             jobId={editJob.id}
             onClose={() => setIsEditOpen(false)}
             onSuccess={() => refetch()}
@@ -478,7 +471,7 @@ export default function JobManagementPage() {
         )}
 
         {isViewOpen && viewJob && (
-          <JobDetailsModal job={viewJob} onClose={() => setIsViewOpen(false)} />
+          <JobDetailsModal jobId={viewJob.id} onClose={() => setIsViewOpen(false)} />
         )}
       </div>
     </div>
