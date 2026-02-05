@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "serve": "serve -s build -p 3000"
   },
   "dependencies": {
     "@google/genai": "^1.38.0",
