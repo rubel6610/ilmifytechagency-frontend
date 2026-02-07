@@ -478,8 +478,8 @@ const handleNext = async () => {
         workplace: finalData.employmentInfo?.workplaceType?.toUpperCase() || "ONSITE",
         experience: finalData.jobSummary?.experienceRequired?.trim() || "",
         education: finalData.jobDescription?.requirements?.education?.trim() || "",
-        sallaryNegotiable: finalData.salaryAndBenefits?.salary?.negotiable || false,
-        sallaryRange: "", 
+        salaryNegotiable: finalData.salaryAndBenefits?.salary?.negotiable || false,
+        salaryRange: "", 
         responsibilities: finalData.jobDescription?.responsibilities?.filter(r => r?.trim()).map(r => r.trim()) || [],
         mandatorySkills: finalData.skillsAndExpertise?.filter(s => s?.trim()).map(s => s.trim()) || [],
         fresherAllowed: finalData.jobSummary?.freshersAllowed || false,
@@ -619,11 +619,11 @@ const handleNext = async () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 w-full max-w-5xl mx-auto"
+          className="space-y-4 w-full max-w-5xl mx-auto"
         >
           {/* STEP 1 */}
           {step === 1 && (
-            <div className="space-y-6 w-full min-h-[520px]">
+            <div className="space-y-1 w-full min-h-[520px]">
               <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
                 Basic Information
               </h3>
@@ -763,7 +763,7 @@ const handleNext = async () => {
 
           {/* STEP 2 */}
           {step === 2 && (
-            <div className="space-y-1 md:spacy-8 lg:space-y-6  w-full min-h-[520px]">
+            <div className="space-y-1 md:spacy-8 lg:space-y-1  w-full min-h-[520px]">
               <h3 className="font-semibold text-xl text-[#00c389] border-b pb-2">
                 Employment Summary
               </h3>

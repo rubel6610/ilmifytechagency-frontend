@@ -27,7 +27,7 @@ export default function WeAre() {
   };
 
   return (
-    <div className="grid items-center grid-cols-1 gap-12 px-4 py-8 mx-auto max-w-400 my-12 lg:my-28 md:px-12 lg:grid-cols-2">
+    <div className="grid items-center grid-cols-1 gap-12  py-8 mx-auto max-w-400 my-8 lg:my-20 md:px-12 lg:grid-cols-2">
       {/* Left Content */}
       <div>
         <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-tight text-center lg:text-left">
@@ -67,7 +67,7 @@ export default function WeAre() {
 
         <div className="text-justify">
           <motion.p
-            className="items-start px-8 text-gray-600 md:leading-relaxed md:px-0"
+            className="items-start px-4 text-gray-600 md:leading-relaxed md:px-0"
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" as const }}
@@ -84,7 +84,7 @@ export default function WeAre() {
 
           <br />
           <motion.p
-            className="px-8 text-gray-600 md:leading-relaxed md:px-0"
+            className="px-4 text-gray-600 md:leading-relaxed md:px-0"
             initial={{ y: 60, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" as const }}
@@ -117,7 +117,7 @@ export default function WeAre() {
             src="/Service-banner.jpeg"
             alt="Team discussion"
             fill
-            className="object-cover px-8 md:px-0"
+            className="object-cover px-4 md:px-0"
             priority
           />
         </motion.div>

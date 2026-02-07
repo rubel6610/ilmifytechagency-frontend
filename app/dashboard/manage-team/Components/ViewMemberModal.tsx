@@ -5,9 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { TeamMember } from '@/redux/service/teamApi';
 import QRCode from "react-qr-code";
-import { useRef } from 'react';
 
-interface ViewMemberModalProps {
+export interface ViewMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   member: TeamMember | null;
@@ -22,6 +21,7 @@ export default function ViewMemberModal({
     <AnimatePresence>
       {isOpen && member && (
         <motion.div 
+        data-lenis-prevent
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           exit={{ opacity: 0 }} 
@@ -33,7 +33,8 @@ export default function ViewMemberModal({
             animate={{ scale: 1, opacity: 1 }} 
             exit={{ scale: 0.95, opacity: 0 }} 
             onClick={(e) => e.stopPropagation()} 
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full"
+           className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg md:max-w-2xl max-h-[90vh] overflow-y-auto"
+
           >
             <div className="flex justify-between items-center p-6 border-b-2 border-slate-200 bg-gradient-to-r from-[#0ddaa0]/10 to-[#8ce064]/10">
               <h2 className="text-2xl font-bold text-slate-900">Member Details</h2>
@@ -86,7 +87,7 @@ export default function ViewMemberModal({
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 mb-2">Description</h4>
-                <p className="text-slate-600">{member.description}</p>
+                <p className="text-slate-600">{member.memberDescription}</p>
               </div>
               {member.skills && member.skills.length > 0 && (
                 <div>

@@ -58,32 +58,16 @@ const teamMembers: TeamMember[] = [
 ];
 
 export default function Team() {
-  const slideUpVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" as const },
-    },
-  };
 
-  const fadeInRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.8, ease: "easeOut" as const },
-    },
-  };
 
   return (
-    <section className="max-w-400 mx-auto px-8 md:px-12 my-12 py-24 bg-white text-center">
+    <section className="max-w-400 mx-auto px-4 md:px-12 my-12 py-24 bg-white text-center">
       <motion.h2
         className="text-2xl md:text-4xl lg:text-5xl font-semibold text-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.6 }}
-        variants={slideUpVariants}
+
       >
         Get to know
         <br />
@@ -95,7 +79,7 @@ export default function Team() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.6 }}
-        variants={fadeInRight}
+
       >
         <CustomBorder />
       </motion.div>

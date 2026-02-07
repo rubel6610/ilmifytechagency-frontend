@@ -116,9 +116,9 @@ const Careers = () => {
               district: district
             }
           },
-          salaryAndBenefits: {
+                  salaryAndBenefits: {
             salary: {
-              range: "Negotiable",
+              range: "Negotiable", // Actual salary not available in list endpoint
               negotiable: true
             }
           },
@@ -176,6 +176,7 @@ const Careers = () => {
   // Filter logic
   const filteredJobs = jobs.filter((job) => {
     // Search across multiple fields
+    console.log(job);
     const matchSearch =
       search === "" ||
       job.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -191,7 +192,8 @@ const Careers = () => {
       (filter === "Part Time" && job.jobType === "Part Time") ||
       (filter === "Internship" && job.jobType === "Internship");
 
-    // Salary filter (always matches since all are negotiable)
+    // Salary filter - since salary data is not available in list endpoint,
+    // we'll treat all jobs as having negotiable salary for filtering purposes
     const matchSalary =
       salaryFilter === "All" ||
       salaryFilter === "Negotiable";

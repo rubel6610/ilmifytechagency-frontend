@@ -67,7 +67,7 @@ const Showcase = () => {
       </div>
 
       {/* action card */}
-      <div className="mt-66 mb-25">
+      <div className="mt-20 lg:mt-50 mb-25">
         <CallToActionCard />
       </div>
     </div>

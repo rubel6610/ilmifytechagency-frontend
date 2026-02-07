@@ -16,7 +16,7 @@ export default function Question() {
   };
 
   return (
-    <div className="mt-16 relative w-full">
+    <div className="mt-16 relative w-full ">
       <div
         className="relative bg-cover bg-center py-44 flex flex-col items-center justify-center text-center"
         style={{ backgroundImage: "url('/contact-bg.png')" }}

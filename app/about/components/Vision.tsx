@@ -17,11 +17,11 @@ export default function Vision() {
   const cardVariants = {
     hidden: {
       opacity: 0,
-      x: 80,
+      y: 0, 
     },
     visible: (index: number) => ({
       opacity: 1,
-      x: 0,
+      y: 0,
       transition: {
         duration: 1.2,
         delay: index * 0.2,
@@ -31,7 +31,7 @@ export default function Vision() {
   };
 
   const fadeInRight = {
-    hidden: { opacity: 0, x: 50 },
+    hidden: { opacity: 0, x: 0 },
     visible: {
       opacity: 1,
       x: 0,
@@ -39,19 +39,19 @@ export default function Vision() {
     },
   };
 
-const iconVariants = {
-  hidden: { scale: 0, rotate: -180 },
-  visible: {
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: "spring" as const, // 👈 Add "as const" here
-      stiffness: 200,
-      damping: 15,
-      delay: 0.3,
+  const iconVariants = {
+    hidden: { scale: 0, rotate: -180 },
+    visible: {
+      scale: 1,
+      rotate: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 200,
+        damping: 15,
+        delay: 0.3,
+      },
     },
-  },
-};
+  };
 
   const cards: Card[] = [
     {
@@ -78,7 +78,7 @@ const iconVariants = {
 
   return (
     <section
-      className="relative bg-fixed bg-center bg-cover"
+      className="relative bg-fixed bg-center bg-cover overflow-hidden" // Added overflow-hidden here
       style={{
         backgroundImage: "url('/office.png')",
       }}
@@ -131,7 +131,7 @@ const iconVariants = {
         <div className="container mx-auto">
           {/* Header */}
           <motion.div
-            initial={{ y: 60, opacity: 0 }}
+            initial={{ y: 0, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" as const }}
             viewport={{ once: true }}
@@ -169,7 +169,7 @@ const iconVariants = {
           </motion.div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-14 overflow-hidden"> {/* Added overflow-hidden here */}
             {cards.map((item, index) => {
               const Icon = item.icon;
 

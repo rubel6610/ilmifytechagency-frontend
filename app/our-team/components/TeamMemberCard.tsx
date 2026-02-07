@@ -98,12 +98,12 @@ export default function TeamMemberCard({
       animate={isVisible ? "visible" : "exit"}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative w-full flex items-center justify-center mb-24 ${
-        isEvenIndex ? "flex-row" : "flex-row-reverse"
+      className={`relative w-full flex flex-col-reverse md:flex-row  items-center justify-center mb-16 md:mb-24 ${
+        isEvenIndex ? "md:flex-row" : "md:flex-row-reverse"
       }`}
     >
       {/* Card Container */}
-      <div className="w-full md:w-1/2 px-4">
+      <div className="w-full  md:w-1/2 px-4 ">
         <div className="relative group h-full">
           {/* Glow Effect on Hover */}
           <motion.div
@@ -148,7 +148,7 @@ export default function TeamMemberCard({
 
             {/* Description */}
             <motion.p className="text-slate-600 text-sm mb-4 leading-relaxed">
-              {member.description}
+              {member.memberDescription}
             </motion.p>
 
             {/* Experience Badge */}

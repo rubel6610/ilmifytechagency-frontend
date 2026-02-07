@@ -14,6 +14,15 @@ export default function AllTeamMembersPage() {
   });
 
   const teamData: TeamMember[] = data?.data ?? [];
+  const sortedMembers = [...teamData].sort((a, b) => {
+  if (!a.employeeId) return 1;
+  if (!b.employeeId) return -1;
+
+  return a.employeeId.localeCompare(b.employeeId, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
+});
 
   const [selectedDepartment, setSelectedDepartment] = useState<string>("All");
   const [departments, setDepartments] = useState<string[]>(["All"]);
@@ -158,7 +167,7 @@ export default function AllTeamMembersPage() {
               exit={{ opacity: 0 }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {filteredTeam.map((member, index) => (
+              {sortedMembers.map((member, index) => (
                 <TeamGridCard
                   key={member.id}
                   member={member}

@@ -111,7 +111,7 @@ export async function exportMembersToExcel(members: TeamMember[]) {
         skills: Array.isArray(member.skills)
           ? member.skills.join(", ")
           : member.skills || "",
-        description: member.description || "",
+        description: member.memberDescription || "",
         profileUrl,
       });
 
@@ -155,7 +155,7 @@ export async function exportMembersToExcel(members: TeamMember[]) {
 
     Swal.fire({
       icon: "success",
-      title: "Export completed 🎉",
+      title: "Export completed ",
       text: "Excel file downloaded successfully",
       confirmButtonColor: "#0DDAA0",
     });

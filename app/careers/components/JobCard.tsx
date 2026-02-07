@@ -31,6 +31,7 @@ interface Job {
   };
   employmentInfo: {
     workplaceType?: string;
+    remoteAllowed?: boolean;
     jobLocation: {
       city: string;
     };

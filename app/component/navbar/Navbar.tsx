@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,11 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/features/authSlice";
 import { FaUserCircle, FaSignOutAlt, FaTachometerAlt, FaCaretDown } from "react-icons/fa";
-
 const MotionLink = motion(Link);
-
-
-
 const Header = () => {
   const [nav, setNav] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -36,9 +31,7 @@ const Header = () => {
     dispatch(logout());
     setDropdownOpen(false);
   };
-
   const toggleNav = () => setNav(!nav);
-
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },

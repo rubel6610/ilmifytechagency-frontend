@@ -19,6 +19,15 @@ export default function TeamPage() {
 
   // ✅ Safe fallback
   const members = teamData?.data ?? [];
+  const sortedMembers = [...members].sort((a, b) => {
+  if (!a.employeeId) return 1;
+  if (!b.employeeId) return -1;
+
+  return a.employeeId.localeCompare(b.employeeId, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
+});
 
   // Scroll detection for showing cards one by one
   useEffect(() => {
@@ -110,7 +119,7 @@ export default function TeamPage() {
             </div>
           ) : (
             <div className="relative">
-              {members.slice(0, 4).map((member, index) => (
+              {sortedMembers.slice(0, 3).map((member, index) => (
                 <div key={member.id} data-card-index={index}>
                   <TeamMemberCard
                     member={member}

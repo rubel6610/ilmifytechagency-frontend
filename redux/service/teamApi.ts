@@ -19,21 +19,25 @@ export interface TeamMember {
   employeeId: string;
   fullName: string;
   position: string;
-  department: Department;
+  department: string;
   experience: number;
-  description: string | null;
-  profilePhoto: string | null;
-  email: string | null;
-  phone: string | null;
-  linkedin: string | null;
-  skills: string[];
-  startDate: string | null;
-  endDate: string | null;
-  reportingTo: string | null;
-  status: TeamMemberStatus;
+  memberDescription?: string;
+  companyDescription?: string;
+  profilePhoto?: string;
+  email?: string;
+  phone?: string;
+  linkedin?: string;
+  facebook?: string;
+  instagram?: string;
+  skills?: string[];
+  startDate?: string;
+  endDate?: string;
+  reportingTo?: string;
+  bloodGroup?: string;
+  status: 'ACTIVE' | 'INACTIVE';
   active: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // Pagination meta

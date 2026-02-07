@@ -53,7 +53,7 @@ export default function TeamGridCard({ member, index }: Props) {
       )}
 
       <p className="text-xs text-slate-600 mt-3">
-        {member.description}
+        {member.memberDescription}
       </p>
 
       <p className="text-xs font-bold mt-4 text-transparent bg-clip-text bg-gradient-to-r from-[#0ddaa0] to-[#8ce064]">

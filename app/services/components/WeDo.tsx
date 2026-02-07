@@ -47,7 +47,7 @@ export default function WeDo() {
   const router = useRouter();
   
   return (
-    <section className="w-full py-10 md:py-20 mb-10 lg:mb-30">
+    <section className="w-full  py-10 md:py-20 mb-10 lg:mb-30">
       <div className="container px-4 mx-auto">
         {/* ---------------- Heading ---------------- */}
         <div className="mb-14 text-center">

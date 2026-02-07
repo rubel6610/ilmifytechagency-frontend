@@ -42,13 +42,13 @@ export default function JobManagementPage() {
   const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
 
   // Fetch jobs from API
-  const { data, isLoading, isError, refetch } = useGetJobsQuery({ 
-    page: 1, 
-    limit: 10 
+  const { data, isLoading, isError, refetch } = useGetJobsQuery({
+    page: 1,
+    limit: 10,
   });
-  
+
   const [deleteJob] = useDeleteJobMutation();
-  const jobs: JobListItem[] = data?.data || []; 
+  const jobs: JobListItem[] = data?.data || [];
   const handleUpdateJob = (updatedJob: Job) => {
     // Refetch jobs after update
     refetch();
@@ -60,9 +60,19 @@ export default function JobManagementPage() {
     const matchesSearch = job.title
       ?.toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const matchesFilter =
-      filterStatus === "all" ||
-      job.applicationStatus?.toLowerCase() === filterStatus.toLowerCase();
+    
+    let matchesFilter = true;
+    if (filterStatus !== "all") {
+      if (filterStatus === "active") {
+        matchesFilter = job.applicationStatus?.toLowerCase() === "open";
+      } else if (filterStatus === "closed") {
+        matchesFilter = job.applicationStatus?.toLowerCase() === "closed";
+      } else if (filterStatus === "inactive") {
+        // Assuming inactive means closed since there's no separate inactive status
+        matchesFilter = job.applicationStatus?.toLowerCase() === "closed";
+      }
+    }
+    
     return matchesSearch && matchesFilter;
   });
 
@@ -107,9 +117,9 @@ export default function JobManagementPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-teal-50 to-cyan-50">
-      <div className="max-w-400 mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6">
+      <div className="max-w-400 mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 space-y-6 sm:space-y-8">
         {/* HEADER */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8 space-y-4 sm:space-y-6">
           <div className="flex flex-col md:flex-row justify-between items-start lg:items-center gap-4 mb-6">
             <div className="flex items-center gap-3 mb-2">
               <div className="bg-linear-to-br from-emerald-500 to-teal-600 p-3 rounded-2xl shadow-lg">
@@ -134,65 +144,10 @@ export default function JobManagementPage() {
             </button>
           </div>
 
-          {/* Stats Cards */}
-          <div className="mb-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 max-w-300 mx-auto">
-              {/* Total Jobs */}
-              <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-500 text-sm font-medium mb-1">
-                      Total Jobs
-                    </p>
-                    <p className="text-3xl font-black text-gray-800">
-                      {jobs.length}
-                    </p>
-                  </div>
-                  <div className="bg-blue-50 p-3 rounded-xl ">
-                    <Briefcase className="text-primary" size={24} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Active Jobs */}
-              <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-500 text-sm font-medium mb-1">
-                      Active
-                    </p>
-                    <p className="text-3xl font-black text-emerald-600">
-                      {activeJobs}
-                    </p>
-                  </div>
-                  <div className="bg-emerald-50 p-3 rounded-xl">
-                    <TrendingUp className="text-emerald-600" size={24} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Closed Jobs */}
-              <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-500 text-sm font-medium mb-1">
-                      Closed
-                    </p>
-                    <p className="text-3xl font-black text-gray-600">
-                      {closedJobs}
-                    </p>
-                  </div>
-                  <div className="bg-gray-100 p-3 rounded-xl">
-                    <Calendar className="text-gray-600" size={24} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+      
           {/* Search & Filter */}
-          <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-100">
-            <div className="flex flex-col sm:flex-row gap-3">
+         
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-3 ">
               <div className="relative flex-1">
                 <Search
                   size={18}
@@ -223,15 +178,15 @@ export default function JobManagementPage() {
                 <option value="closed">Closed</option>
               </select>
             </div>
-          </div>
+        
         </div>
 
         {/* TABLE */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden ">
           <div className="overflow-x-auto">
-            <table className="w-full md:table-fixed border-collapse">
+            <table className="w-full md:table-fixed border-collapse ">
               <colgroup>
-                <col className="md:w-[30%]" />
+                <col className="md:w-[30%] " />
                 <col className="md:w-[15%]" />
                 <col className="md:w-[15%]" />
                 <col className="md:w-[5%]" />
@@ -240,7 +195,7 @@ export default function JobManagementPage() {
               </colgroup>
 
               {/* Table Header */}
-              <thead className="hidden md:table-header-group bg-linear-to-r from-gray-50 to-gray-100">
+              <thead className="hidden md:table-header-group bg-linear-to-r from-gray-50 to-gray-100 ">
                 <tr>
                   <th className="px-4 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                     Position
@@ -264,11 +219,13 @@ export default function JobManagementPage() {
               </thead>
 
               {/* Table Body */}
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 space-y-4 sm:space-y-0">
                 {paginatedJobs.map((job) => (
                   <tr
                     key={job.id}
-                    className="block md:table-row w-full hover:bg-linear-to-r hover:from-emerald-50/50 hover:to-teal-50/50 transition-all duration-200"
+                    className="block md:table-row w-full rounded-xl sm:rounded-none 
+             hover:bg-linear-to-r hover:from-emerald-50/50 hover:to-teal-50/50 
+             transition-all duration-200"
                   >
                     {/* POSITION */}
                     <td className="block md:table-cell px-4 py-4 md:px-6 w-full">
@@ -315,7 +272,9 @@ export default function JobManagementPage() {
                       </span>
                       <div className="flex items-center gap-1">
                         <Users size={14} className="text-purple-500" />
-                        <span className="font-bold text-gray-800">{job.applicationsCount || 0} </span>
+                        <span className="font-bold text-gray-800">
+                          {job.applicationsCount || 0}{" "}
+                        </span>
                       </div>
                     </td>
 
@@ -471,7 +430,10 @@ export default function JobManagementPage() {
         )}
 
         {isViewOpen && viewJob && (
-          <JobDetailsModal jobId={viewJob.id} onClose={() => setIsViewOpen(false)} />
+          <JobDetailsModal
+            jobId={viewJob.id}
+            onClose={() => setIsViewOpen(false)}
+          />
         )}
       </div>
     </div>

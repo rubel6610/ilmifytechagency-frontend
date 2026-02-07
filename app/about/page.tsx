@@ -6,7 +6,7 @@ import Vision from "./components/Vision";
 
 export default function AboutPage() {
   return (
-    <main className="my-30">
+    <main className="my-20 lg:my-30 ">
       <div>
         <h2 className="text-3xl  md:text-4xl lg:text-5xl font-semibold text-center bg-[#F9F9F9] py-14 text-[#00D9A6]">
           About Page
