@@ -5,7 +5,8 @@ import { RootState } from "../store";
 //const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL ||
-  "https://job-management-5wx5.onrender.com/api/v1";
+  "https://api.ilmifytech.agency/api/v1";
+// const baseUrl = "http://localhost:5000/api/v1";
 
 if (!baseUrl) {
   throw new Error("Environment variable NEXT_PUBLIC_BASE_URL is not set");
